@@ -1,168 +1,162 @@
 "use client";
 
-import React, { useState } from "react";
+import { FormEvent, useState } from "react";
+import { ArrowRight, CheckCircle2, MessageCircle, TriangleAlert } from "lucide-react";
 
 interface InquiryFormProps {
   variant?: "default" | "sidebar";
   showWhatsApp?: boolean;
 }
 
-export const InquiryForm: React.FC<InquiryFormProps> = ({ 
+export function InquiryForm({
   variant = "default",
-  showWhatsApp = false
-}) => {
+  showWhatsApp = false,
+}: InquiryFormProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const isSidebar = variant === "sidebar";
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     setStatus("loading");
-    
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+
+    const formData = new FormData(event.currentTarget);
+    const payload = Object.fromEntries(formData.entries());
 
     try {
       const response = await fetch("/api/send", {
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
-        setStatus("success");
-      } else {
-        setStatus("error");
-      }
-    } catch (error) {
+      setStatus(response.ok ? "success" : "error");
+    } catch {
       setStatus("error");
     }
-  };
-
-  const isSidebar = variant === "sidebar";
+  }
 
   if (status === "success") {
     return (
-      <div className={`bg-[#f0f9f1] border border-[#c6efce] p-8 rounded-lg text-center ${isSidebar ? "p-4" : "p-8"}`}>
-        <h3 className={`text-[#006100] font-montserrat font-bold mb-2 ${isSidebar ? "text-lg" : "text-xl"}`}>✅ Inquiry Sent Successfully!</h3>
-        <p className="text-[#006100]/80 text-sm font-open-sans">Our sales team will reply within 12 hours.</p>
+      <div className={`rt-form-state rt-form-state-success${isSidebar ? " is-sidebar" : ""}`}>
+        <CheckCircle2 size={24} strokeWidth={2.2} />
+        <h3>Inquiry Sent Successfully!</h3>
+        <p>
+          Our sales team will reply to your email or WhatsApp within 12 hours.
+        </p>
       </div>
     );
   }
 
-  const labelStyle = "text-[0.8rem] font-[700] text-[#1A1A1A] font-montserrat block mb-1.5";
-  const inputBaseStyle = "w-full border-[1.5px] border-[#ddd] rounded-[4px] focus:border-[#C0392B] outline-none transition-all font-open-sans bg-white box-border";
-  const inputStyle = `${inputBaseStyle} px-4 py-3 text-[0.9rem]`;
-  const sidebarInputStyle = `${inputBaseStyle} px-3 py-2 text-sm`;
-
   return (
-    <form className={isSidebar ? "space-y-3" : "space-y-5"} onSubmit={handleSubmit}>
-      <div className={isSidebar ? "space-y-3" : "grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5"}>
-        <div className="space-y-0.5">
-          <label className={labelStyle}>Your Name *</label>
-          <input 
-            name="name" 
-            required 
-            placeholder="Full Name" 
-            className={isSidebar ? sidebarInputStyle : inputStyle}
-          />
-        </div>
-
-        <div className="space-y-0.5">
-          <label className={labelStyle}>WhatsApp / Phone *</label>
-          <input 
-            name="whatsapp" 
-            required 
-            placeholder="+1 234 567 8900" 
-            className={isSidebar ? sidebarInputStyle : inputStyle}
-          />
-        </div>
-
-        <div className="space-y-0.5">
-          <label className={labelStyle}>Email Address</label>
-          <input 
-            name="email" 
-            type="email" 
-            placeholder="your@email.com" 
-            className={isSidebar ? sidebarInputStyle : inputStyle}
-          />
-        </div>
-
-        <div className="space-y-0.5">
-          <label className={labelStyle}>Your Country *</label>
-          <input 
-            name="country" 
+    <form
+      className={`rt-inquiry-form${isSidebar ? " is-sidebar" : ""}`}
+      onSubmit={handleSubmit}
+    >
+      <div className="rt-form-grid">
+        <div className="rt-form-group">
+          <label htmlFor={`${variant}-name`}>Your Name *</label>
+          <input
+            id={`${variant}-name`}
+            name="name"
+            type="text"
             required
-            placeholder="e.g. Nigeria, Kenya, Ghana..." 
-            className={isSidebar ? sidebarInputStyle : inputStyle}
+            placeholder="John Smith"
           />
         </div>
 
-        <div className="space-y-0.5">
-          <label className={labelStyle}>Product Interest</label>
-          <select 
-            name="product" 
-            className={isSidebar ? sidebarInputStyle : inputStyle}
-          >
-            <option value="">Select product...</option>
-            <option value="Used Brand Clothes">Used Brand Clothes</option>
-            <option value="Used Brand Shoes">Used Brand Shoes</option>
-            <option value="Used Brand Bags">Used Brand Bags</option>
-            <option value="Mixed Products">Mixed (Clothes + Shoes)</option>
-            <option value="Full Container">Full Container Mixed</option>
-          </select>
+        <div className="rt-form-group">
+          <label htmlFor={`${variant}-email`}>Your Email *</label>
+          <input
+            id={`${variant}-email`}
+            name="email"
+            type="email"
+            required
+            placeholder="john@company.com"
+          />
         </div>
 
-        <div className="space-y-0.5">
-          <label className={labelStyle}>Order Quantity</label>
-          <select 
-            name="quantity" 
-            className={isSidebar ? sidebarInputStyle : inputStyle}
-          >
-            <option value="">Select quantity...</option>
-            <option value="100bales">≥100 bales (4,500 kg)</option>
-            <option value="20ft">≥1 × 20ft Container (~13,000 kg)</option>
-            <option value="40ft">≥1 × 40ft Container (~28,000 kg)</option>
-            <option value="2x40ft">≥2 × 40ft Containers (~56,000 kg)</option>
-          </select>
+        <div className="rt-form-group">
+          <label htmlFor={`${variant}-whatsapp`}>Your WhatsApp *</label>
+          <input
+            id={`${variant}-whatsapp`}
+            name="whatsapp"
+            type="text"
+            required
+            placeholder="+1 234 567 8900"
+          />
+        </div>
+
+        <div className="rt-form-group">
+          <label htmlFor={`${variant}-country`}>Your Country</label>
+          <input
+            id={`${variant}-country`}
+            name="country"
+            type="text"
+            placeholder="Nigeria, Philippines..."
+          />
         </div>
       </div>
 
-      <div className="space-y-0.5">
-        <label className={labelStyle}>Message</label>
-        <textarea 
-          name="message" 
-          rows={isSidebar ? 3 : 4} 
-          placeholder="Tell us about your business, target market, or any questions..." 
-          className={isSidebar ? `${sidebarInputStyle} resize-none` : `${inputStyle} resize-y min-h-[100px]`}
+      <div className="rt-form-group">
+        <label htmlFor={`${variant}-product`}>Product Interest</label>
+        <select id={`${variant}-product`} name="product">
+          <option value="">Select product...</option>
+          <option value="Used Brand Clothes">Used Brand Clothes</option>
+          <option value="Used Brand Shoes">Used Brand Shoes</option>
+          <option value="Used Brand Bags">Used Brand Bags</option>
+          <option value="Mixed Products">Mixed Products</option>
+        </select>
+      </div>
+
+      <div className="rt-form-group">
+        <label htmlFor={`${variant}-quantity`}>Your Quantity</label>
+        <select id={`${variant}-quantity`} name="quantity">
+          <option value="">Select quantity...</option>
+          <option value="100bales">≥100 bales (4,500kg / 2,000 pairs)</option>
+          <option value="20ft">≥One 20ft Container</option>
+          <option value="40ft">≥One 40ft Container</option>
+          <option value="2x40ft">≥Two 40ft Containers</option>
+        </select>
+      </div>
+
+      <div className="rt-form-group">
+        <label htmlFor={`${variant}-message`}>Your Message</label>
+        <textarea
+          id={`${variant}-message`}
+          name="message"
+          rows={isSidebar ? 4 : 5}
+          placeholder="Tell us about your requirements, target market, quantity needed..."
         />
       </div>
 
-      <div className={isSidebar ? "space-y-2" : "flex flex-wrap items-center gap-4 pt-2"}>
-        <button 
-          type="submit" 
-          disabled={status === "loading"}
-          className={`bg-[#C0392B] hover:bg-[#a93226] text-white px-8 py-3.5 rounded-[4px] font-montserrat font-bold text-[0.9375rem] uppercase tracking-[0.03em] transition-all disabled:opacity-50 cursor-pointer ${isSidebar ? "w-full" : ""}`}
-        >
-          {status === "loading" ? "SENDING..." : "GET PRICE NOW →"}
+      <div className={`rt-form-actions${isSidebar ? " is-sidebar" : ""}`}>
+        <button type="submit" className="rt-form-submit" disabled={status === "loading"}>
+          {status === "loading" ? "SENDING..." : "SEND INQUIRY NOW"}
+          {status !== "loading" && <ArrowRight size={16} strokeWidth={2.25} />}
         </button>
 
-        {showWhatsApp && !isSidebar && (
-          <a 
-            href="https://wa.me/8618800000001?text=Hi%2C+I+want+to+place+a+wholesale+order" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="bg-[#25D366] hover:bg-[#1da851] text-white px-6 py-3.5 rounded-[4px] font-montserrat font-bold text-[0.9375rem] inline-flex items-center gap-2 transition-all shadow-sm"
+        {showWhatsApp && !isSidebar ? (
+          <a
+            href="https://wa.me/8618800000001?text=Hi%2C+I+want+to+place+a+wholesale+order"
+            target="_blank"
+            rel="noreferrer"
+            className="rt-form-whatsapp"
           >
-            💬 WhatsApp
+            <MessageCircle size={18} strokeWidth={2.2} />
+            WhatsApp
           </a>
-        )}
-
-        {!isSidebar && (
-          <span className="text-[0.8rem] text-gray-500 font-open-sans">Reply within 12 hours</span>
-        )}
+        ) : null}
       </div>
 
-      {status === "error" && (
-        <p className="text-red-600 text-xs text-center font-open-sans mt-2">⚠️ Failed to send. Please contact us via WhatsApp instead.</p>
-      )}
+      {!isSidebar ? (
+        <p className="rt-form-note">Reply within 12 hours | Free consultation | No spam</p>
+      ) : null}
+
+      {status === "error" ? (
+        <div className="rt-form-state rt-form-state-error">
+          <TriangleAlert size={18} strokeWidth={2.2} />
+          <p>Failed to send. Please contact us via WhatsApp or Email directly.</p>
+        </div>
+      ) : null}
     </form>
   );
-};
+}
