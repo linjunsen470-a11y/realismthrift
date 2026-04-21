@@ -69,7 +69,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({ data }) => {
             <ul className="space-y-3 mb-6">
               <li><a href="https://wa.me/8618800000001" className="text-white/50 hover:text-brand-gold text-[0.8125rem] font-open-sans transition-colors">💬 WhatsApp</a></li>
               <li><a href="mailto:sales@realismthrift.com" className="text-white/50 hover:text-brand-gold text-[0.8125rem] font-open-sans transition-colors">✉ Email Us</a></li>
-              <li><Link href="#contact" className="text-white/50 hover:text-brand-gold text-[0.8125rem] font-open-sans transition-colors">📋 Inquiry Form</Link></li>
+              <li><Link href="/#contact" className="text-white/50 hover:text-brand-gold text-[0.8125rem] font-open-sans transition-colors">📋 Inquiry Form</Link></li>
             </ul>
             <div className="bg-white/5 p-4 rounded-[4px] border border-white/10">
               <p className="text-[0.75rem] text-white/40 font-open-sans leading-[1.6]">
