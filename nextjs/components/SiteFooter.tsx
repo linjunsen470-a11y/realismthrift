@@ -133,7 +133,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
           className={`rt-floating-top${showBackToTop ? " is-visible" : ""}`}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          <span className="rt-floating-top-glyph">▲</span>
+          <span className="rt-floating-top-glyph">↑</span>
         </button>
       </div>
     </footer>

@@ -50,14 +50,59 @@ export interface Product {
   href: string;
 }
 
-export interface BlogPost {
-  slug: string;
+export interface SanityImageDimensions {
+  width: number;
+  height: number;
+  aspectRatio: number;
+}
+
+export interface SanityImageAsset {
+  _ref?: string;
+  url?: string;
+  metadata?: {
+    dimensions?: SanityImageDimensions;
+  };
+}
+
+export interface SanityImage {
+  alt?: string;
+  caption?: string;
+  asset?: SanityImageAsset;
+}
+
+export interface BlogCategory {
   title: string;
+  slug?: string;
+  description?: string;
+}
+
+export interface BlogAuthor {
+  name: string;
+  role?: string;
+  bio?: string;
+  avatar?: SanityImage;
+}
+
+export interface BlogSeo {
+  metaTitle?: string;
+  metaDescription?: string;
+  ogImage?: SanityImage;
+}
+
+export interface BlogPostCard {
+  _id: string;
+  title: string;
+  slug: string;
   excerpt: string;
-  date: string;
-  image?: string;
-  category: string;
-  content: string;
+  publishedAt: string;
+  coverImage?: SanityImage;
+  category?: BlogCategory;
+  author?: BlogAuthor;
+}
+
+export interface BlogPostDetail extends BlogPostCard {
+  body: unknown[];
+  seo?: BlogSeo;
 }
 
 export interface HomePageData {

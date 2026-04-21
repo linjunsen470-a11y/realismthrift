@@ -1,74 +1,68 @@
-"use client";
-
-import React from "react";
-import Image from "next/image";
+import type { Metadata } from "next";
 import Link from "next/link";
-import { blogPosts } from "@/data/siteData";
-import { Section } from "@/components/CommonUI";
-import { Calendar, User, ArrowRight } from "lucide-react";
-import { motion } from "motion/react";
+import { ArrowRight } from "lucide-react";
+import { BlogCard } from "@/components/blog/BlogCard";
+import { getAllBlogPosts } from "@/lib/blog";
 
-export default function BlogPage() {
+export const metadata: Metadata = {
+  title: "Blog | RealismThrift Export Co., Ltd",
+  description:
+    "Wholesale market insights, sourcing advice, and second-hand clothing industry updates from RealismThrift.",
+};
+
+export default async function BlogPage() {
+  const posts = await getAllBlogPosts();
+
   return (
-    <div className="pb-20">
-      <div className="bg-gray-50 border-b border-gray-200 py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-gray-900">Industry Insights</h1>
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto font-light">
-            Stay updated with the latest trends, guides, and news from the global used goods market.
-          </p>
+    <div>
+      <section
+        className="rt-page-hero rt-blog-hero"
+        style={{ backgroundImage: "url('/img/blog-inner.jpg')" }}
+      >
+        <div className="rt-page-hero-overlay" />
+        <div className="rt-container">
+          <p className="rt-page-hero-sub">Wholesale News, Guides, and Market Insights</p>
+          <h1 className="rt-page-hero-title">Industry Insights</h1>
+          <div className="rt-breadcrumb">
+            <Link href="/">Home</Link>
+            <span>/</span>
+            <span>Blog</span>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <Section>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {blogPosts.map((post, idx) => (
-            <motion.article
-              key={post.slug}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 group"
-            >
-              <Link href={`/blog/${post.slug}`} className="block relative h-64 overflow-hidden bg-gray-900 flex items-center justify-center">
-                {post.image ? (
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    referrerPolicy="no-referrer"
-                  />
-                ) : (
-                  <div className="text-6xl opacity-20 filter grayscale transform hover:scale-110 transition-transform">📰</div>
-                )}
+      <section className="rt-home-section rt-blog-index">
+        <div className="rt-container">
+          <div className="rt-section-header center">
+            <span className="rt-section-badge">LATEST ARTICLES</span>
+            <h2 className="rt-section-title">USED CLOTHING BUSINESS KNOWLEDGE</h2>
+            <div className="rt-section-divider center" />
+            <p className="rt-section-copy">
+              Stay current with sourcing tips, profit strategies, and wholesale market
+              updates for second-hand clothes, shoes, and bags.
+            </p>
+          </div>
+
+          {posts.length ? (
+            <div className="rt-news-grid">
+              {posts.map((post) => (
+                <BlogCard key={post._id} post={post} showAuthor />
+              ))}
+            </div>
+          ) : (
+            <div className="rt-empty-state">
+              <h3>No published articles yet</h3>
+              <p>
+                The blog is connected to Sanity and ready. Publish your first post in the
+                Studio to populate this page.
+              </p>
+              <Link href="/" className="rt-news-footer-link">
+                Return Home <ArrowRight size={16} strokeWidth={2.25} />
               </Link>
-              <div className="p-8">
-                <div className="flex items-center gap-6 text-xs text-gray-500 mb-4 uppercase tracking-widest font-medium">
-                  <div className="flex items-center gap-2">
-                    <Calendar size={14} /> {post.date}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <User size={14} /> Admin
-                  </div>
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
-                  <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                </h2>
-                <p className="text-gray-600 font-light mb-6 line-clamp-3">
-                  {post.excerpt}
-                </p>
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="inline-flex items-center gap-2 text-blue-600 font-bold hover:gap-4 transition-all"
-                >
-                  Read Full Article <ArrowRight size={18} />
-                </Link>
-              </div>
-            </motion.article>
-          ))}
+            </div>
+          )}
         </div>
-      </Section>
+      </section>
     </div>
   );
 }
