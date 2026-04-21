@@ -1,5 +1,15 @@
 import { Product, SiteFooter, SiteHeader } from "@/types";
 
+export const companyStats = {
+  foundedYear: 2012,
+  staffCount: "200+",
+  countriesCount: "100+",
+  facilitySize: "15,000 m²",
+  monthlyCapacity: "500 tonnes",
+  reorderRate: "80%+",
+  buyersCount: "1,000+",
+};
+
 export const siteHeader: SiteHeader = {
   brand: {
     logo: "RealismThrift",
@@ -22,7 +32,7 @@ export const siteFooter: SiteFooter = {
   brand: {
     logo: "RealismThrift",
     description:
-      "RealismThrift Export Co., Ltd is a leading wholesale supplier of second-hand clothes, shoes and bags from China. Export to 100+ countries with A-Grade quality.",
+      `RealismThrift Export Co., Ltd is a leading wholesale supplier of second-hand clothes, shoes and bags from China. Export to ${companyStats.countriesCount} countries with A-Grade quality.`,
     address: "Guangzhou, Guangdong Province, China",
     phone: "+86 188 0000 0001",
     email: "sales@realismthrift.com",
@@ -98,10 +108,10 @@ export const productsData: Product[] = [
 
 export const features = [
   {
-    title: "80%+ Reorder Rate",
+    title: `${companyStats.reorderRate} Reorder Rate`,
     icon: "bar-chart-3",
     description:
-      "Over 80% of our customers reorder because our stable quality helps them build a great reputation in their local markets.",
+      `Over ${companyStats.reorderRate} of our customers reorder because our stable quality helps them build a great reputation in their local markets.`,
   },
   {
     title: "Premium Raw Materials",
@@ -125,10 +135,10 @@ export const features = [
     title: "12+ Years Experience",
     icon: "clock-3",
     description:
-      "Founded in 2012, we have rich experience in used clothes, shoes, and bags wholesale export to global markets.",
+      `Founded in ${companyStats.foundedYear}, we have rich experience in used clothes, shoes, and bags wholesale export to global markets.`,
   },
   {
-    title: "Export to 100+ Countries",
+    title: `Export to ${companyStats.countriesCount} Countries`,
     icon: "globe-2",
     description:
       "Our products are well-appreciated by wholesalers in Africa, Middle East, Southeast Asia, and South America.",

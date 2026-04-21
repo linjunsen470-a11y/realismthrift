@@ -40,9 +40,6 @@ export function SiteHeader({ data }: SiteHeaderProps) {
               <MessageCircle size={14} strokeWidth={2.2} />
               WhatsApp
             </a>
-            <Link href="/" className="rt-lang-pill" lang="es-PR">
-              es
-            </Link>
           </div>
         </div>
       </div>

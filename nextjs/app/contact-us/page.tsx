@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { InquiryForm } from "@/components/InquiryForm";
+import { companyStats } from "@/data/siteData";
 
 export const metadata = {
   title: "Contact Us | RealismThrift Wholesale",
-  description: "Get in touch with RealismThrift for wholesale inquiries, price quotes, and export information. 24/7 sales support in English, French, Spanish, and Arabic.",
+  description: `Get in touch with RealismThrift for wholesale inquiries, price quotes, and export information. Professional sales support in English, French, Spanish, and Arabic.`,
 };
 
 export default function ContactUsPage() {
@@ -25,7 +26,7 @@ export default function ContactUsPage() {
             Contact <span className="text-brand-gold">Us</span>
           </h1>
           <p className="text-white/80 text-[1.0625rem] max-w-[600px] mx-auto mb-10 font-open-sans leading-[1.7]">
-            Our sales team is available 24/7 to answer your questions and provide price quotations. We speak English, French, Spanish, and Arabic.
+            Our sales team is available during business hours to answer your questions and provide price quotations. We speak English, French, Spanish, and Arabic.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a href="mailto:sales@realismthrift.com" className="bg-brand-gold text-brand-dark px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-brand-gold-dark hover:-translate-y-0.5 shadow-lg active:scale-95">
@@ -141,7 +142,7 @@ export default function ContactUsPage() {
         <div className="rt-container">
           <div className="text-center mb-14">
             <span className="inline-block bg-brand-red text-white text-[10px] font-black px-3 py-1 rounded-sm tracking-widest mb-4 uppercase">Global Reach</span>
-            <h2 className="font-montserrat text-[1.75rem] font-black text-brand-dark mb-4">WE EXPORT TO 110+ COUNTRIES</h2>
+            <h2 className="font-montserrat text-[1.75rem] font-black text-brand-dark mb-4">WE EXPORT TO {companyStats.countriesCount} COUNTRIES</h2>
             <div className="w-16 h-1 bg-brand-red mx-auto mb-6" />
             <p className="text-[#666] text-[0.9375rem] max-w-[640px] mx-auto font-open-sans italic">
               Our products reach buyers across 6 continents. Find your regional sales expertise below for localized wholesale solutions.
@@ -188,7 +189,7 @@ export default function ContactUsPage() {
             </div>
             <div className="mt-8 p-6 bg-brand-light rounded-[10px] border-l-4 border-brand-gold">
               <p className="text-[0.875rem] text-[#555] font-open-sans leading-relaxed">
-                <strong className="text-brand-dark">Visiting our factory?</strong> We welcome international buyers to visit our 15,000m² facility. Please contact your regional sales agent to schedule a tour and arrange airport pickup in Guangzhou.
+                <strong className="text-brand-dark">Visiting our factory?</strong> We welcome international buyers to visit our {companyStats.facilitySize} facility. Please contact your regional sales agent to schedule a tour and arrange airport pickup in Guangzhou.
               </p>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { InquiryForm } from "@/components/InquiryForm";
+import { companyStats } from "@/data/siteData";
 
 export const metadata = {
   title: "About Us | RealismThrift Wholesale",
@@ -26,7 +27,7 @@ export default function AboutUsPage() {
             About <span className="text-brand-gold">RealismThrift</span>
           </h1>
           <p className="text-white/80 text-[1.0625rem] max-w-[700px] mx-auto mb-7 leading-[1.7]">
-            China's leading wholesale exporter of used brand clothes, shoes, and bags. Over 10 years of experience. 15,000 m² sorting facility. Trusted by 1,200+ wholesale buyers in 110+ countries.
+            China&apos;s leading wholesale exporter of used brand clothes, shoes, and bags. Over 10 years of experience. {companyStats.facilitySize} sorting facility. Trusted by {companyStats.buyersCount} wholesale buyers in {companyStats.countriesCount} countries.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-7 py-3 rounded-[3px] font-bold font-montserrat text-[0.875rem] hover:bg-brand-gold-dark transition-colors">
@@ -48,15 +49,15 @@ export default function AboutUsPage() {
               <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">Years Experience</div>
             </div>
             <div className="text-white">
-              <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">15,000 m²</div>
+              <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">{companyStats.facilitySize}</div>
               <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">Sorting Facility</div>
             </div>
             <div className="text-white">
-              <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">1,200+</div>
+              <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">{companyStats.buyersCount}</div>
               <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">Wholesale Buyers</div>
             </div>
             <div className="text-white">
-              <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">110+</div>
+              <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">{companyStats.countriesCount}</div>
               <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">Export Countries</div>
             </div>
             <div className="text-white">
@@ -75,13 +76,13 @@ export default function AboutUsPage() {
               Our Story: <span className="text-brand-red">From Guangzhou to the World</span>
             </h2>
             <p className="text-[0.9375rem] text-[#555] leading-[1.85] mb-5">
-              RealismThrift was founded in Guangzhou, China — the world's largest hub for used clothing trade. What began as a small sorting operation in 2014 has grown into one of China's most trusted wholesale exporters of second-hand branded fashion.
+              RealismThrift was founded in Guangzhou, China — the world&apos;s largest hub for used clothing trade. What began as a small sorting operation in {companyStats.foundedYear} has grown into one of China&apos;s most trusted wholesale exporters of second-hand branded fashion.
             </p>
             <p className="text-[0.9375rem] text-[#555] leading-[1.85] mb-5">
               Our founders recognized a critical gap in the market: overseas wholesale buyers needed a reliable Chinese supplier who could consistently deliver A-grade branded merchandise with transparent quality standards and professional export documentation. RealismThrift was built to fill that gap.
             </p>
             <p className="text-[0.9375rem] text-[#555] leading-[1.85] mb-7">
-              Today, our 15,000 m² facility in Guangzhou processes over 500 tonnes of used branded clothing, shoes, and bags every month. Our 200+ trained staff sort, grade, clean, and pack merchandise destined for wholesale markets across Africa, Southeast Asia, the Middle East, Europe, and the Americas.
+              Today, our {companyStats.facilitySize} facility in Guangzhou processes over {companyStats.monthlyCapacity} of used branded clothing, shoes, and bags every month. Our {companyStats.staffCount} trained staff sort, grade, clean, and pack merchandise destined for wholesale markets across Africa, Southeast Asia, the Middle East, Europe, and the Americas.
             </p>
             <div className="flex gap-6 flex-wrap">
               <div className="text-center px-6 py-4 bg-[#F5F5F0] rounded-[6px]">
@@ -230,12 +231,12 @@ export default function AboutUsPage() {
             <h2 className="font-montserrat text-[1.5rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-6">Certifications & Trust Signals</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { title: 'ISO 9001:2015', desc: 'Quality Management System certified. Annual third-party audit.' },
-                { title: 'GRS Certified', desc: 'Global Recycled Standard. Verified recycled content tracking.' },
                 { title: 'Export License', desc: 'Official Chinese export license for used textile products.' },
-                { title: '10+ Years', desc: 'Established 2014. Decade of trusted wholesale operations.' },
-                { title: '1,200+ Buyers', desc: 'Active wholesale buyers across 110+ countries worldwide.' },
-                { title: '30-Day Warranty', desc: 'After-sales quality guarantee on all shipped orders.' }
+                { title: '12+ Years', desc: `Established ${companyStats.foundedYear}. Over a decade of trusted wholesale operations.` },
+                { title: `${companyStats.buyersCount} Buyers`, desc: `Active wholesale buyers across ${companyStats.countriesCount} countries worldwide.` },
+                { title: 'Quality Inspection', desc: 'Every item passes 6-point inspection before packing to ensure A-Grade quality.' },
+                { title: 'Secure Payment', desc: 'Standard 30% deposit and 70% balance payment terms via T/T or Western Union.' },
+                { title: 'Fast Loading', desc: 'Container loading in as fast as 7 days after order confirmation.' }
               ].map(cert => (
                 <div key={cert.title} className="bg-brand-light rounded-[6px] p-4 border-l-[3px] border-brand-red">
                   <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1.5">{cert.title}</div>
