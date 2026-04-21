@@ -166,7 +166,6 @@ export default async function Home() {
           className="rt-hero-bg"
         />
         <div className="rt-hero-overlay" />
-        <div className="rt-hero-accent-line" />
         <div className="rt-container">
           <div className="rt-hero-content rt-fade-in">
             <div className="rt-hero-badge">#1 Second Hand Clothes Supplier in China</div>
