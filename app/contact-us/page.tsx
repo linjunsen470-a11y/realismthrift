@@ -175,16 +175,16 @@ export default function ContactUsPage() {
           <div className="max-w-[1000px] mx-auto">
             <h2 className="font-montserrat text-[1.5rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-8">Our Factory Location</h2>
             <div className="w-full h-[450px] rounded-[16px] overflow-hidden border border-[#eee] shadow-2xl relative">
-               <iframe 
-                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117565.17833008985!2d113.19792556519213!3d23.136269931818274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3402f8c47f711f11%3A0xc3b8dc0a45bdada1!2sGuangzhou%2C%20Guangdong%20Province%2C%20China!5e0!3m2!1sen!2sus!4v1713500000000!5m2!1sen!2sus" 
-                 width="100%" 
-                 height="100%" 
-                 style={{border:0}} 
-                 allowFullScreen={true} 
-                 loading="lazy" 
-                 referrerPolicy="no-referrer-when-downgrade"
-                 className="absolute inset-0"
-               ></iframe>
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117565.17833008985!2d113.19792556519213!3d23.136269931818274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3402f8c47f711f11%3A0xc3b8dc0a45bdada1!2sGuangzhou%2C%20Guangdong%20Province%2C%20China!5e0!3m2!1sen!2sus!4v1713500000000!5m2!1sen!2sus" 
+                  width="100%" 
+                  height="100%" 
+                  title="Google Maps location of RealismThrift in Guangzhou, China"
+                  allowFullScreen={true} 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="absolute inset-0 border-0"
+                ></iframe>
             </div>
             <div className="mt-8 p-6 bg-brand-light rounded-[10px] border-l-4 border-brand-gold">
               <p className="text-[0.875rem] text-[#555] font-open-sans leading-relaxed">

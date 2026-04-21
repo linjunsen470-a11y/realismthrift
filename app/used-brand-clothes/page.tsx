@@ -117,13 +117,13 @@ export default function UsedBrandClothesPage() {
             </div>
             
             {[
-              { title: 'Sportswear', color: '#C0392B', brands: ['Nike', 'Adidas', 'Puma', 'Under Armour', 'New Balance', 'Reebok', 'Champion', 'Fila', 'Lululemon', 'Columbia', 'The North Face', 'Patagonia'] },
-              { title: 'Fast Fashion', color: '#1A1A1A', brands: ['H&M', 'Zara', 'Uniqlo', 'Mango', 'Gap', 'Old Navy', 'Forever 21', 'Primark', 'Topshop', 'ASOS', 'Shein', 'Next'] },
-              { title: 'Premium / Luxury', color: '#8B6914', brands: ['Ralph Lauren', 'Tommy Hilfiger', 'Calvin Klein', 'Lacoste', 'Hugo Boss', 'Armani', 'Burberry', 'Guess', 'Michael Kors', 'Coach'] },
-              { title: 'Denim & Casual', color: '#2C5F8A', brands: ["Levi's", 'Wrangler', 'Lee', 'Diesel', 'G-Star Raw', 'True Religion', 'Hollister', 'American Eagle', 'Banana Republic', 'J.Crew'] }
+              { title: 'Sportswear', colorClass: 'bg-brand-red', brands: ['Nike', 'Adidas', 'Puma', 'Under Armour', 'New Balance', 'Reebok', 'Champion', 'Fila', 'Lululemon', 'Columbia', 'The North Face', 'Patagonia'] },
+              { title: 'Fast Fashion', colorClass: 'bg-brand-dark', brands: ['H&M', 'Zara', 'Uniqlo', 'Mango', 'Gap', 'Old Navy', 'Forever 21', 'Primark', 'Topshop', 'ASOS', 'Shein', 'Next'] },
+              { title: 'Premium / Luxury', colorClass: 'bg-[#8B6914]', brands: ['Ralph Lauren', 'Tommy Hilfiger', 'Calvin Klein', 'Lacoste', 'Hugo Boss', 'Armani', 'Burberry', 'Guess', 'Michael Kors', 'Coach'] },
+              { title: 'Denim & Casual', colorClass: 'bg-[#2C5F8A]', brands: ["Levi's", 'Wrangler', 'Lee', 'Diesel', 'G-Star Raw', 'True Religion', 'Hollister', 'American Eagle', 'Banana Republic', 'J.Crew'] }
             ].map(group => (
                <div key={group.title} className="mb-[1rem] border border-[#eee] rounded-[4px] overflow-hidden">
-                 <div className="px-[1.25rem] py-[0.5rem]" style={{ backgroundColor: group.color }}>
+                 <div className={`px-[1.25rem] py-[0.5rem] ${group.colorClass}`}>
                    <span className="font-montserrat font-bold text-[0.75rem] text-white tracking-[0.08em] uppercase">{group.title}</span>
                  </div>
                  <div className="p-[0.875rem_1.25rem] flex flex-wrap gap-[0.4rem] bg-white">

@@ -7,6 +7,8 @@ export const siteHeader: SiteHeader = {
   },
   navItems: [
     { label: "Home", href: "/" },
+    { label: "Used Clothes", href: "/used-brand-clothes" },
+    { label: "Used Bags", href: "/used-brand-bag" },
     { label: "Used Shoes", href: "/used-brand-shoes" },
     { label: "How To Order", href: "/how-to-order" },
     { label: "About Us", href: "/about-us" },

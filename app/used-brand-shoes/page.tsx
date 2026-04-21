@@ -38,7 +38,7 @@ export default function UsedBrandShoesPage() {
   return (
     <main className="bg-white">
       {/* PAGE HERO */}
-      <section className="relative px-0 py-14 overflow-hidden" style={{ background: "linear-gradient(135deg, #1A1A1A 0%, #1a1a2e 50%, #16213e 100%)" }}>
+      <section className="relative px-0 py-14 overflow-hidden bg-[linear-gradient(135deg,#1A1A1A_0%,#1a1a2e_50%,#16213e_100%)]">
         <div className="absolute inset-0 z-0">
           <Image 
             src="/images/reconstructed/1542291026-7eec264c27ff.jpg" 

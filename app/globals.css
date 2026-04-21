@@ -1712,6 +1712,7 @@
   z-index: 100;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.75rem;
 }
 
@@ -1722,6 +1723,11 @@
   justify-content: center;
   border: none;
   cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease,
+    visibility 0.2s ease;
 }
 
 .rt-floating-whatsapp {
@@ -1734,16 +1740,46 @@
 }
 
 .rt-floating-top {
-  width: 48px;
-  height: 48px;
+  width: 42px;
+  height: 42px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--color-brand-red);
   color: #fff;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 18px rgba(192, 57, 43, 0.28);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+
+.rt-floating-top[hidden] {
+  display: none;
+}
+
+.rt-floating-top.is-visible {
+  display: inline-flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .rt-floating-whatsapp:hover,
 .rt-floating-top:hover {
+  transform: translateY(-1px);
+}
+
+.rt-floating-top.is-visible:hover {
+  background: var(--color-brand-red-dark);
+  transform: translateY(-1px);
+}
+
+.rt-floating-top-glyph {
+  display: block;
+  font-family: var(--font-montserrat);
+  font-size: 0.95rem;
+  font-weight: 900;
+  line-height: 1;
   transform: translateY(-1px);
 }
 
