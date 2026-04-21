@@ -106,7 +106,7 @@ export default function UsedBrandBagPage() {
       <div className="max-w-[1280px] mx-auto px-6 py-[3rem] grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-[2.5rem] items-start">
 
         {/* ─── LEFT CONTENT ─── */}
-        <div>
+        <div className="min-w-0">
 
           {/* BRAND LIST */}
           <section className="mb-[3rem]">
@@ -248,8 +248,8 @@ export default function UsedBrandBagPage() {
             <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-l-4 border-[#C0392B] pl-[0.875rem] m-0 mb-[1.25rem]">
               Product Specifications
             </h2>
-            <div className="overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
-              <table className="w-full border-collapse text-[0.8125rem] bg-white">
+            <div className="rt-table-wrap overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
+              <table className="w-full border-collapse text-[0.8125rem] bg-white min-w-[650px]">
                 <thead>
                   <tr className="bg-[#1A1A1A] text-white">
                     <th className="p-[0.875rem_1rem] text-left font-montserrat">Category</th>
