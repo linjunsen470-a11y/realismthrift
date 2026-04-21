@@ -3,6 +3,7 @@ import { InquiryForm } from "@/components/InquiryForm";
 import { QualityStandards } from "@/components/product/QualityStandards";
 import { ProductTrustSections } from "@/components/product/ProductTrustSections";
 import { ProductCTA } from "@/components/product/ProductCTA";
+import { companyStats } from "@/data/siteData";
 
 const shoeStandards = [
   { icon: '❌', title: 'No Glue Damage', desc: 'No sticky parts coming loose from sole or upper', isNegative: true },
@@ -20,7 +21,7 @@ const shoeFeatures = [
   { icon: '👟', title: 'Precise Pairing', desc: '100% manual check ensures no single shoes or mismatched pairs.' },
   { icon: '🧼', title: 'Professional Sterilization', desc: 'Cleaned, deodorized, and UV sterilized for international health standards.' },
   { icon: '📦', title: 'Secure Sacking', desc: 'Hydraulic compressed packing to maximize container space and protect shoes.' },
-  { icon: '🌍', title: '110+ Export Ports', desc: 'Direct shipping to major ports in Africa, Middle East, and Southeast Asia.' }
+  { icon: '🌍', title: `${companyStats.countriesCount} Export Ports`, desc: 'Direct shipping to major ports in Africa, Middle East, and Southeast Asia.' }
 ];
 
 const shoeFaqs = [
@@ -29,9 +30,7 @@ const shoeFaqs = [
   { q: 'Do you provide the shoes in boxes?', a: 'To maximize shipping efficiency and lower your costs, we typically pack shoes in woven sacks. Box packing is available upon request for premium orders.' }
 ];
 
-export const metadata = {
-  title: "Used Brand Shoes | RealismThrift Wholesale",
-  description: "Wholesale second-hand branded shoes — Nike, Adidas, Jordan, and 30+ brands. Sold by the sack. Exported to 110+ countries.",
+  description: `Wholesale second-hand branded shoes — Nike, Adidas, Jordan, and 30+ brands. Sold by the sack. Exported to ${companyStats.countriesCount} countries.`,
 };
 
 export default function UsedBrandShoesPage() {
@@ -58,7 +57,7 @@ export default function UsedBrandShoesPage() {
             Used Brand Shoes <span className="text-brand-gold">Wholesale</span>
           </h1>
           <p className="text-white/75 text-[1rem] max-w-[620px] leading-[1.7] mb-6">
-            Wholesale second-hand branded shoes — Nike, Adidas, Jordan, New Balance, Puma and 30+ top brands. Sold by the pair or by the sack. Strict cleaning and grading process. Exported to 110+ countries.
+            Wholesale second-hand branded shoes — Nike, Adidas, Jordan, New Balance, Puma and 30+ top brands. Sold by the pair or by the sack. Strict cleaning and grading process. Exported to {companyStats.countriesCount} countries.
           </p>
           <div className="flex gap-3.5 flex-wrap">
             <a href="#inquiry" className="bg-brand-gold text-brand-dark px-6 py-3 rounded-[3px] font-bold font-montserrat text-[0.85rem] hover:bg-brand-gold-dark transition-colors">

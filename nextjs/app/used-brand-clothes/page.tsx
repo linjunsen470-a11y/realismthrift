@@ -4,6 +4,7 @@ import { InquiryForm } from "@/components/InquiryForm";
 import { QualityStandards } from "@/components/product/QualityStandards";
 import { ProductTrustSections } from "@/components/product/ProductTrustSections";
 import { ProductCTA } from "@/components/product/ProductCTA";
+import { companyStats } from "@/data/siteData";
 
 const clothesStandards = [
   { icon: '❌', title: 'No Stains or Dirt', desc: 'No dirty patches or discoloration on fabric surface', isNegative: true },
@@ -20,7 +21,7 @@ const clothesStandards = [
 const clothesFeatures = [
   { icon: '🏭', title: 'Direct Factory Source', desc: '15,000m² facility. No middlemen — you buy directly from the source.' },
   { icon: '📦', title: 'Consistent Grading', desc: 'Standardized grading across all batches. What you see is what you get.' },
-  { icon: '🚢', title: 'Global Export', desc: '12+ years experience exporting to 110+ countries with full documentation.' },
+  { icon: '🚢', title: 'Global Export', desc: `12+ years experience exporting to ${companyStats.countriesCount} countries with full documentation.` },
   { icon: '⚡', title: 'Fast Lead Time', desc: 'Orders ready in 7–14 days. Large ready-stock inventory for immediate dispatch.' }
 ];
 
@@ -31,9 +32,7 @@ const clothesFaqs = [
   { q: 'What payment methods do you accept?', a: 'We accept T/T (30% deposit), Western Union, and L/C for large orders.' }
 ];
 
-export const metadata = {
-  title: "Used Brand Clothes | RealismThrift Wholesale",
-  description: "China's top exporter of sorted, graded second-hand branded clothing. Nike, Adidas, H&M, Zara and 200+ brands. Strict 5-step sorting. MOQ 100 bales. Ships to 110+ countries.",
+  description: `China's top exporter of sorted, graded second-hand branded clothing. Nike, Adidas, H&M, Zara and 200+ brands. Strict 5-step sorting. MOQ 100 bales. Ships to ${companyStats.countriesCount} countries.`,
 };
 
 export default function UsedBrandClothesPage() {
@@ -65,7 +64,7 @@ export default function UsedBrandClothesPage() {
               Used Brand Clothes<br /><span className="text-[#F0B429]">Wholesale Supplier</span>
             </h1>
             <p className="text-[0.9375rem] text-white/80 font-open-sans max-w-[500px] leading-[1.75] m-0 mb-[1.75rem]">
-              China's top exporter of sorted, graded second-hand branded clothing. Nike, Adidas, H&M, Zara and 200+ brands. Strict 5-step sorting. MOQ 100 bales. Ships to 110+ countries.
+              China&apos;s top exporter of sorted, graded second-hand branded clothing. Nike, Adidas, H&M, Zara and 200+ brands. Strict 5-step sorting. MOQ 100 bales. Ships to {companyStats.countriesCount} countries.
             </p>
             <div className="flex gap-[0.875rem] flex-wrap">
               <a href="#inquiry" className="bg-[#F0B429] text-[#1A1A1A] font-montserrat font-extrabold text-[0.875rem] px-[2rem] py-[0.875rem] rounded-[3px] no-underline tracking-[0.03em] hover:bg-[#d4a017] transition-colors">GET PRICE NOW →</a>
@@ -83,7 +82,7 @@ export default function UsedBrandClothesPage() {
             { num: 'A/B/C', label: 'Quality Grades' },
             { num: '100 bales', label: 'Min. Order' },
             { num: '7–14 days', label: 'Lead Time' },
-            { num: '110+', label: 'Export Countries' },
+            { num: companyStats.countriesCount, label: 'Export Countries' },
             { num: '12 yrs', label: 'Experience' },
           ].map((stat, i) => (
             <div key={i} className="text-center text-white">
@@ -459,7 +458,7 @@ export default function UsedBrandClothesPage() {
                 ['Lead Time', '7–14 days'],
                 ['Payment', 'T/T, Western Union'],
                 ['Shipping', 'FOB Guangzhou / CIF'],
-                ['Certifications', 'ISO9001, SGS']
+                ['Quality Check', '6-Point Inspection']
               ].map(([key, val]) => (
                 <div key={key} className="flex justify-between py-[0.4rem] border-b border-white/5 text-[0.8rem]">
                   <span className="text-white/55">{key}</span>

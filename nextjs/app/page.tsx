@@ -20,7 +20,7 @@ import {
   Trophy,
   Zap,
 } from "lucide-react";
-import { features, orderSteps, productsData } from "@/data/siteData";
+import { features, orderSteps, productsData, companyStats } from "@/data/siteData";
 import { InquiryForm } from "@/components/InquiryForm";
 import { getLatestBlogPosts } from "@/lib/blog";
 import { LatestBlogSection } from "@/components/blog/LatestBlogSection";
@@ -50,7 +50,7 @@ const trustItems = [
   { label: "12+ Years Experience", icon: Zap },
   { label: "Fast 7-Day Loading", icon: Ship },
   { label: "80%+ Reorder Rate", icon: BarChart3 },
-  { label: "100+ Countries", icon: Globe2 },
+  { label: `${companyStats.countriesCount} Countries`, icon: Globe2 },
 ];
 
 const productQualityBadges = [
@@ -97,7 +97,7 @@ const faqs = [
   {
     question: "What is your monthly supply capacity?",
     answer:
-      "Our monthly supply capacity is 1,000+ containers (20ft and 40ft). We can handle large orders efficiently with our 15,000m² facility and 300+ staff.",
+      `Our monthly supply capacity is 1,000+ containers (20ft and 40ft). We can handle large orders efficiently with our ${companyStats.facilitySize} facility and ${companyStats.staffCount} staff.`,
   },
   {
     question: "What products do you offer?",
@@ -194,15 +194,15 @@ export default async function Home() {
             </div>
             <div className="rt-hero-stats">
               <div className="rt-hero-stat">
-                <span className="rt-hero-stat-value">15,000m²</span>
+                <span className="rt-hero-stat-value">{companyStats.facilitySize}</span>
                 <span className="rt-hero-stat-label">Modern Factory</span>
               </div>
               <div className="rt-hero-stat">
-                <span className="rt-hero-stat-value">100+</span>
+                <span className="rt-hero-stat-value">{companyStats.countriesCount}</span>
                 <span className="rt-hero-stat-label">Countries Served</span>
               </div>
               <div className="rt-hero-stat">
-                <span className="rt-hero-stat-value">80%</span>
+                <span className="rt-hero-stat-value">{companyStats.reorderRate}</span>
                 <span className="rt-hero-stat-label">Reorder Rate</span>
               </div>
               <div className="rt-hero-stat">
@@ -308,17 +308,17 @@ export default async function Home() {
                 prices.
               </p>
               <p className="rt-about-text">
-                We operate from a 15,000-square-meter facility with 300+ dedicated staff
+                We operate from a {companyStats.facilitySize} square-meter facility with {companyStats.staffCount} dedicated staff
                 members. Our strict quality control ensures long-term partnerships with
-                clients in more than 100 countries.
+                clients in more than {companyStats.countriesCount} countries.
               </p>
               <div className="rt-about-stats">
                 <div className="rt-stat-box">
-                  <span className="rt-stat-value">80%</span>
+                  <span className="rt-stat-value">{companyStats.reorderRate}</span>
                   <span className="rt-stat-label">Reorder Rate</span>
                 </div>
                 <div className="rt-stat-box">
-                  <span className="rt-stat-value">100+</span>
+                  <span className="rt-stat-value">{companyStats.countriesCount}</span>
                   <span className="rt-stat-label">Countries Served</span>
                 </div>
                 <div className="rt-stat-box">
@@ -326,7 +326,7 @@ export default async function Home() {
                   <span className="rt-stat-label">Years Experience</span>
                 </div>
                 <div className="rt-stat-box">
-                  <span className="rt-stat-value">300+</span>
+                  <span className="rt-stat-value">{companyStats.staffCount}</span>
                   <span className="rt-stat-label">Staff Members</span>
                 </div>
               </div>
@@ -515,7 +515,7 @@ export default async function Home() {
               {" "}
               <strong>used clothing export</strong>
               {" "}
-              industry, we have built strong relationships with buyers in more than 100
+              industry, we have built strong relationships with buyers in more than {companyStats.countriesCount}
               countries across Africa, Southeast Asia, the Middle East, and the Americas.
             </p>
             <p>

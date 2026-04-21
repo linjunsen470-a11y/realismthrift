@@ -176,11 +176,11 @@ export default function HowToOrderPage() {
               <h3 className="font-montserrat text-[1.2rem] font-extrabold text-brand-dark m-0">Shipment & After-Sales</h3>
             </div>
             <p className="text-[0.9375rem] text-[#555] leading-[1.8] mb-6">
-              We handle all export documentation including commercial invoice, packing list, bill of lading, and certificate of origin. After delivery, our after-sales team is available to handle any quality claims within 30 days of receipt.
+              We handle all export documentation including commercial invoice, packing list, bill of lading, and certificate of origin. After delivery, our team is available to handle any quality concerns through fair negotiation and compensation.
             </p>
             <div className="flex gap-2.5 flex-wrap">
               <span className="bg-[#F5F5F0] border border-[#e0e0e0] text-[#333] px-3 py-1.5 rounded-sm text-[0.75rem] font-montserrat font-semibold">Export Documentation</span>
-              <span className="bg-[#F5F5F0] border border-[#e0e0e0] text-[#333] px-3 py-1.5 rounded-sm text-[0.75rem] font-montserrat font-semibold">30-Day After-Sales</span>
+              <span className="bg-[#F5F5F0] border border-[#e0e0e0] text-[#333] px-3 py-1.5 rounded-sm text-[0.75rem] font-montserrat font-semibold">Flexible Compensation</span>
             </div>
           </div>
           <div className="relative min-h-[280px]">
@@ -427,7 +427,7 @@ export default function HowToOrderPage() {
               },
               {
                 q: "What happens if there is a quality issue?",
-                a: "We have a 30-day after-sales policy. If you receive items that do not match the agreed grade, please send us photos within 30 days of receipt and we will arrange compensation or replacement in your next order."
+                a: "If you receive items that do not match the agreed grade, please send us photos and videos of the issue. Our team will review the claim and arrange fair compensation or replacement in your subsequent order."
               }
             ].map((faq, idx) => (
               <details key={idx} className="group bg-white border border-[#eee] rounded-[6px] shadow-[0_2px_6px_rgba(0,0,0,0.04)] overflow-hidden [&_summary::-webkit-details-marker]:hidden">
