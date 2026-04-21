@@ -65,6 +65,10 @@ const postSlugsQuery = groq`*[
   ${ACTIVE_POST_FILTER}
 ].slug.current`;
 
+const relatedPostsQuery = groq`*[
+  ${ACTIVE_POST_FILTER} && _id != $currentId && category._ref == $categoryId
+] | order(publishedAt desc)[0...3] ${POST_CARD_PROJECTION}`;
+
 export async function getLatestBlogPosts(): Promise<BlogPostCard[]> {
   return sanityClient.fetch<BlogPostCard[]>(latestPostsQuery);
 }
@@ -79,6 +83,17 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
 
 export async function getBlogSlugs(): Promise<string[]> {
   return sanityClient.fetch<string[]>(postSlugsQuery);
+}
+
+export async function getRelatedBlogPosts(
+  currentId: string,
+  categoryId: string
+): Promise<BlogPostCard[]> {
+  if (!categoryId) return [];
+  return sanityClient.fetch<BlogPostCard[]>(relatedPostsQuery, {
+    currentId,
+    categoryId,
+  });
 }
 
 export function formatBlogDate(date: string) {
