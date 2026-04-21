@@ -8,28 +8,37 @@
   --color-brand-dark: #1A1A1A;
   --color-brand-light: #F5F5F0;
   
-  --font-montserrat: 'Montserrat', sans-serif;
-  --font-open-sans: 'Open Sans', sans-serif;
+  --font-montserrat: var(--font-montserrat), 'Montserrat', sans-serif;
+  --font-open-sans: var(--font-open-sans), 'Open Sans', sans-serif;
+
+  /* Custom sizes from original site */
+  --font-size-hero-title: clamp(2.25rem, 5vw, 3.5rem);
+  --font-size-section-title: clamp(1.75rem, 4vw, 2.5rem);
+  
+  --tracking-rt-nav: 0.03em;
+  --tracking-rt-badge: 0.2em;
+  
+  --animate-rt-pulse: rt-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes rt-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+  }
 }
 
-:root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-}
+@layer base {
+  body {
+    font-family: var(--font-open-sans);
+    color: #333;
+    @apply antialiased;
+  }
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: var(--font-open-sans);
-  color: #333;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-montserrat);
-  font-weight: 800;
-  color: #1A1A1A;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-montserrat);
+    font-weight: 800;
+    color: #1A1A1A;
+    @apply tracking-tight;
+  }
 }
 
 @layer utilities {
@@ -38,17 +47,30 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 auto;
     padding: 0 1.5rem;
   }
+
+  /* 1:1 Reconstruction Tokens */
+  .rt-hero-overlay {
+    background: linear-gradient(to right, rgba(13,13,13,0.92) 0%, rgba(26,26,26,0.80) 50%, rgba(61,0,0,0.55) 100%);
+  }
   
-  .rt-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
+  .rt-section-badge {
+    @apply text-brand-red inline-flex items-center text-[11px] font-black uppercase tracking-[0.2em] border-b-2 border-brand-red pb-1 mb-4;
+  }
+
+  .rt-btn-primary {
+    @apply bg-brand-red text-white px-8 py-4 font-montserrat font-black text-sm uppercase tracking-widest rounded-sm transition-all hover:bg-brand-red-dark hover:-translate-y-0.5 active:scale-95 shadow-lg;
+  }
+
+  .rt-btn-outline {
+    @apply border-2 border-white text-white px-8 py-4 font-montserrat font-black text-sm uppercase tracking-widest rounded-sm transition-all hover:bg-white hover:text-brand-dark hover:-translate-y-0.5 active:scale-95;
+  }
+
+  .rt-product-card-gradient {
+    background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
   }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* Ticker Animation */
 @keyframes ticker {
   0% { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
@@ -59,7 +81,7 @@ h1, h2, h3, h4, h5, h6 {
   animation: ticker 30s linear infinite;
 }
 
-/* Custom scrollbar for a more professional look */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }

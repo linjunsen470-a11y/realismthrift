@@ -38,54 +38,54 @@ export const InquiryForm: React.FC = () => {
   }
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <form className="space-y-6" onSubmit={handleSubmit}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label className="text-xs font-bold text-[#1A1A1A] font-montserrat uppercase tracking-wider">Your Name *</label>
+          <label className="text-[11px] font-[800] text-[#1A1A1A] font-montserrat uppercase tracking-[0.05rem]">Your Name *</label>
           <input 
             name="name" 
             required 
             placeholder="John Smith" 
-            className="w-full px-4 py-3 border-2 border-gray-100 rounded-sm focus:border-[#C0392B] outline-none text-sm transition-all"
+            className="w-full px-4 py-3 border-[1.5px] border-gray-200 rounded-sm focus:border-[#C0392B] outline-none text-sm transition-all font-open-sans"
           />
         </div>
         <div className="space-y-2">
-          <label className="text-xs font-bold text-[#1A1A1A] font-montserrat uppercase tracking-wider">Your Email *</label>
+          <label className="text-[11px] font-[800] text-[#1A1A1A] font-montserrat uppercase tracking-[0.05rem]">Your Email *</label>
           <input 
             name="email" 
             type="email" 
             required 
             placeholder="john@company.com" 
-            className="w-full px-4 py-3 border-2 border-gray-100 rounded-sm focus:border-[#C0392B] outline-none text-sm transition-all"
+            className="w-full px-4 py-3 border-[1.5px] border-gray-200 rounded-sm focus:border-[#C0392B] outline-none text-sm transition-all font-open-sans"
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label className="text-xs font-bold text-[#1A1A1A] font-montserrat uppercase tracking-wider">Your WhatsApp *</label>
+          <label className="text-[11px] font-[800] text-[#1A1A1A] font-montserrat uppercase tracking-[0.05rem]">Your WhatsApp *</label>
           <input 
             name="whatsapp" 
             required 
             placeholder="+1 234 567 8900" 
-            className="w-full px-4 py-3 border-2 border-gray-100 rounded-sm focus:border-[#C0392B] outline-none text-sm transition-all"
+            className="w-full px-4 py-3 border-[1.5px] border-gray-200 rounded-sm focus:border-[#C0392B] outline-none text-sm transition-all font-open-sans"
           />
         </div>
         <div className="space-y-2">
-          <label className="text-xs font-bold text-[#1A1A1A] font-montserrat uppercase tracking-wider">Your Country</label>
+          <label className="text-[11px] font-[800] text-[#1A1A1A] font-montserrat uppercase tracking-[0.05rem]">Your Country</label>
           <input 
             name="country" 
             placeholder="Nigeria, Philippines..." 
-            className="w-full px-4 py-3 border-2 border-gray-100 rounded-sm focus:border-[#C0392B] outline-none text-sm transition-all"
+            className="w-full px-4 py-3 border-[1.5px] border-gray-200 rounded-sm focus:border-[#C0392B] outline-none text-sm transition-all font-open-sans"
           />
         </div>
       </div>
 
       <div className="space-y-2">
-        <label className="text-xs font-bold text-[#1A1A1A] font-montserrat uppercase tracking-wider">Product Interest</label>
+        <label className="text-[11px] font-[800] text-[#1A1A1A] font-montserrat uppercase tracking-[0.05rem]">Product Interest</label>
         <select 
           name="product" 
-          className="w-full px-4 py-3 border-2 border-gray-100 rounded-sm focus:border-[#C0392B] outline-none text-sm bg-white"
+          className="w-full px-4 py-3 border-[1.5px] border-gray-200 rounded-sm focus:border-[#C0392B] outline-none text-sm bg-white font-open-sans"
         >
           <option value="">Select product...</option>
           <option value="Used Brand Clothes">Used Brand Clothes</option>
@@ -96,10 +96,10 @@ export const InquiryForm: React.FC = () => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-xs font-bold text-[#1A1A1A] font-montserrat uppercase tracking-wider">Your Quantity</label>
+        <label className="text-[11px] font-[800] text-[#1A1A1A] font-montserrat uppercase tracking-[0.05rem]">Your Quantity</label>
         <select 
           name="quantity" 
-          className="w-full px-4 py-3 border-2 border-gray-100 rounded-sm focus:border-[#C0392B] outline-none text-sm bg-white"
+          className="w-full px-4 py-3 border-[1.5px] border-gray-200 rounded-sm focus:border-[#C0392B] outline-none text-sm bg-white font-open-sans"
         >
           <option value="">Select quantity...</option>
           <option value="100bales">≥100 bales (4,500kg / 2,000 Pairs)</option>
@@ -110,28 +110,28 @@ export const InquiryForm: React.FC = () => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-xs font-bold text-[#1A1A1A] font-montserrat uppercase tracking-wider">Your Message</label>
+        <label className="text-[11px] font-[800] text-[#1A1A1A] font-montserrat uppercase tracking-[0.05rem]">Your Message</label>
         <textarea 
           name="message" 
           rows={4} 
           placeholder="Tell us about your requirements, target market..." 
-          className="w-full px-4 py-3 border-2 border-gray-100 rounded-sm focus:border-[#C0392B] outline-none text-sm transition-all resize-none"
+          className="w-full px-4 py-3 border-[1.5px] border-gray-200 rounded-sm focus:border-[#C0392B] outline-none text-sm transition-all resize-none font-open-sans"
         />
       </div>
 
       <button 
         type="submit" 
         disabled={status === "loading"}
-        className="w-full bg-[#C0392B] text-white font-montserrat font-black text-sm py-4 rounded-sm hover:bg-[#A93226] transition-all disabled:opacity-50"
+        className="rt-btn-primary w-full shadow-lg !py-4 disabled:opacity-50"
       >
         {status === "loading" ? "SENDING..." : "SEND INQUIRY NOW"}
       </button>
 
       {status === "error" && (
-        <p className="text-red-600 text-xs text-center">⚠️ Failed to send. Please contact us via WhatsApp directly.</p>
+        <p className="text-red-600 text-xs text-center font-open-sans">⚠️ Failed to send. Please contact us via WhatsApp directly.</p>
       )}
 
-      <p className="text-center text-[10px] text-gray-400 font-open-sans">
+      <p className="text-center text-[11px] text-gray-400 font-open-sans pt-2">
         ✓ Reply within 12 hours &nbsp;·&nbsp; ✓ Free consultation &nbsp;·&nbsp; ✓ No spam
       </p>
     </form>

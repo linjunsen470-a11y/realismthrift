@@ -6,13 +6,15 @@ import { AppShell } from '@/components/AppShell';
 const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-montserrat',
-  weight: ['400', '600', '700', '800', '900'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  display: 'swap',
 });
 
 const openSans = Open_Sans({
   subsets: ['latin'],
   variable: '--font-open-sans',
   weight: ['400', '500', '600', '700'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -23,9 +25,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${montserrat.variable} ${openSans.variable}`}>
-      <body suppressHydrationWarning className="font-sans antialiased bg-white text-gray-900">
+      <body className="antialiased font-sans bg-white text-[#333]">
         <AppShell>{children}</AppShell>
       </body>
     </html>
   );
 }
+
