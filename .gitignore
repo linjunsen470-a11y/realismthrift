@@ -3,5 +3,23 @@ node_modules/
 coverage/
 .DS_Store
 *.log
+
+# Environment files
 .env*
 !.env.example
+!.env*.example
+
+# Next.js app
+nextjs/.next/
+nextjs/out/
+nextjs/coverage/
+nextjs/.vercel/
+nextjs/*.html
+nextjs/original_pages/
+
+# Sanity Studio
+sanity/node_modules/
+sanity/.sanity/
+sanity/dist/
+sanity/coverage/
+sanity/.cache/
