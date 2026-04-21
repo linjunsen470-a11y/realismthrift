@@ -1,0 +1,326 @@
+import Image from "next/image";
+import Link from "next/link";
+import { InquiryForm } from "@/components/InquiryForm";
+import { QualityStandards } from "@/components/product/QualityStandards";
+import { ProductTrustSections } from "@/components/product/ProductTrustSections";
+import { ProductCTA } from "@/components/product/ProductCTA";
+
+const bagStandards = [
+  { icon: '❌', title: 'No Broken Zippers', desc: 'All zippers open and close smoothly without snagging', isNegative: true },
+  { icon: '❌', title: 'No Torn Straps', desc: 'Handles and straps fully intact, no fraying or tears', isNegative: true },
+  { icon: '❌', title: 'No Heavy Stains', desc: 'Interior and exterior cleaned, no permanent discoloration', isNegative: true },
+  { icon: '❌', title: 'No Broken Hardware', desc: 'All buckles, clasps, and rings fully functional', isNegative: true },
+  { icon: '❌', title: 'No Peeling Lining', desc: 'Interior lining intact, no separation or peeling', isNegative: true },
+  { icon: '❌', title: 'No Structural Damage', desc: 'Bag holds its shape, no crushing or deformation', isNegative: true },
+  { icon: '✅', title: 'Complete Accessories', desc: 'Dust bags, straps, and original accessories included where available', isNegative: false },
+  { icon: '✅', title: 'Brand Label Visible', desc: 'Original brand label or embossing clearly present', isNegative: false },
+  { icon: '✅', title: 'Individually Wrapped', desc: 'Each bag wrapped in plastic before packing', isNegative: false }
+];
+
+const bagFeatures = [
+  { icon: '🔍', title: '6-Pt Hardware Check', desc: 'Every zipper, clasp, and ring is tested 3 times for 100% functionality.' },
+  { icon: '🧼', title: 'Deep Interior Cleaning', desc: 'Specialized cleaning for leather, canvas and nylon. Deodorized interiors.' },
+  { icon: '🚢', title: 'Worldwide Export', desc: '12+ years experience in global logistics and customs clearance.' },
+  { icon: '📸', title: 'Photo Verification', desc: 'Live photos and videos of your specific order sent before shipment.' }
+];
+
+const bagFaqs = [
+  { q: 'What is the minimum order quantity for bags?', a: 'Minimum order is 100 pieces for sorted brand categories, or 200 pieces for mixed lots.' },
+  { q: 'Can I pick specific models or sizes?', a: 'You can specify categories (Handbags, Backpacks, etc.). For specific high-demand models, we offer premium sorting at custom rates.' },
+  { q: 'How are the bags packed?', a: 'Each bag is individually wrapped in plastic to prevent scratching, then packed in woven sacks or cartons.' }
+];
+
+export const metadata = {
+  title: "Used Brand Bags | RealismThrift Wholesale",
+  description: "Premium second-hand branded handbags, backpacks, and luggage — Coach, Michael Kors, Kate Spade, Longchamp and 20+ international brands. Strict 6-point quality inspection. Exported worldwide.",
+};
+
+export default function UsedBrandBagPage() {
+  return (
+    <main className="bg-white">
+      {/* PAGE HERO */}
+      <section
+        className="relative overflow-hidden py-[3.5rem] bg-[linear-gradient(135deg,#1A1A1A_0%,#1a1510_50%,#8B6914_100%)]"
+      >
+        {/* Background image overlay */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/used-brand-bag/hero.jpg"
+            alt="Used Brand Bags"
+            fill
+            priority
+            className="object-cover opacity-10"
+          />
+        </div>
+        <div className="max-w-[1280px] mx-auto px-6 relative z-10">
+          <nav className="text-[0.8rem] text-white/55 mb-[0.875rem] flex items-center gap-[0.4rem] flex-wrap">
+            <Link href="/" className="text-white/55 no-underline hover:text-[#F0B429] transition-colors">Home</Link>
+            <span className="mx-[0.4rem]">›</span>
+            <span className="text-[#F0B429]">Used Brand Bags</span>
+          </nav>
+          <h1 className="font-montserrat font-extrabold text-[clamp(1.75rem,4vw,2.75rem)] text-white m-0 mb-[0.875rem] leading-[1.2]">
+            Used Brand Bags <span className="text-[#F0B429]">Wholesale</span>
+          </h1>
+          <p className="text-white/75 text-[1rem] max-w-[620px] leading-[1.7] m-0 mb-6">
+            Premium second-hand branded handbags, backpacks, and luggage — Coach, Michael Kors, Kate Spade, Longchamp and 20+ international brands. Strict 6-point quality inspection. Exported worldwide.
+          </p>
+          <div className="flex gap-[0.875rem] flex-wrap">
+            <a
+              href="#inquiry"
+              className="bg-[#F0B429] text-[#1A1A1A] font-montserrat font-bold text-[0.85rem] px-6 py-[0.7rem] rounded-[3px] no-underline hover:bg-[#d4a017] transition-colors"
+            >
+              Get Price Now →
+            </a>
+            <a
+              href="https://wa.me/8618800000001?text=Hi%2C+I+want+to+wholesale+used+brand+bags"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/[.12] border border-white/30 text-white font-montserrat font-semibold text-[0.85rem] px-6 py-[0.7rem] rounded-[3px] no-underline hover:bg-white/20 transition-colors"
+            >
+              💬 WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* STATS BAR — gold/brown brand color */}
+      <div className="bg-[#8B6914] py-[0.875rem]">
+        <div className="max-w-[1280px] mx-auto px-6 flex gap-8 flex-wrap justify-center">
+          {[
+            { num: "20+", label: "Bag Brands" },
+            { num: "A-Grade", label: "Quality Standard" },
+            { num: "38kg", label: "Per Sack" },
+            { num: "100 PCS", label: "MOQ" },
+            { num: "Cleaned", label: "Before Packing" },
+          ].map((stat) => (
+            <div key={stat.num} className="text-center text-white">
+              <div className="font-montserrat font-extrabold text-[1.1rem]">{stat.num}</div>
+              <div className="text-[0.7rem] opacity-85 tracking-[0.05em]">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* MAIN CONTENT: Left + Right Sidebar */}
+      <div className="max-w-[1280px] mx-auto px-6 py-[3rem] grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-[2.5rem] items-start">
+
+        {/* ─── LEFT CONTENT ─── */}
+        <div>
+
+          {/* BRAND LIST */}
+          <section className="mb-[3rem]">
+            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-l-4 border-[#C0392B] pl-[0.875rem] m-0 mb-[1.25rem]">
+              Available Bag Brands
+            </h2>
+            <div className="flex flex-wrap gap-2 mb-6">
+              {[
+                'Coach', 'Michael Kors', 'Kate Spade', 'Longchamp', 'Tory Burch', 'Guess',
+                'Calvin Klein', 'Tommy Hilfiger', 'Ralph Lauren', 'DKNY', 'Fossil', 'Kipling',
+                'Samsonite', 'Herschel', 'JanSport', 'Eastpak', 'The North Face', 'Fjällräven',
+                'Tumi', 'Vera Bradley'
+              ].map(brand => (
+                <span
+                  key={brand}
+                  className="bg-[#F5F5F0] border border-[#e0e0e0] text-[#333] px-[0.875rem] py-[0.35rem] rounded-[2px] text-[0.8rem] font-montserrat font-semibold"
+                >
+                  {brand}
+                </span>
+              ))}
+            </div>
+          </section>
+
+          {/* PRODUCT SHOWCASE */}
+          <section className="mb-[3rem]">
+            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-l-4 border-[#C0392B] pl-[0.875rem] m-0 mb-[1.25rem]">
+              Product Categories
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[1.25rem]">
+              {[
+                { title: 'Used Brand Handbags', img: '/images/used-brand-bag/cat-handbag.jpg', desc: 'Coach, MK, Kate Spade', spec: '38kg/sack (~50 pcs)' },
+                { title: 'Used Brand Backpacks', img: '/images/used-brand-bag/cat-backpack.jpg', desc: 'Herschel, JanSport, NF', spec: '35kg/sack (~40 pcs)' },
+                { title: 'Used Brand Shoulder Bags', img: '/images/used-brand-bag/cat-shoulder.jpg', desc: 'Longchamp, Tory Burch', spec: '38kg/sack (~45 pcs)' },
+                { title: 'Used Brand Crossbody Bags', img: '/images/used-brand-bag/cat-crossbody.jpg', desc: 'Calvin Klein, DKNY', spec: '35kg/sack (~55 pcs)' },
+                { title: 'Used Brand Luggage', img: '/images/used-brand-bag/cat-luggage.jpg', desc: 'Samsonite, Tumi', spec: '40kg/sack (~15 pcs)' },
+                { title: 'Mixed Brand Bags', img: '/images/used-brand-bag/cat-handbag.jpg', desc: 'All brands mixed', spec: '38kg/sack (~50 pcs)' },
+              ].map(prod => (
+                <div key={prod.title} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
+                  <div className="relative h-[180px]">
+                    <Image src={prod.img} alt={prod.title} fill className="object-cover" />
+                    <div className="absolute top-2 left-2 bg-[#8B6914] text-white text-[0.65rem] font-montserrat font-bold px-2 py-[0.2rem] rounded-[2px]">
+                      A-GRADE
+                    </div>
+                  </div>
+                  <div className="p-[0.875rem]">
+                    <h3 className="font-montserrat text-[0.875rem] font-bold text-[#1A1A1A] m-0 mb-[0.35rem]">{prod.title}</h3>
+                    <p className="text-[0.75rem] text-[#888] m-0 mb-2">{prod.desc}</p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-[0.75rem] text-[#C0392B] font-bold">{prod.spec}</span>
+                      <a href="#inquiry" className="bg-[#1A1A1A] text-white text-[0.7rem] px-[0.75rem] py-[0.3rem] rounded-[2px] no-underline font-montserrat font-semibold">
+                        Inquire
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* BAG INSPECTION & SORTING PROCESS */}
+          <section className="mb-[3rem]">
+            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-l-4 border-[#C0392B] pl-[0.875rem] m-0 mb-6">
+              Bag Inspection & Sorting Process
+            </h2>
+            <p className="text-[0.9375rem] text-[#555] leading-[1.75] mb-[1.75rem]">
+              Bags require the most detailed inspection of all our product categories. Our dedicated bag sorting team checks every zipper, strap, clasp, and lining before grading. Only fully functional bags pass our A-grade standard.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[1.25rem]">
+              {[
+                {
+                  step: '01',
+                  title: 'Initial Sorting by Type',
+                  img: '/images/used-brand-bag/cat-handbag.jpg',
+                  desc: 'Incoming bags are sorted by type: handbags, backpacks, shoulder bags, crossbody bags, and luggage. Each type follows a different inspection protocol. Brand identification happens simultaneously during this stage.'
+                },
+                {
+                  step: '02',
+                  title: 'Hardware Inspection',
+                  img: '/images/used-brand-bag/step-inspect.jpg',
+                  desc: 'Every zipper is opened and closed 3 times. All clasps, buckles, magnetic closures, and rings are tested for functionality. Any bag with broken or stuck hardware is immediately downgraded. Chain straps are checked link by link.'
+                },
+                {
+                  step: '03',
+                  title: 'Interior & Exterior Cleaning',
+                  img: '/images/used-brand-bag/step-clean.jpg',
+                  desc: 'Bags are cleaned inside and out using appropriate methods for each material type (leather, canvas, nylon, synthetic). Stubborn stains are treated. Bags with permanent staining or mold are rejected. Interiors are deodorized.'
+                },
+                {
+                  step: '04',
+                  title: 'Structural Integrity Check',
+                  img: '/images/used-brand-bag/step-structural.jpg',
+                  desc: 'Straps are tested for strength and attachment points. Lining integrity is checked — no peeling, tearing, or separation allowed. The bag must hold its shape when loaded. Base corners are checked for wear-through.'
+                },
+              ].map(process => (
+                <div key={process.step} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
+                  <div className="relative h-[160px]">
+                    <Image src={process.img} alt={process.title} fill className="object-cover" />
+                  </div>
+                  <div className="p-[1.25rem]">
+                    <div className="flex items-center gap-[0.625rem] mb-[0.625rem]">
+                      <span className="bg-[#8B6914] text-white font-montserrat text-[0.75rem] font-extrabold px-[0.625rem] py-[0.25rem] rounded-[2px]">
+                        STEP {process.step}
+                      </span>
+                      <h3 className="font-montserrat text-[0.9375rem] font-bold text-[#1A1A1A] m-0">{process.title}</h3>
+                    </div>
+                    <p className="text-[0.8125rem] text-[#666] leading-[1.7] m-0">{process.desc}</p>
+                  </div>
+                </div>
+              ))}
+
+              {/* STEP 05 — full width */}
+              <div className="sm:col-span-2 bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] grid grid-cols-1 md:grid-cols-[300px_1fr]">
+                <div className="relative h-[200px] md:h-auto">
+                  <Image src="/images/used-brand-bag/step-pack.jpg" alt="Brand Verification & Packing" fill className="object-cover" />
+                </div>
+                <div className="p-[1.25rem]">
+                  <div className="flex items-center gap-[0.625rem] mb-[0.625rem]">
+                    <span className="bg-[#8B6914] text-white font-montserrat text-[0.75rem] font-extrabold px-[0.625rem] py-[0.25rem] rounded-[2px]">
+                      STEP 05
+                    </span>
+                    <h3 className="font-montserrat text-[0.9375rem] font-bold text-[#1A1A1A] m-0">Brand Verification & Packing</h3>
+                  </div>
+                  <p className="text-[0.8125rem] text-[#666] leading-[1.7] m-0">
+                    Brand labels, serial numbers, and authenticity markers are verified. Each bag is individually wrapped in plastic before being packed into woven sacks. Sacks are labeled with brand, type, grade, and piece count.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* QUALITY STANDARDS */}
+          <QualityStandards title="A-Grade Bag Quality Standards" standards={bagStandards} />
+
+          {/* TRUST SECTIONS */}
+          <ProductTrustSections features={bagFeatures} faqs={bagFaqs} />
+
+          {/* SPECS TABLE */}
+          <section className="mb-[3rem]">
+            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-l-4 border-[#C0392B] pl-[0.875rem] m-0 mb-[1.25rem]">
+              Product Specifications
+            </h2>
+            <div className="overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
+              <table className="w-full border-collapse text-[0.8125rem] bg-white">
+                <thead>
+                  <tr className="bg-[#1A1A1A] text-white">
+                    <th className="p-[0.875rem_1rem] text-left font-montserrat">Category</th>
+                    <th className="p-[0.875rem_1rem] text-left font-montserrat">Sack Weight</th>
+                    <th className="p-[0.875rem_1rem] text-left font-montserrat">PCS/Sack</th>
+                    <th className="p-[0.875rem_1rem] text-left font-montserrat">MOQ</th>
+                    <th className="p-[0.875rem_1rem] text-left font-montserrat">20ft Load</th>
+                    <th className="p-[0.875rem_1rem] text-left font-montserrat">40ft Load</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { cat: 'Brand Handbags', w: '38 kg', pcs: '~50 pcs', moq: '≥100 pcs', c20: '~6,000 pcs', c40: '~14,000 pcs', bg: 'bg-white' },
+                    { cat: 'Brand Backpacks', w: '35 kg', pcs: '~40 pcs', moq: '≥100 pcs', c20: '~5,500 pcs', c40: '~12,000 pcs', bg: 'bg-[#fafafa]' },
+                    { cat: 'Brand Shoulder Bags', w: '38 kg', pcs: '~45 pcs', moq: '≥100 pcs', c20: '~6,000 pcs', c40: '~13,000 pcs', bg: 'bg-white' },
+                    { cat: 'Brand Crossbody Bags', w: '35 kg', pcs: '~55 pcs', moq: '≥100 pcs', c20: '~6,500 pcs', c40: '~14,500 pcs', bg: 'bg-[#fafafa]' },
+                    { cat: 'Mixed Brand Bags', w: '38 kg', pcs: '~50 pcs', moq: '≥200 pcs', c20: '~6,000 pcs', c40: '~14,000 pcs', bg: 'bg-white' },
+                  ].map(row => (
+                    <tr key={row.cat} className={`${row.bg} border-b border-[#f0f0f0]`}>
+                      <td className="p-[0.75rem_1rem] font-semibold text-[#1A1A1A]">{row.cat}</td>
+                      <td className="p-[0.75rem_1rem] text-[#555]">{row.w}</td>
+                      <td className="p-[0.75rem_1rem] text-[#555]">{row.pcs}</td>
+                      <td className="p-[0.75rem_1rem]">
+                        <span className="bg-[#F0B429] text-[#1A1A1A] px-2 py-[0.15rem] rounded-[2px] text-[0.7rem] font-bold">{row.moq}</span>
+                      </td>
+                      <td className="p-[0.75rem_1rem] text-[#555]">{row.c20}</td>
+                      <td className="p-[0.75rem_1rem] text-[#555]">{row.c40}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+        </div>{/* END LEFT CONTENT */}
+
+        {/* ─── SIDEBAR ─── */}
+        <aside>
+          <div
+            id="inquiry"
+            className="bg-white border border-[#eee] rounded-[8px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-[1.75rem] sticky top-[80px]"
+          >
+            {/* Sidebar header — gold/brown */}
+            <div className="bg-[#8B6914] text-white -mx-[1.75rem] -mt-[1.75rem] px-[1.75rem] py-[1.25rem] rounded-t-[8px] mb-6">
+              <h3 className="font-montserrat text-[1rem] font-extrabold m-0 mb-[0.25rem]">Get Bag Price Now</h3>
+              <p className="text-[0.75rem] opacity-85 m-0">Reply within 12 hours · Free samples available</p>
+            </div>
+
+            <InquiryForm variant="sidebar" />
+
+            <div className="mt-[1.25rem]">
+              <a
+                href="https://wa.me/8618800000001?text=Hi%2C+I+want+used+brand+bags+wholesale+price"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-[3px] no-underline font-montserrat font-bold text-[0.875rem] hover:bg-[#1da851] transition-colors"
+              >
+                💬 Chat on WhatsApp
+              </a>
+            </div>
+          </div>
+        </aside>
+
+      </div>{/* END MAIN GRID */}
+
+      {/* CTA BLOCK */}
+      <ProductCTA 
+        title="Ready to Order Used Brand Bags?"
+        description="Minimum 100 pieces. Free pre-shipment photos and videos. Worldwide shipping available."
+        whatsappMessage="Hi, I want to wholesale used brand bags. Can I get a price list?"
+      />
+
+    </main>
+  );
+}
