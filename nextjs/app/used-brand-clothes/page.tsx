@@ -99,7 +99,7 @@ export default function UsedBrandClothesPage() {
       <div className="max-w-[1280px] mx-auto py-[3.5rem] px-8 grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-[3rem] items-start">
 
         {/* ─── LEFT CONTENT ─── */}
-        <div>
+        <div className="min-w-0">
           {/* INTRO */}
           <section className="mb-[3rem]">
             <div className="flex items-center gap-[0.75rem] mb-[1rem]">
@@ -384,8 +384,8 @@ export default function UsedBrandClothesPage() {
               <div className="w-[4px] h-[26px] bg-[#C0392B] rounded-[2px] shrink-0" />
               <h2 className="font-montserrat font-extrabold text-[1.4rem] text-[#1A1A1A] m-0">Product Specifications & Pricing</h2>
             </div>
-            <div className="overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
-              <table className="w-full border-collapse text-[0.8125rem] bg-white min-w-[580px]">
+            <div className="rt-table-wrap overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
+              <table className="w-full border-collapse text-[0.8125rem] bg-white min-w-[700px]">
                 <thead>
                   <tr className="bg-[#1A1A1A]">
                     <th className="p-[0.875rem_1rem] text-left text-[#F0B429] font-montserrat font-bold">Category</th>

@@ -93,7 +93,7 @@ export default function UsedBrandShoesPage() {
       {/* MAIN CONTENT */}
       <div className="max-w-[1280px] mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10 items-start">
         
-        <div>
+        <div className="min-w-0">
           {/* BRAND LIST */}
           <section className="mb-12">
             <h2 className="font-montserrat text-[1.4rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-5">
@@ -196,8 +196,8 @@ export default function UsedBrandShoesPage() {
             <h2 className="font-montserrat text-[1.4rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-5">
               Product Specifications
             </h2>
-            <div className="overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
-              <table className="w-full border-collapse text-[0.8125rem] bg-white">
+            <div className="rt-table-wrap overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
+              <table className="w-full border-collapse text-[0.8125rem] bg-white min-w-[650px]">
                 <thead>
                   <tr className="bg-brand-dark text-white text-left font-montserrat">
                     <th className="p-3.5 px-4 font-semibold">Category</th>
