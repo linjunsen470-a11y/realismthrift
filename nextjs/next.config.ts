@@ -2,7 +2,6 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  cacheComponents: true, // Replaces experimental.ppr in Next.js 16
   turbopack: {}, // Satisfies Next.js 16 requirements when webpack config is present
   typescript: {
     ignoreBuildErrors: false,
@@ -15,6 +14,12 @@ const nextConfig: NextConfig = {
         hostname: 'picsum.photos',
         port: '',
         pathname: '/**', // This allows any path under the hostname
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        port: '',
+        pathname: '/images/**',
       },
     ],
   },

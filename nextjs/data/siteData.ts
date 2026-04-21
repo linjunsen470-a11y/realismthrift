@@ -1,4 +1,4 @@
-import { BlogPost, Product, SiteFooter, SiteHeader } from "@/types";
+import { Product, SiteFooter, SiteHeader } from "@/types";
 
 export const siteHeader: SiteHeader = {
   brand: {
@@ -10,6 +10,7 @@ export const siteHeader: SiteHeader = {
     { label: "Used Clothes", href: "/used-brand-clothes" },
     { label: "Used Bags", href: "/used-brand-bag" },
     { label: "Used Shoes", href: "/used-brand-shoes" },
+    { label: "Blog", href: "/blog" },
     { label: "How To Order", href: "/how-to-order" },
     { label: "About Us", href: "/about-us" },
     { label: "Contact Us", href: "/contact-us" },
@@ -32,6 +33,7 @@ export const siteFooter: SiteFooter = {
       title: "Quick Links",
       links: [
         { label: "Home", href: "/" },
+        { label: "Blog", href: "/blog" },
         { label: "About Us", href: "/about-us" },
         { label: "How To Order", href: "/how-to-order" },
         { label: "FAQ", href: "/#faq" },
@@ -91,19 +93,6 @@ export const productsData: Product[] = [
     category: "WHOLESALE",
     image: "/img/cat-ukay.jpg",
     href: "/#contact",
-  },
-];
-
-export const blogPosts: BlogPost[] = [
-  {
-    slug: "why-wholesale-second-hand-branded-clothes-is-the-most-profitable-business-in-afr",
-    title:
-      "Why Wholesale Second Hand Branded Clothes Is the Most Profitable Business in Africa 2024",
-    excerpt:
-      "Discover why importing wholesale second hand branded clothes from China to Africa generates 200-400% profit margins for savvy importers.",
-    date: "Mar 21, 2026",
-    category: "Uncategorized",
-    content: "Full content placeholder...",
   },
 ];
 

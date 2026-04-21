@@ -20,8 +20,10 @@ import {
   Trophy,
   Zap,
 } from "lucide-react";
-import { blogPosts, features, orderSteps, productsData } from "@/data/siteData";
+import { features, orderSteps, productsData } from "@/data/siteData";
 import { InquiryForm } from "@/components/InquiryForm";
+import { getLatestBlogPosts } from "@/lib/blog";
+import { LatestBlogSection } from "@/components/blog/LatestBlogSection";
 
 const featureIconMap = {
   "award": Award,
@@ -150,7 +152,9 @@ const contactMethods = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const latestPosts = await getLatestBlogPosts();
+
   return (
     <div className="rt-home">
       <section className="rt-hero" id="home">
@@ -524,59 +528,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="rt-home-section rt-news" id="news">
-        <div className="rt-container">
-          <div className="rt-news-header">
-            <div>
-              <span className="rt-section-badge">BLOG &amp; RESOURCES</span>
-              <h2 className="rt-section-title">LATEST NEWS &amp; INSIGHTS</h2>
-              <div className="rt-section-divider" />
-              <p className="rt-news-copy">
-                Industry news, wholesale tips, and market insights for second-hand
-                clothing importers worldwide.
-              </p>
-            </div>
-
-            <Link href="/blog" className="rt-news-view-all">
-              VIEW ALL (26) ARTICLES <ArrowRight size={16} strokeWidth={2.25} />
-            </Link>
-          </div>
-
-          <div className="rt-news-grid">
-            {blogPosts.map((post) => (
-              <article key={post.slug} className="rt-news-card">
-                <Link href={`/blog/${post.slug}`} className="rt-news-card-thumb">
-                  <div className="rt-news-card-thumb-fallback">
-                    <ClipboardList size={36} strokeWidth={2.1} />
-                  </div>
-                </Link>
-                <div className="rt-news-card-body">
-                  <div className="rt-news-card-meta">
-                    <span className="rt-news-card-category">{post.category}</span>
-                    <span className="rt-news-card-date">{post.date}</span>
-                  </div>
-                  <h3 className="rt-news-card-title">
-                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                  </h3>
-                  <p className="rt-news-card-excerpt">{post.excerpt}</p>
-                  <Link href={`/blog/${post.slug}`} className="rt-news-card-link">
-                    READ MORE <ArrowRight size={15} strokeWidth={2.25} />
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="rt-news-footer">
-            <p>
-              Want to read more articles about the second-hand wholesale industry?
-            </p>
-            <Link href="/blog" className="rt-news-footer-link">
-              VIEW ALL ARTICLES (26) <ArrowRight size={16} strokeWidth={2.25} />
-            </Link>
-          </div>
-        </div>
-      </section>
+      <LatestBlogSection posts={latestPosts} />
     </div>
   );
 }
