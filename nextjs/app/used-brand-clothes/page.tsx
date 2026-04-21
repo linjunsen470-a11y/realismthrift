@@ -32,6 +32,8 @@ const clothesFaqs = [
   { q: 'What payment methods do you accept?', a: 'We accept T/T (30% deposit), Western Union, and L/C for large orders.' }
 ];
 
+export const metadata = {
+  title: "Used Brand Clothes | RealismThrift Wholesale",
   description: `China's top exporter of sorted, graded second-hand branded clothing. Nike, Adidas, H&M, Zara and 200+ brands. Strict 5-step sorting. MOQ 100 bales. Ships to ${companyStats.countriesCount} countries.`,
 };
 

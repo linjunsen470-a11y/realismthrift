@@ -4,6 +4,7 @@ import { InquiryForm } from "@/components/InquiryForm";
 import { QualityStandards } from "@/components/product/QualityStandards";
 import { ProductTrustSections } from "@/components/product/ProductTrustSections";
 import { ProductCTA } from "@/components/product/ProductCTA";
+import { companyStats } from "@/data/siteData";
 
 const bagStandards = [
   { icon: '❌', title: 'No Broken Zippers', desc: 'All zippers open and close smoothly without snagging', isNegative: true },
@@ -20,7 +21,7 @@ const bagStandards = [
 const bagFeatures = [
   { icon: '🔍', title: '6-Pt Hardware Check', desc: 'Every zipper, clasp, and ring is tested 3 times for 100% functionality.' },
   { icon: '🧼', title: 'Deep Interior Cleaning', desc: 'Specialized cleaning for leather, canvas and nylon. Deodorized interiors.' },
-  { icon: '🚢', title: 'Worldwide Export', desc: '12+ years experience in global logistics and customs clearance.' },
+  { icon: '🚢', title: 'Worldwide Export', desc: `12+ years experience in global logistics and exporting to ${companyStats.countriesCount} countries.` },
   { icon: '📸', title: 'Photo Verification', desc: 'Live photos and videos of your specific order sent before shipment.' }
 ];
 
@@ -32,7 +33,7 @@ const bagFaqs = [
 
 export const metadata = {
   title: "Used Brand Bags | RealismThrift Wholesale",
-  description: "Premium second-hand branded handbags, backpacks, and luggage — Coach, Michael Kors, Kate Spade, Longchamp and 20+ international brands. Strict 6-point quality inspection. Exported worldwide.",
+  description: `Premium second-hand branded handbags, backpacks, and luggage — Coach, Michael Kors, Kate Spade, Longchamp and 20+ international brands. Strict 6-point quality inspection. Exported to ${companyStats.countriesCount} countries.`,
 };
 
 export default function UsedBrandBagPage() {
@@ -62,7 +63,7 @@ export default function UsedBrandBagPage() {
             Used Brand Bags <span className="text-[#F0B429]">Wholesale</span>
           </h1>
           <p className="text-white/75 text-[1rem] max-w-[620px] leading-[1.7] m-0 mb-6">
-            Premium second-hand branded handbags, backpacks, and luggage — Coach, Michael Kors, Kate Spade, Longchamp and 20+ international brands. Strict 6-point quality inspection. Exported worldwide.
+            Premium second-hand branded handbags, backpacks, and luggage — Coach, Michael Kors, Kate Spade, Longchamp and 20+ international brands. Strict 6-point quality inspection. Exported to {companyStats.countriesCount} countries.
           </p>
           <div className="flex gap-[0.875rem] flex-wrap">
             <a

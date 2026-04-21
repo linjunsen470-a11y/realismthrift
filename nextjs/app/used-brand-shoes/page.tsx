@@ -30,6 +30,8 @@ const shoeFaqs = [
   { q: 'Do you provide the shoes in boxes?', a: 'To maximize shipping efficiency and lower your costs, we typically pack shoes in woven sacks. Box packing is available upon request for premium orders.' }
 ];
 
+export const metadata = {
+  title: "Used Brand Shoes | RealismThrift Wholesale",
   description: `Wholesale second-hand branded shoes — Nike, Adidas, Jordan, and 30+ brands. Sold by the sack. Exported to ${companyStats.countriesCount} countries.`,
 };
 
