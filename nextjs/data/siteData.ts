@@ -56,8 +56,6 @@ export const siteFooter: SiteFooter = {
         { label: "Used Clothes", href: "/used-brand-clothes" },
         { label: "Used Shoes", href: "/used-brand-shoes" },
         { label: "Used Bags", href: "/used-brand-bag" },
-        { label: "Brand Shoes", href: "/used-brand-shoes" },
-        { label: "Brand Clothes", href: "/used-brand-clothes" },
       ],
     },
   ],

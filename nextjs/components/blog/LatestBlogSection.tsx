@@ -39,9 +39,6 @@ export function LatestBlogSection({ posts }: LatestBlogSectionProps) {
               <p>
                 Want to read more articles about the second-hand wholesale industry?
               </p>
-              <Link href="/blog" className="rt-news-footer-link">
-                View All Articles <ArrowRight size={16} strokeWidth={2.25} />
-              </Link>
             </div>
           </>
         ) : (
