@@ -277,6 +277,24 @@ export default function HowToOrderPage() {
               </tr>
               {/* Row 2 */}
               <tr className="border-b border-[#f0f0f0] bg-[#fafafa]">
+                <td className="p-3 px-4 font-semibold text-brand-dark">Clothes (small)</td>
+                <td className="p-3 px-4 text-[#555]">25</td>
+                <td className="p-3 px-4 text-[#555]">75</td>
+                <td className="p-3 px-4 text-[#555]">35</td>
+                <td className="p-3 px-4 text-[#555]">35</td>
+                <td className="p-3 px-4 text-[#555]">0.092</td>
+              </tr>
+              {/* Row 3 */}
+              <tr className="border-b border-[#f0f0f0] bg-white">
+                <td className="p-3 px-4 font-semibold text-brand-dark">Clothes (large)</td>
+                <td className="p-3 px-4 text-[#555]">70</td>
+                <td className="p-3 px-4 text-[#555]">75</td>
+                <td className="p-3 px-4 text-[#555]">47</td>
+                <td className="p-3 px-4 text-[#555]">55</td>
+                <td className="p-3 px-4 text-[#555]">0.194</td>
+              </tr>
+              {/* Row 4 */}
+              <tr className="border-b border-[#f0f0f0] bg-[#fafafa]">
                 <td className="p-3 px-4 font-semibold text-brand-dark">Shoes (mixed)</td>
                 <td className="p-3 px-4 text-[#555]">25</td>
                 <td className="p-3 px-4 text-[#555]">73</td>
@@ -284,7 +302,7 @@ export default function HowToOrderPage() {
                 <td className="p-3 px-4 text-[#555]">32</td>
                 <td className="p-3 px-4 text-[#555]">0.140</td>
               </tr>
-              {/* Row 3 */}
+              {/* Row 5 */}
               <tr className="border-b border-[#f0f0f0] bg-white">
                 <td className="p-3 px-4 font-semibold text-brand-dark">Brand Shoes (40 pairs)</td>
                 <td className="p-3 px-4 text-[#555]">28–30</td>
@@ -293,7 +311,7 @@ export default function HowToOrderPage() {
                 <td className="p-3 px-4 text-[#555]">30</td>
                 <td className="p-3 px-4 text-[#555]">0.162</td>
               </tr>
-              {/* Row 4 */}
+              {/* Row 6 */}
               <tr className="border-b border-[#f0f0f0] bg-[#fafafa]">
                 <td className="p-3 px-4 font-semibold text-brand-dark">Bags (mixed)</td>
                 <td className="p-3 px-4 text-[#555]">38</td>
@@ -327,6 +345,13 @@ export default function HowToOrderPage() {
                   <div className="text-[0.8rem] text-[#666] leading-relaxed">Available for smaller orders. Suitable for first-time buyers who prefer quick transfers.</div>
                 </div>
               </div>
+              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm mix-blend-luminosity hover:mix-blend-normal transition-all">
+                <span className="text-[1.5rem] shrink-0">💳</span>
+                <div>
+                  <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1">Other Methods</div>
+                  <div className="text-[0.8rem] text-[#666] leading-relaxed">Contact our sales team to discuss alternative payment arrangements for large volume orders.</div>
+                </div>
+              </div>
             </div>
             <div>
               <h2 className="font-montserrat text-[1.4rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-6">Shipping Options</h2>
@@ -344,14 +369,81 @@ export default function HowToOrderPage() {
                   <div className="text-[0.8rem] text-[#666] leading-relaxed">Share a container with other buyers. Suitable for smaller orders. Higher cost per kg but lower minimum.</div>
                 </div>
               </div>
+              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm mix-blend-luminosity hover:mix-blend-normal transition-all">
+                <span className="text-[1.5rem] shrink-0">✈️</span>
+                <div>
+                  <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1">Air Freight</div>
+                  <div className="text-[0.8rem] text-[#666] leading-relaxed">Available for urgent small orders. Significantly higher cost. Contact us for air freight quotation.</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* INQUIRY SECTION */}
-      <section id="inquiry-form" className="py-20 bg-white">
-        <InquiryForm />
+      <section id="inquiry-form" className="py-20 bg-[#f9f9f9]">
+        <div className="max-w-[900px] mx-auto px-4">
+          <div className="bg-white border border-[#eee] rounded-[12px] shadow-[0_8px_40px_rgba(0,0,0,0.08)] overflow-hidden">
+            <div className="bg-gradient-to-br from-[#C0392B] to-[#1A1A1A] p-10 text-center">
+              <h2 className="font-montserrat text-[1.6rem] font-extrabold text-white mb-2.5">Send Us Your Inquiry</h2>
+              <p className="text-white/75 text-[0.9375rem] font-open-sans">Get a price quotation within 12 hours. Our team speaks English, French, Spanish, and Arabic.</p>
+            </div>
+            <div className="p-10">
+              <InquiryForm showWhatsApp />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ SECTION */}
+      <section id="faq" className="py-20 bg-white">
+        <div className="max-w-[800px] mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="font-montserrat text-[2rem] md:text-[2.5rem] font-black text-brand-dark uppercase">FREQUENTLY ASKED QUESTIONS</h2>
+            <div className="rt-section-divider center" />
+          </div>
+          <div className="space-y-4">
+            {[
+              {
+                q: "What is the minimum order quantity?",
+                a: "For used clothes, the minimum is 100 bales (approximately 4,500 kg). For used shoes, the minimum is 200 pairs. For used bags, the minimum is 100 pieces. Container orders receive better pricing."
+              },
+              {
+                q: "How long does it take to receive my order?",
+                a: "Production and packing takes 7–14 days. Sea freight to Africa takes 20–35 days, Southeast Asia 15–25 days, Middle East 20–30 days. Air freight is available for urgent orders."
+              },
+              {
+                q: "Can I see the products before paying?",
+                a: "Yes. We send detailed photos and videos of your specific order before you pay the balance. For first-time buyers, we can also send physical samples (shipping cost covered by buyer)."
+              },
+              {
+                q: "What quality grades do you offer?",
+                a: "We primarily offer A-grade (highest quality, no visible defects) and B-grade (minor imperfections, fully wearable). All grades are clearly labeled and priced accordingly."
+              },
+              {
+                q: "Do you handle customs clearance?",
+                a: "We provide all export documentation (commercial invoice, packing list, bill of lading, certificate of origin). Import customs clearance in your country is the buyer's responsibility. We can recommend experienced customs brokers in major markets."
+              },
+              {
+                q: "What happens if there is a quality issue?",
+                a: "We have a 30-day after-sales policy. If you receive items that do not match the agreed grade, please send us photos within 30 days of receipt and we will arrange compensation or replacement in your next order."
+              }
+            ].map((faq, idx) => (
+              <details key={idx} className="group bg-white border border-[#eee] rounded-[6px] shadow-[0_2px_6px_rgba(0,0,0,0.04)] overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                <summary className="flex justify-between items-center p-5 px-6 font-montserrat font-bold text-[0.9375rem] text-brand-dark cursor-pointer select-none transition-all hover:bg-[#f9f9f9]">
+                  {faq.q}
+                  <span className="text-brand-red font-light text-[1.5rem] group-open:rotate-45 transition-transform">+</span>
+                </summary>
+                <div className="p-5 px-6 pt-0 text-[0.875rem] text-[#555] font-open-sans leading-[1.75] border-t border-[#f0f0f0] mt-[-1px]">
+                  <div className="pt-4">
+                    {faq.a}
+                  </div>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
       </section>
     </main>
   );
