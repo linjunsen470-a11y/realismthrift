@@ -2853,3 +2853,60 @@
     bottom: 1rem;
   }
 }
+
+.shadow-premium {
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.06);
+}
+
+/* Legal Page Refinements - Clean & Professional */
+.rt-legal-hero {
+  min-height: 320px;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  padding-bottom: 4rem;
+}
+
+.rt-legal-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  margin-top: -6rem; /* Shared alignment */
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 1024px) {
+  .rt-legal-grid {
+    grid-template-columns: minmax(0, 1fr) 340px;
+  }
+}
+
+.rt-legal-content-shell {
+  background: #fff;
+  padding: 3rem;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05);
+}
+
+.rt-legal-sidebar-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05);
+}
+
+.rt-legal-tag {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  background: var(--color-brand-red);
+  color: #fff;
+  font-family: var(--font-montserrat);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  border-radius: 2px;
+  margin-bottom: 1rem;
+}
