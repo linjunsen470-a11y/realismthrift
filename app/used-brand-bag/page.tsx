@@ -1,6 +1,34 @@
 import Image from "next/image";
 import Link from "next/link";
 import { InquiryForm } from "@/components/InquiryForm";
+import { QualityStandards } from "@/components/product/QualityStandards";
+import { ProductTrustSections } from "@/components/product/ProductTrustSections";
+import { ProductCTA } from "@/components/product/ProductCTA";
+
+const bagStandards = [
+  { icon: '❌', title: 'No Broken Zippers', desc: 'All zippers open and close smoothly without snagging', isNegative: true },
+  { icon: '❌', title: 'No Torn Straps', desc: 'Handles and straps fully intact, no fraying or tears', isNegative: true },
+  { icon: '❌', title: 'No Heavy Stains', desc: 'Interior and exterior cleaned, no permanent discoloration', isNegative: true },
+  { icon: '❌', title: 'No Broken Hardware', desc: 'All buckles, clasps, and rings fully functional', isNegative: true },
+  { icon: '❌', title: 'No Peeling Lining', desc: 'Interior lining intact, no separation or peeling', isNegative: true },
+  { icon: '❌', title: 'No Structural Damage', desc: 'Bag holds its shape, no crushing or deformation', isNegative: true },
+  { icon: '✅', title: 'Complete Accessories', desc: 'Dust bags, straps, and original accessories included where available', isNegative: false },
+  { icon: '✅', title: 'Brand Label Visible', desc: 'Original brand label or embossing clearly present', isNegative: false },
+  { icon: '✅', title: 'Individually Wrapped', desc: 'Each bag wrapped in plastic before packing', isNegative: false }
+];
+
+const bagFeatures = [
+  { icon: '🔍', title: '6-Pt Hardware Check', desc: 'Every zipper, clasp, and ring is tested 3 times for 100% functionality.' },
+  { icon: '🧼', title: 'Deep Interior Cleaning', desc: 'Specialized cleaning for leather, canvas and nylon. Deodorized interiors.' },
+  { icon: '🚢', title: 'Worldwide Export', desc: '12+ years experience in global logistics and customs clearance.' },
+  { icon: '📸', title: 'Photo Verification', desc: 'Live photos and videos of your specific order sent before shipment.' }
+];
+
+const bagFaqs = [
+  { q: 'What is the minimum order quantity for bags?', a: 'Minimum order is 100 pieces for sorted brand categories, or 200 pieces for mixed lots.' },
+  { q: 'Can I pick specific models or sizes?', a: 'You can specify categories (Handbags, Backpacks, etc.). For specific high-demand models, we offer premium sorting at custom rates.' },
+  { q: 'How are the bags packed?', a: 'Each bag is individually wrapped in plastic to prevent scratching, then packed in woven sacks or cartons.' }
+];
 
 export const metadata = {
   title: "Used Brand Bags | RealismThrift Wholesale",
@@ -213,31 +241,11 @@ export default function UsedBrandBagPage() {
             </div>
           </section>
 
-          {/* QUALITY STANDARDS — 9-item 3-col grid */}
-          <section className="bg-[#F5F5F0] rounded-[8px] p-[2rem] mb-[3rem]">
-            <h2 className="font-montserrat text-[1.25rem] font-extrabold text-[#1A1A1A] m-0 mb-[1.25rem]">
-              A-Grade Bag Quality Standards
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[0.875rem]">
-              {[
-                { icon: '❌', col: 'border-[#C0392B]', title: 'No Broken Zippers', desc: 'All zippers open and close smoothly without snagging' },
-                { icon: '❌', col: 'border-[#C0392B]', title: 'No Torn Straps', desc: 'Handles and straps fully intact, no fraying or tears' },
-                { icon: '❌', col: 'border-[#C0392B]', title: 'No Heavy Stains', desc: 'Interior and exterior cleaned, no permanent discoloration' },
-                { icon: '❌', col: 'border-[#C0392B]', title: 'No Broken Hardware', desc: 'All buckles, clasps, and rings fully functional' },
-                { icon: '❌', col: 'border-[#C0392B]', title: 'No Peeling Lining', desc: 'Interior lining intact, no separation or peeling' },
-                { icon: '❌', col: 'border-[#C0392B]', title: 'No Structural Damage', desc: 'Bag holds its shape, no crushing or deformation' },
-                { icon: '✅', col: 'border-[#27ae60]', title: 'Complete Accessories', desc: 'Dust bags, straps, and original accessories included where available' },
-                { icon: '✅', col: 'border-[#27ae60]', title: 'Brand Label Visible', desc: 'Original brand label or embossing clearly present' },
-                { icon: '✅', col: 'border-[#27ae60]', title: 'Individually Wrapped', desc: 'Each bag wrapped in plastic before packing' },
-              ].map(std => (
-                <div key={std.title} className={`bg-white rounded-[4px] p-[0.875rem] border-l-[3px] ${std.col}`}>
-                  <div className="text-[1.1rem] mb-[0.35rem]">{std.icon}</div>
-                  <div className="font-montserrat text-[0.8rem] font-bold text-[#1A1A1A] mb-[0.25rem]">{std.title}</div>
-                  <div className="text-[0.75rem] text-[#888] leading-[1.5]">{std.desc}</div>
-                </div>
-              ))}
-            </div>
-          </section>
+          {/* QUALITY STANDARDS */}
+          <QualityStandards title="A-Grade Bag Quality Standards" standards={bagStandards} />
+
+          {/* TRUST SECTIONS */}
+          <ProductTrustSections features={bagFeatures} faqs={bagFaqs} />
 
           {/* SPECS TABLE */}
           <section className="mb-[3rem]">
@@ -312,32 +320,11 @@ export default function UsedBrandBagPage() {
       </div>{/* END MAIN GRID */}
 
       {/* CTA BLOCK */}
-      <section className="py-[3.5rem] text-center" style={{ background: "linear-gradient(135deg,#1A1A1A,#1a1510)" }}>
-        <div className="max-w-[700px] mx-auto px-6">
-          <h2 className="font-montserrat text-[1.6rem] font-extrabold text-white m-0 mb-[0.875rem]">
-            Ready to Order Used Brand Bags?
-          </h2>
-          <p className="text-white/70 text-[0.9375rem] leading-[1.7] m-0 mb-[1.75rem]">
-            Minimum 100 pieces. Free pre-shipment photos and videos. Worldwide shipping available.
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <a
-              href="#inquiry"
-              className="bg-[#F0B429] text-[#1A1A1A] px-[2rem] py-[0.875rem] rounded-[3px] no-underline font-montserrat font-bold text-[0.9rem] hover:bg-[#d4a017] transition-colors"
-            >
-              Get Free Quote
-            </a>
-            <a
-              href="https://wa.me/8618800000001"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#25D366] text-white px-[2rem] py-[0.875rem] rounded-[3px] no-underline font-montserrat font-bold text-[0.9rem] hover:bg-[#1da851] transition-colors"
-            >
-              💬 WhatsApp Now
-            </a>
-          </div>
-        </div>
-      </section>
+      <ProductCTA 
+        title="Ready to Order Used Brand Bags?"
+        description="Minimum 100 pieces. Free pre-shipment photos and videos. Worldwide shipping available."
+        whatsappMessage="Hi, I want to wholesale used brand bags. Can I get a price list?"
+      />
 
     </main>
   );

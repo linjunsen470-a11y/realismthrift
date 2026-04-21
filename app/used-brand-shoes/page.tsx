@@ -1,5 +1,33 @@
 import Image from "next/image";
 import { InquiryForm } from "@/components/InquiryForm";
+import { QualityStandards } from "@/components/product/QualityStandards";
+import { ProductTrustSections } from "@/components/product/ProductTrustSections";
+import { ProductCTA } from "@/components/product/ProductCTA";
+
+const shoeStandards = [
+  { icon: '❌', title: 'No Glue Damage', desc: 'No sticky parts coming loose from sole or upper', isNegative: true },
+  { icon: '❌', title: 'No Cracking', desc: 'Surface stays smooth, no layers peeling or cracking', isNegative: true },
+  { icon: '❌', title: 'No Missing Pieces', desc: 'All parts present — laces, insoles, tongue included', isNegative: true },
+  { icon: '❌', title: 'No Heavy Odor', desc: 'Cleaned and deodorized, no persistent smell', isNegative: true },
+  { icon: '❌', title: 'No Broken Soles', desc: 'Bottom part fully solid, no separation from upper', isNegative: true },
+  { icon: '❌', title: 'No Structural Damage', desc: 'Shape maintained, no crushing or deformation', isNegative: true },
+  { icon: '✅', title: 'Complete Pairs Only', desc: 'Every sack contains 100% matched pairs', isNegative: false },
+  { icon: '✅', title: 'Brand Label Intact', desc: 'Original brand label clearly visible on tongue/sole', isNegative: false },
+  { icon: '✅', title: 'Wearable Condition', desc: 'All items are immediately wearable upon receipt', isNegative: false }
+];
+
+const shoeFeatures = [
+  { icon: '👟', title: 'Precise Pairing', desc: '100% manual check ensures no single shoes or mismatched pairs.' },
+  { icon: '🧼', title: 'Professional Sterilization', desc: 'Cleaned, deodorized, and UV sterilized for international health standards.' },
+  { icon: '📦', title: 'Secure Sacking', desc: 'Hydraulic compressed packing to maximize container space and protect shoes.' },
+  { icon: '🌍', title: '110+ Export Ports', desc: 'Direct shipping to major ports in Africa, Middle East, and Southeast Asia.' }
+];
+
+const shoeFaqs = [
+  { q: 'How many pairs fit in a 40HQ container?', a: 'A 40HQ container typically fits around 20,000 to 22,000 pairs of shoes depending on the mix of boots and sneakers.' },
+  { q: 'Can I order just Nike or Adidas?', a: 'Yes, we offer brand-specific sorting. Premium brands like Nike/Adidas have a separate pricing tier and specific MOQ.' },
+  { q: 'Do you provide the shoes in boxes?', a: 'To maximize shipping efficiency and lower your costs, we typically pack shoes in woven sacks. Box packing is available upon request for premium orders.' }
+];
 
 export const metadata = {
   title: "Used Brand Shoes | RealismThrift Wholesale",
@@ -157,30 +185,10 @@ export default function UsedBrandShoesPage() {
           </section>
 
           {/* QUALITY STANDARDS */}
-          <section className="bg-[#F5F5F0] rounded-[8px] p-8 mb-12">
-            <h2 className="font-montserrat text-[1.25rem] font-extrabold text-brand-dark m-0 mb-5">
-              A-Grade Shoe Quality Standards
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-              {[
-                { icon: '❌', bg: 'border-brand-red', title: 'No Glue Damage', desc: 'No sticky parts coming loose from sole or upper' },
-                { icon: '❌', bg: 'border-brand-red', title: 'No Cracking', desc: 'Surface stays smooth, no layers peeling or cracking' },
-                { icon: '❌', bg: 'border-brand-red', title: 'No Missing Pieces', desc: 'All parts present — laces, insoles, tongue included' },
-                { icon: '❌', bg: 'border-brand-red', title: 'No Heavy Odor', desc: 'Cleaned and deodorized, no persistent smell' },
-                { icon: '❌', bg: 'border-brand-red', title: 'No Broken Soles', desc: 'Bottom part fully solid, no separation from upper' },
-                { icon: '❌', bg: 'border-brand-red', title: 'No Structural Damage', desc: 'Shape maintained, no crushing or deformation' },
-                { icon: '✅', bg: 'border-[#27ae60]', title: 'Complete Pairs Only', desc: 'Every sack contains 100% matched pairs' },
-                { icon: '✅', bg: 'border-[#27ae60]', title: 'Brand Label Intact', desc: 'Original brand label clearly visible on tongue/sole' },
-                { icon: '✅', bg: 'border-[#27ae60]', title: 'Wearable Condition', desc: 'All items are immediately wearable upon receipt' }
-              ].map(std => (
-                <div key={std.title} className={`bg-white rounded-[4px] p-3.5 border-l-[3px] ${std.bg}`}>
-                  <div className="text-[1.1rem] mb-1">{std.icon}</div>
-                  <div className="font-montserrat text-[0.8rem] font-bold text-brand-dark mb-1">{std.title}</div>
-                  <div className="text-[0.75rem] text-[#888] leading-[1.5]">{std.desc}</div>
-                </div>
-              ))}
-            </div>
-          </section>
+          <QualityStandards title="A-Grade Shoe Quality Standards" standards={shoeStandards} />
+
+          {/* TRUST SECTIONS */}
+          <ProductTrustSections features={shoeFeatures} faqs={shoeFaqs} />
 
           {/* SPECS TABLE */}
           <section className="scroll-mt-24 mb-12">
@@ -277,20 +285,11 @@ export default function UsedBrandShoesPage() {
       </div>
 
       {/* CTA BLOCK */}
-      <section className="bg-gradient-to-br from-brand-dark to-[#1a1a2e] py-14 text-center">
-        <div className="max-w-[700px] mx-auto px-6">
-          <h2 className="font-montserrat text-[1.6rem] font-extrabold text-white mb-3.5">Ready to Order Used Brand Shoes?</h2>
-          <p className="text-white/70 text-[0.9375rem] leading-[1.7] mb-7">Get a free price quotation within 12 hours. Minimum order 200 pairs. Worldwide shipping available.</p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <a href="#inquiry" className="bg-brand-gold text-brand-dark px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-colors">
-              Get Free Quote
-            </a>
-            <a href="https://wa.me/8618800000001" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-[#1da851] transition-colors">
-              💬 WhatsApp Now
-            </a>
-          </div>
-        </div>
-      </section>
+      <ProductCTA 
+        title="Ready to Order Used Brand Shoes?"
+        description="Get a free price quotation within 12 hours. Minimum order 200 pairs. Worldwide shipping available."
+        whatsappMessage="Hi, I want to wholesale used brand shoes. Can I get a price list?"
+      />
     </main>
   );
 }

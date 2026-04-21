@@ -1,6 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
 import { InquiryForm } from "@/components/InquiryForm";
+import { QualityStandards } from "@/components/product/QualityStandards";
+import { ProductTrustSections } from "@/components/product/ProductTrustSections";
+import { ProductCTA } from "@/components/product/ProductCTA";
+
+const clothesStandards = [
+  { icon: '❌', title: 'No Stains or Dirt', desc: 'No dirty patches or discoloration on fabric surface', isNegative: true },
+  { icon: '❌', title: 'No Tears or Holes', desc: 'No cuts, rips, or openings anywhere on the garment', isNegative: true },
+  { icon: '❌', title: 'No Heavy Fading', desc: 'Colors remain vibrant, not washed out or bleached', isNegative: true },
+  { icon: '❌', title: 'No Pilling', desc: 'No fuzzy balls or fiber lumps on the fabric surface', isNegative: true },
+  { icon: '❌', title: 'No Heavy Wear', desc: 'No signs of excessive use or structural damage', isNegative: true },
+  { icon: '❌', title: 'No Missing Closures', desc: 'All buttons, zippers, and snaps fully functional', isNegative: true },
+  { icon: '✅', title: 'Brand Label Intact', desc: 'Original brand label clearly visible and attached', isNegative: false },
+  { icon: '✅', title: 'Clean & Odor-Free', desc: 'Washed and deodorized before packing', isNegative: false },
+  { icon: '✅', title: 'Photo Verified', desc: 'Pre-shipment photos sent to buyer for approval', isNegative: false }
+];
+
+const clothesFeatures = [
+  { icon: '🏭', title: 'Direct Factory Source', desc: '15,000m² facility. No middlemen — you buy directly from the source.' },
+  { icon: '📦', title: 'Consistent Grading', desc: 'Standardized grading across all batches. What you see is what you get.' },
+  { icon: '🚢', title: 'Global Export', desc: '12+ years experience exporting to 110+ countries with full documentation.' },
+  { icon: '⚡', title: 'Fast Lead Time', desc: 'Orders ready in 7–14 days. Large ready-stock inventory for immediate dispatch.' }
+];
+
+const clothesFaqs = [
+  { q: 'What is the minimum order quantity?', a: 'Our minimum order is 100 bales (approximately 4,500 kg). For brand-specific orders, the MOQ is 200 bales.' },
+  { q: 'Can I request a specific brand mix?', a: 'Yes. We offer custom brand mix orders for orders above 500 bales. A small custom sorting fee applies.' },
+  { q: 'Do you provide samples?', a: 'Yes. We can send a 1–2 bale sample for a fee (deducted from your first bulk order).' },
+  { q: 'What payment methods do you accept?', a: 'We accept T/T (30% deposit), Western Union, and L/C for large orders.' }
+];
 
 export const metadata = {
   title: "Used Brand Clothes | RealismThrift Wholesale",
@@ -394,87 +423,10 @@ export default function UsedBrandClothesPage() {
           </section>
 
           {/* QUALITY STANDARDS */}
-          <section className="bg-[#F5F5F0] rounded-[8px] p-[2rem] mb-[3rem]">
-            <h2 className="font-montserrat text-[1.25rem] font-extrabold text-[#1A1A1A] m-0 mb-[1.25rem]">A-Grade Quality Standards</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[0.875rem]">
-              {[
-                { icon: '❌', col: 'border-[#C0392B]', title: 'No Stains or Dirt', desc: 'No dirty patches or discoloration on fabric surface' },
-                { icon: '❌', col: 'border-[#C0392B]', title: 'No Tears or Holes', desc: 'No cuts, rips, or openings anywhere on the garment' },
-                { icon: '❌', col: 'border-[#C0392B]', title: 'No Heavy Fading', desc: 'Colors remain vibrant, not washed out or bleached' },
-                { icon: '❌', col: 'border-[#C0392B]', title: 'No Pilling', desc: 'No fuzzy balls or fiber lumps on the fabric surface' },
-                { icon: '❌', col: 'border-[#C0392B]', title: 'No Heavy Wear', desc: 'No signs of excessive use or structural damage' },
-                { icon: '❌', col: 'border-[#C0392B]', title: 'No Missing Closures', desc: 'All buttons, zippers, and snaps fully functional' },
-                { icon: '✅', col: 'border-[#27AE60]', title: 'Brand Label Intact', desc: 'Original brand label clearly visible and attached' },
-                { icon: '✅', col: 'border-[#27AE60]', title: 'Clean & Odor-Free', desc: 'Washed and deodorized before packing' },
-                { icon: '✅', col: 'border-[#27AE60]', title: 'Photo Verified', desc: 'Pre-shipment photos sent to buyer for approval' }
-              ].map(std => (
-                <div key={std.title} className={`bg-white rounded-[4px] p-[0.875rem] border-l-[3px] ${std.col}`}>
-                  <div className="text-[1rem] mb-[0.3rem]">{std.icon}</div>
-                  <div className="font-montserrat text-[0.8rem] font-bold text-[#1A1A1A] mb-[0.2rem]">{std.title}</div>
-                  <div className="text-[0.75rem] text-[#888] leading-[1.5]">{std.desc}</div>
-                </div>
-              ))}
-            </div>
-          </section>
+          <QualityStandards standards={clothesStandards} />
 
-          {/* WHY CHOOSE US */}
-          <section className="mb-[3rem]">
-            <div className="flex items-center gap-[0.75rem] mb-[1.25rem]">
-              <div className="w-[4px] h-[26px] bg-[#C0392B] rounded-[2px] shrink-0" />
-              <h2 className="font-montserrat font-extrabold text-[1.4rem] text-[#1A1A1A] m-0">Why Buyers Choose RealismThrift</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[1.25rem]">
-              {[
-                { icon: '🏭', title: 'Own Factory & Sorting Facility', desc: '15,000m² facility with 200+ trained sorters. No middlemen — you buy directly from the source.' },
-                { icon: '📦', title: 'Consistent Grade Quality', desc: 'Standardized grading system across all batches. What you see in the sample is what you get in bulk.' },
-                { icon: '🚢', title: 'Global Export Experience', desc: '12+ years exporting to 110+ countries. We know customs requirements for Africa, SE Asia, Middle East and more.' },
-                { icon: '⚡', title: 'Fast Turnaround', desc: 'Orders ready in 7–14 days. Large ready-stock inventory for immediate dispatch.' },
-                { icon: '💬', title: 'Dedicated Sales Support', desc: 'Personal account manager. WhatsApp, email and video call support in English, French and Arabic.' },
-                { icon: '🔄', title: 'Flexible Order Sizes', desc: 'Start with 100 bales. Scale up to full container loads as your business grows.' }
-              ].map(why => (
-                <div key={why.title} className="bg-white border border-[#eee] rounded-[4px] p-[1.25rem] flex gap-[0.875rem] items-start shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-                  <div className="text-[1.5rem] shrink-0 leading-none">{why.icon}</div>
-                  <div>
-                    <h4 className="font-montserrat font-bold text-[0.875rem] text-[#1A1A1A] m-0 mb-[0.3rem]">{why.title}</h4>
-                    <p className="font-open-sans text-[0.8125rem] text-[#666] leading-[1.7] m-0">{why.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* FAQ */}
-          <section className="mb-[3rem]">
-            <div className="flex items-center gap-[0.75rem] mb-[1.25rem]">
-              <div className="w-[4px] h-[26px] bg-[#C0392B] rounded-[2px] shrink-0" />
-              <h2 className="font-montserrat font-extrabold text-[1.4rem] text-[#1A1A1A] m-0">Frequently Asked Questions</h2>
-            </div>
-            {[
-              { q: 'What is the minimum order quantity?', a: 'Our minimum order is 100 bales (approximately 4,500 kg) per grade per order. For brand-specific orders (e.g., Nike only), the MOQ is 200 bales due to the additional sorting effort required.' },
-              { q: 'Can I request a specific brand mix?', a: 'Yes. We offer custom brand mix orders for orders above 500 bales. You can specify the brands you want and the approximate percentage of each. A small custom sorting fee applies.' },
-              { q: 'How do you ensure consistent grade quality between batches?', a: 'We use a standardized grading checklist with photographic references. All graders are trained on the same criteria and undergo regular quality audits. We provide a quality inspection report with every shipment.' },
-              { q: 'Do you provide samples before bulk orders?', a: 'Yes. We can send a 1–2 bale sample for a nominal fee (deducted from your first bulk order). This allows you to verify the quality and grade before committing to a large order.' },
-              { q: 'What payment methods do you accept?', a: 'We accept T/T (bank transfer), Western Union, and L/C for large orders. A 30% deposit is required to confirm the order, with the balance paid before shipment.' },
-              { q: 'How long does shipping take to Africa / SE Asia?', a: 'Sea freight to West Africa (Lagos, Tema, Abidjan) takes 20–28 days. To East Africa (Mombasa, Dar es Salaam) 25–35 days. To SE Asia 10–18 days. We arrange door-to-door delivery.' },
-            ].map(faq => (
-              <details key={faq.q} className="group border border-[#eee] rounded-[4px] mb-[0.625rem] overflow-hidden bg-white">
-                <summary className="w-full bg-white border-none p-[1rem_1.25rem] text-left cursor-pointer flex justify-between items-center font-montserrat font-bold text-[0.875rem] text-[#1A1A1A] list-none [&::-webkit-details-marker]:hidden focus:outline-none">
-                  <span>{faq.q}</span>
-                  <span className="text-[#C0392B] text-base transition-transform duration-200 group-open:rotate-180">▼</span>
-                </summary>
-                <div className="px-[1.25rem] pb-[1rem] bg-[#FAFAFA]">
-                  <p className="font-open-sans text-[0.875rem] text-[#555] leading-[1.8] m-0">{faq.a}</p>
-                </div>
-              </details>
-            ))}
-          </section>
-
-          {/* INLINE INQUIRY FORM */}
-          <section id="inquiry" className="bg-gradient-to-br from-[#1A1A1A] to-[#2d1515] rounded-[8px] p-[2.5rem]">
-             <h2 className="font-montserrat font-extrabold text-[1.4rem] text-white m-0 mb-[0.5rem]">Request a Price Quote</h2>
-             <p className="font-open-sans text-[0.875rem] text-white/60 m-0 mb-[1.75rem]">Our sales team will reply within 12 hours with a detailed price list and product catalog.</p>
-             <InquiryForm variant="default" />
-          </section>
+          {/* TRUST SECTIONS (Why Choose Us & FAQ) */}
+          <ProductTrustSections features={clothesFeatures} faqs={clothesFaqs} />
 
         </div>{/* END LEFT CONTENT */}
 
@@ -483,7 +435,8 @@ export default function UsedBrandClothesPage() {
           <div className="sticky top-[90px]">
 
             {/* Sticky Inquiry CTA */}
-            <div id="inquiry-sidebar" className="bg-white border border-[#eee] rounded-[8px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] overflow-hidden mb-[1.5rem]">
+            {/* Sticky Inquiry CTA */}
+            <div id="inquiry" className="bg-white border border-[#eee] rounded-[8px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] overflow-hidden mb-[1.5rem]">
               <div className="bg-[#C0392B] p-[1.25rem_1.5rem]">
                 <h3 className="font-montserrat text-[1rem] font-extrabold text-white m-0 mb-[0.25rem]">Get Wholesale Price</h3>
                 <p className="text-[0.75rem] text-white/80 m-0">Reply within 12 hours · Free samples available</p>
@@ -538,20 +491,11 @@ export default function UsedBrandClothesPage() {
       </div>{/* END MAIN GRID */}
 
       {/* BOTTOM CTA BANNER */}
-      <section className="bg-gradient-to-br from-[#1A1A1A] to-[#2d1515] py-[3.5rem] text-center">
-        <div className="max-w-[700px] mx-auto px-8">
-          <h2 className="font-montserrat text-[1.6rem] font-extrabold text-white m-0 mb-[0.875rem]">Ready to Order Used Brand Clothes?</h2>
-          <p className="text-white/70 text-[0.9375rem] leading-[1.7] m-0 mb-[1.75rem]">Get a free price quotation within 12 hours. Our sales team speaks English, French, Spanish, and Arabic.</p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <a href="#inquiry" className="bg-[#F0B429] text-[#1A1A1A] px-[2rem] py-[0.875rem] rounded-[3px] no-underline font-bold font-montserrat text-[0.9rem] hover:bg-[#d4a017] transition-colors">
-              Get Free Quote
-            </a>
-            <a href="https://wa.me/8618800000001" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-[2rem] py-[0.875rem] rounded-[3px] no-underline font-bold font-montserrat text-[0.9rem] hover:bg-[#1da851] transition-colors">
-              💬 WhatsApp Now
-            </a>
-          </div>
-        </div>
-      </section>
+      <ProductCTA 
+        title="Ready to Order Used Brand Clothes?"
+        description="Get a free price quotation within 12 hours. Our sales team speaks English, French, Spanish, and Arabic."
+        whatsappMessage="Hi, I want to wholesale used brand clothes. Can I get a price list?"
+      />
 
     </main>
   );
