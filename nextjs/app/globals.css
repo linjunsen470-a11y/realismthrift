@@ -229,11 +229,18 @@
 .rt-topbar-brand {
   color: var(--color-brand-gold);
   font-family: var(--font-montserrat);
-  font-size: 0.7rem;
+  font-size: 0.625rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .rt-topbar-brand {
+    max-width: none;
+    white-space: nowrap;
+  }
 }
 
 .rt-topbar-ticker {
@@ -378,6 +385,13 @@
   transform: translateY(-1px);
 }
 
+@media (max-width: 768px) {
+  .rt-inquiry-btn {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.7rem;
+  }
+}
+
 .rt-mainnav {
   position: sticky;
   top: 0;
@@ -465,15 +479,7 @@
   );
 }
 
-.rt-hero-accent-line {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 2;
-  width: 6px;
-  background: linear-gradient(180deg, var(--color-brand-gold), var(--color-brand-red));
-}
+/* rt-hero-accent-line removed as requested */
 
 .rt-hero .rt-container {
   position: relative;
@@ -502,10 +508,10 @@
 
 .rt-hero-title {
   color: #fff;
-  font-size: clamp(2.6rem, 5vw, 4.5rem);
+  font-size: clamp(2rem, 5vw, 3.25rem);
   font-weight: 900;
-  line-height: 1.02;
-  letter-spacing: -0.03em;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   text-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
 }
 
@@ -547,7 +553,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px;
-  max-width: 620px;
+  max-width: 800px;
   margin-top: 2.6rem;
   overflow: hidden;
   border-radius: 4px;
@@ -567,9 +573,10 @@
 .rt-hero-stat-value {
   color: var(--color-brand-gold);
   font-family: var(--font-montserrat);
-  font-size: 1.55rem;
+  font-size: 1.25rem;
   font-weight: 900;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .rt-hero-stat-label {
@@ -2683,19 +2690,32 @@
 }
 
 @media (max-width: 900px) {
-  .rt-topbar-brand,
   .rt-search-form {
     display: none;
   }
 
   .rt-logo-bar .rt-container {
-    min-height: 4.5rem;
+    min-height: 5.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
   }
 
   .rt-hamburger {
     display: inline-flex;
-    min-height: 3.2rem;
-    padding: 0 1rem;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+    background: #f0f0f0;
+    border: 1.5px solid #ddd;
+    color: var(--color-brand-dark);
+    transition: background 0.2s ease;
+  }
+
+  .rt-hamburger:active {
+    background: #e5e5e5;
   }
 
   .rt-mainnav .rt-container {
@@ -2783,8 +2803,8 @@
 
   .rt-topbar .rt-container {
     min-height: auto;
-    padding-top: 0.45rem;
-    padding-bottom: 0.45rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }
 
   .rt-topbar-links {
@@ -2823,13 +2843,14 @@
 
 @media (max-width: 560px) {
   .rt-topbar .rt-container {
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
   }
 
   .rt-topbar-ticker {
-    order: 3;
-    width: 100%;
+    display: none;
   }
 
   .rt-hero-stats {

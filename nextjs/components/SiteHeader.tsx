@@ -30,17 +30,6 @@ export function SiteHeader({ data }: SiteHeaderProps) {
               Wholesale China |
             </span>
           </div>
-
-          <div className="rt-topbar-links">
-            <a href="mailto:sales@realismthrift.com">
-              <Mail size={14} strokeWidth={2.2} />
-              Email
-            </a>
-            <a href="https://wa.me/8618800000001" target="_blank" rel="noreferrer">
-              <MessageCircle size={14} strokeWidth={2.2} />
-              WhatsApp
-            </a>
-          </div>
         </div>
       </div>
 
@@ -69,25 +58,26 @@ export function SiteHeader({ data }: SiteHeaderProps) {
             </button>
           </form>
 
-          <Link href="/#contact" className="rt-inquiry-btn">
-            {data.inquiryCta}
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link href="/#contact" className="rt-inquiry-btn">
+              {data.inquiryCta}
+            </Link>
+            <button
+              type="button"
+              className="rt-hamburger md:hidden"
+              aria-expanded={isMenuOpen}
+              aria-controls="rt-nav-list"
+              aria-label="Toggle navigation"
+              onClick={() => setIsMenuOpen((open) => !open)}
+            >
+              {isMenuOpen ? <X size={24} strokeWidth={2.4} /> : <Menu size={24} strokeWidth={2.4} />}
+            </button>
+          </div>
         </div>
       </div>
 
       <nav className="rt-mainnav" id="rt-mainnav" aria-label="Main navigation">
         <div className="rt-container">
-          <button
-            type="button"
-            className="rt-hamburger"
-            aria-expanded={isMenuOpen}
-            aria-controls="rt-nav-list"
-            aria-label="Toggle navigation"
-            onClick={() => setIsMenuOpen((open) => !open)}
-          >
-            {isMenuOpen ? <X size={24} strokeWidth={2.4} /> : <Menu size={24} strokeWidth={2.4} />}
-          </button>
-
           <ul
             id="rt-nav-list"
             className={`rt-nav-list${isMenuOpen ? " is-open" : ""}`}
