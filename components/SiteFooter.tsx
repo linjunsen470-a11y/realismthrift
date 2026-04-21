@@ -1,9 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowUp,
   Mail,
   MapPin,
   MessageCircle,
@@ -16,6 +16,19 @@ interface SiteFooterProps {
 }
 
 export function SiteFooter({ data }: SiteFooterProps) {
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 320);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <footer className="rt-footer">
       <div className="rt-container">
@@ -115,10 +128,12 @@ export function SiteFooter({ data }: SiteFooterProps) {
         <button
           type="button"
           aria-label="Back to top"
-          className="rt-floating-top"
+          aria-hidden={!showBackToTop}
+          hidden={!showBackToTop}
+          className={`rt-floating-top${showBackToTop ? " is-visible" : ""}`}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          <ArrowUp size={20} strokeWidth={2.5} />
+          <span className="rt-floating-top-glyph">▲</span>
         </button>
       </div>
     </footer>

@@ -40,12 +40,7 @@ export default function UsedBrandBagPage() {
     <main className="bg-white">
       {/* PAGE HERO */}
       <section
-        className="relative overflow-hidden py-[3.5rem_0_2.5rem]"
-        style={{
-          background: "linear-gradient(135deg,#1A1A1A 0%,#1a1510 50%,#8B6914 100%)",
-          padding: "3.5rem 0 2.5rem",
-          position: "relative",
-        }}
+        className="relative overflow-hidden py-[3.5rem] bg-[linear-gradient(135deg,#1A1A1A_0%,#1a1510_50%,#8B6914_100%)]"
       >
         {/* Background image overlay */}
         <div className="absolute inset-0">

@@ -138,7 +138,7 @@ export function InquiryForm({
           <a
             href="https://wa.me/8618800000001?text=Hi%2C+I+want+to+place+a+wholesale+order"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="rt-form-whatsapp"
           >
             <MessageCircle size={18} strokeWidth={2.2} />

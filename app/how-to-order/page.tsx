@@ -11,7 +11,7 @@ export default function HowToOrderPage() {
   return (
     <main className="bg-white">
       {/* PAGE HERO */}
-      <section className="rt-page-hero" style={{ background: "linear-gradient(135deg, #1A1A1A 0%, #2a1515 60%, #C0392B 100%)" }}>
+      <section className="rt-page-hero bg-[linear-gradient(135deg,#1A1A1A_0%,#2a1515_60%,#C0392B_100%)]">
         <div className="absolute inset-0 z-0">
           <Image 
             src="/images/reconstructed/1578575437130-527eed3abbec.jpg" 
