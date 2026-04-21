@@ -91,9 +91,9 @@ export default function UsedBrandShoesPage() {
       </div>
 
       {/* MAIN CONTENT */}
-      <div className="max-w-[1280px] mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-[1fr_320px] gap-10 items-start">
+      <div className="max-w-[1280px] mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10 items-start">
         
-        <div className="order-2 md:order-1">
+        <div>
           {/* BRAND LIST */}
           <section className="mb-12">
             <h2 className="font-montserrat text-[1.4rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-5">
@@ -234,8 +234,8 @@ export default function UsedBrandShoesPage() {
         </div>
 
         {/* SIDEBAR */}
-        <aside className="order-1 md:order-2 sticky top-[80px]">
-          <div id="inquiry" className="rt-sidebar-card">
+        <aside>
+          <div id="inquiry" className="sticky top-[100px] rt-sidebar-card">
             <div className="rt-sidebar-card-title">
               <h3 className="text-[1rem] font-extrabold m-0 uppercase tracking-wider">Get Shoe Price Now</h3>
               <p className="text-[0.7rem] opacity-80 m-0 mt-0.5 font-open-sans normal-case tracking-normal">Reply within 12 hours · Samples available</p>
