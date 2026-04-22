@@ -97,9 +97,10 @@ export default function UsedBrandShoesPage() {
         <div className="min-w-0">
           {/* BRAND LIST */}
           <section className="mb-12">
-            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-5">
-              Available Shoe Brands
-            </h2>
+            <div className="rt-subsection-heading">
+              <h2>Available Shoe Brands</h2>
+              <div className="rt-section-divider" />
+            </div>
             <div className="flex flex-wrap gap-2 mb-6">
               {['Nike', 'Adidas', 'Jordan', 'New Balance', 'Puma', 'Reebok', 'Converse', 'Vans', 'Timberland', 'Under Armour', 'Skechers', 'ASICS', 'Salomon', 'Merrell', 'Clarks', 'Dr. Martens', 'UGG', 'Birkenstock', 'Steve Madden', 'Cole Haan', 'Guess', 'Lacoste', 'Polo Ralph Lauren', 'Tommy Hilfiger', 'Calvin Klein', 'Fila', 'Champion', 'Kappa', 'Ellesse', 'Lotto'].map(brand => (
                 <span key={brand} className="bg-[#F5F5F0] border border-[#e0e0e0] text-[#333] px-3.5 py-1.5 rounded-[2px] text-[0.8rem] font-montserrat font-semibold">
@@ -111,9 +112,10 @@ export default function UsedBrandShoesPage() {
 
           {/* PRODUCT SHOWCASE */}
           <section className="mb-12">
-            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-5">
-              Product Categories
-            </h2>
+            <div className="rt-subsection-heading">
+              <h2>Product Categories</h2>
+              <div className="rt-section-divider" />
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {[
                 { title: 'Used Nike Shoes', img: '1542291026-7eec264c27ff', desc: 'Nike Air, Force 1, Jordan', spec: '25kg/sack (~40 pairs)' },
@@ -145,9 +147,10 @@ export default function UsedBrandShoesPage() {
 
           {/* SHOE SORTING PROCESS */}
           <section className="mb-12">
-            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-6">
-              Shoe Sorting & Cleaning Process
-            </h2>
+            <div className="rt-subsection-heading">
+              <h2>Shoe Sorting & Cleaning Process</h2>
+              <div className="rt-section-divider" />
+            </div>
             <p className="text-[0.9375rem] text-[#555] leading-[1.75] mb-7">
               Used brand shoes require a more detailed sorting process than clothing. Our dedicated shoe sorting team handles each pair individually to ensure quality and pairing accuracy.
             </p>
@@ -194,9 +197,10 @@ export default function UsedBrandShoesPage() {
 
           {/* SPECS TABLE */}
           <section className="scroll-mt-24 mb-12">
-            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-5">
-              Product Specifications
-            </h2>
+            <div className="rt-subsection-heading">
+              <h2>Product Specifications</h2>
+              <div className="rt-section-divider" />
+            </div>
             <div className="rt-table-wrap overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
               <table className="w-full border-collapse text-[0.8125rem] bg-white min-w-[650px]">
                 <thead>

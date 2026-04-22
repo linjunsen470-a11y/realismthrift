@@ -282,7 +282,7 @@ export default async function Home() {
           <div className="rt-about-inner">
             <div className="rt-about-image-wrap">
               <Image
-                src="/img/about-img.jpg"
+                src="/img/wholesale-inventory.webp"
                 alt="RealismThrift Export Co., Ltd factory"
                 width={760}
                 height={560}

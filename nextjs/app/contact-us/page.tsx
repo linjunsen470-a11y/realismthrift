@@ -69,7 +69,10 @@ export default function ContactUsPage() {
             
             {/* INQUIRY FORM COLUMN */}
             <div>
-              <h2 className="font-montserrat text-[1.5rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-8">Send Us an Inquiry</h2>
+              <div className="rt-subsection-heading">
+                <h2>Send Us an Inquiry</h2>
+                <div className="rt-section-divider" />
+              </div>
               <div className="bg-white border border-[#eee] rounded-[12px] p-8 md:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.05)]">
                  <InquiryForm />
                  <p className="text-center text-[0.75rem] text-gray-400 font-open-sans mt-5">
@@ -80,36 +83,6 @@ export default function ContactUsPage() {
 
             {/* SIDEBAR */}
             <aside className="space-y-10">
-              {/* OUR SALES TEAM SECTION */}
-              <div>
-                <h2 className="font-montserrat text-[1.25rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-7">Our Sales Team</h2>
-                <div className="space-y-4">
-                  {[
-                    { n: "Sarah Chen", r: "Africa & Middle East", l: "English, French, Arabic", i: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80", w: "868619128294940" },
-                    { n: "Michael Wang", r: "Southeast Asia", l: "English, Malay", i: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80", w: "868618924256802" },
-                    { n: "Lisa Zhang", r: "Europe & Americas", l: "English, Spanish, French", i: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80", w: "868618520376729" },
-                    { n: "James Liu", r: "East Africa", l: "English, Swahili", i: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80", w: "868619102069515" },
-                  ].map((member) => (
-                    <div key={member.n} className="bg-white border border-[#eee] rounded-[10px] p-5 flex gap-4 items-center shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-md transition-shadow">
-                      <Image src={member.i} alt={member.n} width={56} height={56} className="w-14 h-14 rounded-full object-cover shrink-0 border-2 border-brand-light" />
-                      <div className="flex-1 min-width-0">
-                        <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark">{member.n}</div>
-                        <div className="text-[0.75rem] text-brand-red font-bold my-0.5 tracking-tight">{member.r}</div>
-                        <div className="text-[0.7rem] text-[#888] font-medium">{member.l}</div>
-                      </div>
-                      <a 
-                        href={`https://wa.me/${member.w}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="bg-[#25D366] text-white px-4 py-2 rounded-full text-[0.7rem] font-black font-montserrat hover:bg-[#1da851] uppercase tracking-wider transition-colors"
-                      >
-                        Chat
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
               {/* FACTORY COMPANY INFO CARD */}
               <div className="bg-brand-dark rounded-[10px] p-7 text-white shadow-xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-brand-red/10 rounded-bl-full -mr-12 -mt-12" />
@@ -141,9 +114,9 @@ export default function ContactUsPage() {
       <section className="bg-brand-light py-20">
         <div className="rt-container">
           <div className="text-center mb-14">
-            <span className="inline-block bg-brand-red text-white text-[10px] font-black px-3 py-1 rounded-sm tracking-widest mb-4 uppercase">Global Reach</span>
-            <h2 className="font-montserrat text-[1.75rem] font-black text-brand-dark mb-4">WE EXPORT TO {companyStats.countriesCount} COUNTRIES</h2>
-            <div className="w-16 h-1 bg-brand-red mx-auto mb-6" />
+            <span className="rt-section-badge" style={{display:'inline-block'}}>Global Reach</span>
+            <h2 className="font-montserrat text-[1.75rem] font-black text-brand-dark mb-3">WE EXPORT TO {companyStats.countriesCount} COUNTRIES</h2>
+            <div className="rt-section-divider center mb-6" />
             <p className="text-[#666] text-[0.9375rem] max-w-[640px] mx-auto font-open-sans italic">
               Our products reach buyers across 6 continents. Find your regional sales expertise below for localized wholesale solutions.
             </p>
@@ -174,7 +147,10 @@ export default function ContactUsPage() {
       <section className="py-20 bg-white">
         <div className="rt-container">
           <div className="max-w-[1000px] mx-auto">
-            <h2 className="font-montserrat text-[1.5rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-8">Our Factory Location</h2>
+            <div className="rt-subsection-heading">
+              <h2>Our Factory Location</h2>
+              <div className="rt-section-divider" />
+            </div>
             <div className="w-full h-[450px] rounded-[16px] overflow-hidden border border-[#eee] shadow-2xl relative">
                 <iframe 
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117565.17833008985!2d113.19792556519213!3d23.136269931818274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3402f8c47f711f11%3A0xc3b8dc0a45bdada1!2sGuangzhou%2C%20Guangdong%20Province%2C%20China!5e0!3m2!1sen!2sus!4v1713500000000!5m2!1sen!2sus" 
