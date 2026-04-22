@@ -4,10 +4,10 @@ import { hasUsableImageAsset, urlForImage } from "@/lib/sanity/image";
 
 export const portableTextComponents: PortableTextComponents = {
   block: {
-    normal: ({ children }) => <p>{children}</p>,
-    h2: ({ children }) => <h2>{children}</h2>,
-    h3: ({ children }) => <h3>{children}</h3>,
-    h4: ({ children }) => <h4>{children}</h4>,
+    normal: ({ children }) => <p className="mb-8 leading-relaxed">{children}</p>,
+    h2: ({ children }) => <h2 className="rt-prose-h2">{children}</h2>,
+    h3: ({ children }) => <h3 className="rt-prose-h3">{children}</h3>,
+    h4: ({ children }) => <h4 className="rt-prose-h4">{children}</h4>,
     blockquote: ({ children }) => (
       <blockquote className="rt-prose-quote">{children}</blockquote>
     ),
