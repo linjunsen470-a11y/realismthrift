@@ -168,20 +168,24 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
-  background: #fcf4f2; /* Light warm background matching reference */
-  color: var(--color-brand-gold);
-  padding: 0.35rem 1.1rem;
+  background: linear-gradient(180deg, #f4ddd7 0%, #ecd0c6 100%);
+  color: var(--color-brand-dark);
+  padding: 0.42rem 1.15rem;
+  border: 1px solid rgba(169, 72, 53, 0.14);
   border-radius: 999px;
   font-family: var(--font-montserrat);
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  box-shadow: 0 6px 14px rgba(192, 57, 43, 0.05);
 }
 
 .rt-section-badge.light {
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
 }
 
 .rt-section-title {

@@ -83,7 +83,7 @@ export default function UsedBrandBagPage() {
               rel="noopener noreferrer"
               className="bg-white/[.12] border border-white/30 text-white font-montserrat font-semibold text-[0.85rem] px-6 py-[0.7rem] rounded-[3px] no-underline hover:bg-white/20 transition-colors"
             >
-              💬 WhatsApp
+              WhatsApp
             </a>
           </div>
         </div>
@@ -312,7 +312,7 @@ export default function UsedBrandBagPage() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-[3px] no-underline font-montserrat font-bold text-[0.875rem] hover:bg-[#1da851] transition-colors"
               >
-                💬 Chat on WhatsApp
+                Chat on WhatsApp
               </a>
             </div>
           </div>

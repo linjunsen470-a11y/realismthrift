@@ -34,12 +34,6 @@ export function LatestBlogSection({ posts }: LatestBlogSectionProps) {
                 <BlogCard key={post._id} post={post} />
               ))}
             </div>
-
-            <div className="rt-news-footer">
-              <p>
-                Want to read more articles about the second-hand wholesale industry?
-              </p>
-            </div>
           </>
         ) : (
           <div className="rt-empty-state">
