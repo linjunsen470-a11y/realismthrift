@@ -10,9 +10,9 @@
     "clean": "next clean"
   },
   "dependencies": {
-    "@portabletext/react": "^6.0.3",
     "@google/genai": "^1.17.0",
     "@hookform/resolvers": "^5.2.1",
+    "@portabletext/react": "^6.0.3",
     "@sanity/image-url": "^2.1.1",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
@@ -21,6 +21,7 @@
     "motion": "^12.23.24",
     "next": "^16.0.0",
     "next-sanity": "^12.3.0",
+    "nextjs-toploader": "^3.9.17",
     "postcss": "^8.5.6",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
