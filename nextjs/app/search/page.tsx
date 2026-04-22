@@ -54,7 +54,7 @@ function SearchHero({
       </div>
       <div className="absolute inset-0 z-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.22)_0%,rgba(0,0,0,0.5)_100%)]" />
 
-      <div className="rt-container relative z-10 py-11 text-center sm:py-14 lg:py-20 xl:py-24">
+      <div className="rt-container relative z-10 py-14 text-center sm:py-20 lg:py-32 xl:py-40">
         <span className="rt-section-badge light mb-3 inline-flex text-[10px] tracking-[0.2em] opacity-60 md:text-xs">
           SITE SEARCH
         </span>
