@@ -12,8 +12,14 @@ type InquiryPayload = {
   product: string;
   quantity: string;
   message: string;
-  company: string;
+  website: string;
 };
+
+type ApiErrorCode =
+  | 'validation_error'
+  | 'rate_limited'
+  | 'delivery_failed'
+  | 'config_error';
 
 type RateLimitStore = Map<string, number[]>;
 
@@ -26,18 +32,13 @@ if (!(globalThis as typeof globalThis & { __inquiryRateLimitStore?: RateLimitSto
 }
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const whatsappPattern = /^[+\d\s\-()]{7,20}$/;
-const allowedProducts = new Set([
-  '',
-  'Used Brand Clothes',
-  'Used Brand Shoes',
-  'Used Brand Bags',
-  'Mixed Products',
-]);
-const allowedQuantities = new Set(['', '100bales', '20ft', '40ft', '2x40ft']);
 
 function normalizeText(value: unknown, maxLength: number) {
   return String(value ?? '').replace(/\s+/g, ' ').trim().slice(0, maxLength);
+}
+
+function jsonError(code: ApiErrorCode, message: string, status: number) {
+  return NextResponse.json({ ok: false, code, message }, { status });
 }
 
 function escapeHtml(value: string) {
@@ -87,10 +88,10 @@ function validatePayload(body: unknown): { data?: InquiryPayload; error?: string
     product: normalizeText(record.product, 40),
     quantity: normalizeText(record.quantity, 20),
     message: normalizeText(record.message, 2000),
-    company: normalizeText(record.company, 80),
+    website: normalizeText(record.website, 80),
   };
 
-  if (data.company) {
+  if (data.website) {
     return { error: 'Invalid request payload.' };
   }
 
@@ -102,23 +103,22 @@ function validatePayload(body: unknown): { data?: InquiryPayload; error?: string
     return { error: 'Invalid email address.' };
   }
 
-  if (!whatsappPattern.test(data.whatsapp)) {
-    return { error: 'Invalid WhatsApp number.' };
-  }
-
-  if (!allowedProducts.has(data.product) || !allowedQuantities.has(data.quantity)) {
-    return { error: 'Invalid form selection.' };
-  }
-
   return { data };
 }
 
 export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   const contactEmail = process.env.CONTACT_EMAIL || 'sales@realismthrift.com';
-  const fromEmail = process.env.CONTACT_FROM_EMAIL || 'sales@realismthrift.com';
-  if (!apiKey) {
-    return NextResponse.json({ error: 'Failed to send inquiry' }, { status: 500 });
+  const fromEmail = process.env.CONTACT_FROM_EMAIL 
+    ? normalizeText(process.env.CONTACT_FROM_EMAIL, 120).toLowerCase() 
+    : 'onboarding@resend.dev';
+
+  if (!apiKey || !fromEmail || !emailPattern.test(fromEmail)) {
+    return jsonError(
+      'config_error',
+      'Inquiry service is temporarily unavailable. Please contact us via WhatsApp or email directly.',
+      500,
+    );
   }
 
   const resend = new Resend(apiKey);
@@ -126,17 +126,25 @@ export async function POST(request: Request) {
   try {
     const clientIp = getClientIp(request);
     if (isRateLimited(clientIp)) {
-      return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+      return jsonError(
+        'rate_limited',
+        'Too many inquiries were submitted from this connection. Please wait a few minutes and try again.',
+        429,
+      );
     }
 
     const parsed = validatePayload(await request.json());
     if (!parsed.data) {
-      return NextResponse.json({ error: parsed.error ?? 'Invalid request payload.' }, { status: 400 });
+      return jsonError(
+        'validation_error',
+        parsed.error ?? 'Invalid request payload.',
+        400,
+      );
     }
 
     const { name, email, whatsapp, country, product, quantity, message } = parsed.data;
 
-    const data = await resend.emails.send({
+    const result = await resend.emails.send({
       from: `RealismThrift <${fromEmail}>`,
       to: [contactEmail],
       subject: `New Lead: ${escapeHtml(name)} from ${escapeHtml(country || 'Unknown Country')}`,
@@ -152,9 +160,26 @@ export async function POST(request: Request) {
       `,
     });
 
-    return NextResponse.json(data);
+    if (result.error || !result.data?.id) {
+      console.error('Failed to send inquiry', result.error);
+      return jsonError(
+        'delivery_failed',
+        'We could not send your inquiry right now. Please try again or contact us via WhatsApp.',
+        502,
+      );
+    }
+
+    return NextResponse.json({
+      ok: true,
+      id: result.data.id,
+      message: 'Inquiry received. Our sales team will contact you within 12 hours.',
+    });
   } catch (error) {
     console.error('Failed to send inquiry', error);
-    return NextResponse.json({ error: 'Failed to send inquiry' }, { status: 500 });
+    return jsonError(
+      'delivery_failed',
+      'We could not send your inquiry right now. Please try again or contact us via WhatsApp.',
+      500,
+    );
   }
 }
