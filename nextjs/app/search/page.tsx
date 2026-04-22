@@ -49,24 +49,24 @@ function SearchHero({
           alt="RealismThrift wholesale inventory"
           fill
           priority
-          className="object-cover opacity-[0.22]"
+          className="object-cover opacity-[0.28]"
         />
       </div>
-      <div className="absolute inset-0 z-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.22)_0%,rgba(0,0,0,0.5)_100%)]" />
-
-      <div className="rt-container relative z-10 py-14 text-center sm:py-20 lg:py-32 xl:py-40">
-        <span className="rt-section-badge light mb-3 inline-flex text-[10px] tracking-[0.2em] opacity-60 md:text-xs">
+      <div className="absolute inset-0 z-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.5)_100%)]" />
+ 
+      <div className="rt-container relative z-10 min-h-[190px] flex flex-col justify-center py-20 text-center sm:min-h-0 sm:py-16 lg:py-24 xl:py-28">
+        <span className="rt-section-badge light mb-6 inline-flex text-[10px] tracking-[0.2em] opacity-70 md:text-xs">
           SITE SEARCH
         </span>
-        <h1 className="mx-auto mb-4 max-w-5xl font-montserrat text-[clamp(2rem,6vw,4.75rem)] font-light leading-[0.96] tracking-tight text-white lg:mb-5">
+        <h1 className="mx-auto mb-6 max-w-5xl font-montserrat text-[clamp(2.4rem,8vw,4.5rem)] font-light leading-[0.92] tracking-tight text-white lg:mb-6">
           Search <span className="font-black text-brand-gold italic">Results</span>
         </h1>
         {query ? (
-          <p className="mx-auto max-w-[44rem] px-4 text-sm font-light leading-relaxed text-white/75 sm:text-base lg:text-[1.15rem]">
+          <p className="mx-auto max-w-[46rem] px-4 text-sm font-light leading-relaxed text-white/80 sm:text-base lg:text-[1.15rem]">
             Displaying matches for <span className="font-bold text-white italic">&quot;{query}&quot;</span>.
           </p>
         ) : (
-          <p className="mx-auto max-w-[44rem] px-4 text-sm font-light leading-relaxed text-white/75 sm:text-base lg:text-[1.15rem]">
+          <p className="mx-auto max-w-[46rem] px-4 text-sm font-light leading-relaxed text-white/80 sm:text-base lg:text-[1.15rem]">
             Search products, shipping guidance, pricing, payment terms, and blog insights.
           </p>
         )}
@@ -336,12 +336,12 @@ export default async function SearchPage({
                   <div className="mb-3 text-center text-[0.72rem] font-montserrat font-bold uppercase tracking-[0.14em] text-[#8e7d70]">
                     Try These Searches Instead
                   </div>
-                  <div className="flex flex-wrap justify-center gap-3">
+                  <div className="flex flex-wrap justify-center gap-2 sm:flex-nowrap sm:gap-3">
                     {suggestedTerms.map((term) => (
                       <Link
                         key={term}
                         href={`/search?q=${encodeURIComponent(term)}`}
-                        className="rounded-[3px] border border-[#dfd2c2] bg-white px-4 py-2 text-[0.74rem] font-montserrat font-bold uppercase tracking-[0.08em] text-brand-dark transition-colors hover:border-brand-red/25 hover:text-brand-red"
+                        className="whitespace-nowrap rounded-[3px] border border-[#dfd2c2] bg-white px-3 py-2 text-[0.74rem] font-montserrat font-bold uppercase tracking-[0.08em] text-brand-dark transition-colors hover:border-brand-red/25 hover:text-brand-red sm:px-4"
                       >
                         {term}
                       </Link>
