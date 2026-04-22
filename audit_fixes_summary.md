@@ -13,6 +13,8 @@ We established a "Master Data" source to ensure all pages speak with one voice.
 | **Export Reach** | 100+ / 110+ / 120+ (Conflicting) | **100+ Countries** |
 | **Facility Size** | 15,000m² | **15,000m²** (Standardized) |
 | **Response Time** | 24/7 (Impossible for B2B) | **Within 12 hours** |
+| **WhatsApp/Phone**| +86 188 0000 0001 | **+86 133 6748 1710** |
+| **Main Address**  | Guangzhou | **Huizhou (Boluo County)** |
 
 ## 2. Removal of Over-promised Claims
 

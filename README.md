@@ -67,5 +67,10 @@ This digital platform is built with modern web technologies to ensure a premium 
 ## Professional Service Network
 For a detailed breakdown of our sourcing, quality control, and logistics operations, please refer to [AGENTS.MD](AGENTS.MD).
 
+## Contact Us
+- **Address**: Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
+- **WhatsApp**: [+86 133 6748 1710](https://wa.me/8613367481710)
+- **Email**: sales@realismthrift.com
+
 ---
 © 2026 RealismThrift Export Co., Ltd. All Rights Reserved.
