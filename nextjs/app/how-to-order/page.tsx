@@ -184,8 +184,15 @@ export default function HowToOrderPage() {
               <span className="bg-[#F5F5F0] border border-[#e0e0e0] text-[#333] px-3 py-1.5 rounded-sm text-[0.75rem] font-montserrat font-semibold">Flexible Compensation</span>
             </div>
           </div>
-          <div className="relative min-h-[280px]">
-             <Image src="/img/order/step-shipment.jpg" alt="Shipment" fill className="object-cover" />
+          <div className="relative h-[260px] md:h-auto md:min-h-[280px]">
+             <Image
+               src="/images/reconstructed/1494412574643-ff11b0a5c1c3.jpg"
+               alt="Shipment and after-sales support at the destination port"
+               fill
+               sizes="(min-width: 768px) 50vw, 100vw"
+               className="object-cover object-[58%_52%] md:object-center"
+               priority
+             />
           </div>
         </div>
       </section>
