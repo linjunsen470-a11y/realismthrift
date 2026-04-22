@@ -31,3 +31,6 @@ sanity/.cache/
 # Local tooling / audit artifacts
 .playwright-mcp/
 code_audit_report_*.md
+nextjs/scratch/
+nextjs/unused_files.txt
+index_filter.sh
