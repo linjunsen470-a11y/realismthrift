@@ -82,12 +82,16 @@ export default async function BlogPostPage({
   return (
     <article>
       {/* HERO SECTION */}
-      <section
-        className="rt-page-hero rt-blog-hero"
-        style={{ backgroundImage: `url("${heroImage}")` }}
-      >
-        <div className="rt-page-hero-overlay" />
-        <div className="rt-container">
+      <section className="rt-page-hero rt-blog-hero relative overflow-hidden">
+        <Image
+          src={heroImage}
+          alt={post.title}
+          fill
+          className="object-cover z-0"
+          priority
+        />
+        <div className="rt-page-hero-overlay relative z-1" />
+        <div className="rt-container relative z-10">
           <div className="rt-fade-in">
             <Link href="/blog" className="rt-blog-back-link">
               <ArrowLeft size={14} strokeWidth={3} />

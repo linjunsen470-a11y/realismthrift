@@ -143,7 +143,7 @@ export default function UsedBrandClothesPage() {
               <div className="w-[4px] h-[26px] bg-[#C0392B] rounded-[2px] shrink-0" />
               <h2 className="font-montserrat font-extrabold text-[1.4rem] text-[#1A1A1A] m-0">Our 5-Step Sorting Process</h2>
             </div>
-            <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0 mb-[2.5rem]">This is what separates RealismThrift Export from ordinary second-hand dealers. We don't just ship mixed bags — we deliver professionally sorted, consistently graded merchandise that your customers will trust. Every single bale passes through all five steps before it leaves our facility.</p>
+            <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0 mb-[2.5rem]">This is what separates RealismThrift Export from ordinary second-hand dealers. We don&apos;t just ship mixed bags — we deliver professionally sorted, consistently graded merchandise that your customers will trust. Every single bale passes through all five steps before it leaves our facility.</p>
 
             {/* STEP 1 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem] items-center mb-[3rem]">
@@ -188,7 +188,7 @@ export default function UsedBrandClothesPage() {
                     <h3 className="font-montserrat font-extrabold text-[1.1rem] text-[#1A1A1A] m-0">Brand Identification & Authentication</h3>
                   </div>
                 </div>
-                <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1rem]">Our trained sorters examine every garment's brand label, care label, and stitching quality under magnified lighting. The team has memorized the label characteristics of 200+ brands and can quickly identify authentic branded items from generic ones. Items are grouped into brand-specific bins for downstream processing.</p>
+                <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1rem]">Our trained sorters examine every garment&apos;s brand label, care label, and stitching quality under magnified lighting. The team has memorized the label characteristics of 200+ brands and can quickly identify authentic branded items from generic ones. Items are grouped into brand-specific bins for downstream processing.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-[0.625rem]">
                   {[
                     'Label verification (brand, origin, fabric)',
@@ -219,7 +219,7 @@ export default function UsedBrandClothesPage() {
                     <h3 className="font-montserrat font-extrabold text-[1.1rem] text-[#1A1A1A] m-0">Quality Grading: A / B / C</h3>
                   </div>
                 </div>
-                <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1.25rem]">Each garment is assessed against our standardized 3-tier grading system. Graders evaluate fabric condition, color fastness, stain presence, pilling, and overall wearability using a 6-point checklist. This grading system is consistent across all batches — so buyers always know exactly what they're receiving.</p>
+                <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1.25rem]">Each garment is assessed against our standardized 3-tier grading system. Graders evaluate fabric condition, color fastness, stain presence, pilling, and overall wearability using a 6-point checklist. This grading system is consistent across all batches — so buyers always know exactly what they&apos;re receiving.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-[0.75rem]">
                   <div className="border-2 border-[#27AE60] rounded-[4px] p-[0.875rem] text-center">
                     <div className="font-montserrat font-extrabold text-[0.875rem] text-[#27AE60] mb-[0.4rem]">Grade A</div>
@@ -248,7 +248,7 @@ export default function UsedBrandClothesPage() {
               <div>
                 <div className="text-[0.7rem] text-[#F0B429] font-montserrat font-bold tracking-[0.08em] uppercase mb-[0.3rem]">Step 04</div>
                 <h3 className="font-montserrat font-extrabold text-[1.1rem] text-white m-0 mb-[0.75rem]">Cleaning, Deodorizing & Steam Pressing</h3>
-                <p className="font-open-sans text-[0.9rem] text-white/70 leading-[1.8] m-0 mb-[1.25rem]">All Grade A garments undergo industrial cleaning and deodorizing before packing. Steam pressing restores the garment's original shape. This step ensures your customers receive merchandise that looks and smells fresh — a critical factor for retail resale success.</p>
+                <p className="font-open-sans text-[0.9rem] text-white/70 leading-[1.8] m-0 mb-[1.25rem]">All Grade A garments undergo industrial cleaning and deodorizing before packing. Steam pressing restores the garment&apos;s original shape. This step ensures your customers receive merchandise that looks and smells fresh — a critical factor for retail resale success.</p>
                 <div className="flex flex-wrap gap-[0.625rem]">
                   {[
                     'Industrial steam cleaning',
@@ -308,7 +308,7 @@ export default function UsedBrandClothesPage() {
           <section className="mb-[3rem]">
             <div className="flex items-center gap-[0.75rem] mb-[1.25rem]">
               <div className="w-[4px] h-[26px] bg-[#C0392B] rounded-[2px] shrink-0" />
-              <h2 className="font-montserrat font-extrabold text-[1.4rem] text-[#1A1A1A] m-0">What's Inside a Typical Bale</h2>
+              <h2 className="font-montserrat font-extrabold text-[1.4rem] text-[#1A1A1A] m-0">What&apos;s Inside a Typical Bale</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem] items-center">
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12)] relative h-[320px]">
