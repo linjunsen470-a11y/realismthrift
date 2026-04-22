@@ -54,12 +54,14 @@ export function SiteFooter({ data }: SiteFooterProps) {
               <Mail size={18} strokeWidth={2.2} />
               <a href={`mailto:${data.brand.email}`}>{data.brand.email}</a>
             </div>
-            <div className="rt-footer-contact-item">
-              <MessageCircle size={18} strokeWidth={2.2} />
-              <a href={`https://wa.me/${data.brand.whatsapp.replace(/\s/g, "")}`} target="_blank" rel="noreferrer">
-                {data.brand.whatsapp}
-              </a>
-            </div>
+            {data.brand.whatsapp && (
+              <div className="rt-footer-contact-item">
+                <MessageCircle size={18} strokeWidth={2.2} />
+                <a href={`https://wa.me/${data.brand.whatsapp.replace(/\s/g, "")}`} target="_blank" rel="noreferrer">
+                  {data.brand.whatsapp}
+                </a>
+              </div>
+            )}
             <div className="rt-footer-contact-item">
               <Phone size={18} strokeWidth={2.2} />
               <a href="tel:+8613367481710">{data.brand.phone}</a>
