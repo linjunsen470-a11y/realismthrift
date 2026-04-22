@@ -8,18 +8,24 @@ interface InquiryFormProps {
   showWhatsApp?: boolean;
 }
 
+type SubmissionState =
+  | { status: "idle" | "loading" }
+  | { status: "success"; message: string }
+  | { status: "error"; message: string };
+
 export function InquiryForm({
   variant = "default",
   showWhatsApp = false,
 }: InquiryFormProps) {
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [submission, setSubmission] = useState<SubmissionState>({ status: "idle" });
   const isSidebar = variant === "sidebar";
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setStatus("loading");
+    setSubmission({ status: "loading" });
 
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries());
 
     try {
@@ -31,20 +37,39 @@ export function InquiryForm({
         body: JSON.stringify(payload),
       });
 
-      setStatus(response.ok ? "success" : "error");
+      const result = (await response.json().catch(() => null)) as
+        | { ok?: boolean; message?: string }
+        | null;
+
+      if (response.ok && result?.ok) {
+        form.reset();
+        setSubmission({
+          status: "success",
+          message: result.message ?? "Inquiry received. Our sales team will contact you within 12 hours.",
+        });
+        return;
+      }
+
+      setSubmission({
+        status: "error",
+        message:
+          result?.message ??
+          "We could not send your inquiry right now. Please try again or contact us via WhatsApp.",
+      });
     } catch {
-      setStatus("error");
+      setSubmission({
+        status: "error",
+        message: "Network error. Please try again or contact us via WhatsApp.",
+      });
     }
   }
 
-  if (status === "success") {
+  if (submission.status === "success") {
     return (
       <div className={`rt-form-state rt-form-state-success${isSidebar ? " is-sidebar" : ""}`}>
         <CheckCircle2 size={24} strokeWidth={2.2} />
-        <h3>Inquiry Sent Successfully!</h3>
-        <p>
-          Our sales team will reply to your email or WhatsApp within 12 hours.
-        </p>
+        <h3>Inquiry Received</h3>
+        <p>{submission.message}</p>
       </div>
     );
   }
@@ -57,11 +82,12 @@ export function InquiryForm({
       <div className="rt-form-grid">
         <input
           type="text"
-          name="company"
+          name="website"
           tabIndex={-1}
-          autoComplete="off"
+          autoComplete="new-password"
           className="hidden"
           aria-hidden="true"
+          data-lpignore="true"
         />
 
         <div className="rt-form-group">
@@ -141,9 +167,13 @@ export function InquiryForm({
       </div>
 
       <div className={`rt-form-actions${isSidebar ? " is-sidebar" : ""}`}>
-        <button type="submit" className="rt-form-submit" disabled={status === "loading"}>
-          {status === "loading" ? "SENDING..." : "SEND INQUIRY NOW"}
-          {status !== "loading" && <ArrowRight size={16} strokeWidth={2.25} />}
+        <button
+          type="submit"
+          className="rt-form-submit"
+          disabled={submission.status === "loading"}
+        >
+          {submission.status === "loading" ? "SENDING..." : "SEND INQUIRY NOW"}
+          {submission.status !== "loading" && <ArrowRight size={16} strokeWidth={2.25} />}
         </button>
 
         {showWhatsApp && !isSidebar ? (
@@ -163,10 +193,10 @@ export function InquiryForm({
         <p className="rt-form-note">Reply within 12 hours | Free consultation | No spam</p>
       ) : null}
 
-      {status === "error" ? (
+      {submission.status === "error" ? (
         <div className="rt-form-state rt-form-state-error">
           <TriangleAlert size={18} strokeWidth={2.2} />
-          <p>Failed to send. Please contact us via WhatsApp or Email directly.</p>
+          <p>{submission.message}</p>
         </div>
       ) : null}
     </form>
