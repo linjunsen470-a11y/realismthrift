@@ -15,7 +15,7 @@ export default function AboutUsPage() {
       <section className="relative px-0 py-14 overflow-hidden rt-about-hero-bg">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/images/reconstructed/1504307651254-35680f356dfd.jpg" 
+            src="/images/about/hero-bg.jpg" 
             alt="About background" 
             fill 
             className="object-cover opacity-[0.12]" 
@@ -102,13 +102,13 @@ export default function AboutUsPage() {
           
           <div className="grid grid-cols-2 gap-3.5">
             <div className="relative h-[200px] w-full rounded-[6px] overflow-hidden">
-               <Image src="/images/reconstructed/1504307651254-35680f356dfd.jpg" alt="RealismThrift Factory" fill className="object-cover" />
+               <Image src="/images/about/story-factory.jpg" alt="RealismThrift Factory" fill className="object-cover" />
             </div>
             <div className="relative h-[200px] w-full rounded-[6px] overflow-hidden">
-               <Image src="/images/reconstructed/1558618666-fcd25c85cd64.jpg" alt="Sorting Process" fill className="object-cover" />
+               <Image src="/images/about/sorting-process.jpg" alt="Sorting Process" fill className="object-cover" />
             </div>
             <div className="relative h-[200px] w-full col-span-2 rounded-[6px] overflow-hidden">
-               <Image src="/images/reconstructed/1553413077-190dd305871c.jpg" alt="Packing Process" fill className="object-cover" />
+               <Image src="/images/about/packing-process.jpg" alt="Packing Process" fill className="object-cover" />
             </div>
           </div>
         </div>
@@ -119,6 +119,7 @@ export default function AboutUsPage() {
         <div className="max-w-[1280px] mx-auto px-6">
           <div className="text-center mb-10">
             <h2 className="font-montserrat text-[1.75rem] font-extrabold text-white mb-3.5">Meet Our Team</h2>
+            <div className="rt-section-divider center mb-4" />
             <p className="text-white/65 text-[0.9375rem] max-w-[600px] mx-auto">
               Our team of 200+ professionals is dedicated to delivering the highest quality used branded merchandise to wholesale buyers worldwide.
             </p>
@@ -126,7 +127,7 @@ export default function AboutUsPage() {
 
           <div className="rounded-[12px] overflow-hidden mb-10 relative">
             <div className="relative w-full h-[400px]">
-              <Image src="/images/reconstructed/1522071820081-009f0129c71c.jpg" alt="RealismThrift Team" fill className="object-cover" />
+              <Image src="/images/about/team-group.jpg" alt="RealismThrift Team" fill className="object-cover" />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
             <div className="absolute bottom-8 left-8 right-8">
@@ -137,14 +138,14 @@ export default function AboutUsPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { img: "1558618666-fcd25c85cd64", title: "Sorting Team", desc: "80+ sorters with 3+ years experience each. Specialized teams for clothes, shoes, and bags." },
-              { img: "1567401893414-76b7b1e5a7a5", title: "Quality Control", desc: "30+ QC inspectors. Every item passes 6-point inspection before packing." },
-              { img: "1507003211169-0a1dd7228f2d", title: "Sales Team", desc: "20+ multilingual sales staff. English, French, Spanish, Arabic, Swahili." },
-              { img: "1494412574643-ff11b0a5c1c3", title: "Logistics Team", desc: "15+ logistics specialists. Handle all export documentation and freight coordination." }
+              { img: "sorting-process.jpg", title: "Sorting Team", desc: "80+ sorters with 3+ years experience each. Specialized teams for clothes, shoes, and bags." },
+              { img: "quality-control.jpg", title: "Quality Control", desc: "30+ QC inspectors. Every item passes 6-point inspection before packing." },
+              { img: "sales-team.jpg", title: "Sales Team", desc: "20+ multilingual sales staff. English, French, Spanish, Arabic, Swahili." },
+              { img: "logistics-team.jpg", title: "Logistics Team", desc: "15+ logistics specialists. Handle all export documentation and freight coordination." }
             ].map(team => (
               <div key={team.title} className="bg-white/5 border border-white/10 rounded-[8px] overflow-hidden">
                 <div className="relative h-[140px] w-full">
-                  <Image src={`/images/reconstructed/${team.img}.jpg`} alt={team.title} fill className="object-cover" />
+                  <Image src={`/images/about/${team.img}`} alt={team.title} fill className="object-cover" />
                 </div>
                 <div className="p-4">
                   <div className="font-montserrat text-[0.875rem] font-bold text-brand-gold mb-2">{team.title}</div>
@@ -158,22 +159,25 @@ export default function AboutUsPage() {
 
       {/* FACTORY PHOTOS */}
       <section className="max-w-[1280px] mx-auto px-6 py-16">
-        <h2 className="font-montserrat text-[1.5rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-7">Our Facility</h2>
+        <div className="rt-subsection-heading">
+          <h2>Our Facility</h2>
+          <div className="rt-section-divider" />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 grid-rows-2 gap-3.5 md:h-[400px]">
           <div className="relative rounded-[8px] overflow-hidden lg:col-span-2 row-span-2 min-h-[200px]">
-            <Image src="/images/reconstructed/1504307651254-35680f356dfd.jpg" alt="Main Sorting Hall" fill className="object-cover" />
+            <Image src="/images/about/factory-hall.jpg" alt="Main Sorting Hall" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-             <Image src="/images/reconstructed/1553413077-190dd305871c.jpg" alt="Packing Area" fill className="object-cover" />
+             <Image src="/images/about/packing-area-premium.png" alt="Packing Area" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-             <Image src="/images/reconstructed/1578575437130-527eed3abbec.jpg" alt="Loading Dock" fill className="object-cover" />
+             <Image src="/images/about/loading-dock-premium.png" alt="Loading Dock" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-             <Image src="/images/reconstructed/1542291026-7eec264c27ff.jpg" alt="Shoe Sorting" fill className="object-cover" />
+             <Image src="/images/about/sorting-process.jpg" alt="Shoe Sorting" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-             <Image src="/images/reconstructed/1548036328-c9fa89d128fa.jpg" alt="Bag Inspection" fill className="object-cover" />
+             <Image src="/images/about/bag-inspection.jpg" alt="Bag Inspection" fill className="object-cover" />
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">
@@ -201,6 +205,7 @@ export default function AboutUsPage() {
         <div className="max-w-[1280px] mx-auto px-6">
           <div className="text-center mb-10">
             <h2 className="font-montserrat text-[1.5rem] font-extrabold text-brand-dark mb-3.5">Our Production Process</h2>
+            <div className="rt-section-divider center mb-4" />
             <p className="text-[#666] text-[0.9375rem] max-w-[600px] mx-auto">From raw material collection to container loading — every step is managed by our dedicated team.</p>
           </div>
           
@@ -228,7 +233,10 @@ export default function AboutUsPage() {
       <section className="max-w-[1280px] mx-auto px-6 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="font-montserrat text-[1.5rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-6">Certifications & Trust Signals</h2>
+            <div className="rt-subsection-heading">
+              <h2>Certifications &amp; Trust Signals</h2>
+              <div className="rt-section-divider" />
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 { title: 'Export License', desc: 'Official Chinese export license for used textile products.' },
@@ -247,7 +255,10 @@ export default function AboutUsPage() {
           </div>
           
           <div>
-            <h2 className="font-montserrat text-[1.5rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-6">What Our Buyers Say</h2>
+            <div className="rt-subsection-heading">
+              <h2>What Our Buyers Say</h2>
+              <div className="rt-section-divider" />
+            </div>
             {[
               { name: 'Emmanuel Osei', country: 'Ghana' },
               { name: 'Fatima Al-Hassan', country: 'Nigeria' },

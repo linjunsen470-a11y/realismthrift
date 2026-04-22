@@ -14,10 +14,10 @@ export default function HowToOrderPage() {
       <section className="rt-page-hero bg-[linear-gradient(135deg,#1A1A1A_0%,#2a1515_60%,#C0392B_100%)]">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/images/reconstructed/1578575437130-527eed3abbec.jpg" 
+            src="/img/order/order-hero.jpg" 
             alt="How to order background" 
             fill 
-            className="object-cover opacity-[0.08]" 
+            className="object-cover opacity-[0.4]" 
             priority 
           />
         </div>
@@ -38,6 +38,7 @@ export default function HowToOrderPage() {
       <section className="max-w-[1280px] mx-auto px-6 py-16">
         <div className="text-center mb-12">
           <h2 className="font-montserrat text-[1.75rem] font-extrabold text-brand-dark mb-3.5">7-Step Wholesale Process</h2>
+          <div className="rt-section-divider center mb-4" />
           <p className="text-[#666] text-[0.9375rem] max-w-[600px] mx-auto leading-[1.7]">
             Follow these simple steps to place your wholesale order. Our sales team will support you throughout the entire process.
           </p>
@@ -60,14 +61,14 @@ export default function HowToOrderPage() {
             </div>
           </div>
           <div className="relative min-h-[280px]">
-            <Image src="/images/reconstructed/1558618666-fcd25c85cd64.jpg" alt="Confirm Categories" fill className="object-cover" />
+            <Image src="/img/order/step-categories.webp" alt="Confirm Categories" fill className="object-cover" />
           </div>
         </div>
 
         {/* Step 2 */}
         <div className="grid grid-cols-1 md:grid-cols-2 border border-[#eee] border-b-0">
           <div className="relative min-h-[280px] order-2 md:order-1">
-            <Image src="/images/reconstructed/1553413077-190dd305871c.jpg" alt="Confirm Quantity" fill className="object-cover" />
+            <Image src="/img/order/step-quantity.jpg" alt="Confirm Quantity" fill className="object-cover" />
           </div>
           <div className="bg-[#F5F5F0] p-12 flex flex-col justify-center order-1 md:order-2">
             <div className="flex items-center gap-4 mb-5">
@@ -102,14 +103,14 @@ export default function HowToOrderPage() {
             </div>
           </div>
           <div className="relative min-h-[280px]">
-             <Image src="/images/reconstructed/1507003211169-0a1dd7228f2d.jpg" alt="Discuss Prices" fill className="object-cover" />
+             <Image src="/img/order/step-prices.jpg" alt="Discuss Prices" fill className="object-cover" />
           </div>
         </div>
 
         {/* Step 4 */}
         <div className="grid grid-cols-1 md:grid-cols-2 border border-[#eee] border-b-0">
           <div className="relative min-h-[280px] order-2 md:order-1">
-             <Image src="/images/reconstructed/1567401893414-76b7b1e5a7a5.jpg" alt="Confirm Grade" fill className="object-cover" />
+             <Image src="/img/order/step-quality.webp" alt="Confirm Grade" fill className="object-cover" />
           </div>
           <div className="bg-[#F5F5F0] p-12 flex flex-col justify-center order-1 md:order-2">
             <div className="flex items-center gap-4 mb-5">
@@ -144,14 +145,14 @@ export default function HowToOrderPage() {
             </div>
           </div>
           <div className="relative min-h-[280px]">
-             <Image src="/images/reconstructed/1554224155-6726b3ff858f.jpg" alt="Confirm Payment" fill className="object-cover" />
+             <Image src="/img/order/step-payment.jpg" alt="Confirm Payment" fill className="object-cover" />
           </div>
         </div>
 
         {/* Step 6 */}
         <div className="grid grid-cols-1 md:grid-cols-2 border border-[#eee] border-b-0">
           <div className="relative min-h-[280px] order-2 md:order-1">
-             <Image src="/images/reconstructed/1578575437130-527eed3abbec.jpg" alt="Production" fill className="object-cover" />
+             <Image src="/img/order/step-production-inspection.jpg" alt="Production & Inspection" fill className="object-cover" />
           </div>
           <div className="bg-[#F5F5F0] p-12 flex flex-col justify-center order-1 md:order-2">
             <div className="flex items-center gap-4 mb-5">
@@ -184,7 +185,7 @@ export default function HowToOrderPage() {
             </div>
           </div>
           <div className="relative min-h-[280px]">
-             <Image src="/images/reconstructed/1494412574643-ff11b0a5c1c3.jpg" alt="Shipment" fill className="object-cover" />
+             <Image src="/img/order/step-shipment.jpg" alt="Shipment" fill className="object-cover" />
           </div>
         </div>
       </section>
@@ -194,6 +195,7 @@ export default function HowToOrderPage() {
         <div className="rt-container max-w-[1280px]">
           <div className="text-center mb-10">
             <h2 className="font-montserrat text-[1.75rem] font-extrabold text-white mb-3.5">Container Loading Reference</h2>
+            <div className="rt-section-divider center mb-4" />
             <p className="text-white/65 text-[0.9375rem] max-w-[600px] mx-auto">Use this guide to plan your order quantity. Contact us for exact loading plans based on your specific product mix.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -252,7 +254,10 @@ export default function HowToOrderPage() {
 
       {/* BALE SIZE TABLE */}
       <section className="max-w-[1280px] mx-auto px-6 py-16">
-        <h2 className="font-montserrat text-[1.5rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-6">Bale & Sack Size Reference</h2>
+        <div className="rt-subsection-heading">
+          <h2>Bale &amp; Sack Size Reference</h2>
+          <div className="rt-section-divider" />
+        </div>
         <div className="overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
           <table className="w-full border-collapse text-[0.8125rem] bg-white text-left font-open-sans">
             <thead>
@@ -330,7 +335,10 @@ export default function HowToOrderPage() {
         <div className="rt-container max-w-[1280px]">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
-              <h2 className="font-montserrat text-[1.4rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-6">Payment Methods</h2>
+              <div className="rt-subsection-heading">
+                <h2>Payment Methods</h2>
+                <div className="rt-section-divider" />
+              </div>
               <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm mix-blend-luminosity hover:mix-blend-normal transition-all">
                 <span className="text-[1.5rem] shrink-0">🏦</span>
                 <div>
@@ -354,7 +362,10 @@ export default function HowToOrderPage() {
               </div>
             </div>
             <div>
-              <h2 className="font-montserrat text-[1.4rem] font-extrabold text-brand-dark border-l-4 border-brand-red pl-3.5 mb-6">Shipping Options</h2>
+              <div className="rt-subsection-heading">
+                <h2>Shipping Options</h2>
+                <div className="rt-section-divider" />
+              </div>
               <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm mix-blend-luminosity hover:mix-blend-normal transition-all">
                 <span className="text-[1.5rem] shrink-0">🚢</span>
                 <div>

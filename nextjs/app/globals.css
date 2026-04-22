@@ -161,20 +161,22 @@
 .rt-section-badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   margin-bottom: 1rem;
-  padding-bottom: 0.35rem;
-  border-bottom: 2px solid var(--color-brand-red);
-  color: var(--color-brand-red);
+  background: #fcf4f2; /* Light warm background matching reference */
+  color: var(--color-brand-gold);
+  padding: 0.35rem 1.1rem;
+  border-radius: 999px;
   font-family: var(--font-montserrat);
-  font-size: 0.6875rem;
-  font-weight: 900;
-  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .rt-section-badge.light {
-  border-bottom-color: rgba(255, 255, 255, 0.18);
-  color: rgba(255, 255, 255, 0.68);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .rt-section-title {
@@ -191,16 +193,36 @@
 }
 
 .rt-section-divider {
-  width: 76px;
+  width: 64px;
   height: 4px;
   margin: 0 0 1.1rem;
-  background: linear-gradient(90deg, var(--color-brand-red), var(--color-brand-gold));
+  background: var(--color-brand-red);
   border-radius: 999px;
 }
 
 .rt-section-divider.center {
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Sub-section heading style matching realismthrift.com — title + short divider bar */
+.rt-subsection-heading {
+  margin-bottom: 1.5rem;
+}
+
+.rt-subsection-heading h2,
+.rt-subsection-heading h3 {
+  font-family: var(--font-montserrat);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 0.6rem;
+}
+
+.rt-subsection-heading .rt-section-divider {
+  width: 48px;
+  height: 3px;
+  margin: 0 0 0;
 }
 
 .rt-section-copy {
