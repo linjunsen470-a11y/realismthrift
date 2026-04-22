@@ -1652,8 +1652,11 @@
 }
 
 .rt-blog-hero-index {
-  min-height: 380px;
-  padding-bottom: 0;
+  min-height: 300px !important;
+  height: 300px !important;
+  padding-bottom: 0 !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .rt-blog-hero .rt-page-hero-overlay {
