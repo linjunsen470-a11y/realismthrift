@@ -49,15 +49,17 @@ export default function UsedBrandClothesPage() {
       {/* ═══════════════════════════════════════════════════════
           HERO — Full-width AI sorting facility photo
           ═══════════════════════════════════════════════════════ */}
-      <section className="relative h-[420px] overflow-hidden">
-        <Image 
-          src="/images/used-brand-clothes/hero.jpg"
-          alt="RealismThrift used brand clothes sorting facility"
-          fill
-          priority
-          className="object-cover object-[center_30%] w-full h-full block"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A1A]/95 to-[#1A1A1A]/50" />
+      <section className="rt-page-hero">
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/images/used-brand-clothes/hero.jpg"
+            alt="RealismThrift used brand clothes sorting facility"
+            fill
+            priority
+            className="object-cover object-[center_30%]"
+          />
+        </div>
+        <div className="rt-page-hero-overlay" />
         <div className="absolute inset-0 flex items-center">
           <div className="max-w-[1280px] mx-auto px-8 w-full">
             <nav className="text-[0.75rem] text-white/45 mb-4 flex gap-[0.4rem] items-center flex-wrap">
