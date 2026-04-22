@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Mail, Menu, MessageCircle, Search, X } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Menu, Search, X } from "lucide-react";
 import { SiteHeader as SiteHeaderType } from "@/types";
 
 interface SiteHeaderProps {
@@ -13,7 +13,22 @@ interface SiteHeaderProps {
 
 export function SiteHeader({ data }: SiteHeaderProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const value = String(formData.get("q") ?? "").trim();
+    const target = value ? `/search?q=${encodeURIComponent(value)}` : "/search";
+
+    startTransition(() => {
+      router.push(target);
+    });
+  }
 
   return (
     <header>
@@ -51,9 +66,15 @@ export function SiteHeader({ data }: SiteHeaderProps) {
             </span>
           </Link>
 
-          <form className="rt-search-form" role="search" action="/">
-            <input type="search" name="s" placeholder="Search products..." />
-            <button type="submit" aria-label="Search products">
+          <form className="rt-search-form" role="search" onSubmit={handleSubmit}>
+            <input
+              key={`${pathname}:${searchParams.get("q") ?? ""}`}
+              type="search"
+              name="q"
+              defaultValue={searchParams.get("q") ?? ""}
+              placeholder="Search products, FAQ, blog..."
+            />
+            <button type="submit" aria-label="Search site" disabled={isPending}>
               <Search size={16} strokeWidth={2.25} />
             </button>
           </form>
