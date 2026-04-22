@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import { Montserrat, Open_Sans } from 'next/font/google';
+import { draftMode } from 'next/headers';
+import { VisualEditing } from 'next-sanity/visual-editing';
 import './globals.css';
 import { AppShell } from '@/components/AppShell';
 import NextTopLoader from 'nextjs-toploader';
+import { SanityLive } from '@/lib/sanity/live';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -56,7 +59,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const { isEnabled: isDraftModeEnabled } = await draftMode();
+
   return (
     <html lang="en" className={`${montserrat.variable} ${openSans.variable}`}>
       <body className="antialiased font-sans bg-white text-[#333]">
@@ -72,6 +77,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           shadow="0 0 10px #c0392b,0 0 5px #c0392b"
         />
         <AppShell>{children}</AppShell>
+        {isDraftModeEnabled ? <VisualEditing /> : null}
+        {isDraftModeEnabled ? (
+          <SanityLive
+            refreshOnMount={false}
+            refreshOnFocus={false}
+            refreshOnReconnect={false}
+          />
+        ) : null}
       </body>
     </html>
   );

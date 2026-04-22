@@ -1,6 +1,6 @@
 import { groq } from "next-sanity";
 import { BlogPostCard, BlogPostDetail } from "@/types";
-import { sanityClient } from "@/lib/sanity/client";
+import { sanityFetch } from "@/lib/sanity/live";
 
 const POST_CARD_PROJECTION = groq`{
   _id,
@@ -72,19 +72,49 @@ const relatedPostsQuery = groq`*[
 ] | order(publishedAt desc)[0...3] ${POST_CARD_PROJECTION}`;
 
 export async function getLatestBlogPosts(): Promise<BlogPostCard[]> {
-  return sanityClient.fetch<BlogPostCard[]>(latestPostsQuery);
+  const { data } = await sanityFetch({
+    query: latestPostsQuery,
+    tags: ["post"],
+    requestTag: "blog.latest",
+  });
+
+  return data as BlogPostCard[];
 }
 
 export async function getAllBlogPosts(): Promise<BlogPostCard[]> {
-  return sanityClient.fetch<BlogPostCard[]>(allPostsQuery);
+  const { data } = await sanityFetch({
+    query: allPostsQuery,
+    tags: ["post"],
+    requestTag: "blog.all",
+  });
+
+  return data as BlogPostCard[];
 }
 
-export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | null> {
-  return sanityClient.fetch<BlogPostDetail | null>(postBySlugQuery, { slug });
+export async function getBlogPostBySlug(
+  slug: string,
+  options?: { stega?: boolean }
+): Promise<BlogPostDetail | null> {
+  const { data } = await sanityFetch({
+    query: postBySlugQuery,
+    params: { slug },
+    tags: ["post"],
+    requestTag: "blog.by-slug",
+    stega: options?.stega ?? true,
+  });
+
+  return (data as BlogPostDetail | null) ?? null;
 }
 
 export async function getBlogSlugs(): Promise<string[]> {
-  return sanityClient.fetch<string[]>(postSlugsQuery);
+  const { data } = await sanityFetch({
+    query: postSlugsQuery,
+    tags: ["post"],
+    requestTag: "blog.slugs",
+    stega: false,
+  });
+
+  return data as string[];
 }
 
 export async function getRelatedBlogPosts(
@@ -92,10 +122,18 @@ export async function getRelatedBlogPosts(
   categoryId: string
 ): Promise<BlogPostCard[]> {
   if (!categoryId) return [];
-  return sanityClient.fetch<BlogPostCard[]>(relatedPostsQuery, {
-    currentId,
-    categoryId,
+
+  const { data } = await sanityFetch({
+    query: relatedPostsQuery,
+    params: {
+      currentId,
+      categoryId,
+    },
+    tags: ["post", "category"],
+    requestTag: "blog.related",
   });
+
+  return data as BlogPostCard[];
 }
 
 export function formatBlogDate(date: string) {
