@@ -42,48 +42,55 @@ function SearchHero({
   showSuggestedTerms: boolean;
 }) {
   return (
-    <section className="relative overflow-hidden bg-[linear-gradient(135deg,#1A1A1A_0%,#2a1515_60%,#C0392B_100%)]">
+    <section className="rt-page-hero">
       <div className="absolute inset-0 z-0">
         <Image
           src="/img/wholesale-inventory.webp"
           alt="RealismThrift wholesale inventory"
           fill
           priority
-          className="object-cover opacity-[0.28]"
+          className="object-cover opacity-[0.25]"
         />
       </div>
-      <div className="absolute inset-0 z-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.5)_100%)]" />
+      <div className="rt-page-hero-overlay" />
  
-      <div className="rt-container relative z-10 min-h-[190px] flex flex-col justify-center py-20 text-center sm:min-h-0 sm:py-16 lg:py-24 xl:py-28">
-        <span className="rt-section-badge light mb-6 inline-flex text-[10px] tracking-[0.2em] opacity-70 md:text-xs">
-          SITE SEARCH
-        </span>
-        <h1 className="mx-auto mb-6 max-w-5xl font-montserrat text-[clamp(2.4rem,8vw,4.5rem)] font-light leading-[0.92] tracking-tight text-white lg:mb-6">
-          Search <span className="font-black text-brand-gold italic">Results</span>
-        </h1>
-        {query ? (
-          <p className="mx-auto max-w-[46rem] px-4 text-sm font-light leading-relaxed text-white/80 sm:text-base lg:text-[1.15rem]">
-            Displaying matches for <span className="font-bold text-white italic">&quot;{query}&quot;</span>.
-          </p>
-        ) : (
-          <p className="mx-auto max-w-[46rem] px-4 text-sm font-light leading-relaxed text-white/80 sm:text-base lg:text-[1.15rem]">
-            Search products, shipping guidance, pricing, payment terms, and blog insights.
-          </p>
-        )}
-
-        {showSuggestedTerms ? (
-          <div className="mx-auto mt-6 grid max-w-[24rem] grid-cols-3 gap-3 px-4 sm:flex sm:max-w-3xl sm:flex-wrap sm:justify-center lg:mt-8">
-            {suggestedTerms.map((term) => (
-              <Link
-                key={term}
-                href={`/search?q=${encodeURIComponent(term)}`}
-                className="flex min-h-[3rem] items-center justify-center rounded-[3px] border border-white/20 bg-white/10 px-2 py-2 text-center text-[9px] font-montserrat font-bold uppercase tracking-[0.1em] text-white transition-all hover:bg-white/25 sm:min-h-0 sm:px-4 sm:text-xs"
-              >
-                {term}
-              </Link>
-            ))}
+      <div className="rt-container relative z-10 text-center md:text-left">
+        <div className="rt-fade-in">
+          <nav className="rt-breadcrumb mb-5 justify-center md:justify-start">
+            <Link href="/">Home</Link>
+            <span>›</span>
+            <span className="text-white/70">Search</span>
+          </nav>
+          <div className="inline-block bg-brand-red text-white font-montserrat font-bold text-[0.65rem] tracking-[0.12em] px-[0.875rem] py-[0.3rem] rounded-[2px] mb-[1rem] uppercase">
+            Site Search · RealismThrift
           </div>
-        ) : null}
+          <h1 className="rt-page-hero-title mb-5 text-[clamp(2rem,8vw,4rem)] leading-[1.1] tracking-tight">
+            Search <span className="font-black text-brand-gold italic">Results</span>
+          </h1>
+          {query ? (
+            <p className="rt-page-hero-sub max-w-[620px] mb-8 leading-relaxed text-[1.05rem]">
+              Displaying matches for <span className="font-bold text-white italic">&quot;{query}&quot;</span>.
+            </p>
+          ) : (
+            <p className="rt-page-hero-sub max-w-[620px] mb-8 leading-relaxed text-[1.05rem]">
+              Search products, shipping guidance, pricing, payment terms, and blog insights.
+            </p>
+          )}
+
+          {showSuggestedTerms ? (
+            <div className="flex flex-wrap gap-2.5 justify-center md:justify-start">
+              {suggestedTerms.map((term) => (
+                <Link
+                  key={term}
+                  href={`/search?q=${encodeURIComponent(term)}`}
+                  className="bg-white/10 border border-white/25 text-white px-4 py-2.5 rounded-[2px] font-montserrat font-bold text-[0.7rem] uppercase tracking-wider hover:bg-white/20 transition-all"
+                >
+                  {term}
+                </Link>
+              ))}
+            </div>
+          ) : null}
+        </div>
       </div>
     </section>
   );

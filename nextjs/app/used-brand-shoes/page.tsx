@@ -5,24 +5,25 @@ import { QualityStandards } from "@/components/product/QualityStandards";
 import { ProductTrustSections } from "@/components/product/ProductTrustSections";
 import { ProductCTA } from "@/components/product/ProductCTA";
 import { companyStats } from "@/data/siteData";
+import { XCircle, CheckCircle2, Footprints, Sparkles, Package, Globe2, ShoppingBag, ClipboardList, Mail } from "lucide-react";
 
 const shoeStandards = [
-  { icon: '❌', title: 'No Glue Damage', desc: 'No sticky parts coming loose from sole or upper', isNegative: true },
-  { icon: '❌', title: 'No Cracking', desc: 'Surface stays smooth, no layers peeling or cracking', isNegative: true },
-  { icon: '❌', title: 'No Missing Pieces', desc: 'All parts present — laces, insoles, tongue included', isNegative: true },
-  { icon: '❌', title: 'No Heavy Odor', desc: 'Cleaned and deodorized, no persistent smell', isNegative: true },
-  { icon: '❌', title: 'No Broken Soles', desc: 'Bottom part fully solid, no separation from upper', isNegative: true },
-  { icon: '❌', title: 'No Structural Damage', desc: 'Shape maintained, no crushing or deformation', isNegative: true },
-  { icon: '✅', title: 'Complete Pairs Only', desc: 'Every sack contains 100% matched pairs', isNegative: false },
-  { icon: '✅', title: 'Brand Label Intact', desc: 'Original brand label clearly visible on tongue/sole', isNegative: false },
-  { icon: '✅', title: 'Wearable Condition', desc: 'All items are immediately wearable upon receipt', isNegative: false }
+  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'No Glue Damage', desc: 'No sticky parts coming loose from sole or upper', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'No Cracking', desc: 'Surface stays smooth, no layers peeling or cracking', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'No Missing Pieces', desc: 'All parts present — laces, insoles, tongue included', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'No Heavy Odor', desc: 'Cleaned and deodorized, no persistent smell', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'No Broken Soles', desc: 'Bottom part fully solid, no separation from upper', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'No Structural Damage', desc: 'Shape maintained, no crushing or deformation', isNegative: true },
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Complete Pairs Only', desc: 'Every sack contains 100% matched pairs', isNegative: false },
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Brand Label Intact', desc: 'Original brand label clearly visible on tongue/sole', isNegative: false },
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Wearable Condition', desc: 'All items are immediately wearable upon receipt', isNegative: false }
 ];
 
 const shoeFeatures = [
-  { icon: '👟', title: 'Precise Pairing', desc: '100% manual check ensures no single shoes or mismatched pairs.' },
-  { icon: '🧼', title: 'Professional Sterilization', desc: 'Cleaned, deodorized, and UV sterilized for international health standards.' },
-  { icon: '📦', title: 'Secure Sacking', desc: 'Hydraulic compressed packing to maximize container space and protect shoes.' },
-  { icon: '🌍', title: `${companyStats.countriesCount} Export Ports`, desc: 'Direct shipping to major ports in Africa, Middle East, and Southeast Asia.' }
+  { icon: <Footprints className="w-6 h-6 text-brand-gold" />, title: 'Precise Pairing', desc: '100% manual check ensures no single shoes or mismatched pairs.' },
+  { icon: <Sparkles className="w-6 h-6 text-brand-gold" />, title: 'Professional Sterilization', desc: 'Cleaned, deodorized, and UV sterilized for international health standards.' },
+  { icon: <Package className="w-6 h-6 text-brand-gold" />, title: 'Secure Sacking', desc: 'Hydraulic compressed packing to maximize container space and protect shoes.' },
+  { icon: <Globe2 className="w-6 h-6 text-brand-gold" />, title: `${companyStats.countriesCount} Export Ports`, desc: 'Direct shipping to major ports in Africa, Middle East, and Southeast Asia.' }
 ];
 
 const shoeFaqs = [
@@ -45,35 +46,41 @@ export default function UsedBrandShoesPage() {
   return (
     <main className="bg-white">
       {/* PAGE HERO */}
-      <section className="relative px-0 py-14 overflow-hidden bg-[linear-gradient(135deg,#1A1A1A_0%,#1a1a2e_50%,#16213e_100%)]">
+      <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <Image 
             src="/images/reconstructed/1542291026-7eec264c27ff.jpg" 
             alt="Used Shoes background" 
             fill 
-            className="object-cover opacity-[0.1]" 
+            className="object-cover" 
             priority 
           />
         </div>
-        <div className="rt-container relative z-10">
-          <nav className="text-[0.8rem] text-white/55 mb-3.5 flex items-center gap-1.5">
-            <Link href="/" className="text-white/55 hover:text-white transition-colors">Home</Link>
-            <span>›</span>
-            <span className="text-brand-gold">Used Brand Shoes</span>
-          </nav>
-          <h1 className="font-montserrat text-[clamp(1.75rem,4vw,2.75rem)] font-extrabold text-white mb-3.5 leading-[1.2]">
-            Used Brand Shoes <span className="text-brand-gold">Wholesale</span>
-          </h1>
-          <p className="text-white/75 text-[1rem] max-w-[620px] leading-[1.7] mb-6">
-            Wholesale second-hand branded shoes — Nike, Adidas, Jordan, New Balance, Puma and 30+ top brands. Sold by the pair or by the sack. Strict cleaning and grading process. Exported to {companyStats.countriesCount} countries.
-          </p>
-          <div className="flex gap-3.5 flex-wrap">
-            <a href="#inquiry" className="bg-brand-gold text-brand-dark px-6 py-3 rounded-[3px] font-bold font-montserrat text-[0.85rem] hover:bg-brand-gold-dark transition-colors">
-              Get Price Now →
-            </a>
-            <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-6 py-3 rounded-[3px] font-semibold font-montserrat text-[0.85rem] hover:bg-white/20 transition-colors">
-              WhatsApp
-            </a>
+        <div className="rt-page-hero-overlay" />
+        <div className="rt-container relative z-10 text-center md:text-left">
+          <div className="rt-fade-in">
+            <nav className="rt-breadcrumb mb-5 justify-center md:justify-start">
+              <Link href="/">Home</Link>
+              <span>›</span>
+              <span className="text-white/70">Used Brand Shoes</span>
+            </nav>
+            <div className="inline-block bg-brand-red text-white font-montserrat font-bold text-[0.65rem] tracking-[0.12em] px-[0.875rem] py-[0.3rem] rounded-[2px] mb-[1rem] uppercase">
+              Nike · Adidas · A-Grade Quality
+            </div>
+            <h1 className="rt-page-hero-title mb-5 text-[clamp(2rem,6vw,3.5rem)] leading-[1.1]">
+              Used Brand Shoes <span className="text-brand-gold">Wholesale</span>
+            </h1>
+            <p className="rt-page-hero-sub max-w-[620px] mb-9 leading-[1.8] text-[1.05rem]">
+              Wholesale second-hand branded shoes — Nike, Adidas, Jordan, and 30+ top brands. Strict cleaning and grading process. Exported to {companyStats.countriesCount} countries.
+            </p>
+            <div className="flex gap-4 justify-center md:justify-start">
+              <a href="#inquiry" className="bg-brand-gold text-brand-dark px-10 py-4 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-all shadow-[0_10px_20px_rgba(240,180,41,0.2)]">
+                Get Price Now →
+              </a>
+              <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-10 py-4 rounded-[3px] font-semibold font-montserrat text-[0.9rem] hover:bg-white/20 transition-all">
+                WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </section>

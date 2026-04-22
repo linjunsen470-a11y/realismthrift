@@ -33,14 +33,30 @@ export default function FAQPage() {
 
   return (
     <div className="pb-20">
-      <div className="bg-gray-50 border-b border-gray-200 py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-gray-900">Frequently Asked Questions</h1>
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto font-light">
-            Everything you need to know about sourcing premium used goods from Realism Thrift.
-          </p>
+      <section className="rt-page-hero">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-brand-dark opacity-90" />
         </div>
-      </div>
+        <div className="rt-page-hero-overlay" />
+        <div className="rt-container relative z-10 text-center md:text-left">
+          <div className="rt-fade-in">
+            <nav className="rt-breadcrumb mb-5 justify-center md:justify-start">
+              <a href="/">Home</a>
+              <span>›</span>
+              <span className="text-white/70">FAQ</span>
+            </nav>
+            <div className="inline-block bg-brand-red text-white font-montserrat font-bold text-[0.65rem] tracking-[0.12em] px-[0.875rem] py-[0.3rem] rounded-[2px] mb-[1rem] uppercase">
+              Help Center · Common Questions
+            </div>
+            <h1 className="rt-page-hero-title mb-5 text-[clamp(2rem,6vw,3.5rem)] leading-[1.1]">
+              Frequently Asked <span className="text-brand-gold">Questions</span>
+            </h1>
+            <p className="rt-page-hero-sub max-w-[620px] mb-0 leading-relaxed text-[1.05rem]">
+              Everything you need to know about sourcing premium used goods from RealismThrift.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <Section>
         <div className="max-w-3xl mx-auto space-y-4">

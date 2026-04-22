@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { InquiryForm } from "@/components/InquiryForm";
 import { companyStats } from "@/data/siteData";
+import { Mail, Phone, MapPin, Building2, Clock, MessageCircle, Send, Globe } from "lucide-react";
 
 export const metadata = {
   title: "Contact Us | Get Wholesale Quotes for Used Clothes & Shoes",
@@ -34,10 +35,12 @@ export default function ContactUsPage() {
             Our sales team is available during business hours to answer your questions and provide price quotations. We speak English, French, Spanish, and Arabic.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="mailto:sales@realismthrift.com" className="bg-brand-gold text-brand-dark px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-brand-gold-dark hover:-translate-y-0.5 shadow-lg active:scale-95">
-              📧 Email Us
+            <a href="mailto:sales@realismthrift.com" className="group bg-brand-gold text-brand-dark px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-brand-gold-dark hover:-translate-y-0.5 shadow-lg active:scale-95 flex items-center gap-2">
+              <Mail className="w-4 h-4 transition-transform group-hover:scale-110" />
+              Email Us
             </a>
-            <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-[#1da851] hover:-translate-y-0.5 shadow-lg active:scale-95">
+            <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="group bg-[#25D366] text-white px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-[#1da851] hover:-translate-y-0.5 shadow-lg active:scale-95 flex items-center gap-2">
+              <MessageCircle className="w-4 h-4 transition-transform group-hover:scale-110" />
               WhatsApp
             </a>
           </div>
@@ -49,16 +52,18 @@ export default function ContactUsPage() {
         <div className="rt-container">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
             {[
-              { i: "📧", t: "Email", s: "Send us an email", v: "sales@realismthrift.com", l: "mailto:sales@realismthrift.com" },
-              { i: "WA", t: "WhatsApp", s: "Chat with us now", v: "+8613367481710", l: "https://wa.me/8613367481710" },
-              { i: "📞", t: "Phone", s: "Call our sales team", v: "+86 133 6748 1710", l: "tel:+8613367481710" },
-              { i: "📍", t: "Address", s: "Visit our factory", v: "Huizhou, China", l: "#" },
+              { i: <Mail className="w-6 h-6 text-brand-red" />, t: "Email", s: "Send us an email", v: "sales@realismthrift.com", l: "mailto:sales@realismthrift.com", color: "bg-red-50" },
+              { i: <MessageCircle className="w-6 h-6 text-[#25D366]" />, t: "WhatsApp", s: "Chat with us now", v: "+8613367481710", l: "https://wa.me/8613367481710", color: "bg-green-50" },
+              { i: <Phone className="w-6 h-6 text-brand-gold" />, t: "Phone", s: "Call our sales team", v: "+86 133 6748 1710", l: "tel:+8613367481710", color: "bg-yellow-50" },
+              { i: <MapPin className="w-6 h-6 text-brand-dark" />, t: "Address", s: "Visit our factory", v: "Huizhou, China", l: "#", color: "bg-gray-100" },
             ].map((item) => (
-              <div key={item.t} className="bg-white border border-[#eee] rounded-[8px] p-7 text-center shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.12)] transition-all transform hover:-translate-y-1">
-                <div className="text-[2.25rem] mb-4">{item.i}</div>
-                <div className="font-montserrat text-[0.875rem] font-extrabold text-brand-dark mb-1">{item.t}</div>
-                <div className="text-[0.75rem] text-[#888] mb-4">{item.s}</div>
-                <a href={item.l} className="text-brand-red text-[0.85rem] font-bold font-montserrat hover:underline break-all block">
+              <div key={item.t} className="bg-white border border-[#eee] rounded-[12px] p-8 text-center shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all transform hover:-translate-y-1.5 group">
+                <div className={`w-14 h-14 ${item.color} rounded-full flex items-center justify-center mx-auto mb-5 transition-transform group-hover:scale-110 group-hover:rotate-3`}>
+                  {item.i}
+                </div>
+                <div className="font-montserrat text-[0.9375rem] font-bold text-brand-dark mb-1">{item.t}</div>
+                <div className="text-[0.8125rem] text-[#666] mb-5 font-open-sans">{item.s}</div>
+                <a href={item.l} className="text-brand-red text-[0.875rem] font-bold font-montserrat hover:text-brand-red-dark transition-colors break-all block">
                   {item.v}
                 </a>
               </div>
@@ -94,14 +99,14 @@ export default function ContactUsPage() {
                 <h4 className="font-montserrat text-[0.9375rem] font-black text-brand-gold mb-6 uppercase tracking-[0.1em]">Company Profile</h4>
                 <div className="space-y-5">
                   {[
-                    { i: "🏢", l: "Full Name", v: "RealismThrift Export Co., Ltd." },
-                    { i: "📍", l: "Location", v: "Huizhou, Guangdong, China" },
-                    { i: "✉️", l: "Official Email", v: "sales@realismthrift.com" },
-                    { i: "📞", l: "Sales Hotline", v: "+86 133 6748 1710" },
-                    { i: "🕒", l: "Business Hours", v: "Mon–Sat 8:00–20:00 (GMT+8)" },
+                    { i: <Building2 className="w-5 h-5 text-brand-gold" />, l: "Full Name", v: "RealismThrift Export Co., Ltd." },
+                    { i: <MapPin className="w-5 h-5 text-brand-gold" />, l: "Location", v: "Huizhou, Guangdong, China" },
+                    { i: <Mail className="w-5 h-5 text-brand-gold" />, l: "Official Email", v: "sales@realismthrift.com" },
+                    { i: <Phone className="w-5 h-5 text-brand-gold" />, l: "Sales Hotline", v: "+86 133 6748 1710" },
+                    { i: <Clock className="w-5 h-5 text-brand-gold" />, l: "Business Hours", v: "Mon–Sat 8:00–20:00 (GMT+8)" },
                   ].map((item) => (
                     <div key={item.l} className="flex gap-4 text-[0.8125rem] border-b border-white/5 pb-4 last:border-0 last:pb-0">
-                      <span className="shrink-0 text-lg opacity-80">{item.i}</span>
+                      <span className="shrink-0 opacity-80 pt-1">{item.i}</span>
                       <div>
                         <div className="text-white/40 text-[0.65rem] font-bold uppercase tracking-widest mb-1">{item.l}</div>
                         <div className="font-semibold text-white/95 leading-relaxed">{item.v}</div>
@@ -128,18 +133,21 @@ export default function ContactUsPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {[
-              { r: "🌍 Africa", c: "Nigeria, Ghana, Kenya, Tanzania, Ethiopia, Senegal, Ivory Coast, Cameroon, Uganda, Mozambique" },
-              { r: "🌏 Southeast Asia", c: "Vietnam, Thailand, Philippines, Indonesia, Malaysia, Cambodia, Myanmar, Laos" },
-              { r: "🌍 Middle East", c: "UAE, Saudi Arabia, Jordan, Lebanon, Egypt, Morocco, Tunisia, Algeria" },
-              { r: "🌎 Americas", c: "USA, Canada, Mexico, Brazil, Colombia, Peru, Chile, Ecuador" },
-              { r: "🌍 Europe", c: "UK, France, Germany, Poland, Romania, Ukraine, Bulgaria, Hungary" },
-              { r: "🌏 Oceania", c: "Australia, New Zealand, Kazakhstan, Uzbekistan, Pakistan, Bangladesh" },
+              { r: "Africa", c: "Nigeria, Ghana, Kenya, Tanzania, Ethiopia, Senegal, Ivory Coast, Cameroon, Uganda, Mozambique" },
+              { r: "Southeast Asia", c: "Vietnam, Thailand, Philippines, Indonesia, Malaysia, Cambodia, Myanmar, Laos" },
+              { r: "Middle East", c: "UAE, Saudi Arabia, Jordan, Lebanon, Egypt, Morocco, Tunisia, Algeria" },
+              { r: "Americas", c: "USA, Canada, Mexico, Brazil, Colombia, Peru, Chile, Ecuador" },
+              { r: "Europe", c: "UK, France, Germany, Poland, Romania, Ukraine, Bulgaria, Hungary" },
+              { r: "Oceania", c: "Australia, New Zealand, Kazakhstan, Uzbekistan, Pakistan, Bangladesh" },
             ].map((market) => (
-              <div key={market.r} className="bg-white p-7 rounded-[8px] shadow-sm hover:shadow-md transition-shadow border border-white hover:border-brand-red/10 group">
-                <div className="font-montserrat text-[1rem] font-black text-brand-dark mb-4 border-b border-brand-light pb-3 group-hover:text-brand-red transition-colors">
-                  {market.r}
+              <div key={market.r} className="bg-white p-7 rounded-[12px] shadow-sm hover:shadow-md transition-all border border-transparent hover:border-brand-red/10 group">
+                <div className="flex items-center gap-3 mb-4 border-b border-brand-light pb-3">
+                  <Globe className="w-5 h-5 text-brand-red opacity-70 group-hover:opacity-100 transition-opacity" />
+                  <div className="font-montserrat text-[1rem] font-bold text-brand-dark group-hover:text-brand-red transition-colors">
+                    {market.r}
+                  </div>
                 </div>
-                <p className="text-[0.8rem] text-[#666] leading-relaxed font-open-sans">
+                <p className="text-[0.8125rem] text-[#666] leading-relaxed font-open-sans">
                   {market.c}
                 </p>
               </div>

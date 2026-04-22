@@ -1,7 +1,7 @@
 import React from "react";
 
 interface StandardItem {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   desc: string;
   isNegative?: boolean; // If true, uses red border, else green

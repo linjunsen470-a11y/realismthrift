@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { InquiryForm } from "@/components/InquiryForm";
+import { Landmark, Wallet, CreditCard, Ship, Package, Plane } from "lucide-react";
 
 export const metadata = {
   title: "How to Order Wholesale Used Clothes & Shoes | 7-Step Process",
@@ -15,27 +16,39 @@ export const metadata = {
 export default function HowToOrderPage() {
   return (
     <main className="bg-white">
-      {/* PAGE HERO */}
-      <section className="rt-page-hero bg-[linear-gradient(135deg,#1A1A1A_0%,#2a1515_60%,#C0392B_100%)]">
+      <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <Image 
             src="/img/order/order-hero.jpg" 
             alt="How to order background" 
             fill 
-            className="object-cover opacity-[0.4]" 
+            className="object-cover" 
             priority 
           />
         </div>
-        <div className="rt-container relative z-10 text-center pb-12 w-full pt-16">
-          <h1 className="rt-page-hero-title mb-4">
-            How To <span className="text-brand-gold">Order</span>
-          </h1>
-          <p className="rt-page-hero-sub max-w-[600px] mx-auto mb-7 leading-[1.7]">
-            Simple 7-step process to wholesale used brand clothes, shoes and bags from RealismThrift. From inquiry to delivery — we guide you every step of the way.
-          </p>
-          <Link href="#inquiry-form" className="bg-brand-gold text-brand-dark px-10 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] inline-block hover:transform hover:-translate-y-0.5 transition-all">
-            Start Your Order →
-          </Link>
+        <div className="rt-page-hero-overlay" />
+        <div className="rt-container relative z-10 text-center md:text-left">
+          <div className="rt-fade-in">
+            <nav className="rt-breadcrumb mb-5 justify-center md:justify-start">
+              <Link href="/">Home</Link>
+              <span>›</span>
+              <span className="text-white/70">How To Order</span>
+            </nav>
+            <div className="inline-block bg-brand-red text-white font-montserrat font-bold text-[0.65rem] tracking-[0.12em] px-[0.875rem] py-[0.3rem] rounded-[2px] mb-[1rem] uppercase">
+              7-Step Process · Order Guide
+            </div>
+            <h1 className="rt-page-hero-title mb-5 text-[clamp(2rem,6vw,3.5rem)] leading-[1.1]">
+              How To <span className="text-brand-gold">Order</span>
+            </h1>
+            <p className="rt-page-hero-sub max-w-[620px] mb-9 leading-[1.8] text-[1.05rem]">
+              Simple 7-step process to wholesale used brand clothes, shoes and bags from RealismThrift. From inquiry to delivery — we guide you every step of the way.
+            </p>
+            <div className="flex gap-4 justify-center md:justify-start">
+              <Link href="#inquiry-form" className="bg-brand-gold text-brand-dark px-10 py-4 rounded-[3px] font-bold font-montserrat text-[0.9rem] inline-block hover:transform hover:-translate-y-0.5 transition-all shadow-[0_10px_20px_rgba(240,180,41,0.2)]">
+                Start Your Order →
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -351,22 +364,28 @@ export default function HowToOrderPage() {
                 <h2>Payment Methods</h2>
                 <div className="rt-section-divider" />
               </div>
-              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm mix-blend-luminosity hover:mix-blend-normal transition-all">
-                <span className="text-[1.5rem] shrink-0">🏦</span>
+              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm border border-transparent hover:border-brand-red/20 transition-all group">
+                <div className="bg-brand-red/5 p-3 rounded-full shrink-0 group-hover:scale-110 transition-transform">
+                  <Landmark className="w-6 h-6 text-brand-red" />
+                </div>
                 <div>
                   <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1">T/T Bank Transfer</div>
                   <div className="text-[0.8rem] text-[#666] leading-relaxed">Most common method. 30% deposit before production, 70% balance before shipment. Bank details provided in PI.</div>
                 </div>
               </div>
-              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm mix-blend-luminosity hover:mix-blend-normal transition-all">
-                <span className="text-[1.5rem] shrink-0">💸</span>
+              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm border border-transparent hover:border-brand-red/20 transition-all group">
+                <div className="bg-brand-red/5 p-3 rounded-full shrink-0 group-hover:scale-110 transition-transform">
+                  <Wallet className="w-6 h-6 text-brand-red" />
+                </div>
                 <div>
                   <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1">Western Union</div>
                   <div className="text-[0.8rem] text-[#666] leading-relaxed">Available for smaller orders. Suitable for first-time buyers who prefer quick transfers.</div>
                 </div>
               </div>
-              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm mix-blend-luminosity hover:mix-blend-normal transition-all">
-                <span className="text-[1.5rem] shrink-0">💳</span>
+              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm border border-transparent hover:border-brand-red/20 transition-all group">
+                <div className="bg-brand-red/5 p-3 rounded-full shrink-0 group-hover:scale-110 transition-transform">
+                  <CreditCard className="w-6 h-6 text-brand-red" />
+                </div>
                 <div>
                   <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1">Other Methods</div>
                   <div className="text-[0.8rem] text-[#666] leading-relaxed">Contact our sales team to discuss alternative payment arrangements for large volume orders.</div>
@@ -378,22 +397,28 @@ export default function HowToOrderPage() {
                 <h2>Shipping Options</h2>
                 <div className="rt-section-divider" />
               </div>
-              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm mix-blend-luminosity hover:mix-blend-normal transition-all">
-                <span className="text-[1.5rem] shrink-0">🚢</span>
+              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm border border-transparent hover:border-brand-gold/20 transition-all group">
+                <div className="bg-brand-gold/5 p-3 rounded-full shrink-0 group-hover:scale-110 transition-transform">
+                  <Ship className="w-6 h-6 text-brand-gold" />
+                </div>
                 <div>
                   <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1">FCL (Full Container Load)</div>
                   <div className="text-[0.8rem] text-[#666] leading-relaxed">20ft or 40ft containers. Best price per kg. Suitable for large orders. We handle all export documentation.</div>
                 </div>
               </div>
-              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm mix-blend-luminosity hover:mix-blend-normal transition-all">
-                <span className="text-[1.5rem] shrink-0">📦</span>
+              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm border border-transparent hover:border-brand-gold/20 transition-all group">
+                <div className="bg-brand-gold/5 p-3 rounded-full shrink-0 group-hover:scale-110 transition-transform">
+                  <Package className="w-6 h-6 text-brand-gold" />
+                </div>
                 <div>
                   <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1">LCL (Less than Container)</div>
                   <div className="text-[0.8rem] text-[#666] leading-relaxed">Share a container with other buyers. Suitable for smaller orders. Higher cost per kg but lower minimum.</div>
                 </div>
               </div>
-              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm mix-blend-luminosity hover:mix-blend-normal transition-all">
-                <span className="text-[1.5rem] shrink-0">✈️</span>
+              <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm border border-transparent hover:border-brand-gold/20 transition-all group">
+                <div className="bg-brand-gold/5 p-3 rounded-full shrink-0 group-hover:scale-110 transition-transform">
+                  <Plane className="w-6 h-6 text-brand-gold" />
+                </div>
                 <div>
                   <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1">Air Freight</div>
                   <div className="text-[0.8rem] text-[#666] leading-relaxed">Available for urgent small orders. Significantly higher cost. Contact us for air freight quotation.</div>
