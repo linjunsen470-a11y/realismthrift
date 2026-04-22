@@ -6,3 +6,8 @@ export const sanityDataset =
 
 export const sanityApiVersion =
   process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2025-02-06";
+
+export const sanityStudioUrl =
+  process.env.NEXT_PUBLIC_SANITY_STUDIO_URL || "http://localhost:3333";
+
+export const sanityReadToken = process.env.SANITY_API_READ_TOKEN || "";
