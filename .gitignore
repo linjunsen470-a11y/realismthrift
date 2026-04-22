@@ -3,6 +3,7 @@ node_modules/
 coverage/
 .DS_Store
 *.log
+*.tsbuildinfo
 
 # Environment files
 .env*
@@ -26,3 +27,7 @@ sanity/.sanity/
 sanity/dist/
 sanity/coverage/
 sanity/.cache/
+
+# Local tooling / audit artifacts
+.playwright-mcp/
+code_audit_report_*.md
