@@ -5,24 +5,25 @@ import { QualityStandards } from "@/components/product/QualityStandards";
 import { ProductTrustSections } from "@/components/product/ProductTrustSections";
 import { ProductCTA } from "@/components/product/ProductCTA";
 import { companyStats } from "@/data/siteData";
+import { XCircle, CheckCircle2, Search, Sparkles, Ship, Camera, Footprints, ShoppingBag, ClipboardList, Mail } from "lucide-react";
 
 const bagStandards = [
-  { icon: '❌', title: 'No Broken Zippers', desc: 'All zippers open and close smoothly without snagging', isNegative: true },
-  { icon: '❌', title: 'No Torn Straps', desc: 'Handles and straps fully intact, no fraying or tears', isNegative: true },
-  { icon: '❌', title: 'No Heavy Stains', desc: 'Interior and exterior cleaned, no permanent discoloration', isNegative: true },
-  { icon: '❌', title: 'No Broken Hardware', desc: 'All buckles, clasps, and rings fully functional', isNegative: true },
-  { icon: '❌', title: 'No Peeling Lining', desc: 'Interior lining intact, no separation or peeling', isNegative: true },
-  { icon: '❌', title: 'No Structural Damage', desc: 'Bag holds its shape, no crushing or deformation', isNegative: true },
-  { icon: '✅', title: 'Complete Accessories', desc: 'Dust bags, straps, and original accessories included where available', isNegative: false },
-  { icon: '✅', title: 'Brand Label Visible', desc: 'Original brand label or embossing clearly present', isNegative: false },
-  { icon: '✅', title: 'Individually Wrapped', desc: 'Each bag wrapped in plastic before packing', isNegative: false }
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Broken Zippers', desc: 'All zippers open and close smoothly without snagging', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Torn Straps', desc: 'Handles and straps fully intact, no fraying or tears', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Heavy Stains', desc: 'Interior and exterior cleaned, no permanent discoloration', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Broken Hardware', desc: 'All buckles, clasps, and rings fully functional', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Peeling Lining', desc: 'Interior lining intact, no separation or peeling', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Structural Damage', desc: 'Bag holds its shape, no crushing or deformation', isNegative: true },
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Complete Accessories', desc: 'Dust bags, straps, and original accessories included where available', isNegative: false },
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Brand Label Visible', desc: 'Original brand label or embossing clearly present', isNegative: false },
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Individually Wrapped', desc: 'Each bag wrapped in plastic before packing', isNegative: false }
 ];
 
 const bagFeatures = [
-  { icon: '🔍', title: '6-Pt Hardware Check', desc: 'Every zipper, clasp, and ring is tested 3 times for 100% functionality.' },
-  { icon: '🧼', title: 'Deep Interior Cleaning', desc: 'Specialized cleaning for leather, canvas and nylon. Deodorized interiors.' },
-  { icon: '🚢', title: 'Worldwide Export', desc: `12+ years experience in global logistics and exporting to ${companyStats.countriesCount} countries.` },
-  { icon: '📸', title: 'Photo Verification', desc: 'Live photos and videos of your specific order sent before shipment.' }
+  { icon: <Search className="w-6 h-6 text-white" />, title: '6-Pt Hardware Check', desc: 'Every zipper, clasp, and ring is tested 3 times for 100% functionality.' },
+  { icon: <Sparkles className="w-6 h-6 text-white" />, title: 'Deep Interior Cleaning', desc: 'Specialized cleaning for leather, canvas and nylon. Deodorized interiors.' },
+  { icon: <Ship className="w-6 h-6 text-white" />, title: 'Worldwide Export', desc: `12+ years experience in global logistics and exporting to ${companyStats.countriesCount} countries.` },
+  { icon: <Camera className="w-6 h-6 text-white" />, title: 'Photo Verification', desc: 'Live photos and videos of your specific order sent before shipment.' }
 ];
 
 const bagFaqs = [
@@ -45,46 +46,41 @@ export default function UsedBrandBagPage() {
   return (
     <main className="bg-white">
       {/* PAGE HERO */}
-      <section
-        className="relative overflow-hidden py-[3.5rem] bg-[linear-gradient(135deg,#1A1A1A_0%,#1a1510_50%,#8B6914_100%)]"
-      >
-        {/* Background image overlay */}
-        <div className="absolute inset-0">
-          <Image
-            src="/images/used-brand-bag/hero.jpg"
-            alt="Used Brand Bags"
-            fill
-            priority
-            className="object-cover opacity-10"
+      <section className="rt-page-hero">
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/images/used-brand-bag/hero.jpg" 
+            alt="Used Brand Bags" 
+            fill 
+            className="object-cover" 
+            priority 
           />
         </div>
-        <div className="max-w-[1280px] mx-auto px-6 relative z-10">
-          <nav className="text-[0.8rem] text-white/55 mb-[0.875rem] flex items-center gap-[0.4rem] flex-wrap">
-            <Link href="/" className="text-white/55 no-underline hover:text-[#F0B429] transition-colors">Home</Link>
-            <span className="mx-[0.4rem]">›</span>
-            <span className="text-[#F0B429]">Used Brand Bags</span>
-          </nav>
-          <h1 className="font-montserrat font-extrabold text-[clamp(1.75rem,4vw,2.75rem)] text-white m-0 mb-[0.875rem] leading-[1.2]">
-            Used Brand Bags <span className="text-[#F0B429]">Wholesale</span>
-          </h1>
-          <p className="text-white/75 text-[1rem] max-w-[620px] leading-[1.7] m-0 mb-6">
-            Premium second-hand branded handbags, backpacks, and luggage — Coach, Michael Kors, Kate Spade, Longchamp and 20+ international brands. Strict 6-point quality inspection. Exported to {companyStats.countriesCount} countries.
-          </p>
-          <div className="flex gap-[0.875rem] flex-wrap">
-            <a
-              href="#inquiry"
-              className="bg-[#F0B429] text-[#1A1A1A] font-montserrat font-bold text-[0.85rem] px-6 py-[0.7rem] rounded-[3px] no-underline hover:bg-[#d4a017] transition-colors"
-            >
-              Get Price Now →
-            </a>
-            <a
-              href="https://wa.me/8613367481710?text=Hi%2C+I+want+to+wholesale+used+brand+bags"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white/[.12] border border-white/30 text-white font-montserrat font-semibold text-[0.85rem] px-6 py-[0.7rem] rounded-[3px] no-underline hover:bg-white/20 transition-colors"
-            >
-              WhatsApp
-            </a>
+        <div className="rt-page-hero-overlay" />
+        <div className="rt-container relative z-10 text-center md:text-left">
+          <div className="rt-fade-in">
+            <nav className="rt-breadcrumb mb-5 justify-center md:justify-start">
+              <Link href="/">Home</Link>
+              <span>›</span>
+              <span className="text-white/70">Used Brand Bags</span>
+            </nav>
+            <div className="inline-block bg-brand-red text-white font-montserrat font-bold text-[0.65rem] tracking-[0.12em] px-[0.875rem] py-[0.3rem] rounded-[2px] mb-[1rem] uppercase">
+              Coach · Michael Kors · Kate Spade
+            </div>
+            <h1 className="rt-page-hero-title mb-5 text-[clamp(2rem,6vw,3.5rem)] leading-[1.1]">
+              Used Brand Bags <span className="text-brand-gold">Wholesale</span>
+            </h1>
+            <p className="rt-page-hero-sub max-w-[620px] mb-9 leading-[1.8] text-[1.05rem]">
+              Premium second-hand branded handbags, backpacks, and luggage — Coach, Michael Kors, Kate Spade, and 20+ international brands.
+            </p>
+            <div className="flex gap-4 justify-center md:justify-start">
+              <a href="#inquiry" className="bg-brand-gold text-brand-dark px-10 py-4 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-all shadow-[0_10px_20px_rgba(240,180,41,0.2)]">
+                Get Price Now →
+              </a>
+              <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-10 py-4 rounded-[3px] font-semibold font-montserrat text-[0.9rem] hover:bg-white/20 transition-all">
+                WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </section>

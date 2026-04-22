@@ -5,24 +5,25 @@ import { QualityStandards } from "@/components/product/QualityStandards";
 import { ProductTrustSections } from "@/components/product/ProductTrustSections";
 import { ProductCTA } from "@/components/product/ProductCTA";
 import { companyStats } from "@/data/siteData";
+import { XCircle, CheckCircle2, Factory, Package, Ship, Zap, ShoppingBag, Footprints, ClipboardList, Mail } from "lucide-react";
 
 const clothesStandards = [
-  { icon: '❌', title: 'No Stains or Dirt', desc: 'No dirty patches or discoloration on fabric surface', isNegative: true },
-  { icon: '❌', title: 'No Tears or Holes', desc: 'No cuts, rips, or openings anywhere on the garment', isNegative: true },
-  { icon: '❌', title: 'No Heavy Fading', desc: 'Colors remain vibrant, not washed out or bleached', isNegative: true },
-  { icon: '❌', title: 'No Pilling', desc: 'No fuzzy balls or fiber lumps on the fabric surface', isNegative: true },
-  { icon: '❌', title: 'No Heavy Wear', desc: 'No signs of excessive use or structural damage', isNegative: true },
-  { icon: '❌', title: 'No Missing Closures', desc: 'All buttons, zippers, and snaps fully functional', isNegative: true },
-  { icon: '✅', title: 'Brand Label Intact', desc: 'Original brand label clearly visible and attached', isNegative: false },
-  { icon: '✅', title: 'Clean & Odor-Free', desc: 'Washed and deodorized before packing', isNegative: false },
-  { icon: '✅', title: 'Photo Verified', desc: 'Pre-shipment photos sent to buyer for approval', isNegative: false }
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Stains or Dirt', desc: 'No dirty patches or discoloration on fabric surface', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Tears or Holes', desc: 'No cuts, rips, or openings anywhere on the garment', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Heavy Fading', desc: 'Colors remain vibrant, not washed out or bleached', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Pilling', desc: 'No fuzzy balls or fiber lumps on the fabric surface', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Heavy Wear', desc: 'No signs of excessive use or structural damage', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Missing Closures', desc: 'All buttons, zippers, and snaps fully functional', isNegative: true },
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Brand Label Intact', desc: 'Original brand label clearly visible and attached', isNegative: false },
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Clean & Odor-Free', desc: 'Washed and deodorized before packing', isNegative: false },
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Photo Verified', desc: 'Pre-shipment photos sent to buyer for approval', isNegative: false }
 ];
 
 const clothesFeatures = [
-  { icon: '🏭', title: 'Direct Factory Source', desc: '15,000m² facility. No middlemen — you buy directly from the source.' },
-  { icon: '📦', title: 'Consistent Grading', desc: 'Standardized grading across all batches. What you see is what you get.' },
-  { icon: '🚢', title: 'Global Export', desc: `12+ years experience exporting to ${companyStats.countriesCount} countries with full documentation.` },
-  { icon: '⚡', title: 'Fast Lead Time', desc: 'Orders ready in 7–14 days. Large ready-stock inventory for immediate dispatch.' }
+  { icon: <Factory className="w-6 h-6 text-[#C0392B]" />, title: 'Direct Factory Source', desc: '15,000m² facility. No middlemen — you buy directly from the source.' },
+  { icon: <Package className="w-6 h-6 text-[#C0392B]" />, title: 'Consistent Grading', desc: 'Standardized grading across all batches. What you see is what you get.' },
+  { icon: <Ship className="w-6 h-6 text-[#C0392B]" />, title: 'Global Export', desc: `12+ years experience exporting to ${companyStats.countriesCount} countries with full documentation.` },
+  { icon: <Zap className="w-6 h-6 text-[#C0392B]" />, title: 'Fast Lead Time', desc: 'Orders ready in 7–14 days. Large ready-stock inventory for immediate dispatch.' }
 ];
 
 const clothesFaqs = [
@@ -48,7 +49,7 @@ export default function UsedBrandClothesPage() {
       {/* ═══════════════════════════════════════════════════════
           HERO — Full-width AI sorting facility photo
           ═══════════════════════════════════════════════════════ */}
-      <section className="relative h-[520px] overflow-hidden">
+      <section className="relative h-[420px] overflow-hidden">
         <Image 
           src="/images/used-brand-clothes/hero.jpg"
           alt="RealismThrift used brand clothes sorting facility"
@@ -56,7 +57,7 @@ export default function UsedBrandClothesPage() {
           priority
           className="object-cover object-[center_30%] w-full h-full block"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A1A]/90 to-[#1A1A1A]/25" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A1A]/95 to-[#1A1A1A]/50" />
         <div className="absolute inset-0 flex items-center">
           <div className="max-w-[1280px] mx-auto px-8 w-full">
             <nav className="text-[0.75rem] text-white/45 mb-4 flex gap-[0.4rem] items-center flex-wrap">
@@ -123,8 +124,8 @@ export default function UsedBrandClothesPage() {
             </div>
             
             {[
-              { title: 'Sportswear', colorClass: 'bg-brand-red', brands: ['Nike', 'Adidas', 'Puma', 'Under Armour', 'New Balance', 'Reebok', 'Champion', 'Fila', 'Lululemon', 'Columbia', 'The North Face', 'Patagonia'] },
-              { title: 'Fast Fashion', colorClass: 'bg-brand-dark', brands: ['H&M', 'Zara', 'Uniqlo', 'Mango', 'Gap', 'Old Navy', 'Forever 21', 'Primark', 'Topshop', 'ASOS', 'Shein', 'Next'] },
+              { title: 'Sportswear', colorClass: 'bg-[#C0392B]', brands: ['Nike', 'Adidas', 'Puma', 'Under Armour', 'New Balance', 'Reebok', 'Champion', 'Fila', 'Lululemon', 'Columbia', 'The North Face', 'Patagonia'] },
+              { title: 'Fast Fashion', colorClass: 'bg-[#1A1A1A]', brands: ['H&M', 'Zara', 'Uniqlo', 'Mango', 'Gap', 'Old Navy', 'Forever 21', 'Primark', 'Topshop', 'ASOS', 'Shein', 'Next'] },
               { title: 'Premium / Luxury', colorClass: 'bg-[#8B6914]', brands: ['Ralph Lauren', 'Tommy Hilfiger', 'Calvin Klein', 'Lacoste', 'Hugo Boss', 'Armani', 'Burberry', 'Guess', 'Michael Kors', 'Coach'] },
               { title: 'Denim & Casual', colorClass: 'bg-[#2C5F8A]', brands: ["Levi's", 'Wrangler', 'Lee', 'Diesel', 'G-Star Raw', 'True Religion', 'Hollister', 'American Eagle', 'Banana Republic', 'J.Crew'] }
             ].map(group => (
@@ -441,7 +442,6 @@ export default function UsedBrandClothesPage() {
           <div className="sticky top-[90px]">
 
             {/* Sticky Inquiry CTA */}
-            {/* Sticky Inquiry CTA */}
             <div id="inquiry" className="bg-white border border-[#eee] rounded-[8px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] overflow-hidden mb-[1.5rem]">
               <div className="bg-[#C0392B] p-[1.25rem_1.5rem]">
                 <h3 className="font-montserrat text-[1rem] font-extrabold text-white m-0 mb-[0.25rem]">Get Wholesale Price</h3>
@@ -478,13 +478,13 @@ export default function UsedBrandClothesPage() {
             <div className="bg-white border border-[#eee] rounded-[8px] p-[1.5rem]">
               <h4 className="font-montserrat text-[0.875rem] font-extrabold text-[#1A1A1A] m-0 mb-[1rem]">Also Available</h4>
               {[
-                { icon: '👟', title: 'Used Brand Shoes', href: '/used-brand-shoes' },
-                { icon: '👜', title: 'Used Brand Bags', href: '/used-brand-bags' },
-                { icon: '📋', title: 'How To Order', href: '/how-to-order' },
-                { icon: '📧', title: 'Contact Us', href: '/contact-us' }
+                { icon: <Footprints className="w-5 h-5 text-[#8B6914]" />, title: 'Used Brand Shoes', href: '/used-brand-shoes' },
+                { icon: <ShoppingBag className="w-5 h-5 text-[#C0392B]" />, title: 'Used Brand Bags', href: '/used-brand-bag' },
+                { icon: <ClipboardList className="w-5 h-5 text-[#1A1A1A]" />, title: 'How To Order', href: '/how-to-order' },
+                { icon: <Mail className="w-5 h-5 text-brand-gold" />, title: 'Contact Us', href: '/contact-us' }
               ].map(rel => (
                 <Link key={rel.title} href={rel.href} className="flex items-center gap-[0.75rem] py-[0.625rem] border-b border-[#f5f5f5] no-underline group">
-                  <span className="text-[1.25rem]">{rel.icon}</span>
+                  <span className="shrink-0 group-hover:scale-110 transition-transform">{rel.icon}</span>
                   <span className="font-open-sans text-[0.8125rem] text-[#333] font-semibold group-hover:text-[#C0392B] transition-colors">{rel.title}</span>
                   <span className="text-[#C0392B] text-[0.75rem] ml-auto group-hover:translate-x-1 transition-transform">→</span>
                 </Link>

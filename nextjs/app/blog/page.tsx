@@ -23,17 +23,22 @@ export default async function BlogPage() {
         className="rt-page-hero rt-blog-hero rt-blog-hero-index bg-[url('/img/blog-hero-wholesale.webp')]"
       >
         <div className="rt-page-hero-overlay" />
-        <div className="rt-container">
+        <div className="rt-container relative z-10 text-center md:text-left">
           <div className="rt-fade-in">
-            <span className="rt-hero-badge">Industry Insights</span>
-            <h1 className="rt-page-hero-title text-[clamp(1.75rem,4.5vw,2.6rem)] leading-[1.2] mb-[1.25rem]">
+            <nav className="rt-breadcrumb mb-5 justify-center md:justify-start">
+              <Link href="/">Home</Link>
+              <span>›</span>
+              <span className="text-white/70">Blog</span>
+            </nav>
+            <div className="inline-block bg-brand-red text-white font-montserrat font-bold text-[0.65rem] tracking-[0.12em] px-[0.875rem] py-[0.3rem] rounded-[2px] mb-[1rem] uppercase">
+              Industry Insights · Market News
+            </div>
+            <h1 className="rt-page-hero-title mb-5 text-[clamp(1.75rem,5vw,2.8rem)] leading-[1.1] max-w-[800px]">
               Used Branded Clothes, Shoes & Bags <br className="hidden md:block" /> Wholesale Market News
             </h1>
-            <div className="rt-breadcrumb">
-              <Link href="/">Home</Link>
-              <span>/</span>
-              <span>Blog</span>
-            </div>
+            <p className="rt-page-hero-sub max-w-[620px] mb-0 leading-[1.8] text-[1.05rem]">
+              Stay updated with the latest trends, sourcing strategies, and market reports from China's leading wholesale export hub.
+            </p>
           </div>
         </div>
       </section>

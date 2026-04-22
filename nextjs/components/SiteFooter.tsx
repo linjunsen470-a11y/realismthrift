@@ -51,21 +51,21 @@ export function SiteFooter({ data }: SiteFooterProps) {
             <p className="rt-footer-desc">{data.brand.description}</p>
 
             <div className="rt-footer-contact-item">
-              <Mail size={16} strokeWidth={2.2} />
+              <Mail size={18} strokeWidth={2.2} />
               <a href={`mailto:${data.brand.email}`}>{data.brand.email}</a>
             </div>
             <div className="rt-footer-contact-item">
-              <MessageCircle size={16} strokeWidth={2.2} />
+              <MessageCircle size={18} strokeWidth={2.2} />
               <a href={`https://wa.me/${data.brand.whatsapp}`} target="_blank" rel="noreferrer">
                 {data.brand.whatsapp}
               </a>
             </div>
             <div className="rt-footer-contact-item">
-              <Phone size={16} strokeWidth={2.2} />
+              <Phone size={18} strokeWidth={2.2} />
               <a href="tel:+8613367481710">{data.brand.phone}</a>
             </div>
             <div className="rt-footer-contact-item">
-              <MapPin size={16} strokeWidth={2.2} />
+              <MapPin size={18} strokeWidth={2.2} />
               <span>{data.brand.address}</span>
             </div>
           </div>

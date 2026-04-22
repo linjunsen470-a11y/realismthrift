@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { InquiryForm } from "@/components/InquiryForm";
 import { companyStats } from "@/data/siteData";
+import { Building2, Search, CheckCircle2, Brush, Box, Ship, Globe2 } from "lucide-react";
 
 export const metadata = {
   title: "About Us | Leading Used Clothes & Shoes Exporter in China",
@@ -16,31 +17,41 @@ export const metadata = {
 export default function AboutUsPage() {
   return (
     <main className="bg-white">
-      {/* PAGE HERO */}
-      <section className="relative px-0 py-14 overflow-hidden rt-about-hero-bg">
+      <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/images/about/hero-bg.jpg" 
-            alt="About background" 
+            src="/img/about-hero.jpg" 
+            alt="RealismThrift facility and team" 
             fill 
-            className="object-cover opacity-[0.12]" 
+            className="object-cover" 
             priority 
           />
         </div>
-        <div className="rt-container relative z-10 text-center">
-          <h1 className="font-montserrat text-[clamp(2rem,5vw,3rem)] font-extrabold text-white mb-4 leading-[1.2]">
-            About <span className="text-brand-gold">RealismThrift</span>
-          </h1>
-          <p className="text-white/80 text-[1.0625rem] max-w-[700px] mx-auto mb-7 leading-[1.7]">
-            China&apos;s leading wholesale exporter of used brand clothes, shoes, and bags. Over 10 years of experience. {companyStats.facilitySize} sorting facility. Trusted by {companyStats.buyersCount} wholesale buyers in {companyStats.countriesCount} countries.
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-7 py-3 rounded-[3px] font-bold font-montserrat text-[0.875rem] hover:bg-brand-gold-dark transition-colors">
-              Contact Our Team
-            </Link>
-            <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-7 py-3 rounded-[3px] font-semibold font-montserrat text-[0.875rem] hover:bg-white/20 transition-colors">
-              WhatsApp
-            </a>
+        <div className="rt-page-hero-overlay" />
+        <div className="rt-container relative z-10 text-center md:text-left">
+          <div className="rt-fade-in">
+            <nav className="rt-breadcrumb mb-5 justify-center md:justify-start">
+              <Link href="/">Home</Link>
+              <span>›</span>
+              <span className="text-white/70">About Us</span>
+            </nav>
+            <div className="inline-block bg-brand-red text-white font-montserrat font-bold text-[0.65rem] tracking-[0.12em] px-[0.875rem] py-[0.3rem] rounded-[2px] mb-[1rem] uppercase">
+              China Supplier · ISO Certified · {companyStats.foundedYear}
+            </div>
+            <h1 className="rt-page-hero-title mb-5 text-[clamp(2.5rem,6vw,3.5rem)] leading-[1.1]">
+              About <span className="text-brand-gold">RealismThrift</span>
+            </h1>
+            <p className="rt-page-hero-sub max-w-[700px] mb-9 leading-[1.8] text-[1.0625rem]">
+              China&apos;s leading wholesale exporter of used brand clothes, shoes, and bags. Over 10 years of experience. {companyStats.facilitySize} sorting facility. Trusted by {companyStats.buyersCount} wholesale buyers in {companyStats.countriesCount} countries.
+            </p>
+            <div className="flex gap-4 justify-center md:justify-start">
+              <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-10 py-4 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-all shadow-[0_10px_20px_rgba(240,180,41,0.2)]">
+                Contact Our Team
+              </Link>
+              <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-10 py-4 rounded-[3px] font-semibold font-montserrat text-[0.9rem] hover:bg-white/20 transition-all">
+                WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -217,15 +228,17 @@ export default function AboutUsPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-10 relative">
             <div className="hidden lg:block absolute top-[2rem] left-[8.33%] right-[8.33%] h-[2px] bg-gradient-to-r from-brand-red to-brand-gold z-0"></div>
             {[
-              { icon: '🏙️', bg: 'bg-brand-red', title: 'Source Collection', desc: 'First-tier cities: Beijing, Shanghai, Guangzhou' },
-              { icon: '🔍', bg: 'bg-brand-dark', title: 'Initial Sort', desc: 'Separate by type: clothes, shoes, bags' },
-              { icon: '✅', bg: 'bg-brand-red', title: 'Quality Grade', desc: 'A/B/C grading by trained inspectors' },
-              { icon: '🧹', bg: 'bg-brand-dark', title: 'Clean & Prep', desc: 'Wash, deodorize, and prepare for packing' },
-              { icon: '📦', bg: 'bg-brand-red', title: 'Pack & Weigh', desc: 'Hydraulic compression, exact weight labeling' },
-              { icon: '🚢', bg: 'bg-brand-dark', title: 'Load & Export', desc: 'Container loading with full documentation' },
+              { icon: <Building2 className="w-6 h-6 text-white" />, bg: 'bg-brand-red', title: 'Source Collection', desc: 'First-tier cities: Beijing, Shanghai, Guangzhou' },
+              { icon: <Search className="w-6 h-6 text-white" />, bg: 'bg-brand-dark', title: 'Initial Sort', desc: 'Separate by type: clothes, shoes, bags' },
+              { icon: <CheckCircle2 className="w-6 h-6 text-white" />, bg: 'bg-brand-red', title: 'Quality Grade', desc: 'A/B/C grading by trained inspectors' },
+              { icon: <Brush className="w-6 h-6 text-white" />, bg: 'bg-brand-dark', title: 'Clean & Prep', desc: 'Wash, deodorize, and prepare for packing' },
+              { icon: <Box className="w-6 h-6 text-white" />, bg: 'bg-brand-red', title: 'Pack & Weigh', desc: 'Hydraulic compression, exact weight labeling' },
+              { icon: <Ship className="w-6 h-6 text-white" />, bg: 'bg-brand-dark', title: 'Load & Export', desc: 'Container loading with full documentation' },
             ].map(step => (
-              <div key={step.title} className="text-center px-2 relative z-10 w-full">
-                <div className={`w-16 h-16 ${step.bg} rounded-full flex items-center justify-center text-[1.5rem] mx-auto mb-4 border-4 border-brand-light`}>{step.icon}</div>
+              <div key={step.title} className="text-center px-2 relative z-10 w-full group">
+                <div className={`w-16 h-16 ${step.bg} rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-brand-light shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-6`}>
+                  {step.icon}
+                </div>
                 <div className="font-montserrat text-[0.8rem] font-bold text-brand-dark mb-1.5">{step.title}</div>
                 <div className="text-[0.7rem] text-[#888] leading-[1.5] max-w-[150px] mx-auto">{step.desc}</div>
               </div>

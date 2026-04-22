@@ -1,7 +1,7 @@
 import React from "react";
 
 interface TrustItem {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   desc: string;
 }
