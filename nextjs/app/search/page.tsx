@@ -49,7 +49,7 @@ function SearchHero({
           alt="RealismThrift wholesale inventory"
           fill
           priority
-          className="object-cover opacity-[0.25]"
+          className="object-cover"
         />
       </div>
       <div className="rt-page-hero-overlay" />

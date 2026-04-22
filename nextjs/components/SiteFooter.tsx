@@ -103,7 +103,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
 
             <div className="rt-footer-note">
               {data.contact.inquiryTime.split(". ").map((text, idx) => (
-                <div key={idx} style={{ marginTop: idx > 0 ? "0.35rem" : "0" }}>
+                <div key={idx}>
                   {text.includes("12 hours") ? (
                     <>
                       Reply within <span className="rt-footer-note-gold">12 hours</span>.

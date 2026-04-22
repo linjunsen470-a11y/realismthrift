@@ -2194,6 +2194,10 @@
   line-height: 1.5;
 }
 
+.rt-footer-note div + div {
+  margin-top: 0.35rem;
+}
+
 .rt-footer-note-gold {
   color: var(--color-brand-gold);
   font-weight: 700;
