@@ -14,6 +14,16 @@ export const metadata: Metadata = {
   },
 };
 
+const suggestedTerms = ["used shoes", "clothes", "price list", "shipping", "moq", "bags"];
+const popularSearches = [
+  "used brand clothes",
+  "used shoes wholesale",
+  "shipping to africa",
+  "wholesale bags",
+  "payment terms",
+  "sample order",
+];
+
 function splitResults(results: SearchResult[]) {
   return {
     products: results.filter((result) => result.type === "product"),
@@ -35,10 +45,13 @@ function ResultGroup({
 
   return (
     <section className="rounded-[8px] border border-[#eee] bg-white p-6 shadow-[0_4px_18px_rgba(0,0,0,0.05)]">
-      <div className="mb-4 flex items-center justify-between gap-4">
-        <h2 className="font-montserrat text-[1.35rem] font-extrabold text-brand-dark">{title}</h2>
-        <span className="rounded-[3px] bg-brand-gold px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-brand-dark">
-          {results.length} Results
+      <div className="mb-6 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-1 h-6 bg-brand-red rounded-full" />
+          <h2 className="font-montserrat text-[1.25rem] font-black text-brand-dark uppercase tracking-tight">{title}</h2>
+        </div>
+        <span className="rounded-full bg-gray-100 border border-gray-200 px-3 py-1 text-[10px] font-black uppercase tracking-[0.1em] text-gray-500">
+          {results.length} Found
         </span>
       </div>
 
@@ -47,27 +60,25 @@ function ResultGroup({
           <Link
             key={result.id}
             href={result.href}
-            className="group rounded-[6px] border border-[#eee] bg-[#faf9f4] px-5 py-4 transition-all hover:border-brand-red/20 hover:shadow-[0_6px_18px_rgba(0,0,0,0.06)]"
+            className="group block relative rounded-[8px] border border-gray-100 bg-white px-6 py-5 transition-all hover:border-brand-red/10 hover:shadow-[0_10px_30px_rgba(0,0,0,0.04)]"
           >
-            <div className="mb-2 flex items-center gap-3">
-              <span className="rounded-[3px] bg-brand-dark px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
+            <div className="mb-3 flex items-center gap-3">
+              <span className="rounded-[2px] bg-brand-dark px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-white">
                 {result.type}
               </span>
-              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-black/45">
-                {result.source === "blog" ? "Sanity Blog" : "Site Content"}
-              </span>
+              <div className="h-px flex-1 bg-gray-100 group-hover:bg-brand-red/10 transition-colors" />
             </div>
-            <div className="mb-2 flex items-start justify-between gap-4">
-              <h3 className="font-montserrat text-[1rem] font-bold text-brand-dark transition-colors group-hover:text-brand-red">
-                {result.title}
-              </h3>
-              <ArrowRight
-                className="shrink-0 text-brand-red transition-transform group-hover:translate-x-1"
-                size={18}
-                strokeWidth={2.5}
-              />
+            <div className="flex items-start justify-between gap-6">
+              <div className="flex-1">
+                <h3 className="font-montserrat text-[1.1rem] font-extrabold text-brand-dark mb-2 transition-colors group-hover:text-brand-red">
+                  {result.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-gray-500 line-clamp-2">{result.description}</p>
+              </div>
+              <div className="shrink-0 w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-300 group-hover:border-brand-red/20 group-hover:text-brand-red transition-all">
+                <ArrowRight size={18} strokeWidth={2.5} />
+              </div>
             </div>
-            <p className="text-sm leading-7 text-black/65">{result.description}</p>
           </Link>
         ))}
       </div>
@@ -88,37 +99,35 @@ export default async function SearchPage({
 
   return (
     <main className="bg-white">
-      <section className="rt-page-hero bg-[linear-gradient(135deg,#1A1A1A_0%,#2a1515_60%,#C0392B_100%)]">
+      <section className="relative overflow-hidden bg-[linear-gradient(135deg,#1A1A1A_0%,#2a1515_60%,#C0392B_100%)]">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/img/order/order-hero.jpg"
-            alt="Search page background"
+            src="/img/wholesale-inventory.webp"
+            alt="RealismThrift wholesale inventory"
             fill
             priority
-            className="object-cover opacity-[0.2]"
+            className="object-cover opacity-[0.25]"
           />
         </div>
-        <div className="rt-container relative z-10 text-center pb-12 w-full pt-16">
-          <span className="rt-section-badge light inline-block mb-4">SITE SEARCH</span>
-          <h1 className="rt-page-hero-title mb-4">
-            Search <span className="text-brand-gold">Results</span>
+        <div className="absolute inset-0 z-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.22)_0%,rgba(0,0,0,0.34)_100%)]" />
+        <div className="rt-container relative z-10 w-full py-14 text-center sm:py-16 lg:py-20">
+          <span className="rt-section-badge light mb-3 inline-flex text-[10px] tracking-[0.2em] opacity-60 md:text-xs">
+            SITE SEARCH
+          </span>
+          <h1 className="mb-5 font-montserrat text-[clamp(2.25rem,8vw,5rem)] font-light leading-[0.95] tracking-tight text-white sm:mb-6">
+            Search <span className="font-black text-brand-gold italic">Results</span>
           </h1>
-          {query ? (
-            <p className="rt-page-hero-sub max-w-[680px] mx-auto mb-7 leading-[1.7]">
-              Showing results for <span className="font-bold text-brand-gold">&quot;{query}&quot;</span>.
-              Search covers products, FAQ topics, ordering information, contact paths, and blog posts.
-            </p>
-          ) : (
-            <p className="rt-page-hero-sub max-w-[680px] mx-auto mb-7 leading-[1.7]">
-              Search for products, shipping questions, pricing, payment terms, samples, or blog topics.
+          {query && (
+            <p className="mx-auto mb-8 max-w-[36rem] px-4 text-sm font-light leading-relaxed text-white/70 sm:text-base lg:text-lg">
+              Displaying matches for <span className="font-bold text-white italic">&quot;{query}&quot;</span>.
             </p>
           )}
-          <div className="flex justify-center gap-3 flex-wrap">
-            {["used shoes", "price list", "shipping", "moq", "bags", "sample"].map((term) => (
+          <div className="mx-auto flex max-w-3xl flex-wrap justify-center gap-3 px-4">
+            {suggestedTerms.map((term) => (
               <Link
                 key={term}
                 href={`/search?q=${encodeURIComponent(term)}`}
-                className="bg-white/10 border border-white/20 text-white px-4 py-2 rounded-[3px] text-[0.75rem] font-montserrat font-semibold uppercase tracking-[0.08em] hover:bg-white/18 transition-colors"
+                className="rounded-[3px] border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-montserrat font-bold uppercase tracking-[0.12em] text-white transition-all hover:bg-white/25 sm:text-xs"
               >
                 {term}
               </Link>
@@ -127,30 +136,32 @@ export default async function SearchPage({
         </div>
       </section>
 
-      <div className="bg-brand-red py-7">
-        <div className="rt-container max-w-[1280px]">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="text-white">
-              <div className="font-montserrat text-[1.4rem] font-extrabold leading-none">{grouped.products.length}</div>
-              <div className="text-[0.72rem] opacity-85 mt-1.5 tracking-wider uppercase">Products</div>
-            </div>
-            <div className="text-white">
-              <div className="font-montserrat text-[1.4rem] font-extrabold leading-none">{grouped.support.length}</div>
-              <div className="text-[0.72rem] opacity-85 mt-1.5 tracking-wider uppercase">FAQ & Pages</div>
-            </div>
-            <div className="text-white">
-              <div className="font-montserrat text-[1.4rem] font-extrabold leading-none">{grouped.blog.length}</div>
-              <div className="text-[0.72rem] opacity-85 mt-1.5 tracking-wider uppercase">Blog Posts</div>
-            </div>
-            <div className="text-white">
-              <div className="font-montserrat text-[1.4rem] font-extrabold leading-none">{results.length}</div>
-              <div className="text-[0.72rem] opacity-85 mt-1.5 tracking-wider uppercase">Total Matches</div>
+      <div className="relative z-20 -mt-4 sm:-mt-6 lg:-mt-8">
+        <div className="rt-container">
+          <div className="rounded-[4px] bg-[#b33528] px-5 py-6 shadow-[0_20px_50px_rgba(0,0,0,0.15)] sm:px-6 sm:py-7 md:py-9">
+            <div className="grid grid-cols-2 items-center gap-y-8 text-center md:grid-cols-4 md:gap-x-12">
+              <div className="border-r border-white/10 px-2 text-white md:border-r">
+                <div className="mb-1 font-montserrat text-[1.5rem] font-black leading-none md:text-[2rem]">{grouped.products.length}</div>
+                <div className="text-[9px] font-bold uppercase tracking-[0.15em] opacity-70 md:text-[0.7rem]">Inventory</div>
+              </div>
+              <div className="px-2 text-white md:border-r md:border-white/10">
+                <div className="mb-1 font-montserrat text-[1.5rem] font-black leading-none md:text-[2rem]">{grouped.support.length}</div>
+                <div className="text-[9px] font-bold uppercase tracking-[0.15em] opacity-70 md:text-[0.7rem]">Guidance</div>
+              </div>
+              <div className="border-r border-white/10 px-2 text-white md:border-r">
+                <div className="mb-1 font-montserrat text-[1.5rem] font-black leading-none md:text-[2rem]">{grouped.blog.length}</div>
+                <div className="text-[9px] font-bold uppercase tracking-[0.15em] opacity-70 md:text-[0.7rem]">Insights</div>
+              </div>
+              <div className="px-2 text-white">
+                <div className="mb-1 font-montserrat text-[1.5rem] font-black leading-none md:text-[2rem]">{results.length}</div>
+                <div className="text-[9px] font-bold uppercase tracking-[0.15em] opacity-70 md:text-[0.7rem]">Total Found</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <section className="bg-[#f7f3ea] py-16">
+      <section className="bg-[#f7f3ea] py-12 sm:py-14 lg:py-16">
         <div className="rt-container">
           {!query ? (
             <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8">
@@ -160,7 +171,7 @@ export default async function SearchPage({
                   <div className="rt-section-divider" />
                 </div>
                 <div className="flex flex-wrap gap-3">
-                  {["used brand clothes", "used shoes wholesale", "shipping to africa", "wholesale bags", "payment terms", "sample order"].map((term) => (
+                  {popularSearches.map((term) => (
                     <Link
                       key={term}
                       href={`/search?q=${encodeURIComponent(term)}`}
@@ -192,7 +203,7 @@ export default async function SearchPage({
                     <ArrowRight size={16} strokeWidth={2.5} />
                   </Link>
                   <a
-                    href="https://wa.me/8618800000001"
+                    href="https://wa.me/8613367481710"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-[3px] text-[0.82rem] font-montserrat font-bold uppercase tracking-[0.08em] hover:bg-[#1da851] transition-colors"
@@ -246,7 +257,7 @@ export default async function SearchPage({
                       Get Price List
                     </Link>
                     <a
-                      href="https://wa.me/8618800000001"
+                      href="https://wa.me/8613367481710"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-4 py-3 rounded-[3px] text-[0.78rem] font-montserrat font-bold uppercase tracking-[0.08em] hover:bg-[#1da851] transition-colors"
@@ -259,31 +270,32 @@ export default async function SearchPage({
               </aside>
             </div>
           ) : (
-            <section className="bg-white border border-[#eee] rounded-[8px] p-8 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
-              <div className="mb-4 flex items-center gap-3 text-brand-red">
-                <SearchX size={26} strokeWidth={2.4} />
-                <h2 className="font-montserrat text-[1.5rem] font-extrabold text-brand-dark">No exact match found</h2>
+            <section className="rounded-[8px] border border-gray-100 bg-white px-6 py-12 text-center shadow-[0_10px_40px_rgba(0,0,0,0.03)] sm:px-8 sm:py-14 lg:px-10">
+              <div className="mb-6 flex justify-center">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-50 text-gray-200">
+                  <SearchX size={40} strokeWidth={1.5} />
+                </div>
               </div>
-              <p className="max-w-3xl text-[0.95rem] leading-[1.9] text-black/65">
-                We could not find an exact match for <span className="font-bold">&quot;{query}&quot;</span>.
-                If you need a price list, shipping estimate, or a custom product mix, send your
-                requirements directly and our sales team will reply within 12 hours.
+              <h2 className="mb-4 font-montserrat text-[1.75rem] font-black text-brand-dark">No exact match found</h2>
+              <p className="mx-auto mb-8 max-w-2xl text-[0.98rem] leading-relaxed text-gray-500 sm:mb-10 sm:text-[1rem]">
+                We couldn&apos;t find an exact match for <span className="font-bold text-brand-dark">&quot;{query}&quot;</span>.
+                Our sales team can help you find specific stocks, provide price lists, or calculate shipping costs manually.
               </p>
-              <div className="mt-6 flex flex-wrap gap-4">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
                   href="/#contact"
-                  className="inline-flex items-center gap-2 bg-brand-red px-5 py-3 rounded-[3px] text-[0.82rem] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#a52e23]"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-red px-8 py-4 rounded-[3px] text-[0.85rem] font-black uppercase tracking-wider text-white transition-all hover:bg-brand-red-dark hover:shadow-lg active:scale-[0.98]"
                 >
                   Send Inquiry
                   <ArrowRight size={16} strokeWidth={2.5} />
                 </Link>
                 <a
-                  href="https://wa.me/8618800000001"
+                  href="https://wa.me/8613367481710"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-[#25D366] px-5 py-3 rounded-[3px] text-[0.82rem] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#1da851]"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#25D366] px-8 py-4 rounded-[3px] text-[0.85rem] font-black uppercase tracking-wider text-white transition-all hover:bg-[#1da851] hover:shadow-lg active:scale-[0.98]"
                 >
-                  <MessageCircle size={16} strokeWidth={2.5} />
+                  <MessageCircle size={18} strokeWidth={2.5} />
                   Chat on WhatsApp
                 </a>
               </div>

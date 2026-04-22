@@ -73,7 +73,7 @@ export default function UsedBrandBagPage() {
               Get Price Now →
             </a>
             <a
-              href="https://wa.me/8618800000001?text=Hi%2C+I+want+to+wholesale+used+brand+bags"
+              href="https://wa.me/8613367481710?text=Hi%2C+I+want+to+wholesale+used+brand+bags"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white/[.12] border border-white/30 text-white font-montserrat font-semibold text-[0.85rem] px-6 py-[0.7rem] rounded-[3px] no-underline hover:bg-white/20 transition-colors"
@@ -302,7 +302,7 @@ export default function UsedBrandBagPage() {
 
             <div className="mt-[1.25rem]">
               <a
-                href="https://wa.me/8618800000001?text=Hi%2C+I+want+used+brand+bags+wholesale+price"
+                href="https://wa.me/8613367481710?text=Hi%2C+I+want+used+brand+bags+wholesale+price"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-[3px] no-underline font-montserrat font-bold text-[0.875rem] hover:bg-[#1da851] transition-colors"

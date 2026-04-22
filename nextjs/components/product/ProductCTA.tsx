@@ -10,7 +10,7 @@ interface ProductCTAProps {
 export function ProductCTA({ 
   title, 
   description, 
-  whatsappNumber = "8618800000001",
+  whatsappNumber = "8613367481710",
   whatsappMessage = "Hi, I want to get a wholesale price list"
 }: ProductCTAProps) {
   return (

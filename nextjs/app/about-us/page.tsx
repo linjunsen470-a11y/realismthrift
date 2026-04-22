@@ -33,7 +33,7 @@ export default function AboutUsPage() {
             <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-7 py-3 rounded-[3px] font-bold font-montserrat text-[0.875rem] hover:bg-brand-gold-dark transition-colors">
               Contact Our Team
             </Link>
-            <a href="https://wa.me/8618800000001" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-7 py-3 rounded-[3px] font-semibold font-montserrat text-[0.875rem] hover:bg-white/20 transition-colors">
+            <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-7 py-3 rounded-[3px] font-semibold font-montserrat text-[0.875rem] hover:bg-white/20 transition-colors">
               💬 WhatsApp
             </a>
           </div>
@@ -82,7 +82,7 @@ export default function AboutUsPage() {
               Our founders recognized a critical gap in the market: overseas wholesale buyers needed a reliable Chinese supplier who could consistently deliver A-grade branded merchandise with transparent quality standards and professional export documentation. RealismThrift was built to fill that gap.
             </p>
             <p className="text-[0.9375rem] text-[#555] leading-[1.85] mb-7">
-              Today, our {companyStats.facilitySize} facility in Guangzhou processes over {companyStats.monthlyCapacity} of used branded clothing, shoes, and bags every month. Our {companyStats.staffCount} trained staff sort, grade, clean, and pack merchandise destined for wholesale markets across Africa, Southeast Asia, the Middle East, Europe, and the Americas.
+              Today, our {companyStats.facilitySize} facility in Huizhou processes over {companyStats.monthlyCapacity} of used branded clothing, shoes, and bags every month. Our {companyStats.staffCount} trained staff sort, grade, clean, and pack merchandise destined for wholesale markets across Africa, Southeast Asia, the Middle East, Europe, and the Americas.
             </p>
             <div className="flex gap-6 flex-wrap">
               <div className="text-center px-6 py-4 bg-[#F5F5F0] rounded-[6px]">
@@ -131,7 +131,7 @@ export default function AboutUsPage() {
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
             <div className="absolute bottom-8 left-8 right-8">
-              <div className="font-montserrat text-[1.25rem] font-extrabold text-white mb-2">RealismThrift Export Team — Guangzhou, China</div>
+              <div className="font-montserrat text-[1.25rem] font-extrabold text-white mb-2">RealismThrift Export Team — Huizhou, China</div>
               <div className="text-[0.875rem] text-white/75">200+ dedicated professionals in sorting, quality control, sales, and logistics</div>
             </div>
           </div>
@@ -286,7 +286,7 @@ export default function AboutUsPage() {
              <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-colors">
                Contact Us Now
              </Link>
-             <a href="https://wa.me/8618800000001" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-[#1da851] transition-colors">
+             <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-[#1da851] transition-colors">
                💬 WhatsApp
              </a>
           </div>

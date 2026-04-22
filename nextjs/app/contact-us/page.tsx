@@ -32,7 +32,7 @@ export default function ContactUsPage() {
             <a href="mailto:sales@realismthrift.com" className="bg-brand-gold text-brand-dark px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-brand-gold-dark hover:-translate-y-0.5 shadow-lg active:scale-95">
               📧 Email Us
             </a>
-            <a href="https://wa.me/8618800000001" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-[#1da851] hover:-translate-y-0.5 shadow-lg active:scale-95">
+            <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-[#1da851] hover:-translate-y-0.5 shadow-lg active:scale-95">
               💬 WhatsApp
             </a>
           </div>
@@ -45,9 +45,9 @@ export default function ContactUsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
             {[
               { i: "📧", t: "Email", s: "Send us an email", v: "sales@realismthrift.com", l: "mailto:sales@realismthrift.com" },
-              { i: "💬", t: "WhatsApp", s: "Chat with us now", v: "+8618800000001", l: "https://wa.me/8618800000001" },
-              { i: "📞", t: "Phone", s: "Call our sales team", v: "+86 188 0000 0001", l: "tel:+8618800000001" },
-              { i: "📍", t: "Address", s: "Visit our factory", v: "Guangzhou, China", l: "#" },
+              { i: "💬", t: "WhatsApp", s: "Chat with us now", v: "+8613367481710", l: "https://wa.me/8613367481710" },
+              { i: "📞", t: "Phone", s: "Call our sales team", v: "+86 133 6748 1710", l: "tel:+8613367481710" },
+              { i: "📍", t: "Address", s: "Visit our factory", v: "Huizhou, China", l: "#" },
             ].map((item) => (
               <div key={item.t} className="bg-white border border-[#eee] rounded-[8px] p-7 text-center shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.12)] transition-all transform hover:-translate-y-1">
                 <div className="text-[2.25rem] mb-4">{item.i}</div>
@@ -90,9 +90,9 @@ export default function ContactUsPage() {
                 <div className="space-y-5">
                   {[
                     { i: "🏢", l: "Full Name", v: "RealismThrift Export Co., Ltd." },
-                    { i: "📍", l: "Location", v: "Guangzhou, Guangdong, China" },
+                    { i: "📍", l: "Location", v: "Huizhou, Guangdong, China" },
                     { i: "✉️", l: "Official Email", v: "sales@realismthrift.com" },
-                    { i: "📞", l: "Sales Hotline", v: "+86 188 0000 0001" },
+                    { i: "📞", l: "Sales Hotline", v: "+86 133 6748 1710" },
                     { i: "🕒", l: "Business Hours", v: "Mon–Sat 8:00–20:00 (GMT+8)" },
                   ].map((item) => (
                     <div key={item.l} className="flex gap-4 text-[0.8125rem] border-b border-white/5 pb-4 last:border-0 last:pb-0">
@@ -153,10 +153,10 @@ export default function ContactUsPage() {
             </div>
             <div className="w-full h-[450px] rounded-[16px] overflow-hidden border border-[#eee] shadow-2xl relative">
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117565.17833008985!2d113.19792556519213!3d23.136269931818274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3402f8c47f711f11%3A0xc3b8dc0a45bdada1!2sGuangzhou%2C%20Guangdong%20Province%2C%20China!5e0!3m2!1sen!2sus!4v1713500000000!5m2!1sen!2sus" 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117468.61833008985!2d114.29792556519213!3d23.136269931818274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x340338c47f711f11%3A0xc3b8dc0a45bdada1!2sBoluo%2C%20Huizhou%2C%20Guangdong%20Province%2C%20China!5e0!3m2!1sen!2sus!4v1713500000000!5m2!1sen!2sus" 
                   width="100%" 
                   height="100%" 
-                  title="Google Maps location of RealismThrift in Guangzhou, China"
+                  title="Google Maps location of RealismThrift in Huizhou, China"
                   allowFullScreen={true} 
                   loading="lazy" 
                   referrerPolicy="no-referrer-when-downgrade"
@@ -165,7 +165,7 @@ export default function ContactUsPage() {
             </div>
             <div className="mt-8 p-6 bg-brand-light rounded-[10px] border-l-4 border-brand-gold">
               <p className="text-[0.875rem] text-[#555] font-open-sans leading-relaxed">
-                <strong className="text-brand-dark">Visiting our factory?</strong> We welcome international buyers to visit our {companyStats.facilitySize} facility. Please contact your regional sales agent to schedule a tour and arrange airport pickup in Guangzhou.
+                <strong className="text-brand-dark">Visiting our factory?</strong> We welcome international buyers to visit our {companyStats.facilitySize} facility. Please contact your regional sales agent to schedule a tour and arrange airport pickup in Huizhou or Guangzhou.
               </p>
             </div>
           </div>
