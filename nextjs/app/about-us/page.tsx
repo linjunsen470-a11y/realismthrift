@@ -278,13 +278,25 @@ export default function AboutUsPage() {
               <div className="rt-section-divider" />
             </div>
             {[
-              { name: 'Emmanuel Osei', country: 'Ghana' },
-              { name: 'Fatima Al-Hassan', country: 'Nigeria' },
-              { name: 'Nguyen Van Minh', country: 'Vietnam' }
+              { 
+                name: 'Emmanuel Osei', 
+                country: 'Ghana', 
+                quote: "We've been importing summer clothes from RealismThrift for 3 years. The sorting is very clean compared to other factories we've tried. Very few 'waste' items in the bales, which really helps our profit margins."
+              },
+              { 
+                name: 'Fatima Al-Hassan', 
+                country: 'Nigeria', 
+                quote: "The used shoes and bags are always in high demand. I appreciate that they send photos of the actual container loading process. Their documentation is professional, making customs clearance in Lagos much smoother."
+              },
+              { 
+                name: 'Nguyen Van Minh', 
+                country: 'Vietnam', 
+                quote: "Consistent A-grade quality. Mostly brand name items with very little wear. It's hard to find a supplier in China who stays this reliable month after month. Good communication from the sales team."
+              }
             ].map(buyer => (
               <div key={buyer.name} className="bg-white border border-[#eee] rounded-[8px] p-5 mb-4 shadow-[0_2px_6px_rgba(0,0,0,0.04)]">
-                <div className="text-[0.875rem] mb-2">⭐⭐⭐⭐⭐</div>
-                <p className="text-[0.8125rem] text-[#555] leading-[1.7] italic mb-3">&quot;{buyer.name} feedback quote sample. High quality items and reliable shipping.&quot;</p>
+                <div className="text-[0.875rem] mb-2 text-brand-gold">★★★★★</div>
+                <p className="text-[0.8125rem] text-[#555] leading-[1.7] italic mb-3">&quot;{buyer.quote}&quot;</p>
                 <div className="flex justify-between items-center">
                   <div className="font-montserrat text-[0.8rem] font-bold text-brand-dark">{buyer.name}</div>
                   <div className="text-[0.75rem] text-[#888]">{buyer.country}</div>

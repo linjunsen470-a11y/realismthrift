@@ -145,7 +145,7 @@ const contactMethods = [
   },
   {
     label: "WHATSAPP",
-    value: "+8613367481710",
+    value: "+86 133 6748 1710",
     href: "https://wa.me/8613367481710",
     icon: MessageCircle,
   },

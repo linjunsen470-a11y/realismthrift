@@ -56,7 +56,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
             </div>
             <div className="rt-footer-contact-item">
               <MessageCircle size={18} strokeWidth={2.2} />
-              <a href={`https://wa.me/${data.brand.whatsapp}`} target="_blank" rel="noreferrer">
+              <a href={`https://wa.me/${data.brand.whatsapp.replace(/\s/g, "")}`} target="_blank" rel="noreferrer">
                 {data.brand.whatsapp}
               </a>
             </div>
@@ -87,7 +87,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
             <h4 className="rt-footer-col-title">Contact</h4>
             <ul className="rt-footer-links">
               <li>
-                <a href={`https://wa.me/${data.contact.whatsapp}`} target="_blank" rel="noreferrer">
+                <a href={`https://wa.me/${data.contact.whatsapp.replace(/\s/g, "")}`} target="_blank" rel="noreferrer">
                   WhatsApp
                 </a>
               </li>
@@ -99,7 +99,19 @@ export function SiteFooter({ data }: SiteFooterProps) {
               </li>
             </ul>
 
-            <div className="rt-footer-note">{data.contact.inquiryTime}</div>
+            <div className="rt-footer-note">
+              {data.contact.inquiryTime.split(". ").map((text, idx) => (
+                <div key={idx} style={{ marginTop: idx > 0 ? "0.35rem" : "0" }}>
+                  {text.includes("12 hours") ? (
+                    <>
+                      Reply within <span className="rt-footer-note-gold">12 hours</span>.
+                    </>
+                  ) : (
+                    text
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -117,7 +129,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
 
       <div className="rt-floating-actions">
         <a
-          href={`https://wa.me/${data.contact.whatsapp}`}
+          href={`https://wa.me/${data.contact.whatsapp.replace(/\s/g, "")}`}
           target="_blank"
           rel="noreferrer"
           aria-label="Contact via WhatsApp"

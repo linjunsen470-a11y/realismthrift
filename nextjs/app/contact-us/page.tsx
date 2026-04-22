@@ -31,7 +31,7 @@ export default function ContactUsPage() {
           <h1 className="font-montserrat text-[clamp(2.5rem,5vw,3rem)] font-extrabold text-white mb-4">
             Contact <span className="text-brand-gold">Us</span>
           </h1>
-          <p className="text-white/80 text-[1.0625rem] max-w-[600px] mx-auto mb-10 font-open-sans leading-[1.7]">
+          <p className="text-white/80 text-[1.0625rem] max-w-[600px] md:max-w-[850px] mx-auto mb-10 font-open-sans leading-[1.7]">
             Our sales team is available during business hours to answer your questions and provide price quotations. We speak English, French, Spanish, and Arabic.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
@@ -53,7 +53,7 @@ export default function ContactUsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
             {[
               { i: <Mail className="w-6 h-6 text-brand-red" />, t: "Email", s: "Send us an email", v: "sales@realismthrift.com", l: "mailto:sales@realismthrift.com", color: "bg-red-50" },
-              { i: <MessageCircle className="w-6 h-6 text-[#25D366]" />, t: "WhatsApp", s: "Chat with us now", v: "+8613367481710", l: "https://wa.me/8613367481710", color: "bg-green-50" },
+              { i: <MessageCircle className="w-6 h-6 text-[#25D366]" />, t: "WhatsApp", s: "Chat with us now", v: "+86 133 6748 1710", l: "https://wa.me/8613367481710", color: "bg-green-50" },
               { i: <Phone className="w-6 h-6 text-brand-gold" />, t: "Phone", s: "Call our sales team", v: "+86 133 6748 1710", l: "tel:+8613367481710", color: "bg-yellow-50" },
               { i: <MapPin className="w-6 h-6 text-brand-dark" />, t: "Address", s: "Visit our factory", v: "Huizhou, China", l: "#", color: "bg-gray-100" },
             ].map((item) => (
@@ -85,9 +85,6 @@ export default function ContactUsPage() {
               </div>
               <div className="bg-white border border-[#eee] rounded-[12px] p-8 md:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.05)]">
                  <InquiryForm />
-                 <p className="text-center text-[0.75rem] text-gray-400 font-open-sans mt-5">
-                   Reply within 12 hours · Detailed price quotation · Private & Confidential
-                 </p>
               </div>
             </div>
 
