@@ -21,6 +21,11 @@ const openSans = Open_Sans({
 export const metadata: Metadata = {
   title: 'RealismThrift Export Co., Ltd | #1 Used Clothes & Shoes Supplier in China',
   description: 'Leading wholesale supplier of second-hand clothes, shoes and bags from China. Export to 100+ countries with A-Grade quality.',
+  icons: {
+    icon: '/img/rt-icon.png',
+    shortcut: '/img/rt-icon.png',
+    apple: '/img/rt-icon.png',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -43,4 +48,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-
