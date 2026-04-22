@@ -53,4 +53,8 @@ While our operations are human-led, the **Digital Orchestrator** is the technica
 - **Maintainer Role**: Ensures data accuracy in `siteData.ts` and reliability of the inquiry pipeline.
 
 ---
+## Contact Us
+- **WhatsApp**: [+86 133 6748 1710](https://wa.me/8613367481710)
+- **Address**: Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
+
 © 2026 RealismThrift Export Co., Ltd. — *Stability, Quality, Trust.*
