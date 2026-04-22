@@ -81,8 +81,7 @@ export default async function BlogPostPage({
 
   return (
     <article>
-      {/* HERO SECTION */}
-      <section className="rt-page-hero rt-blog-hero relative overflow-hidden">
+      <section className="rt-page-hero rt-blog-hero relative overflow-hidden flex items-center">
         <Image
           src={heroImage}
           alt={post.title}
@@ -91,28 +90,32 @@ export default async function BlogPostPage({
           priority
         />
         <div className="rt-page-hero-overlay relative z-1" />
-        <div className="rt-container relative z-10">
-          <div className="rt-fade-in">
-            <Link href="/blog" className="rt-blog-back-link">
+        <div className="rt-container relative z-10 pt-16 md:pt-24">
+          <div className="rt-fade-in max-w-4xl">
+            <Link href="/blog" className="rt-blog-back-link mb-8">
               <ArrowLeft size={14} strokeWidth={3} />
               Back to Blog
             </Link>
-            <div className="rt-page-hero-meta">
-              <span className="rt-news-card-category">
-                {post.category?.title || "Blog"}
+            <div className="rt-page-hero-meta mb-4">
+              <span className="rt-news-card-category bg-brand-red text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">
+                {post.category?.title || "Industry Insights"}
               </span>
-              <span className="rt-blog-meta-dot" />
-              <span>{formatBlogDate(post.publishedAt)}</span>
-              <span className="rt-blog-meta-dot" />
+              <span className="rt-blog-meta-dot mx-2" />
+              <span className="text-white/80">{formatBlogDate(post.publishedAt)}</span>
+              <span className="rt-blog-meta-dot mx-2" />
               <ReadingTime content={post.body} />
             </div>
-            <h1 className="rt-page-hero-title rt-blog-title">{post.title}</h1>
-            <div className="rt-breadcrumb">
-              <Link href="/">Home</Link>
+            <h1 className="rt-blog-title text-white font-black leading-tight mb-6">
+              {post.title}
+            </h1>
+            <div className="rt-breadcrumb flex items-center gap-2 text-white/60 text-sm">
+              <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
               <span>/</span>
-              <Link href="/blog">Blog</Link>
+              <Link href="/blog" className="hover:text-brand-gold transition-colors">Blog</Link>
               <span>/</span>
-              <span className="opacity-60">{post.title}</span>
+              <span className="text-white/40 truncate max-w-[200px] md:max-w-md">
+                {post.title}
+              </span>
             </div>
           </div>
         </div>

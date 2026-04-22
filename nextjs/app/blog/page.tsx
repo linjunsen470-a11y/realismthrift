@@ -16,17 +16,21 @@ export default async function BlogPage() {
   return (
     <div>
       <section
-        className="rt-page-hero rt-blog-hero"
-        style={{ backgroundImage: "url('/img/blog-inner.jpg')" }}
+        className="rt-page-hero rt-blog-hero rt-blog-hero-index"
+        style={{ backgroundImage: "url('/img/blog-hero-wholesale.webp')" }}
       >
         <div className="rt-page-hero-overlay" />
         <div className="rt-container">
-          <p className="rt-page-hero-sub">Wholesale News, Guides, and Market Insights</p>
-          <h1 className="rt-page-hero-title">Industry Insights</h1>
-          <div className="rt-breadcrumb">
-            <Link href="/">Home</Link>
-            <span>/</span>
-            <span>Blog</span>
+          <div className="rt-fade-in">
+            <span className="rt-hero-badge">Industry Insights</span>
+            <h1 className="rt-page-hero-title" style={{ fontSize: 'clamp(1.75rem, 4.5vw, 2.6rem)', lineHeight: 1.2, marginBottom: '1.25rem' }}>
+              Used Branded Clothes, Shoes & Bags <br className="hidden md:block" /> Wholesale Market News
+            </h1>
+            <div className="rt-breadcrumb">
+              <Link href="/">Home</Link>
+              <span>/</span>
+              <span>Blog</span>
+            </div>
           </div>
         </div>
       </section>
