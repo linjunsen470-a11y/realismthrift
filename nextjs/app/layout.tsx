@@ -19,6 +19,7 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.realismthrift.com'),
   title: {
     default: 'RealismThrift Export Co., Ltd | #1 Used Clothes & Shoes Supplier in China',
     template: '%s | RealismThrift'

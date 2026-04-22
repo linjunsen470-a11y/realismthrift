@@ -38,7 +38,7 @@ export default function ContactUsPage() {
               📧 Email Us
             </a>
             <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-[#1da851] hover:-translate-y-0.5 shadow-lg active:scale-95">
-              💬 WhatsApp
+              WhatsApp
             </a>
           </div>
         </div>
@@ -50,7 +50,7 @@ export default function ContactUsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
             {[
               { i: "📧", t: "Email", s: "Send us an email", v: "sales@realismthrift.com", l: "mailto:sales@realismthrift.com" },
-              { i: "💬", t: "WhatsApp", s: "Chat with us now", v: "+8613367481710", l: "https://wa.me/8613367481710" },
+              { i: "WA", t: "WhatsApp", s: "Chat with us now", v: "+8613367481710", l: "https://wa.me/8613367481710" },
               { i: "📞", t: "Phone", s: "Call our sales team", v: "+86 133 6748 1710", l: "tel:+8613367481710" },
               { i: "📍", t: "Address", s: "Visit our factory", v: "Huizhou, China", l: "#" },
             ].map((item) => (

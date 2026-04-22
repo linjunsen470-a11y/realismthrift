@@ -25,6 +25,9 @@ export function InquiryForm({
     try {
       const response = await fetch("/api/send", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(payload),
       });
 
@@ -52,6 +55,15 @@ export function InquiryForm({
       onSubmit={handleSubmit}
     >
       <div className="rt-form-grid">
+        <input
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          className="hidden"
+          aria-hidden="true"
+        />
+
         <div className="rt-form-group">
           <label htmlFor={`${variant}-name`}>Your Name *</label>
           <input
@@ -111,10 +123,10 @@ export function InquiryForm({
         <label htmlFor={`${variant}-quantity`}>Your Quantity</label>
         <select id={`${variant}-quantity`} name="quantity">
           <option value="">Select quantity...</option>
-          <option value="100bales">≥100 bales (4,500kg / 2,000 pairs)</option>
-          <option value="20ft">≥One 20ft Container</option>
-          <option value="40ft">≥One 40ft Container</option>
-          <option value="2x40ft">≥Two 40ft Containers</option>
+          <option value="100bales">100+ bales (4,500 kg / 2,000 pairs)</option>
+          <option value="20ft">One 20ft container</option>
+          <option value="40ft">One 40ft container</option>
+          <option value="2x40ft">Two 40ft containers</option>
         </select>
       </div>
 

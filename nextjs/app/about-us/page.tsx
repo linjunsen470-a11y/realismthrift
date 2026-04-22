@@ -39,7 +39,7 @@ export default function AboutUsPage() {
               Contact Our Team
             </Link>
             <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-7 py-3 rounded-[3px] font-semibold font-montserrat text-[0.875rem] hover:bg-white/20 transition-colors">
-              💬 WhatsApp
+              WhatsApp
             </a>
           </div>
         </div>
@@ -292,7 +292,7 @@ export default function AboutUsPage() {
                Contact Us Now
              </Link>
              <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-[#1da851] transition-colors">
-               💬 WhatsApp
+               WhatsApp
              </a>
           </div>
         </div>

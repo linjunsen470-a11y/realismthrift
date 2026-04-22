@@ -72,7 +72,7 @@ export default function UsedBrandShoesPage() {
               Get Price Now →
             </a>
             <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-6 py-3 rounded-[3px] font-semibold font-montserrat text-[0.85rem] hover:bg-white/20 transition-colors">
-              💬 WhatsApp
+              WhatsApp
             </a>
           </div>
         </div>
@@ -257,7 +257,7 @@ export default function UsedBrandShoesPage() {
 
               <div className="mt-4 pt-4 border-t border-gray-100">
                 <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-[3px] font-montserrat font-bold text-[0.8125rem] uppercase tracking-wider hover:bg-[#1da851] transition-all shadow-sm">
-                  💬 WhatsApp Us Directly
+                  WhatsApp Us Directly
                 </a>
               </div>
             </div>

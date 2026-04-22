@@ -3,7 +3,7 @@
 import { FormEvent, useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, Search, X } from "lucide-react";
 import { SiteHeader as SiteHeaderType } from "@/types";
 
@@ -14,9 +14,9 @@ interface SiteHeaderProps {
 export function SiteHeader({ data }: SiteHeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [searchQuery, setSearchQuery] = useState("");
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -71,7 +71,8 @@ export function SiteHeader({ data }: SiteHeaderProps) {
             <input 
               type="search" 
               name="q" 
-              defaultValue={searchParams.get("q") ?? ""}
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
               placeholder="Search catalog..." 
               className="bg-transparent focus:ring-0 text-sm"
             />
