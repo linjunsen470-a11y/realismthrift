@@ -5,9 +5,13 @@ import { BlogCard } from "@/components/blog/BlogCard";
 import { getAllBlogPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "Blog | RealismThrift Export Co., Ltd",
-  description:
-    "Wholesale market insights, sourcing advice, and second-hand clothing industry updates from RealismThrift.",
+  title: "Blog | Used Clothing Wholesale Industry Insights & News",
+  description: "Get the latest market updates, profit strategies, and sourcing advice for the wholesale second-hand clothing, shoes, and bag industry from RealismThrift.",
+  openGraph: {
+    title: "RealismThrift Blog | Wholesale Industry Market News",
+    description: "Expert insights into the global wholesale used clothing market. Sourcing tips, container loading guides, and market trends.",
+    images: ['/img/blog-hero-wholesale.webp'],
+  }
 };
 
 export default async function BlogPage() {

@@ -3,7 +3,11 @@ import { ShieldCheck, Lock, Eye, Globe } from "lucide-react";
 
 export const metadata = {
   title: "Privacy Policy | RealismThrift Export Co., Ltd",
-  description: "Learn how RealismThrift handles and protects your personal information and data.",
+  description: "Learn how RealismThrift handles and protects your personal information and data in our global wholesale operations.",
+  openGraph: {
+    title: "RealismThrift Privacy Policy",
+    description: "Our commitment to data protection and privacy for our global wholesale partners.",
+  }
 };
 
 export default function PrivacyPolicyPage() {

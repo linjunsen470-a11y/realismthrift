@@ -24,6 +24,16 @@ import { features, orderSteps, productsData, companyStats } from "@/data/siteDat
 import { InquiryForm } from "@/components/InquiryForm";
 import { getLatestBlogPosts } from "@/lib/blog";
 import { LatestBlogSection } from "@/components/blog/LatestBlogSection";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Global Wholesale Supplier of Used Clothes, Shoes & Bags',
+  description: 'RealismThrift is China\'s leading exporter of premium second-hand clothes, shoes, and bags. High-quality A-Grade sorting, competitive prices, and fast global shipping to 100+ countries.',
+  openGraph: {
+    title: 'RealismThrift | Global Wholesale Supplier of Used Clothes, Shoes & Bags',
+    description: 'China\'s leading exporter of premium second-hand clothes, shoes, and bags. High-quality A-Grade sorting and fast global shipping.',
+  }
+};
 
 const featureIconMap = {
   "award": Award,

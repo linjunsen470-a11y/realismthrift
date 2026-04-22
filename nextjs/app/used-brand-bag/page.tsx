@@ -32,8 +32,13 @@ const bagFaqs = [
 ];
 
 export const metadata = {
-  title: "Used Brand Bags | RealismThrift Wholesale",
-  description: `Premium second-hand branded handbags, backpacks, and luggage — Coach, Michael Kors, Kate Spade, Longchamp and 20+ international brands. Strict 6-point quality inspection. Exported to ${companyStats.countriesCount} countries.`,
+  title: "Used Brand Bags Wholesale | Coach, MK, Kate Spade Supplier",
+  description: `China's premium wholesale exporter of second-hand branded handbags, backpacks, and luggage. Coach, Michael Kors, Kate Spade, and more. 6-point inspection, individually wrapped. Exporting to ${companyStats.countriesCount} countries.`,
+  openGraph: {
+    title: "Used Brand Bags Wholesale | China's Leading Exporter",
+    description: "Premium second-hand branded bags. 6-point quality check. Individually wrapped for protection. Global shipping.",
+    images: ['/images/used-brand-bag/hero.jpg'],
+  }
 };
 
 export default function UsedBrandBagPage() {

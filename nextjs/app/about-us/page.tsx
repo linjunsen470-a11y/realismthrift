@@ -4,8 +4,13 @@ import { InquiryForm } from "@/components/InquiryForm";
 import { companyStats } from "@/data/siteData";
 
 export const metadata = {
-  title: "About Us | RealismThrift Wholesale",
-  description: "Learn about RealismThrift, China's leading wholesale exporter of used brand clothes, shoes, and bags.",
+  title: "About Us | Leading Used Clothes & Shoes Exporter in China",
+  description: "RealismThrift Export Co., Ltd is a professional wholesale supplier of second-hand clothes, shoes, and bags based in Huizhou, China. 15,000m² facility, ISO certified, and GRS compliant.",
+  openGraph: {
+    title: "About RealismThrift | Professional Wholesale Exporter",
+    description: "Learn about China's top wholesale supplier of premium second-hand goods. High-quality A-Grade sorting and global export experience.",
+    images: ['/images/about/hero-bg.jpg'],
+  }
 };
 
 export default function AboutUsPage() {

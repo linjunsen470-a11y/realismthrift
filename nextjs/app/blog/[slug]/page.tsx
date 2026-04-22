@@ -53,7 +53,16 @@ export async function generateMetadata({
       description,
       images: image ? [{ url: image }] : undefined,
       type: "article",
+      publishedTime: post.publishedAt,
+      authors: [post.author?.name || 'RealismThrift'],
+      section: post.category?.title,
     },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: image ? [image] : undefined,
+    }
   };
 }
 
@@ -264,7 +273,7 @@ export default async function BlogPostPage({
                           WhatsApp
                         </div>
                         <div className="text-[0.95rem] font-extrabold text-brand-dark">
-                          +86 188 0000 0001
+                          +86 133 6748 1710
                         </div>
                       </div>
                     </a>

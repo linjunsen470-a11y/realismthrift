@@ -2,8 +2,12 @@ import Link from "next/link";
 import { Scale, FileText, CheckCircle, HelpCircle } from "lucide-react";
 
 export const metadata = {
-  title: "Terms of Service | RealismThrift Export Co., Ltd",
-  description: "Read our terms and conditions for wholesale orders and website usage.",
+  title: "Terms of Service | Wholesale Order Conditions & Export Rules",
+  description: "Read the official terms and conditions for wholesale orders, payment schedules, shipping responsibilities, and quality claims at RealismThrift.",
+  openGraph: {
+    title: "RealismThrift Terms of Service",
+    description: "Legal terms governing our wholesale business relationship and export operations.",
+  }
 };
 
 export default function TermsOfServicePage() {
