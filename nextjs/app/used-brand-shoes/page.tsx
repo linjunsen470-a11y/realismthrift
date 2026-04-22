@@ -32,8 +32,13 @@ const shoeFaqs = [
 ];
 
 export const metadata = {
-  title: "Used Brand Shoes | RealismThrift Wholesale",
-  description: `Wholesale second-hand branded shoes — Nike, Adidas, Jordan, and 30+ brands. Sold by the sack. Exported to ${companyStats.countriesCount} countries.`,
+  title: "Used Brand Shoes Wholesale | Nike, Adidas, Jordan Supplier",
+  description: `China's premium wholesale supplier of second-hand branded shoes. Nike, Adidas, Jordan, and 30+ brands. 100% matched pairs, cleaned and sterilized. Exporting to ${companyStats.countriesCount} countries.`,
+  openGraph: {
+    title: "Used Brand Shoes Wholesale | Premium A-Grade Supplier",
+    description: "Premium second-hand branded shoes from China. Nike, Adidas, and more. 100% manual check for matched pairs and quality.",
+    images: ['/images/reconstructed/1542291026-7eec264c27ff.jpg'],
+  }
 };
 
 export default function UsedBrandShoesPage() {

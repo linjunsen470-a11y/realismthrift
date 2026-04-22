@@ -33,8 +33,13 @@ const clothesFaqs = [
 ];
 
 export const metadata = {
-  title: "Used Brand Clothes | RealismThrift Wholesale",
+  title: "Used Brand Clothes Wholesale | A-Grade Sorted Supplier",
   description: `China's top exporter of sorted, graded second-hand branded clothing. Nike, Adidas, H&M, Zara and 200+ brands. Strict 5-step sorting. MOQ 100 bales. Ships to ${companyStats.countriesCount} countries.`,
+  openGraph: {
+    title: "Used Brand Clothes Wholesale | China's Leading Supplier",
+    description: "Premium A-Grade sorted second-hand branded clothes. nike, Adidas, and more. Global export to 100+ countries.",
+    images: ['/images/used-brand-clothes/hero.jpg'],
+  }
 };
 
 export default function UsedBrandClothesPage() {

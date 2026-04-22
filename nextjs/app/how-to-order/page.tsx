@@ -3,8 +3,13 @@ import Link from "next/link";
 import { InquiryForm } from "@/components/InquiryForm";
 
 export const metadata = {
-  title: "How to Order | RealismThrift Wholesale",
-  description: "Simple 7-step process to wholesale used brand clothes, shoes and bags from RealismThrift.",
+  title: "How to Order Wholesale Used Clothes & Shoes | 7-Step Process",
+  description: "Learn the 7-step wholesale process at RealismThrift. From inquiry and price negotiation to quality inspection and global shipment. Simple, transparent, and professional.",
+  openGraph: {
+    title: "How to Order Wholesale from RealismThrift | Step-by-Step Guide",
+    description: "Our simple 7-step process for wholesale used brand clothes, shoes and bags. High quality, competitive pricing, and reliable shipping.",
+    images: ['/img/order/order-hero.jpg'],
+  }
 };
 
 export default function HowToOrderPage() {

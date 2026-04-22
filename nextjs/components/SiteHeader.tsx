@@ -54,7 +54,7 @@ export function SiteHeader({ data }: SiteHeaderProps) {
             <span className="rt-logo-combo">
               <Image
                 src="/img/rt-icon.png"
-                alt="RT"
+                alt="RealismThrift Logo"
                 width={48}
                 height={48}
                 className="rt-logo-image"

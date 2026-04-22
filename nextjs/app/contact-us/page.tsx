@@ -3,8 +3,13 @@ import { InquiryForm } from "@/components/InquiryForm";
 import { companyStats } from "@/data/siteData";
 
 export const metadata = {
-  title: "Contact Us | RealismThrift Wholesale",
-  description: `Get in touch with RealismThrift for wholesale inquiries, price quotes, and export information. Professional sales support in English, French, Spanish, and Arabic.`,
+  title: "Contact Us | Get Wholesale Quotes for Used Clothes & Shoes",
+  description: `Get in touch with RealismThrift for wholesale inquiries, price quotes, and export information. Professional sales support in English, French, Spanish, and Arabic. 12-hour response guarantee.`,
+  openGraph: {
+    title: "Contact RealismThrift | Wholesale Sales & Support",
+    description: "Ready to start your wholesale order? Contact our multilingual sales team for direct factory pricing and shipping estimates.",
+    images: ['/images/reconstructed/1578575437130-527eed3abbec.jpg'],
+  }
 };
 
 export default function ContactUsPage() {
