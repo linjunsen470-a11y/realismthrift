@@ -204,6 +204,12 @@
   border-radius: 999px;
 }
 
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .rt-section-divider.center {
   margin-left: auto;
   margin-right: auto;
