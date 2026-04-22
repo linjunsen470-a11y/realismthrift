@@ -119,7 +119,7 @@ export default function ContactUsPage() {
       <section className="bg-brand-light py-20">
         <div className="rt-container">
           <div className="text-center mb-14">
-            <span className="rt-section-badge" style={{display:'inline-block'}}>Global Reach</span>
+            <span className="rt-section-badge inline-block">Global Reach</span>
             <h2 className="font-montserrat text-[1.75rem] font-black text-brand-dark mb-3">WE EXPORT TO {companyStats.countriesCount} COUNTRIES</h2>
             <div className="rt-section-divider center mb-6" />
             <p className="text-[#666] text-[0.9375rem] max-w-[640px] mx-auto font-open-sans italic">
