@@ -16,6 +16,9 @@ nextjs/coverage/
 nextjs/.vercel/
 nextjs/*.html
 nextjs/original_pages/
+nextjs/scripts/
+nextjs/unzipped/
+nextjs/temp_view_clothes/
 
 # Sanity Studio
 sanity/node_modules/

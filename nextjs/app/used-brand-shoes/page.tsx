@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { InquiryForm } from "@/components/InquiryForm";
 import { QualityStandards } from "@/components/product/QualityStandards";
 import { ProductTrustSections } from "@/components/product/ProductTrustSections";
@@ -51,7 +52,7 @@ export default function UsedBrandShoesPage() {
         </div>
         <div className="rt-container relative z-10">
           <nav className="text-[0.8rem] text-white/55 mb-3.5 flex items-center gap-1.5">
-            <a href="/" className="text-white/55 hover:text-white transition-colors">Home</a>
+            <Link href="/" className="text-white/55 hover:text-white transition-colors">Home</Link>
             <span>›</span>
             <span className="text-brand-gold">Used Brand Shoes</span>
           </nav>

@@ -10,6 +10,7 @@ const POST_CARD_PROJECTION = groq`{
   publishedAt,
   coverImage,
   category->{
+    _id,
     title,
     "slug": slug.current,
     description
@@ -43,6 +44,7 @@ const postBySlugQuery = groq`*[
   publishedAt,
   coverImage,
   category->{
+    _id,
     title,
     "slug": slug.current,
     description

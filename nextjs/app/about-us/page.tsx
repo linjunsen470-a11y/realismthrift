@@ -12,7 +12,7 @@ export default function AboutUsPage() {
   return (
     <main className="bg-white">
       {/* PAGE HERO */}
-      <section className="relative px-0 py-14 overflow-hidden" style={{ background: "linear-gradient(135deg, #1A1A1A 0%, #2a1515 60%, #C0392B 100%)" }}>
+      <section className="relative px-0 py-14 overflow-hidden rt-about-hero-bg">
         <div className="absolute inset-0 z-0">
           <Image 
             src="/images/reconstructed/1504307651254-35680f356dfd.jpg" 
@@ -255,7 +255,7 @@ export default function AboutUsPage() {
             ].map(buyer => (
               <div key={buyer.name} className="bg-white border border-[#eee] rounded-[8px] p-5 mb-4 shadow-[0_2px_6px_rgba(0,0,0,0.04)]">
                 <div className="text-[0.875rem] mb-2">⭐⭐⭐⭐⭐</div>
-                <p className="text-[0.8125rem] text-[#555] leading-[1.7] italic mb-3">"{buyer.name} feedback quote sample. High quality items and reliable shipping."</p>
+                <p className="text-[0.8125rem] text-[#555] leading-[1.7] italic mb-3">&quot;{buyer.name} feedback quote sample. High quality items and reliable shipping.&quot;</p>
                 <div className="flex justify-between items-center">
                   <div className="font-montserrat text-[0.8rem] font-bold text-brand-dark">{buyer.name}</div>
                   <div className="text-[0.75rem] text-[#888]">{buyer.country}</div>

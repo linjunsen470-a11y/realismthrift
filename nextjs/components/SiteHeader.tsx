@@ -65,7 +65,7 @@ export function SiteHeader({ data }: SiteHeaderProps) {
             <button
               type="button"
               className="rt-hamburger md:hidden"
-              aria-expanded={isMenuOpen}
+              aria-expanded={isMenuOpen ? true : false}
               aria-controls="rt-nav-list"
               aria-label="Toggle navigation"
               onClick={() => setIsMenuOpen((open) => !open)}
@@ -81,7 +81,6 @@ export function SiteHeader({ data }: SiteHeaderProps) {
           <ul
             id="rt-nav-list"
             className={`rt-nav-list${isMenuOpen ? " is-open" : ""}`}
-            role="menubar"
           >
             {data.navItems.map((item) => {
               const isActive =

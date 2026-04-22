@@ -91,7 +91,7 @@ export default function ContactUsPage() {
                     { n: "James Liu", r: "East Africa", l: "English, Swahili", i: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80", w: "868619102069515" },
                   ].map((member) => (
                     <div key={member.n} className="bg-white border border-[#eee] rounded-[10px] p-5 flex gap-4 items-center shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-md transition-shadow">
-                      <img src={member.i} alt={member.n} className="w-14 h-14 rounded-full object-cover shrink-0 border-2 border-brand-light" />
+                      <Image src={member.i} alt={member.n} width={56} height={56} className="w-14 h-14 rounded-full object-cover shrink-0 border-2 border-brand-light" />
                       <div className="flex-1 min-width-0">
                         <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark">{member.n}</div>
                         <div className="text-[0.75rem] text-brand-red font-bold my-0.5 tracking-tight">{member.r}</div>
