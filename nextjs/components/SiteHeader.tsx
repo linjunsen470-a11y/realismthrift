@@ -88,7 +88,7 @@ export function SiteHeader({ data }: SiteHeaderProps) {
             <button
               type="button"
               className="rt-hamburger md:hidden"
-              aria-expanded={isMenuOpen ? true : false}
+              {...(isMenuOpen ? { "aria-expanded": "true" } : { "aria-expanded": "false" })}
               aria-controls="rt-nav-list"
               aria-label="Toggle navigation"
               onClick={() => setIsMenuOpen((open) => !open)}
