@@ -76,7 +76,7 @@ export default function PrivacyPolicyPage() {
                 </p>
                 <p className="font-bold">
                   RealismThrift Export Co., Ltd<br />
-                  Guangzhou, Guangdong Province, China<br />
+                  Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China<br />
                   Email: sales@realismthrift.com
                 </p>
               </div>

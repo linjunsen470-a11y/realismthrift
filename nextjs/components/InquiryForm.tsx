@@ -136,7 +136,7 @@ export function InquiryForm({
 
         {showWhatsApp && !isSidebar ? (
           <a
-            href="https://wa.me/8618800000001?text=Hi%2C+I+want+to+place+a+wholesale+order"
+            href="https://wa.me/8613367481710?text=Hi%2C+I+want+to+place+a+wholesale+order"
             target="_blank"
             rel="noopener noreferrer"
             className="rt-form-whatsapp"

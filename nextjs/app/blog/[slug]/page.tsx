@@ -251,7 +251,7 @@ export default async function BlogPostPage({
                 <div className="rt-sidebar-card-body">
                   <div className="flex flex-col gap-4">
                     <a
-                      href="https://wa.me/8618800000001"
+                      href="https://wa.me/8613367481710"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-4 p-4 border border-gray-100 rounded-xl hover:border-[#25D366] hover:bg-[#25D366]/5 transition-all group"

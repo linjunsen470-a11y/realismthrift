@@ -66,16 +66,17 @@ export function SiteHeader({ data }: SiteHeaderProps) {
             </span>
           </Link>
 
-          <form className="rt-search-form" role="search" onSubmit={handleSubmit}>
-            <input
-              key={`${pathname}:${searchParams.get("q") ?? ""}`}
-              type="search"
-              name="q"
+          {/* Search bar - hidden on small mobile to prevent crowding, shown from tablet up */}
+          <form className="hidden md:flex rt-search-form focus-within:border-brand-red focus-within:shadow-[0_0_0_1px_#c0392b] transition-all duration-300" role="search" onSubmit={handleSubmit}>
+            <input 
+              type="search" 
+              name="q" 
               defaultValue={searchParams.get("q") ?? ""}
-              placeholder="Search products, FAQ, blog..."
+              placeholder="Search catalog..." 
+              className="bg-transparent focus:ring-0 text-sm"
             />
-            <button type="submit" aria-label="Search site" disabled={isPending}>
-              <Search size={16} strokeWidth={2.25} />
+            <button type="submit" aria-label="Search" className="active:scale-95 transition-transform" disabled={isPending}>
+              <Search size={16} strokeWidth={2.5} />
             </button>
           </form>
 

@@ -33,10 +33,10 @@ export const siteFooter: SiteFooter = {
     logo: "RealismThrift",
     description:
       `RealismThrift Export Co., Ltd is a leading wholesale supplier of second-hand clothes, shoes and bags from China. Export to ${companyStats.countriesCount} countries with A-Grade quality.`,
-    address: "Guangzhou, Guangdong Province, China",
-    phone: "+86 188 0000 0001",
+    address: "Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China",
+    phone: "+86 133 6748 1710",
     email: "sales@realismthrift.com",
-    whatsapp: "+8618800000001",
+    whatsapp: "+8613367481710",
   },
   sections: [
     {
@@ -60,7 +60,7 @@ export const siteFooter: SiteFooter = {
     },
   ],
   contact: {
-    whatsapp: "+8618800000001",
+    whatsapp: "+8613367481710",
     email: "sales@realismthrift.com",
     inquiryTime: "Reply within 12 hours. Urgent? Contact via WhatsApp.",
   },

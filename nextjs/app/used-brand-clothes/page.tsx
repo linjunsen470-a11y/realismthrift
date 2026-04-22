@@ -70,7 +70,7 @@ export default function UsedBrandClothesPage() {
             </p>
             <div className="flex gap-[0.875rem] flex-wrap">
               <a href="#inquiry" className="bg-[#F0B429] text-[#1A1A1A] font-montserrat font-extrabold text-[0.875rem] px-[2rem] py-[0.875rem] rounded-[3px] no-underline tracking-[0.03em] hover:bg-[#d4a017] transition-colors">GET PRICE NOW →</a>
-              <a href="https://wa.me/8618800000001?text=Hi%2C+I+want+to+wholesale+used+brand+clothes" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white font-montserrat font-bold text-[0.875rem] px-[2rem] py-[0.875rem] rounded-[3px] no-underline hover:bg-[#1da851] transition-colors">💬 WhatsApp Now</a>
+              <a href="https://wa.me/8613367481710?text=Hi%2C+I+want+to+wholesale+used+brand+clothes" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white font-montserrat font-bold text-[0.875rem] px-[2rem] py-[0.875rem] rounded-[3px] no-underline hover:bg-[#1da851] transition-colors">💬 WhatsApp Now</a>
             </div>
           </div>
         </div>
@@ -106,7 +106,7 @@ export default function UsedBrandClothesPage() {
               <div className="w-[4px] h-[26px] bg-[#C0392B] rounded-[2px] shrink-0" />
               <h2 className="font-montserrat font-extrabold text-[1.4rem] text-[#1A1A1A] m-0">What We Supply</h2>
             </div>
-            <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0 mb-4">RealismThrift Export is a direct-source wholesale supplier of used branded clothing based in Guangzhou, China. We operate a 15,000m² sorting facility with 200+ trained staff who process and grade second-hand garments from first-tier Chinese cities daily. Every bale we export has been through our standardized 5-step sorting and quality-control process — ensuring you receive consistent, accurately graded merchandise every time.</p>
+            <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0 mb-4">RealismThrift Export is a direct-source wholesale supplier of used branded clothing based in Huizhou, China. We operate a 15,000m² sorting facility with 200+ trained staff who process and grade second-hand garments from first-tier Chinese cities daily. Every bale we export has been through our standardized 5-step sorting and quality-control process — ensuring you receive consistent, accurately graded merchandise every time.</p>
             <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0">We supply wholesale buyers, thrift store chains, market traders, and NGOs across Africa, Southeast Asia, the Middle East, Latin America, and Europe. Whether you need a 100-bale trial order or a full 40HQ container, we handle everything from sorting to door-to-door delivery.</p>
           </section>
 
@@ -157,7 +157,7 @@ export default function UsedBrandClothesPage() {
                     <h3 className="font-montserrat font-extrabold text-[1.1rem] text-[#1A1A1A] m-0">Raw Material Collection & Initial Separation</h3>
                   </div>
                 </div>
-                <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1rem]">Raw second-hand clothing arrives daily at our Guangzhou facility from collection networks across Beijing, Shanghai, Shenzhen, and other first-tier cities. Upon arrival, all items are immediately separated by garment type — tops, bottoms, outerwear, sportswear, and accessories — before any further processing begins.</p>
+                <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1rem]">Raw second-hand clothing arrives daily at our Huizhou facility from collection networks across Beijing, Shanghai, Shenzhen, and other first-tier cities. Upon arrival, all items are immediately separated by garment type — tops, bottoms, outerwear, sportswear, and accessories — before any further processing begins.</p>
                 <div className="bg-[#F5F5F0] rounded-[4px] p-[1rem]">
                   <div className="font-montserrat font-bold text-[0.8rem] text-[#1A1A1A] mb-[0.625rem]">What happens at this stage:</div>
                   <ul className="m-0 pl-[1.25rem] font-open-sans text-[0.8125rem] text-[#555] leading-[1.9] list-disc">
@@ -444,7 +444,7 @@ export default function UsedBrandClothesPage() {
               </div>
               <div className="p-[1.5rem]">
                  <InquiryForm variant="sidebar" />
-                 <a href="https://wa.me/8618800000001?text=Hi%2C+I+want+used+brand+clothes+wholesale+price" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-[0.5rem] bg-[#25D366] text-white p-[0.625rem] rounded-[3px] no-underline font-montserrat font-bold text-[0.8125rem] mt-[0.75rem] hover:bg-[#1da851] transition-colors">
+                 <a href="https://wa.me/8613367481710?text=Hi%2C+I+want+used+brand+clothes+wholesale+price" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-[0.5rem] bg-[#25D366] text-white p-[0.625rem] rounded-[3px] no-underline font-montserrat font-bold text-[0.8125rem] mt-[0.75rem] hover:bg-[#1da851] transition-colors">
                    💬 Chat on WhatsApp
                  </a>
                </div>

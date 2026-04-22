@@ -135,19 +135,19 @@ const contactMethods = [
   },
   {
     label: "WHATSAPP",
-    value: "+8618800000001",
-    href: "https://wa.me/8618800000001",
+    value: "+8613367481710",
+    href: "https://wa.me/8613367481710",
     icon: MessageCircle,
   },
   {
     label: "PHONE",
-    value: "+86 188 0000 0001",
-    href: "tel:+8618800000001",
+    value: "+86 133 6748 1710",
+    href: "tel:+8613367481710",
     icon: Phone,
   },
   {
     label: "ADDRESS",
-    value: "Guangzhou, Guangdong Province, China",
+    value: "Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China",
     icon: MapPin,
   },
 ];
@@ -508,7 +508,7 @@ export default async function Home() {
               {" "}
               <strong>second hand clothes wholesale supplier</strong>
               {" "}
-              based in Guangzhou, China. We specialize in exporting high-quality used
+              based in Huizhou, China. We specialize in exporting high-quality used
               clothes, used shoes, and used bags to wholesalers and importers worldwide.
               With over 12 years of experience in the
               {" "}
