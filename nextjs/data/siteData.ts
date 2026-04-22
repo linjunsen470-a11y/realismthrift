@@ -36,7 +36,7 @@ export const siteFooter: SiteFooter = {
     address: "Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China",
     phone: "+86 133 6748 1710",
     email: "sales@realismthrift.com",
-    whatsapp: "+8613367481710",
+    whatsapp: "+86 133 6748 1710",
   },
   sections: [
     {
@@ -60,7 +60,7 @@ export const siteFooter: SiteFooter = {
     },
   ],
   contact: {
-    whatsapp: "+8613367481710",
+    whatsapp: "+86 133 6748 1710",
     email: "sales@realismthrift.com",
     inquiryTime: "Reply within 12 hours. Urgent? Contact via WhatsApp.",
   },
