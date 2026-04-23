@@ -179,9 +179,10 @@ export default async function Home() {
       <section className="rt-hero" id="home">
         <Image
           src="/img/hero-bg.png"
-          alt="RealismThrift factory"
+          alt="RealismThrift Export Co., Ltd - Leading China Wholesale Supplier of Premium Second Hand Branded Clothes, Shoes, and Bags Factory" 
           fill
           priority
+          sizes="100vw"
           className="rt-hero-bg"
         />
         <div className="rt-hero-overlay" />
@@ -269,12 +270,18 @@ export default async function Home() {
 
           <div className="rt-products-grid">
             {productsData.map((product) => (
-              <Link key={product.id} href={product.href} className="rt-product-card">
+              <Link 
+                key={product.id} 
+                href={product.href} 
+                className="rt-product-card"
+                aria-label={`View details for ${product.title}`}
+              >
                 <Image
                   src={product.image}
-                  alt={product.title}
+                  alt={`RealismThrift Wholesale ${product.title} - High-Quality A-Grade Bulk Inventory from China Sorting Facility`}
                   width={400}
                   height={260}
+                  sizes="(min-width: 1100px) 25vw, (min-width: 768px) 50vw, 100vw"
                   className="rt-product-card-image"
                 />
                 <span className="rt-product-card-badge">{product.category}</span>
@@ -302,9 +309,10 @@ export default async function Home() {
             <div className="rt-about-image-wrap">
               <Image
                 src="/img/wholesale-inventory.webp"
-                alt="RealismThrift Export Co., Ltd factory"
+                alt="RealismThrift 15,000m² Modern Sorting Facility in China - Industrial Scale Wholesale Export Operations for Used Branded Fashion"
                 width={760}
                 height={560}
+                sizes="(min-width: 900px) 50vw, 100vw"
                 className="rt-about-image"
               />
               <div className="rt-about-image-badge">15,000m² Modern Facility</div>
@@ -348,7 +356,11 @@ export default async function Home() {
                   <span className="rt-stat-label">Staff Members</span>
                 </div>
               </div>
-              <Link href="#contact" className="rt-btn-primary">
+              <Link 
+                href="#contact" 
+                className="rt-btn-primary"
+                aria-label="Know more about RealismThrift export services"
+              >
                 KNOW MORE <ArrowRight size={16} strokeWidth={2.25} />
               </Link>
             </div>

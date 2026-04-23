@@ -17,13 +17,18 @@ export function BlogCard({ post, showAuthor = false }: BlogCardProps) {
 
   return (
     <article className="rt-news-card">
-      <Link href={`/blog/${post.slug}`} className="rt-news-card-thumb">
+      <Link 
+        href={`/blog/${post.slug}`} 
+        className="rt-news-card-thumb"
+        aria-label={post.title}
+      >
         {imageUrl ? (
           <Image
             src={imageUrl}
             alt={post.coverImage?.alt || post.title}
             width={720}
             height={420}
+            sizes="(min-width: 1100px) 33vw, (min-width: 768px) 50vw, 100vw"
             className="rt-news-card-image"
           />
         ) : (
@@ -46,7 +51,11 @@ export function BlogCard({ post, showAuthor = false }: BlogCardProps) {
           <Link href={`/blog/${post.slug}`}>{post.title}</Link>
         </h2>
         <p className="rt-news-card-excerpt">{post.excerpt}</p>
-        <Link href={`/blog/${post.slug}`} className="rt-news-card-link">
+        <Link 
+          href={`/blog/${post.slug}`} 
+          className="rt-news-card-link"
+          aria-label={`Read more about ${post.title}`}
+        >
           Read More <ArrowRight size={15} strokeWidth={2.25} />
         </Link>
       </div>

@@ -1,3 +1,4 @@
+import "../internal-pages.css";
 import Image from "next/image";
 import Link from "next/link";
 import { InquiryForm } from "@/components/InquiryForm";
@@ -40,7 +41,7 @@ export const metadata = {
   openGraph: {
     title: "Used Brand Clothes Wholesale | China's Leading Supplier",
     description: "Premium A-Grade sorted second-hand branded clothes. nike, Adidas, and more. Global export to 100+ countries.",
-    images: ['/images/used-brand-clothes/hero.jpg'],
+    images: ['/images/v2/clothes/assorted-jeans-sweatpants-lee-fila-stack.webp'],
   },
   alternates: {
     canonical: "/used-brand-clothes",
@@ -51,7 +52,7 @@ export default function UsedBrandClothesPage() {
   const productSchema = getProductSchema({
     name: "Used Brand Clothes Wholesale",
     description: "Premium A-Grade sorted second-hand branded clothes. Nike, Adidas, and more. Global export from China.",
-    image: "https://www.realismthrift.com/images/used-brand-clothes/hero.jpg",
+    image: "https://www.realismthrift.com/images/v2/clothes/assorted-jeans-sweatpants-lee-fila-stack.webp",
     url: "https://www.realismthrift.com/used-brand-clothes"
   });
 
@@ -67,11 +68,11 @@ export default function UsedBrandClothesPage() {
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/images/used-brand-clothes/hero.jpg"
-            alt="RealismThrift used brand clothes sorting facility"
-            fill
+            src="/images/v2/clothes/assorted-jeans-sweatpants-lee-fila-stack.webp" 
+            alt="RealismThrift Sorting Facility - Premium Wholesale Used Brand Clothes Inventory for Global B2B Export from China" 
+            fill 
             priority
-            className="object-cover object-[center_30%]"
+            className="object-cover object-center"
           />
         </div>
         <div className="rt-page-hero-overlay" />
@@ -192,14 +193,14 @@ export default function UsedBrandClothesPage() {
                 </div>
               </div>
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.14)] relative h-[280px]">
-                <Image src="/images/used-brand-clothes/hero.jpg" alt="Sorting facility overview" fill className="object-cover" />
+                <Image src="/images/v2/clothes/adidas-kelme-athletic-shorts-pants-pile.webp" alt="RealismThrift Sorting Process Step 1 - Raw Material Collection and Initial Separation of Bulk Second-Hand Clothing" fill className="object-cover" />
               </div>
             </div>
 
             {/* STEP 2 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem] items-center mb-[3rem]">
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.14)] relative h-[280px] order-2 md:order-1">
-                <Image src="/images/used-brand-clothes/step-inspect.jpg" alt="Brand label inspection" fill className="object-cover" />
+                <Image src="/images/v2/clothes/assorted-designer-hats-caps-collection.webp" alt="RealismThrift Quality Control Step 2 - Brand Identification and Authentication for Export Grade Clothes" fill className="object-cover" />
               </div>
               <div className="order-1 md:order-2">
                 <div className="flex items-center gap-[0.875rem] mb-[1rem]">
@@ -259,7 +260,7 @@ export default function UsedBrandClothesPage() {
                 </div>
               </div>
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.14)] relative h-[300px]">
-                <Image src="/images/used-brand-clothes/step-grade.jpg" alt="Quality grading A B C" fill className="object-cover" />
+                <Image src="/images/v2/clothes/mixed-fila-puma-tshirts-polo-shirts.webp" alt="RealismThrift Grading Standards Step 3 - Precise A B C Grade Selection for Wholesale Clothing Batches" fill className="object-cover" />
               </div>
             </div>
 
@@ -291,7 +292,7 @@ export default function UsedBrandClothesPage() {
             {/* STEP 5 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem] items-center mb-[2rem]">
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.14)] relative h-[280px] order-2 md:order-1">
-                <Image src="/images/used-brand-clothes/step-pack.jpg" alt="Packing process" fill className="object-cover" />
+                <Image src="/images/v2/clothes/athletic-track-jackets-lining-nike-stack.webp" alt="RealismThrift Export Logistics Step 5 - Hydraulic Compression Baling and Final QC for Global Shipment" fill className="object-cover" />
               </div>
               <div className="order-1 md:order-2">
                 <div className="flex items-center gap-[0.875rem] mb-[1rem]">
@@ -335,7 +336,7 @@ export default function UsedBrandClothesPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem] items-center">
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12)] relative h-[320px]">
-                <Image src="/images/used-brand-clothes/bale-display.jpg" alt="Mix bale clothes" fill className="object-cover" />
+                <Image src="/images/v2/clothes/adidas-sport-shorts-pink-white-stripes.webp" alt="RealismThrift Typical Bale Composition - High-Quality Sorted Second-Hand Sportswear for Retail Resale" fill className="object-cover" />
               </div>
               <div>
                 <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1.25rem]">A typical Grade A Mixed Brand bale (45kg) contains approximately 120–180 individual garments across multiple categories and brands. The exact composition varies by batch, but our standard mix ratio ensures a balanced assortment that appeals to a wide customer base.</p>
@@ -376,16 +377,16 @@ export default function UsedBrandClothesPage() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[1.25rem]">
               {[
-                { title: 'Used Brand T-Shirts', img: '/images/used-brand-clothes/cat-tshirt.jpg', desc: 'Nike, Adidas, Puma mix', spec: '25kg/bale' },
-                { title: 'Used Brand Jeans', img: '/images/used-brand-clothes/cat-jeans.jpg', desc: "Levi's, Gap, Zara mix", spec: '45kg/bale' },
-                { title: 'Used Brand Jackets', img: '/images/used-brand-clothes/cat-jacket.jpg', desc: 'North Face, Nike, Adidas', spec: '30kg/bale' },
-                { title: 'Used Brand Dresses', img: '/images/used-brand-clothes/cat-dress.jpg', desc: 'Zara, H&M, Mango mix', spec: '25kg/bale' },
-                { title: 'Used Brand Hoodies', img: '/images/used-brand-clothes/cat-hoodie.jpg', desc: 'Champion, Nike, Adidas', spec: '35kg/bale' },
-                { title: 'Used Brand Sportswear', img: '/images/used-brand-clothes/cat-sportswear.jpg', desc: 'Nike, Adidas, Under Armour', spec: '30kg/bale' }
+                { title: 'Used Brand T-Shirts', img: '/images/v2/clothes/champion-white-tshirt-green-script-logo.webp', desc: 'Nike, Adidas, Puma mix', spec: '25kg/bale' },
+                { title: 'Used Brand Jeans', img: '/images/v2/clothes/slim-fit-denim-jeans-classic-blue.webp', desc: "Levi's, Gap, Zara mix", spec: '45kg/bale' },
+                { title: 'Used Brand Jackets', img: '/images/v2/clothes/balenciaga-graffiti-denim-jacket-light-blue.webp', desc: 'North Face, Nike, Adidas', spec: '30kg/bale' },
+                { title: 'Used Brand Dresses', img: '/images/v2/clothes/lacoste-green-polo-dress-crocodile-logo.webp', desc: 'Zara, H&M, Mango mix', spec: '25kg/bale' },
+                { title: 'Used Brand Hoodies', img: '/images/v2/clothes/celine-black-hoodie-white-embroidered-logo.webp', desc: 'Champion, Nike, Adidas', spec: '35kg/bale' },
+                { title: 'Used Brand Sportswear', img: '/images/v2/clothes/nike-pro-dri-fit-croatia-jersey-stack.webp', desc: 'Nike, Adidas, Under Armour', spec: '30kg/bale' }
               ].map(prod => (
                 <div key={prod.title} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
                   <div className="relative h-[170px]">
-                    <Image src={prod.img} alt={prod.title} fill className="object-cover" />
+                    <Image src={prod.img} alt={`RealismThrift Wholesale ${prod.title} - Premium Grade Bulk Inventory`} fill className="object-cover" />
                     <div className="absolute top-2 left-2 bg-[#C0392B] text-white text-[0.6rem] font-bold px-2 py-1 rounded-[2px] font-montserrat">A-GRADE</div>
                   </div>
                   <div className="p-[0.875rem]">
@@ -393,7 +394,13 @@ export default function UsedBrandClothesPage() {
                     <p className="text-[0.75rem] text-[#888] m-0 mb-[0.5rem]">{prod.desc}</p>
                     <div className="flex justify-between items-center">
                       <span className="text-[0.75rem] text-[#C0392B] font-bold">{prod.spec}</span>
-                      <a href="#inquiry" className="bg-[#1A1A1A] text-white text-[0.7rem] px-[0.75rem] py-[0.3rem] rounded-[2px] no-underline font-montserrat font-semibold">Inquire</a>
+                      <a 
+                        href="#inquiry" 
+                        className="bg-[#1A1A1A] text-white text-[0.7rem] px-[0.75rem] py-[0.3rem] rounded-[2px] no-underline font-montserrat font-semibold"
+                        aria-label={`Inquire about ${prod.title}`}
+                      >
+                        Inquire
+                      </a>
                     </div>
                   </div>
                 </div>

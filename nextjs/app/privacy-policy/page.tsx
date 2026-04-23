@@ -1,3 +1,4 @@
+import "../internal-pages.css";
 import Link from "next/link";
 import { ShieldCheck, Lock, Eye, Globe } from "lucide-react";
 

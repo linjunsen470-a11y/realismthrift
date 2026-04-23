@@ -1,3 +1,4 @@
+import "../internal-pages.css";
 import Image from "next/image";
 import Link from "next/link";
 import { InquiryForm } from "@/components/InquiryForm";
@@ -39,7 +40,7 @@ export const metadata = {
   openGraph: {
     title: "Used Brand Shoes Wholesale | Premium A-Grade Supplier",
     description: "Premium second-hand branded shoes from China. Nike, Adidas, and more. 100% manual check for matched pairs and quality.",
-    images: ['/images/reconstructed/1542291026-7eec264c27ff.jpg'],
+    images: ['/images/v2/shoes/wholesale-sneakers-assorted-styles-grid.webp'],
   },
   alternates: {
     canonical: "/used-brand-shoes",
@@ -50,7 +51,7 @@ export default function UsedBrandShoesPage() {
   const productSchema = getProductSchema({
     name: "Used Brand Shoes Wholesale",
     description: "China's premium wholesale supplier of second-hand branded shoes. Nike, Adidas, Jordan, and 30+ brands. 100% matched pairs.",
-    image: "https://www.realismthrift.com/images/reconstructed/1542291026-7eec264c27ff.jpg",
+    image: "https://www.realismthrift.com/images/v2/shoes/wholesale-sneakers-assorted-styles-grid.webp",
     url: "https://www.realismthrift.com/used-brand-shoes"
   });
 
@@ -64,8 +65,8 @@ export default function UsedBrandShoesPage() {
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/images/reconstructed/1542291026-7eec264c27ff.jpg" 
-            alt="Used Shoes background" 
+            src="/images/v2/shoes/wholesale-sneakers-assorted-styles-grid.webp" 
+            alt="RealismThrift Shoe Export Center - Bulk Branded Sneakers Wholesale Nike Adidas Jordan Supplier in China" 
             fill 
             className="object-cover" 
             priority 
@@ -145,16 +146,16 @@ export default function UsedBrandShoesPage() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {[
-                { title: 'Used Nike Shoes', img: '1542291026-7eec264c27ff', desc: 'Nike Air, Force 1, Jordan', spec: '25kg/sack (~40 pairs)' },
-                { title: 'Used Adidas Shoes', img: '1608231387042-66d1773070a5', desc: 'Ultraboost, Stan Smith, NMD', spec: '25kg/sack (~40 pairs)' },
-                { title: 'Used Brand Sneakers', img: '1600185365926-3a2ce3cdb9eb', desc: 'Mixed premium brands', spec: '28kg/sack (~40 pairs)' },
-                { title: 'Used Brand Boots', img: '1520639888713-7851133b1ed0', desc: 'Timberland, Dr. Martens', spec: '30kg/sack (~25 pairs)' },
-                { title: 'Used Brand Sandals', img: '1603487742131-4160ec999306', desc: 'Birkenstock, Teva, UGG', spec: '20kg/sack (~50 pairs)' },
-                { title: 'Used Mixed Shoes', img: '1542291026-7eec264c27ff', desc: 'All brands mixed', spec: '25kg/sack (~40 pairs)' }
+                { title: 'Used Nike Shoes', img: '/images/v2/shoes/nike-air-jordan-1-high-mint-green-white.webp', desc: 'Nike Air, Force 1, Jordan', spec: '25kg/sack (~40 pairs)' },
+                { title: 'Used Adidas Shoes', img: '/images/v2/shoes/adidas-retropy-grey-white-classic-sneakers.webp', desc: 'Ultraboost, Stan Smith, NMD', spec: '25kg/sack (~40 pairs)' },
+                { title: 'Used Brand Sneakers', img: '/images/v2/shoes/designer-sneakers-assorted-wholesale-display.webp', desc: 'Mixed premium brands', spec: '28kg/sack (~40 pairs)' },
+                { title: 'Used Brand Boots', img: '/images/v2/shoes/timberland-6-inch-premium-wheat-boots.webp', desc: 'Timberland, Dr. Martens', spec: '30kg/sack (~25 pairs)' },
+                { title: 'Used Brand Sandals', img: '/images/v2/shoes/cat-leather-sandals-brown-rugged-sole.webp', desc: 'Birkenstock, Teva, UGG', spec: '20kg/sack (~50 pairs)' },
+                { title: 'Used Mixed Shoes', img: '/images/v2/shoes/mixed-sports-shoes-nike-puma-display.webp', desc: 'All brands mixed', spec: '25kg/sack (~40 pairs)' }
               ].map(prod => (
                 <div key={prod.title} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
                   <div className="relative overflow-hidden h-[180px]">
-                    <Image src={`/images/reconstructed/${prod.img}.jpg`} alt={prod.title} fill className="object-cover" />
+                    <Image src={prod.img} alt={`RealismThrift ${prod.title} Wholesale - A-Grade Branded Second-Hand Shoes Bulk Supply`} fill className="object-cover" />
                     <div className="absolute top-2 left-2 bg-brand-dark text-brand-gold text-[0.65rem] font-bold px-2 py-1 rounded-[2px] font-montserrat">
                       A-GRADE
                     </div>
@@ -164,7 +165,13 @@ export default function UsedBrandShoesPage() {
                     <p className="text-[0.75rem] text-[#888] mb-2">{prod.desc}</p>
                     <div className="flex justify-between items-center break-all gap-1">
                       <span className="text-[0.7rem] text-brand-red font-bold flex-1">{prod.spec}</span>
-                      <a href="#inquiry" className="bg-brand-dark text-white text-[0.7rem] px-3 py-1.5 rounded-[2px] font-semibold font-montserrat shrink-0 hover:bg-brand-red transition-colors">Inquire</a>
+                      <a 
+                        href="#inquiry" 
+                        className="bg-brand-dark text-white text-[0.7rem] px-3 py-1.5 rounded-[2px] font-semibold font-montserrat shrink-0 hover:bg-brand-red transition-colors"
+                        aria-label={`Inquire about ${prod.title}`}
+                      >
+                        Inquire
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -183,14 +190,14 @@ export default function UsedBrandShoesPage() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {[
-                { step: '01', title: 'Collection & Pairing Check', img: '1542291026-7eec264c27ff', desc: 'All incoming shoes are first checked for pairs. Unpaired shoes are immediately separated. We only export complete pairs. Each pair is tagged with a temporary ID for tracking through the sorting process.' },
-                { step: '02', title: 'Brand Identification', img: '1600185365926-3a2ce3cdb9eb', desc: 'Trained sorters identify each brand and model. Nike, Adidas, Jordan, and other premium brands are sorted into dedicated lots. Brand labels, tongue tags, and sole markings are all verified before grading.' },
-                { step: '03', title: 'Cleaning & Deodorizing', img: '1608231387042-66d1773070a5', desc: 'All shoes are cleaned using professional equipment. Soles are scrubbed, uppers are wiped down, and interiors are deodorized. Shoes with persistent odors or mold are rejected regardless of brand.' },
-                { step: '04', title: 'Quality Grading', img: '1520639888713-7851133b1ed0', desc: 'Each pair is graded A, B, or C based on 8 quality criteria: sole condition, upper condition, lining integrity, zipper/lace completeness, odor level, structural shape, brand label clarity, and overall wearability. We export A-grade only.' },
+                { step: '01', title: 'Collection & Pairing Check', img: '/images/v2/shoes/nike-dunk-low-assorted-colors-batch.webp', desc: 'All incoming shoes are first checked for pairs. Unpaired shoes are immediately separated. We only export complete pairs. Each pair is tagged with a temporary ID for tracking through the sorting process.' },
+                { step: '02', title: 'Brand Identification', img: '/images/v2/shoes/mixed-premium-sneakers-grid-display.webp', desc: 'Trained sorters identify each brand and model. Nike, Adidas, Jordan, and other premium brands are sorted into dedicated lots. Brand labels, tongue tags, and sole markings are all verified before grading.' },
+                { step: '03', title: 'Cleaning & Deodorizing', img: '/images/v2/shoes/nike-air-max-dunk-low-white-black-display.webp', desc: 'All shoes are cleaned using professional equipment. Soles are scrubbed, uppers are wiped down, and interiors are deodorized. Shoes with persistent odors or mold are rejected regardless of brand.' },
+                { step: '04', title: 'Quality Grading', img: '/images/v2/shoes/nike-revolution-black-white-running-shoe-top.webp', desc: 'Each pair is graded A, B, or C based on 8 quality criteria: sole condition, upper condition, lining integrity, zipper/lace completeness, odor level, structural shape, brand label clarity, and overall wearability. We export A-grade only.' },
               ].map(process => (
                 <div key={process.step} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
                   <div className="relative h-[160px]">
-                    <Image src={`/images/reconstructed/${process.img}.jpg`} alt={process.title} fill className="object-cover" />
+                    <Image src={process.img} alt={`RealismThrift Shoe Process Step ${process.step} - ${process.title} for Bulk Branded Sneakers Export`} fill className="object-cover" />
                   </div>
                   <div className="p-5">
                     <div className="flex items-center gap-2.5 mb-2.5">
@@ -203,7 +210,7 @@ export default function UsedBrandShoesPage() {
               ))}
               <div className="sm:col-span-2 bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] flex flex-col md:flex-row">
                 <div className="relative md:w-[300px] h-[200px] md:h-auto shrink-0">
-                   <Image src="/images/reconstructed/1578575437130-527eed3abbec.jpg" alt="Packing by Category" fill className="object-cover" />
+                   <Image src="/images/v2/shoes/timberland-6-inch-premium-wheat-boots-batch.webp" alt="RealismThrift Final Packing Step 5 - Sacking and Labeling for Global Export Logistics" fill className="object-cover" />
                 </div>
                 <div className="p-5">
                   <div className="flex items-center gap-2.5 mb-2.5">
