@@ -1667,11 +1667,17 @@
 }
 
 .rt-blog-hero-index {
-  min-height: 420px !important;
-  height: 420px !important;
-  padding-bottom: 0 !important;
-  display: flex !important;
-  align-items: center !important;
+  min-height: 420px;
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .rt-blog-hero-index {
+    min-height: 320px;
+    height: auto;
+  }
 }
 
 .rt-blog-hero .rt-page-hero-overlay {
@@ -2326,7 +2332,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: 420px;
+  min-height: 460px;
+  padding: 5rem 0;
   background-position: center;
   background-size: cover;
 }
@@ -2909,6 +2916,14 @@
 
   .rt-section-title {
     font-size: clamp(1.8rem, 7vw, 2.25rem);
+  }
+
+  .rt-home-section {
+    padding: 3.5rem 0;
+  }
+
+  .rt-blog-index {
+    padding-bottom: 6.5rem; /* Safe area for floating buttons */
   }
 
   .rt-contact-form-shell {
