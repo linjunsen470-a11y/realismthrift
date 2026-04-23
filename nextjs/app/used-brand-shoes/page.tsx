@@ -164,7 +164,13 @@ export default function UsedBrandShoesPage() {
                     <p className="text-[0.75rem] text-[#888] mb-2">{prod.desc}</p>
                     <div className="flex justify-between items-center break-all gap-1">
                       <span className="text-[0.7rem] text-brand-red font-bold flex-1">{prod.spec}</span>
-                      <a href="#inquiry" className="bg-brand-dark text-white text-[0.7rem] px-3 py-1.5 rounded-[2px] font-semibold font-montserrat shrink-0 hover:bg-brand-red transition-colors">Inquire</a>
+                      <a 
+                        href="#inquiry" 
+                        className="bg-brand-dark text-white text-[0.7rem] px-3 py-1.5 rounded-[2px] font-semibold font-montserrat shrink-0 hover:bg-brand-red transition-colors"
+                        aria-label={`Inquire about ${prod.title}`}
+                      >
+                        Inquire
+                      </a>
                     </div>
                   </div>
                 </div>

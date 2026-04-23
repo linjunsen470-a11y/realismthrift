@@ -269,7 +269,12 @@ export default async function Home() {
 
           <div className="rt-products-grid">
             {productsData.map((product) => (
-              <Link key={product.id} href={product.href} className="rt-product-card">
+              <Link 
+                key={product.id} 
+                href={product.href} 
+                className="rt-product-card"
+                aria-label={`View details for ${product.title}`}
+              >
                 <Image
                   src={product.image}
                   alt={`RealismThrift Wholesale ${product.title} - High-Quality A-Grade Bulk Inventory from China Sorting Facility`}
@@ -348,7 +353,11 @@ export default async function Home() {
                   <span className="rt-stat-label">Staff Members</span>
                 </div>
               </div>
-              <Link href="#contact" className="rt-btn-primary">
+              <Link 
+                href="#contact" 
+                className="rt-btn-primary"
+                aria-label="Know more about RealismThrift export services"
+              >
                 KNOW MORE <ArrowRight size={16} strokeWidth={2.25} />
               </Link>
             </div>

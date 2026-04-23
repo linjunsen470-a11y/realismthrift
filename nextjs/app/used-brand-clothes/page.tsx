@@ -393,7 +393,13 @@ export default function UsedBrandClothesPage() {
                     <p className="text-[0.75rem] text-[#888] m-0 mb-[0.5rem]">{prod.desc}</p>
                     <div className="flex justify-between items-center">
                       <span className="text-[0.75rem] text-[#C0392B] font-bold">{prod.spec}</span>
-                      <a href="#inquiry" className="bg-[#1A1A1A] text-white text-[0.7rem] px-[0.75rem] py-[0.3rem] rounded-[2px] no-underline font-montserrat font-semibold">Inquire</a>
+                      <a 
+                        href="#inquiry" 
+                        className="bg-[#1A1A1A] text-white text-[0.7rem] px-[0.75rem] py-[0.3rem] rounded-[2px] no-underline font-montserrat font-semibold"
+                        aria-label={`Inquire about ${prod.title}`}
+                      >
+                        Inquire
+                      </a>
                     </div>
                   </div>
                 </div>
