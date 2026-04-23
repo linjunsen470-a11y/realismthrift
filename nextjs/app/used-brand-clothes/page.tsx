@@ -6,6 +6,7 @@ import { ProductTrustSections } from "@/components/product/ProductTrustSections"
 import { ProductCTA } from "@/components/product/ProductCTA";
 import { companyStats } from "@/data/siteData";
 import { XCircle, CheckCircle2, Factory, Package, Ship, Zap, ShoppingBag, Footprints, ClipboardList, Mail } from "lucide-react";
+import { JsonLd, getProductSchema, getFaqSchema } from "@/components/JsonLd";
 
 const clothesStandards = [
   { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Stains or Dirt', desc: 'No dirty patches or discoloration on fabric surface', isNegative: true },
@@ -47,8 +48,19 @@ export const metadata = {
 };
 
 export default function UsedBrandClothesPage() {
+  const productSchema = getProductSchema({
+    name: "Used Brand Clothes Wholesale",
+    description: "Premium A-Grade sorted second-hand branded clothes. Nike, Adidas, and more. Global export from China.",
+    image: "https://www.realismthrift.com/images/used-brand-clothes/hero.jpg",
+    url: "https://www.realismthrift.com/used-brand-clothes"
+  });
+
+  const faqSchema = getFaqSchema(clothesFaqs);
+
   return (
     <main className="bg-white">
+      <JsonLd data={productSchema} />
+      <JsonLd data={faqSchema} />
       {/* ═══════════════════════════════════════════════════════
           HERO — Full-width AI sorting facility photo
           ═══════════════════════════════════════════════════════ */}
@@ -407,7 +419,7 @@ export default function UsedBrandClothesPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {[
+                  {([
                     ['Mixed Brand Clothes', {label: 'A', bg: 'bg-[#27AE60]'}, '45 kg', '100 bales', '$1.8–$2.5/kg', 'bg-white'],
                     ['Nike / Adidas Specific', {label: 'A', bg: 'bg-[#27AE60]'}, '45 kg', '200 bales', '$3.5–$5.0/kg', 'bg-[#FAFAFA]'],
                     ['Denim & Jeans Mix', {label: 'A', bg: 'bg-[#27AE60]'}, '45 kg', '100 bales', '$2.0–$3.0/kg', 'bg-white'],
@@ -415,17 +427,17 @@ export default function UsedBrandClothesPage() {
                     ["Children's Clothes Mix", {label: 'A', bg: 'bg-[#27AE60]'}, '25 kg', '100 bales', '$1.5–$2.2/kg', 'bg-white'],
                     ['Mixed Brand (B-Grade)', {label: 'B', bg: 'bg-[#F0B429]'}, '45 kg', '100 bales', '$0.8–$1.2/kg', 'bg-[#FAFAFA]'],
                     ['Bulk Mixed (C-Grade)', {label: 'C', bg: 'bg-[#C0392B]'}, '45 kg', '500 bales', '$0.3–$0.6/kg', 'bg-white'],
-                  ].map(([cat, grade, w, moq, price, rowBg]) => (
-                    <tr key={cat as string} className={`${rowBg} border-b border-[#f0f0f0]`}>
-                      <td className="p-[0.75rem_1rem] font-semibold text-[#1A1A1A]">{cat as string}</td>
+                  ] as [string, {label: string, bg: string}, string, string, string, string][]).map(([cat, grade, w, moq, price, rowBg]) => (
+                    <tr key={cat} className={`${rowBg} border-b border-[#f0f0f0]`}>
+                      <td className="p-[0.75rem_1rem] font-semibold text-[#1A1A1A]">{cat}</td>
                       <td className="p-[0.75rem_1rem] text-center">
-                        <span className={`${(grade as any).bg} text-white text-[0.65rem] font-montserrat font-bold p-[0.2rem_0.5rem] rounded-[2px]`}>{(grade as any).label}</span>
+                        <span className={`${grade.bg} text-white text-[0.65rem] font-montserrat font-bold p-[0.2rem_0.5rem] rounded-[2px]`}>{grade.label}</span>
                       </td>
-                      <td className="p-[0.75rem_1rem] text-center text-[#555]">{w as string}</td>
+                      <td className="p-[0.75rem_1rem] text-center text-[#555]">{w}</td>
                       <td className="p-[0.75rem_1rem] text-center">
-                        <span className="bg-[#F0B429] text-[#1A1A1A] text-[0.7rem] font-montserrat font-bold p-[0.2rem_0.5rem] rounded-[2px]">{moq as string}</span>
+                        <span className="bg-[#F0B429] text-[#1A1A1A] text-[0.7rem] font-montserrat font-bold p-[0.2rem_0.5rem] rounded-[2px]">{moq}</span>
                       </td>
-                      <td className="p-[0.75rem_1rem] text-center text-[#C0392B] font-bold">{price as string}</td>
+                      <td className="p-[0.75rem_1rem] text-center text-[#C0392B] font-bold">{price}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -9,6 +9,7 @@ import { portableTextComponents } from "@/components/blog/PortableTextComponents
 import { ReadingTime } from "@/components/blog/ReadingTime";
 import { ShareButtons } from "@/components/blog/ShareButtons";
 import { InquiryForm } from "@/components/InquiryForm";
+import { JsonLd, getArticleSchema } from "@/components/JsonLd";
 import {
   formatBlogDate,
   getBlogPostBySlug,
@@ -91,8 +92,21 @@ export default async function BlogPostPage({
     ? urlForImage(authorImage).width(120).height(120).fit("crop").url()
     : null;
 
+  const articleSchema = getArticleSchema({
+    title: post.title,
+    description: post.excerpt,
+    image: heroImage.startsWith("/") ? `https://www.realismthrift.com${heroImage}` : heroImage,
+    datePublished: post.publishedAt,
+    dateModified: post._updatedAt,
+    authorName: post.author?.name || "RealismThrift",
+    publisherName: "RealismThrift Export Co., Ltd.",
+    publisherLogo: "https://www.realismthrift.com/logo.png",
+    url: `https://www.realismthrift.com/blog/${slug}`
+  });
+
   return (
     <article>
+      <JsonLd data={articleSchema} />
       <section className="rt-page-hero rt-blog-hero relative overflow-hidden flex items-center">
         <Image
           src={heroImage}

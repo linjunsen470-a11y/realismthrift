@@ -6,6 +6,7 @@ import { ProductTrustSections } from "@/components/product/ProductTrustSections"
 import { ProductCTA } from "@/components/product/ProductCTA";
 import { companyStats } from "@/data/siteData";
 import { XCircle, CheckCircle2, Footprints, Sparkles, Package, Globe2, ShoppingBag, ClipboardList, Mail } from "lucide-react";
+import { JsonLd, getProductSchema, getFaqSchema } from "@/components/JsonLd";
 
 const shoeStandards = [
   { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'No Glue Damage', desc: 'No sticky parts coming loose from sole or upper', isNegative: true },
@@ -46,8 +47,19 @@ export const metadata = {
 };
 
 export default function UsedBrandShoesPage() {
+  const productSchema = getProductSchema({
+    name: "Used Brand Shoes Wholesale",
+    description: "China's premium wholesale supplier of second-hand branded shoes. Nike, Adidas, Jordan, and 30+ brands. 100% matched pairs.",
+    image: "https://www.realismthrift.com/images/reconstructed/1542291026-7eec264c27ff.jpg",
+    url: "https://www.realismthrift.com/used-brand-shoes"
+  });
+
+  const faqSchema = getFaqSchema(shoeFaqs);
+
   return (
     <main className="bg-white">
+      <JsonLd data={productSchema} />
+      <JsonLd data={faqSchema} />
       {/* PAGE HERO */}
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
