@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { ArrowRight, CheckCircle2, MessageCircle, TriangleAlert } from "lucide-react";
+import { trackEvent } from "./Analytics";
 
 interface InquiryFormProps {
   variant?: "default" | "sidebar";
@@ -47,6 +48,13 @@ export function InquiryForm({
           status: "success",
           message: result.message ?? "Inquiry received. Our sales team will contact you within 12 hours.",
         });
+
+        // Track conversion
+        trackEvent("Lead", {
+          content_name: "Inquiry Form",
+          content_category: payload.product || "General",
+        });
+        
         return;
       }
 
