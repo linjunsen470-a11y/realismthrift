@@ -118,6 +118,18 @@
   .rt-about-hero-bg {
     background: linear-gradient(135deg, #1a1a1a 0%, #2a1515 60%, var(--color-brand-red) 100%);
   }
+
+  .rt-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
 }
 
 @keyframes ticker {

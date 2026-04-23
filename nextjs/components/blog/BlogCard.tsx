@@ -20,8 +20,8 @@ export function BlogCard({ post, showAuthor = false }: BlogCardProps) {
       <Link 
         href={`/blog/${post.slug}`} 
         className="rt-news-card-thumb"
-        aria-label={post.title}
       >
+        <span className="rt-sr-only">Read article: {post.title}</span>
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -54,9 +54,9 @@ export function BlogCard({ post, showAuthor = false }: BlogCardProps) {
         <Link 
           href={`/blog/${post.slug}`} 
           className="rt-news-card-link"
-          aria-label={`Read more about ${post.title}`}
         >
-          Read More <ArrowRight size={15} strokeWidth={2.25} />
+          Read More <span className="rt-sr-only">about {post.title}</span>
+          <ArrowRight size={15} strokeWidth={2.25} />
         </Link>
       </div>
     </article>

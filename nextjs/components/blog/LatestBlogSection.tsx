@@ -22,8 +22,12 @@ export function LatestBlogSection({ posts }: LatestBlogSectionProps) {
             </p>
           </div>
 
-          <Link href="/blog" className="rt-news-view-all">
-            View All Articles <ArrowRight size={16} strokeWidth={2.25} />
+          <Link 
+            href="/blog" 
+            className="rt-news-view-all"
+          >
+            View All Articles <span className="rt-sr-only">and industry insights</span>
+            <ArrowRight size={16} strokeWidth={2.25} />
           </Link>
         </div>
 
