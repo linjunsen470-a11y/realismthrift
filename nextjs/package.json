@@ -1,5 +1,5 @@
 {
-  "name": "ai-studio-applet",
+  "name": "realismthrift-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,7 +15,6 @@
     "pnpm": ">=8"
   },
   "dependencies": {
-    "@google/genai": "^1.17.0",
     "@hookform/resolvers": "^5.2.1",
     "@portabletext/react": "^6.0.3",
     "@sanity/image-url": "^2.1.1",
