@@ -3,22 +3,23 @@ import { Montserrat, Open_Sans } from 'next/font/google';
 import { draftMode } from 'next/headers';
 import { VisualEditing } from 'next-sanity/visual-editing';
 import './globals.css';
-import { AppShell } from '@/components/AppShell';
-import NextTopLoader from 'nextjs-toploader';
+import { SiteHeader } from '@/components/SiteHeader';
+import { SiteFooter } from '@/components/SiteFooter';
 import { SanityLive } from '@/lib/sanity/live';
 import Analytics from '@/components/Analytics';
+import { siteHeader, siteFooter } from '@/data/siteData';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-montserrat',
-  weight: ['400', '500', '600', '700', '800', '900'],
+  weight: ['700', '800', '900'],
   display: 'swap',
 });
 
 const openSans = Open_Sans({
   subsets: ['latin'],
   variable: '--font-open-sans',
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '700'],
   display: 'swap',
 });
 
@@ -67,18 +68,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" className={`${montserrat.variable} ${openSans.variable}`}>
       <body className="antialiased font-sans bg-white text-[#333]">
         <Analytics />
-        <NextTopLoader 
-          color="#c0392b"
-          initialPosition={0.08}
-          crawlSpeed={200}
-          height={3}
-          crawl={true}
-          showSpinner={false}
-          easing="ease"
-          speed={200}
-          shadow="0 0 10px #c0392b,0 0 5px #c0392b"
-        />
-        <AppShell>{children}</AppShell>
+        <div className="flex min-h-screen flex-col">
+          <SiteHeader data={siteHeader} />
+          <main className="flex-grow">{children}</main>
+          <SiteFooter data={siteFooter} />
+        </div>
         {isDraftModeEnabled ? <VisualEditing /> : null}
         {isDraftModeEnabled ? (
           <SanityLive

@@ -28,6 +28,7 @@ export function BlogCard({ post, showAuthor = false }: BlogCardProps) {
             alt={post.coverImage?.alt || post.title}
             width={720}
             height={420}
+            sizes="(min-width: 1100px) 33vw, (min-width: 768px) 50vw, 100vw"
             className="rt-news-card-image"
           />
         ) : (

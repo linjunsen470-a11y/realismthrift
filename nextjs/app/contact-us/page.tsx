@@ -1,3 +1,4 @@
+import "../internal-pages.css";
 import Image from "next/image";
 import { InquiryForm } from "@/components/InquiryForm";
 import { companyStats } from "@/data/siteData";

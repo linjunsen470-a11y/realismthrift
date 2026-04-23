@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -10,25 +7,13 @@ import {
   Phone,
 } from "lucide-react";
 import { SiteFooter as SiteFooterType } from "@/types";
+import { FooterBackToTop } from "@/components/FooterBackToTop";
 
 interface SiteFooterProps {
   data: SiteFooterType;
 }
 
 export function SiteFooter({ data }: SiteFooterProps) {
-  const [showBackToTop, setShowBackToTop] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 320);
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <footer className="rt-footer">
       <div className="rt-container">
@@ -40,6 +25,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
                 alt="RealismThrift Logo"
                 width={56}
                 height={56}
+                sizes="56px"
                 className="rt-footer-logo-image"
               />
               <div className="rt-footer-logo-copy">
@@ -139,16 +125,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
         >
           <MessageCircle size={26} strokeWidth={2.2} />
         </a>
-        <button
-          type="button"
-          aria-label="Back to top"
-          aria-hidden={!showBackToTop}
-          hidden={!showBackToTop}
-          className={`rt-floating-top${showBackToTop ? " is-visible" : ""}`}
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          <span className="rt-floating-top-glyph">↑</span>
-        </button>
+        <FooterBackToTop />
       </div>
     </footer>
   );
