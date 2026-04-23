@@ -39,6 +39,9 @@
 *   `AGENTS.MD`：业务背景与团队架构。
 *   `archive/`：历史审计与技术文档。
 
+> [!IMPORTANT]
+> 本项目强制使用 **pnpm** 进行包管理。请勿使用 `npm` 或 `yarn`，否则 `preinstall` 钩子将报错。
+
 ### 2. 环境配置项 (关键变量)
 *   `RESEND_API_KEY`：邮件发送密钥。
 *   `CONTACT_EMAIL`：接收询盘的邮箱。

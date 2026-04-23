@@ -50,6 +50,7 @@ A multilingual team (English, French, Spanish, Swahili) providing a bridge betwe
 While our operations are human-led, the **Digital Orchestrator** is the technical infrastructure (Next.js Platform) that enables this global collaboration.
 
 - **Vision**: To provide a pixel-perfect, premium digital storefront that reflects the Physical Quality of RealismThrift.
+- **Package Management**: **Mandatory use of `pnpm`** for all dependency management. The project is configured with `only-allow pnpm` to prevent the use of `npm` or `yarn`.
 - **Maintainer Role**: Ensures data accuracy in `siteData.ts` and reliability of the inquiry pipeline.
 
 ---
