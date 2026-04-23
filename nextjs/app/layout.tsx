@@ -6,6 +6,7 @@ import './globals.css';
 import { AppShell } from '@/components/AppShell';
 import NextTopLoader from 'nextjs-toploader';
 import { SanityLive } from '@/lib/sanity/live';
+import Analytics from '@/components/Analytics';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -65,6 +66,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={`${montserrat.variable} ${openSans.variable}`}>
       <body className="antialiased font-sans bg-white text-[#333]">
+        <Analytics />
         <NextTopLoader 
           color="#c0392b"
           initialPosition={0.08}
