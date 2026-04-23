@@ -28,7 +28,7 @@ Operating within our **15,000 m² facility**, these agents manage the complex lo
 - **Facility**: ISO 9001:2015 and GRS certified environment.
 
 ## 🚢 The Global Logistics Agent (Supply Chain)
-Handling export to **110+ countries**, our logistics specialists manage the final bridge to the customer.
+Handling export to **100+ countries**, our logistics specialists manage the final bridge to the customer.
 
 - **Objective**: Cost-effective and secure delivery to global ports.
 - **Responsibilities**:

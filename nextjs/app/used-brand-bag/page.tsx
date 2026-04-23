@@ -6,6 +6,7 @@ import { ProductTrustSections } from "@/components/product/ProductTrustSections"
 import { ProductCTA } from "@/components/product/ProductCTA";
 import { companyStats } from "@/data/siteData";
 import { XCircle, CheckCircle2, Search, Sparkles, Ship, Camera, Footprints, ShoppingBag, ClipboardList, Mail } from "lucide-react";
+import { JsonLd, getProductSchema, getFaqSchema } from "@/components/JsonLd";
 
 const bagStandards = [
   { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Broken Zippers', desc: 'All zippers open and close smoothly without snagging', isNegative: true },
@@ -46,8 +47,19 @@ export const metadata = {
 };
 
 export default function UsedBrandBagPage() {
+  const productSchema = getProductSchema({
+    name: "Used Brand Bags Wholesale",
+    description: "China's premium wholesale exporter of second-hand branded handbags, backpacks, and luggage. Coach, Michael Kors, Kate Spade, and more.",
+    image: "https://www.realismthrift.com/images/used-brand-bag/hero.jpg",
+    url: "https://www.realismthrift.com/used-brand-bag"
+  });
+
+  const faqSchema = getFaqSchema(bagFaqs);
+
   return (
     <main className="bg-white">
+      <JsonLd data={productSchema} />
+      <JsonLd data={faqSchema} />
       {/* PAGE HERO */}
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">

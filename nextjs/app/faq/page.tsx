@@ -2,6 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import Link from "next/link";
 import { FaqContent } from "@/components/faq/FaqContent";
+import { JsonLd, getFaqSchema } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   title: "FAQ | Used Clothes Wholesale Common Questions",
@@ -39,8 +40,11 @@ const faqs = [
 ];
 
 export default function FAQPage() {
+  const faqSchema = getFaqSchema(faqs.map(f => ({ q: f.question, a: f.answer })));
+
   return (
     <div className="pb-20">
+      <JsonLd data={faqSchema} />
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-brand-dark opacity-90" />
