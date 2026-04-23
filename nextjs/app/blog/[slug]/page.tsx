@@ -108,7 +108,7 @@ export default async function BlogPostPage({
   return (
     <article>
       <JsonLd data={articleSchema} />
-      <section className="rt-page-hero rt-blog-hero relative overflow-hidden flex items-center">
+      <section className="rt-page-hero rt-blog-hero relative flex items-center">
         <Image
           src={heroImage}
           alt={post.title}
@@ -117,13 +117,13 @@ export default async function BlogPostPage({
           priority
         />
         <div className="rt-page-hero-overlay relative z-1" />
-        <div className="rt-container relative z-10 pt-16 md:pt-24">
+        <div className="rt-container relative z-10 pt-8 md:pt-24">
           <div className="rt-fade-in max-w-4xl">
-            <Link href="/blog" className="rt-blog-back-link mb-8">
+            <Link href="/blog" className="rt-blog-back-link mb-4 md:mb-8">
               <ArrowLeft size={14} strokeWidth={3} />
               Back to Blog
             </Link>
-            <div className="rt-page-hero-meta mb-4">
+            <div className="rt-page-hero-meta mb-3 md:mb-4">
               <span className="rt-news-card-category bg-brand-red text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">
                 {post.category?.title || "Industry Insights"}
               </span>
@@ -132,7 +132,7 @@ export default async function BlogPostPage({
               <span className="rt-blog-meta-dot mx-2" />
               <ReadingTime content={post.body} />
             </div>
-            <h1 className="rt-blog-title text-white font-black leading-tight mb-6">
+            <h1 className="rt-blog-title text-white font-black leading-tight mb-4 md:mb-6">
               {post.title}
             </h1>
             <div className="rt-breadcrumb flex items-center gap-2 text-white/60 text-sm">
