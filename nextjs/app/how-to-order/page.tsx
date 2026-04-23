@@ -23,7 +23,7 @@ export default function HowToOrderPage() {
         <div className="absolute inset-0 z-0">
           <Image 
             src="/img/order/order-hero.jpg" 
-            alt="How to order background" 
+            alt="RealismThrift Ordering Guide - Simple 7-Step Process to Wholesale Second Hand Branded Fashion from China" 
             fill 
             className="object-cover" 
             priority 
@@ -82,14 +82,14 @@ export default function HowToOrderPage() {
             </div>
           </div>
           <div className="relative min-h-[280px]">
-            <Image src="/img/order/step-categories.webp" alt="Confirm Categories" fill className="object-cover" />
+            <Image src="/img/order/step-categories.webp" alt="RealismThrift Ordering Step 1 - Confirming Wholesale Categories for Clothes, Shoes, and Bags" fill className="object-cover" />
           </div>
         </div>
 
         {/* Step 2 */}
         <div className="grid grid-cols-1 md:grid-cols-2 border border-[#eee] border-b-0">
           <div className="relative min-h-[280px] order-2 md:order-1">
-            <Image src="/img/order/step-quantity.jpg" alt="Confirm Quantity" fill className="object-cover" />
+            <Image src="/img/order/step-quantity.jpg" alt="RealismThrift Ordering Step 2 - Determining Bulk Order Quantity for 20ft/40ft Container Shipment" fill className="object-cover" />
           </div>
           <div className="bg-[#F5F5F0] p-12 flex flex-col justify-center order-1 md:order-2">
             <div className="flex items-center gap-4 mb-5">
@@ -124,14 +124,14 @@ export default function HowToOrderPage() {
             </div>
           </div>
           <div className="relative min-h-[280px]">
-             <Image src="/img/order/step-prices.jpg" alt="Discuss Prices" fill className="object-cover" />
+             <Image src="/img/order/step-prices.jpg" alt="RealismThrift Ordering Step 3 - Negotiating Wholesale Prices and Bulk Volume Discounts for Global Export" fill className="object-cover" />
           </div>
         </div>
 
         {/* Step 4 */}
         <div className="grid grid-cols-1 md:grid-cols-2 border border-[#eee] border-b-0">
           <div className="relative min-h-[280px] order-2 md:order-1">
-             <Image src="/img/order/step-quality.webp" alt="Confirm Grade" fill className="object-cover" />
+             <Image src="/img/order/step-quality.webp" alt="RealismThrift Ordering Step 4 - Selecting Premium A-Grade or Value B-Grade Branded Second Hand Merchandise" fill className="object-cover" />
           </div>
           <div className="bg-[#F5F5F0] p-12 flex flex-col justify-center order-1 md:order-2">
             <div className="flex items-center gap-4 mb-5">
@@ -166,14 +166,14 @@ export default function HowToOrderPage() {
             </div>
           </div>
           <div className="relative min-h-[280px]">
-             <Image src="/img/order/step-payment.jpg" alt="Confirm Payment" fill className="object-cover" />
+             <Image src="/img/order/step-payment.jpg" alt="RealismThrift Ordering Step 5 - Confirming Proforma Invoice and Secure 30% Deposit Payment for Export" fill className="object-cover" />
           </div>
         </div>
 
         {/* Step 6 */}
         <div className="grid grid-cols-1 md:grid-cols-2 border border-[#eee] border-b-0">
           <div className="relative min-h-[280px] order-2 md:order-1">
-             <Image src="/img/order/step-production-inspection.jpg" alt="Production & Inspection" fill className="object-cover" />
+             <Image src="/img/order/step-production-inspection.jpg" alt="RealismThrift Ordering Step 6 - Professional Sorting, Packing, and Final Video Quality Inspection Before Loading" fill className="object-cover" />
           </div>
           <div className="bg-[#F5F5F0] p-12 flex flex-col justify-center order-1 md:order-2">
             <div className="flex items-center gap-4 mb-5">
@@ -208,7 +208,7 @@ export default function HowToOrderPage() {
           <div className="relative h-[260px] md:h-auto md:min-h-[280px]">
              <Image
                src="/images/reconstructed/1494412574643-ff11b0a5c1c3.jpg"
-               alt="Shipment and after-sales support at the destination port"
+               alt="RealismThrift Ordering Step 7 - Global Shipment Logistics and Professional After-Sales Support for Wholesale Buyers"
                fill
                sizes="(min-width: 768px) 50vw, 100vw"
                className="object-cover object-[58%_52%] md:object-center"
