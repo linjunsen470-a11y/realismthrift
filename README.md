@@ -65,6 +65,10 @@
 *   `CONTACT_EMAIL`：接收询盘的邮箱。
 *   `NEXT_PUBLIC_SANITY_PROJECT_ID`：Sanity 项目 ID。
 
+### 3. 常用配置修改
+*   **站点信息与社交媒体**：全站通用的联系方式、页脚链接以及 **Facebook、Instagram、YouTube、X (Twitter)** 的跳转地址，均在 `nextjs/data/siteData.ts` 文件中进行统一维护。修改该文件中的 `siteFooter` 对象即可实时更新页脚显示。
+*   **公司统计数据**：首页展示的出口国家数、工厂面积、成立年份等数据，也在上述文件的 `companyStats` 对象中配置。
+
 ---
 
 ## 六、注意事项与常见问题
