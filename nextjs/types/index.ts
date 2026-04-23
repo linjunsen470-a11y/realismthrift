@@ -25,6 +25,12 @@ export interface SiteFooter {
     phone: string;
     email: string;
     whatsapp?: string;
+    socials?: {
+      facebook?: string;
+      instagram?: string;
+      youtube?: string;
+      twitter?: string;
+    };
   };
   sections: {
     title: string;

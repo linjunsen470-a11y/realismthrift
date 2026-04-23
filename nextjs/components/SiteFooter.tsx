@@ -1,10 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  Facebook,
+  Instagram,
   Mail,
   MapPin,
   MessageCircle,
   Phone,
+  Twitter,
+  Youtube,
+  X,
 } from "lucide-react";
 import { SiteFooter as SiteFooterType } from "@/types";
 import { FooterBackToTop } from "@/components/FooterBackToTop";
@@ -100,11 +105,37 @@ export function SiteFooter({ data }: SiteFooterProps) {
                 </div>
               ))}
             </div>
+
+            {data.brand.socials && (
+              <div className="rt-footer-socials">
+                {data.brand.socials.facebook && (
+                  <a href={data.brand.socials.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="rt-footer-social-link">
+                    <Facebook size={18} />
+                  </a>
+                )}
+                {data.brand.socials.instagram && (
+                  <a href={data.brand.socials.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="rt-footer-social-link">
+                    <Instagram size={18} />
+                  </a>
+                )}
+                {data.brand.socials.youtube && (
+                  <a href={data.brand.socials.youtube} target="_blank" rel="noreferrer" aria-label="YouTube" className="rt-footer-social-link">
+                    <Youtube size={18} />
+                  </a>
+                )}
+                {data.brand.socials.twitter && (
+                  <a href={data.brand.socials.twitter} target="_blank" rel="noreferrer" aria-label="X (Twitter)" className="rt-footer-social-link">
+                    <X size={18} />
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
         <div className="rt-footer-bottom">
           <p>{data.bottom.copyright}</p>
+
           <div className="rt-footer-bottom-links">
             {data.bottom.links.map((link) => (
               <Link key={link.label} href={link.href}>

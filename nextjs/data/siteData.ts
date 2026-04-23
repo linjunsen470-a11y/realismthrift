@@ -37,6 +37,12 @@ export const siteFooter: SiteFooter = {
     phone: "+86 133 6748 1710",
     email: "sales@realismthrift.com",
     whatsapp: "+86 133 6748 1710",
+    socials: {
+      facebook: "https://facebook.com/realismthrift",
+      instagram: "https://instagram.com/realismthrift",
+      youtube: "https://youtube.com/@realismthrift",
+      twitter: "https://x.com/realismthrift",
+    },
   },
   sections: [
     {
