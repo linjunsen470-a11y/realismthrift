@@ -28,7 +28,7 @@ export function FaqContent({ faqs }: FaqContentProps) {
             <button
               className="w-full flex items-center justify-between p-6 text-left bg-white"
               onClick={() => setActiveIndex(activeIndex === idx ? null : idx)}
-              aria-expanded={activeIndex === idx}
+              aria-expanded={activeIndex === idx ? "true" : "false"}
             >
               <span className="text-lg font-bold text-gray-900">{faq.question}</span>
               {activeIndex === idx ? (
