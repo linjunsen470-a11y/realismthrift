@@ -39,7 +39,10 @@ export const metadata = {
     title: "Used Brand Bags Wholesale | China's Leading Exporter",
     description: "Premium second-hand branded bags. 6-point quality check. Individually wrapped for protection. Global shipping.",
     images: ['/images/used-brand-bag/hero.jpg'],
-  }
+  },
+  alternates: {
+    canonical: "/used-brand-bag",
+  },
 };
 
 export default function UsedBrandBagPage() {

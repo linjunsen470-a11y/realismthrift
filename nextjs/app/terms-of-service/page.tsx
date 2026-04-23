@@ -7,7 +7,10 @@ export const metadata = {
   openGraph: {
     title: "RealismThrift Terms of Service",
     description: "Legal terms governing our wholesale business relationship and export operations.",
-  }
+  },
+  alternates: {
+    canonical: "/terms-of-service",
+  },
 };
 
 export default function TermsOfServicePage() {

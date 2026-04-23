@@ -40,7 +40,10 @@ export const metadata = {
     title: "Used Brand Clothes Wholesale | China's Leading Supplier",
     description: "Premium A-Grade sorted second-hand branded clothes. nike, Adidas, and more. Global export to 100+ countries.",
     images: ['/images/used-brand-clothes/hero.jpg'],
-  }
+  },
+  alternates: {
+    canonical: "/used-brand-clothes",
+  },
 };
 
 export default function UsedBrandClothesPage() {

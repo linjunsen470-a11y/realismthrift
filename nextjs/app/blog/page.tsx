@@ -11,7 +11,10 @@ export const metadata: Metadata = {
     title: "RealismThrift Blog | Wholesale Industry Market News",
     description: "Expert insights into the global wholesale used clothing market. Sourcing tips, container loading guides, and market trends.",
     images: ['/img/blog-hero-wholesale.webp'],
-  }
+  },
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 export default async function BlogPage() {

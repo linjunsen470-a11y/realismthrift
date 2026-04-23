@@ -10,7 +10,10 @@ export const metadata = {
     title: "How to Order Wholesale from RealismThrift | Step-by-Step Guide",
     description: "Our simple 7-step process for wholesale used brand clothes, shoes and bags. High quality, competitive pricing, and reliable shipping.",
     images: ['/img/order/order-hero.jpg'],
-  }
+  },
+  alternates: {
+    canonical: "/how-to-order",
+  },
 };
 
 export default function HowToOrderPage() {
