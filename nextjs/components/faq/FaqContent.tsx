@@ -20,26 +20,34 @@ export function FaqContent({ faqs }: FaqContentProps) {
   return (
     <Section>
       <div className="max-w-3xl mx-auto space-y-4">
-        {faqs.map((faq, idx) => (
-          <div 
-            key={idx} 
-            className="border border-gray-100 rounded-2xl overflow-hidden shadow-sm transition-all hover:border-blue-200"
-          >
-            <button
-              className="w-full flex items-center justify-between p-6 text-left bg-white"
-              onClick={() => setActiveIndex(activeIndex === idx ? null : idx)}
-              aria-expanded={activeIndex === idx ? "true" : "false"}
+        {faqs.map((faq, idx) => {
+          const isExpanded = activeIndex === idx;
+          return (
+            <div 
+              key={idx} 
+              className="border border-gray-100 rounded-2xl overflow-hidden shadow-sm transition-all hover:border-blue-200"
             >
-              <span className="text-lg font-bold text-gray-900">{faq.question}</span>
-              {activeIndex === idx ? (
-                <Minus className="text-blue-600 flex-shrink-0" />
-              ) : (
-                <Plus className="text-gray-400 flex-shrink-0" />
-              )}
-            </button>
+              <button
+                type="button"
+                id={`faq-btn-${idx}`}
+                aria-controls={`faq-content-${idx}`}
+                className="w-full flex items-center justify-between p-6 text-left bg-white"
+                onClick={() => setActiveIndex(isExpanded ? null : idx)}
+                aria-expanded={isExpanded}
+              >
+                <span className="text-lg font-bold text-gray-900">{faq.question}</span>
+                {isExpanded ? (
+                  <Minus className="text-blue-600 flex-shrink-0" />
+                ) : (
+                  <Plus className="text-gray-400 flex-shrink-0" />
+                )}
+              </button>
             <AnimatePresence>
-              {activeIndex === idx && (
+              {isExpanded && (
                 <motion.div
+                  id={`faq-content-${idx}`}
+                  role="region"
+                  aria-labelledby={`faq-btn-${idx}`}
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
@@ -50,9 +58,10 @@ export function FaqContent({ faqs }: FaqContentProps) {
                   </div>
                 </motion.div>
               )}
-            </AnimatePresence>
-          </div>
-        ))}
+              </AnimatePresence>
+            </div>
+          );
+        })}
       </div>
     </Section>
   );

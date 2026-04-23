@@ -70,17 +70,17 @@ export default function UsedBrandShoesPage() {
             <div className="inline-block bg-brand-red text-white font-montserrat font-bold text-[0.65rem] tracking-[0.12em] px-[0.875rem] py-[0.3rem] rounded-[2px] mb-[1rem] uppercase">
               Nike · Adidas · A-Grade Quality
             </div>
-            <h1 className="rt-page-hero-title mb-5 text-[clamp(2rem,6vw,3.5rem)] leading-[1.1]">
+            <h1 className="rt-page-hero-title mb-5 text-[clamp(1.75rem,5vw,2.75rem)] leading-[1.1]">
               Used Brand Shoes <span className="text-brand-gold">Wholesale</span>
             </h1>
             <p className="rt-page-hero-sub max-w-[620px] mb-9 leading-[1.8] text-[1.05rem]">
               Wholesale second-hand branded shoes — Nike, Adidas, Jordan, and 30+ top brands. Strict cleaning and grading process. Exported to {companyStats.countriesCount} countries.
             </p>
             <div className="flex gap-4 justify-center md:justify-start">
-              <a href="#inquiry" className="bg-brand-gold text-brand-dark px-10 py-4 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-all shadow-[0_10px_20px_rgba(240,180,41,0.2)]">
+              <a href="#inquiry" className="bg-brand-gold text-brand-dark px-6 md:px-10 py-3 md:py-4 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-all shadow-[0_10px_20px_rgba(240,180,41,0.2)] whitespace-nowrap">
                 Get Price Now →
               </a>
-              <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-10 py-4 rounded-[3px] font-semibold font-montserrat text-[0.9rem] hover:bg-white/20 transition-all">
+              <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-6 md:px-10 py-3 md:py-4 rounded-[3px] font-semibold font-montserrat text-[0.9rem] hover:bg-white/20 transition-all whitespace-nowrap">
                 WhatsApp
               </a>
             </div>
