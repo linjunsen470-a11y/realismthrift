@@ -5,7 +5,7 @@ import { QualityStandards } from "@/components/product/QualityStandards";
 import { ProductTrustSections } from "@/components/product/ProductTrustSections";
 import { ProductCTA } from "@/components/product/ProductCTA";
 import { companyStats } from "@/data/siteData";
-import { XCircle, CheckCircle2, Search, Sparkles, Ship, Camera, Footprints, ShoppingBag, ClipboardList, Mail } from "lucide-react";
+import { XCircle, CheckCircle2, ShieldCheck, Sparkles, Globe2, Camera, Footprints, ShoppingBag, ClipboardList, Mail } from "lucide-react";
 import { JsonLd, getProductSchema, getFaqSchema } from "@/components/JsonLd";
 
 const bagStandards = [
@@ -21,10 +21,10 @@ const bagStandards = [
 ];
 
 const bagFeatures = [
-  { icon: <Search className="w-6 h-6 text-white" />, title: '6-Pt Hardware Check', desc: 'Every zipper, clasp, and ring is tested 3 times for 100% functionality.' },
-  { icon: <Sparkles className="w-6 h-6 text-white" />, title: 'Deep Interior Cleaning', desc: 'Specialized cleaning for leather, canvas and nylon. Deodorized interiors.' },
-  { icon: <Ship className="w-6 h-6 text-white" />, title: 'Worldwide Export', desc: `12+ years experience in global logistics and exporting to ${companyStats.countriesCount} countries.` },
-  { icon: <Camera className="w-6 h-6 text-white" />, title: 'Photo Verification', desc: 'Live photos and videos of your specific order sent before shipment.' }
+  { icon: <ShieldCheck className="w-6 h-6 text-brand-gold" />, title: '6-Pt Hardware Check', desc: 'Every zipper, clasp, and ring is tested 3 times for 100% functionality.' },
+  { icon: <Sparkles className="w-6 h-6 text-brand-gold" />, title: 'Deep Interior Cleaning', desc: 'Specialized cleaning for leather, canvas and nylon. Deodorized interiors.' },
+  { icon: <Globe2 className="w-6 h-6 text-brand-gold" />, title: 'Worldwide Export', desc: `12+ years experience in global logistics and exporting to ${companyStats.countriesCount} countries.` },
+  { icon: <Camera className="w-6 h-6 text-brand-gold" />, title: 'Photo Verification', desc: 'Live photos and videos of your specific order sent before shipment.' }
 ];
 
 const bagFaqs = [
@@ -39,7 +39,7 @@ export const metadata = {
   openGraph: {
     title: "Used Brand Bags Wholesale | China's Leading Exporter",
     description: "Premium second-hand branded bags. 6-point quality check. Individually wrapped for protection. Global shipping.",
-    images: ['/images/used-brand-bag/hero.jpg'],
+    images: ['/images/v2/bags/loewe-puzzle-bag-assorted-colors-display.webp'],
   },
   alternates: {
     canonical: "/used-brand-bag",
@@ -50,7 +50,7 @@ export default function UsedBrandBagPage() {
   const productSchema = getProductSchema({
     name: "Used Brand Bags Wholesale",
     description: "China's premium wholesale exporter of second-hand branded handbags, backpacks, and luggage. Coach, Michael Kors, Kate Spade, and more.",
-    image: "https://www.realismthrift.com/images/used-brand-bag/hero.jpg",
+    image: "https://www.realismthrift.com/images/v2/bags/loewe-puzzle-bag-assorted-colors-display.webp",
     url: "https://www.realismthrift.com/used-brand-bag"
   });
 
@@ -64,8 +64,8 @@ export default function UsedBrandBagPage() {
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/images/used-brand-bag/hero.jpg" 
-            alt="Used Brand Bags" 
+            src="/images/v2/bags/loewe-puzzle-bag-assorted-colors-display.webp" 
+            alt="RealismThrift Designer Bag Warehouse - Premium Wholesale Used Branded Handbags and Backpacks Export from China" 
             fill 
             className="object-cover" 
             priority 
@@ -153,18 +153,18 @@ export default function UsedBrandBagPage() {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[1.25rem]">
               {[
-                { title: 'Used Brand Handbags', img: '/images/used-brand-bag/cat-handbag.jpg', desc: 'Coach, MK, Kate Spade', spec: '38kg/sack (~50 pcs)' },
-                { title: 'Used Brand Backpacks', img: '/images/used-brand-bag/cat-backpack.jpg', desc: 'Herschel, JanSport, NF', spec: '35kg/sack (~40 pcs)' },
-                { title: 'Used Brand Shoulder Bags', img: '/images/used-brand-bag/cat-shoulder.jpg', desc: 'Longchamp, Tory Burch', spec: '38kg/sack (~45 pcs)' },
-                { title: 'Used Brand Crossbody Bags', img: '/images/used-brand-bag/cat-crossbody.jpg', desc: 'Calvin Klein, DKNY', spec: '35kg/sack (~55 pcs)' },
-                { title: 'Used Brand Luggage', img: '/images/used-brand-bag/cat-luggage.jpg', desc: 'Samsonite, Tumi', spec: '40kg/sack (~15 pcs)' },
-                { title: 'Mixed Brand Bags', img: '/images/used-brand-bag/cat-handbag.jpg', desc: 'All brands mixed', spec: '38kg/sack (~50 pcs)' },
+                { title: 'Used Brand Handbags', img: '/images/v2/bags/abags.webp', desc: 'Coach, MK, Kate Spade', spec: '38kg/sack (~50 pcs)' },
+                { title: 'Used Brand Backpacks', img: '/images/v2/bags/bbags.webp', desc: 'Herschel, JanSport, NF', spec: '35kg/sack (~40 pcs)' },
+                { title: 'Used Brand Shoulder Bags', img: '/images/v2/bags/luxury-handbags-assorted-collection-display-1.webp', desc: 'Longchamp, Tory Burch', spec: '38kg/sack (~45 pcs)' },
+                { title: 'Used Brand Crossbody Bags', img: '/images/v2/bags/louis-vuitton-essential-trunk-black-monogram.webp', desc: 'Calvin Klein, DKNY', spec: '35kg/sack (~55 pcs)' },
+                { title: 'Used Brand Luggage', img: '/images/v2/bags/wholesale-luxury-bags-assorted-brands-pile.webp', desc: 'Samsonite, Tumi', spec: '40kg/sack (~15 pcs)' },
+                { title: 'Mixed Brand Bags', img: '/images/v2/bags/second-hand-designer-bags-warehouse-inventory-pile.webp', desc: 'All brands mixed', spec: '38kg/sack (~50 pcs)' },
               ].map(prod => (
                 <div key={prod.title} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
-                  <div className="relative h-[180px]">
-                    <Image src={prod.img} alt={prod.title} fill className="object-cover" />
-                    <div className="absolute top-2 left-2 bg-[#8B6914] text-white text-[0.65rem] font-montserrat font-bold px-2 py-[0.2rem] rounded-[2px]">
-                      A-GRADE
+                  <div className="relative overflow-hidden h-[180px]">
+                    <Image src={prod.img} alt={`RealismThrift Wholesale ${prod.title} - Luxury Branded Second-Hand Bags Bulk Inventory`} fill className="object-cover" />
+                    <div className="absolute top-2 left-2 bg-brand-dark text-brand-gold text-[0.65rem] font-bold px-2 py-1 rounded-[2px] font-montserrat uppercase tracking-wider">
+                      Grade A
                     </div>
                   </div>
                   <div className="p-[0.875rem]">
@@ -195,40 +195,38 @@ export default function UsedBrandBagPage() {
                 {
                   step: '01',
                   title: 'Initial Sorting by Type',
-                  img: '/images/used-brand-bag/cat-handbag.jpg',
+                  img: '/images/v2/bags/mixed-designer-handbags-wholesale-batch-display.webp',
                   desc: 'Incoming bags are sorted by type: handbags, backpacks, shoulder bags, crossbody bags, and luggage. Each type follows a different inspection protocol. Brand identification happens simultaneously during this stage.'
                 },
                 {
                   step: '02',
                   title: 'Hardware Inspection',
-                  img: '/images/used-brand-bag/step-inspect.jpg',
+                  img: '/images/v2/bags/designer-bags-collection-display-dior-chanel-gucci.webp',
                   desc: 'Every zipper is opened and closed 3 times. All clasps, buckles, magnetic closures, and rings are tested for functionality. Any bag with broken or stuck hardware is immediately downgraded. Chain straps are checked link by link.'
                 },
                 {
                   step: '03',
                   title: 'Interior & Exterior Cleaning',
-                  img: '/images/used-brand-bag/step-clean.jpg',
+                  img: '/images/v2/bags/premium-handbags-collection-mixed-brands-display.webp',
                   desc: 'Bags are cleaned inside and out using appropriate methods for each material type (leather, canvas, nylon, synthetic). Stubborn stains are treated. Bags with permanent staining or mold are rejected. Interiors are deodorized.'
                 },
                 {
                   step: '04',
                   title: 'Structural Integrity Check',
-                  img: '/images/used-brand-bag/step-structural.jpg',
+                  img: '/images/v2/bags/designer-bags-collection-dior-mcm-coach-celine.webp',
                   desc: 'Straps are tested for strength and attachment points. Lining integrity is checked — no peeling, tearing, or separation allowed. The bag must hold its shape when loaded. Base corners are checked for wear-through.'
                 },
               ].map(process => (
                 <div key={process.step} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
                   <div className="relative h-[160px]">
-                    <Image src={process.img} alt={process.title} fill className="object-cover" />
+                    <Image src={process.img} alt={`RealismThrift Bag Quality Inspection Step ${process.step} - ${process.title} for Global Wholesale Branded Bags`} fill className="object-cover" />
                   </div>
-                  <div className="p-[1.25rem]">
-                    <div className="flex items-center gap-[0.625rem] mb-[0.625rem]">
-                      <span className="bg-[#8B6914] text-white font-montserrat text-[0.75rem] font-extrabold px-[0.625rem] py-[0.25rem] rounded-[2px]">
-                        STEP {process.step}
-                      </span>
-                      <h3 className="font-montserrat text-[0.9375rem] font-bold text-[#1A1A1A] m-0">{process.title}</h3>
+                  <div className="p-5">
+                    <div className="flex items-center gap-2.5 mb-2.5">
+                      <span className="w-6 h-6 bg-brand-red text-white text-[0.75rem] font-bold flex items-center justify-center rounded-full shrink-0">{process.step}</span>
+                      <h3 className="font-montserrat text-[0.875rem] font-bold text-brand-dark m-0">{process.title}</h3>
                     </div>
-                    <p className="text-[0.8125rem] text-[#666] leading-[1.7] m-0">{process.desc}</p>
+                    <p className="text-[0.75rem] text-[#666] leading-relaxed m-0">{process.desc}</p>
                   </div>
                 </div>
               ))}
@@ -236,7 +234,7 @@ export default function UsedBrandBagPage() {
               {/* STEP 05 — full width */}
               <div className="sm:col-span-2 bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] grid grid-cols-1 md:grid-cols-[300px_1fr]">
                 <div className="relative h-[200px] md:h-auto">
-                  <Image src="/images/used-brand-bag/step-pack.jpg" alt="Brand Verification & Packing" fill className="object-cover" />
+                  <Image src="/images/v2/bags/gucci-handbags-collection-marmont-dionysus-ophidia.webp" alt="RealismThrift Final QC and Packing - Branded Second-Hand Bags Ready for Professional Export Shipment" fill className="object-cover" />
                 </div>
                 <div className="p-[1.25rem]">
                   <div className="flex items-center gap-[0.625rem] mb-[0.625rem]">

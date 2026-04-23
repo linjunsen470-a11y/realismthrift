@@ -179,7 +179,7 @@ export default async function Home() {
       <section className="rt-hero" id="home">
         <Image
           src="/img/hero-bg.png"
-          alt="RealismThrift factory"
+          alt="RealismThrift Export Co., Ltd - Leading China Wholesale Supplier of Premium Second Hand Branded Clothes, Shoes, and Bags Factory" 
           fill
           priority
           className="rt-hero-bg"
@@ -272,7 +272,7 @@ export default async function Home() {
               <Link key={product.id} href={product.href} className="rt-product-card">
                 <Image
                   src={product.image}
-                  alt={product.title}
+                  alt={`RealismThrift Wholesale ${product.title} - High-Quality A-Grade Bulk Inventory from China Sorting Facility`}
                   width={400}
                   height={260}
                   className="rt-product-card-image"
@@ -302,7 +302,7 @@ export default async function Home() {
             <div className="rt-about-image-wrap">
               <Image
                 src="/img/wholesale-inventory.webp"
-                alt="RealismThrift Export Co., Ltd factory"
+                alt="RealismThrift 15,000m² Modern Sorting Facility in China - Industrial Scale Wholesale Export Operations for Used Branded Fashion"
                 width={760}
                 height={560}
                 className="rt-about-image"
