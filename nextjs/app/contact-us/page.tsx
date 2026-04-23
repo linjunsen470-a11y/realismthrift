@@ -10,7 +10,10 @@ export const metadata = {
     title: "Contact RealismThrift | Wholesale Sales & Support",
     description: "Ready to start your wholesale order? Contact our multilingual sales team for direct factory pricing and shipping estimates.",
     images: ['/images/reconstructed/1578575437130-527eed3abbec.jpg'],
-  }
+  },
+  alternates: {
+    canonical: "/contact-us",
+  },
 };
 
 export default function ContactUsPage() {

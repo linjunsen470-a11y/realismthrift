@@ -1,9 +1,18 @@
-"use client";
+import React from "react";
+import { Metadata } from "next";
+import { FaqContent } from "@/components/faq/FaqContent";
 
-import React, { useState } from "react";
-import { Section } from "@/components/CommonUI";
-import { Plus, Minus } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+export const metadata: Metadata = {
+  title: "FAQ | Used Clothes Wholesale Common Questions",
+  description: "Find answers to frequently asked questions about wholesale used clothes, shoes, and bags from RealismThrift. Learn about MOQ, shipping, quality grades, and payment terms.",
+  openGraph: {
+    title: "RealismThrift FAQ | Wholesale Used Goods Help Center",
+    description: "Everything you need to know about sourcing premium second-hand goods from China. Reliable A-Grade quality and global export.",
+  },
+  alternates: {
+    canonical: "/faq",
+  },
+};
 
 const faqs = [
   {
@@ -29,8 +38,6 @@ const faqs = [
 ];
 
 export default function FAQPage() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(0);
-
   return (
     <div className="pb-20">
       <section className="rt-page-hero">
@@ -58,39 +65,7 @@ export default function FAQPage() {
         </div>
       </section>
 
-      <Section>
-        <div className="max-w-3xl mx-auto space-y-4">
-          {faqs.map((faq, idx) => (
-            <div key={idx} className="border border-gray-100 rounded-2xl overflow-hidden shadow-sm transition-all hover:border-blue-200">
-              <button
-                className="w-full flex items-center justify-between p-6 text-left bg-white"
-                onClick={() => setActiveIndex(activeIndex === idx ? null : idx)}
-              >
-                <span className="text-lg font-bold text-gray-900">{faq.question}</span>
-                {activeIndex === idx ? (
-                  <Minus className="text-blue-600 flex-shrink-0" />
-                ) : (
-                  <Plus className="text-gray-400 flex-shrink-0" />
-                )}
-              </button>
-              <AnimatePresence>
-                {activeIndex === idx && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="p-6 pt-0 text-gray-600 font-light border-t border-gray-50">
-                      {faq.answer}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
-        </div>
-      </Section>
+      <FaqContent faqs={faqs} />
     </div>
   );
 }

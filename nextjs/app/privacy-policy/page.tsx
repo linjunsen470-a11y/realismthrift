@@ -7,7 +7,10 @@ export const metadata = {
   openGraph: {
     title: "RealismThrift Privacy Policy",
     description: "Our commitment to data protection and privacy for our global wholesale partners.",
-  }
+  },
+  alternates: {
+    canonical: "/privacy-policy",
+  },
 };
 
 export default function PrivacyPolicyPage() {

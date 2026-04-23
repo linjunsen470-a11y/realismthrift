@@ -11,7 +11,10 @@ export const metadata = {
     title: "About RealismThrift | Professional Wholesale Exporter",
     description: "Learn about China's top wholesale supplier of premium second-hand goods. High-quality A-Grade sorting and global export experience.",
     images: ['/images/about/hero-bg.jpg'],
-  }
+  },
+  alternates: {
+    canonical: "/about-us",
+  },
 };
 
 export default function AboutUsPage() {

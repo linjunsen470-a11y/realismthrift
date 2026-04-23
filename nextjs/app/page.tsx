@@ -32,7 +32,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'RealismThrift | Global Wholesale Supplier of Used Clothes, Shoes & Bags',
     description: 'China\'s leading exporter of premium second-hand clothes, shoes, and bags. High-quality A-Grade sorting and fast global shipping.',
-  }
+  },
+  alternates: {
+    canonical: '/',
+  },
 };
 
 const featureIconMap = {
