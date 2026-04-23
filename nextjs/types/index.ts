@@ -96,6 +96,7 @@ export interface BlogPostCard {
   slug: string;
   excerpt: string;
   publishedAt: string;
+  _updatedAt: string;
   coverImage?: SanityImage;
   category?: BlogCategory;
   author?: BlogAuthor;
