@@ -33,7 +33,7 @@ export function FaqContent({ faqs }: FaqContentProps) {
                 aria-controls={`faq-content-${idx}`}
                 className="w-full flex items-center justify-between p-6 text-left bg-white"
                 onClick={() => setActiveIndex(isExpanded ? null : idx)}
-                aria-expanded={isExpanded}
+                aria-expanded={isExpanded ? "true" : "false"}
               >
                 <span className="text-lg font-bold text-gray-900">{faq.question}</span>
                 {isExpanded ? (

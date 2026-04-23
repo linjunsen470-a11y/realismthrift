@@ -24,6 +24,7 @@ const POST_CARD_PROJECTION = groq`{
   }
 }`;
 
+// Public blog routes only expose posts that are actually ready for the site.
 const ACTIVE_POST_FILTER =
   `_type == "post" && defined(slug.current) && defined(publishedAt) && isArchived != true`;
 

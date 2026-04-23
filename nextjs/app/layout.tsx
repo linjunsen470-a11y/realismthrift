@@ -74,13 +74,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <SiteFooter data={siteFooter} />
         </div>
         {isDraftModeEnabled ? <VisualEditing /> : null}
-        {isDraftModeEnabled ? (
-          <SanityLive
-            refreshOnMount={false}
-            refreshOnFocus={false}
-            refreshOnReconnect={false}
-          />
-        ) : null}
+        <SanityLive
+          refreshOnMount={false}
+          refreshOnFocus={false}
+          refreshOnReconnect={false}
+        />
       </body>
     </html>
   );

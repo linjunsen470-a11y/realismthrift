@@ -35,6 +35,7 @@
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
+    "@sanity/client": "^7.21.0",
     "@tailwindcss/postcss": "4.1.11",
     "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^20",

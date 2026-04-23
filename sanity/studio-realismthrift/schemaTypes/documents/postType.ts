@@ -32,6 +32,8 @@ export const postType = defineType({
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
+      description: 'Public blog pages only show posts that have a publish date and have been published.',
+      initialValue: () => new Date().toISOString(),
       validation: (rule) => rule.required(),
     }),
     defineField({
