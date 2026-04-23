@@ -41,17 +41,17 @@ export default function AboutUsPage() {
             <div className="inline-block bg-brand-red text-white font-montserrat font-bold text-[0.65rem] tracking-[0.12em] px-[0.875rem] py-[0.3rem] rounded-[2px] mb-[1rem] uppercase">
               China Supplier · ISO Certified · {companyStats.foundedYear}
             </div>
-            <h1 className="rt-page-hero-title mb-5 text-[clamp(2.5rem,6vw,3.5rem)] leading-[1.1]">
+            <h1 className="rt-page-hero-title mb-5 text-[clamp(2rem,5.5vw,3rem)] leading-[1.1]">
               About <span className="text-brand-gold">RealismThrift</span>
             </h1>
             <p className="rt-page-hero-sub max-w-[700px] mb-9 leading-[1.8] text-[1.0625rem]">
               China&apos;s leading wholesale exporter of used brand clothes, shoes, and bags. Over 10 years of experience. {companyStats.facilitySize} sorting facility. Trusted by {companyStats.buyersCount} wholesale buyers in {companyStats.countriesCount} countries.
             </p>
             <div className="flex gap-4 justify-center md:justify-start">
-              <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-10 py-4 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-all shadow-[0_10px_20px_rgba(240,180,41,0.2)]">
+              <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-6 md:px-10 py-3 md:py-4 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-all shadow-[0_10px_20px_rgba(240,180,41,0.2)] whitespace-nowrap">
                 Contact Our Team
               </Link>
-              <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-10 py-4 rounded-[3px] font-semibold font-montserrat text-[0.9rem] hover:bg-white/20 transition-all">
+              <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-6 md:px-10 py-3 md:py-4 rounded-[3px] font-semibold font-montserrat text-[0.9rem] hover:bg-white/20 transition-all whitespace-nowrap">
                 WhatsApp
               </a>
             </div>

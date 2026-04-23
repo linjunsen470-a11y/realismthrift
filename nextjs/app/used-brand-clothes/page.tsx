@@ -73,15 +73,15 @@ export default function UsedBrandClothesPage() {
             <div className="inline-block bg-[#C0392B] text-white font-montserrat font-bold text-[0.65rem] tracking-[0.12em] px-[0.875rem] py-[0.3rem] rounded-[2px] mb-[0.875rem] uppercase">
               Wholesale · B2B Export · China Supplier
             </div>
-            <h1 className="font-montserrat font-black text-[clamp(1.8rem,4vw,3rem)] text-white m-0 mb-4 leading-[1.15] max-w-[580px]">
+            <h1 className="font-montserrat font-black text-[clamp(1.6rem,4.5vw,2.5rem)] text-white m-0 mb-4 leading-[1.15] max-w-[580px]">
               Used Brand Clothes<br /><span className="text-[#F0B429]">Wholesale Supplier</span>
             </h1>
             <p className="text-[0.9375rem] text-white/80 font-open-sans max-w-[500px] leading-[1.75] m-0 mb-[1.75rem]">
               China&apos;s top exporter of sorted, graded second-hand branded clothing. Nike, Adidas, H&M, Zara and 200+ brands. Strict 5-step sorting. MOQ 100 bales. Ships to {companyStats.countriesCount} countries.
             </p>
             <div className="flex gap-[0.875rem] flex-wrap">
-              <a href="#inquiry" className="bg-[#F0B429] text-[#1A1A1A] font-montserrat font-extrabold text-[0.875rem] px-[2rem] py-[0.875rem] rounded-[3px] no-underline tracking-[0.03em] hover:bg-[#d4a017] transition-colors">GET PRICE NOW →</a>
-              <a href="https://wa.me/8613367481710?text=Hi%2C+I+want+to+wholesale+used+brand+clothes" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white font-montserrat font-bold text-[0.875rem] px-[2rem] py-[0.875rem] rounded-[3px] no-underline hover:bg-[#1da851] transition-colors">WhatsApp Now</a>
+               <a href="#inquiry" className="bg-[#F0B429] text-[#1A1A1A] font-montserrat font-extrabold text-[0.875rem] px-6 md:px-8 py-3 md:py-[0.875rem] rounded-[3px] no-underline tracking-[0.03em] hover:bg-[#d4a017] transition-colors whitespace-nowrap">GET PRICE NOW →</a>
+               <a href="https://wa.me/8613367481710?text=Hi%2C+I+want+to+wholesale+used+brand+clothes" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white font-montserrat font-bold text-[0.875rem] px-6 md:px-8 py-3 md:py-[0.875rem] rounded-[3px] no-underline hover:bg-[#1da851] transition-colors whitespace-nowrap">WhatsApp Now</a>
             </div>
           </div>
         </div>
