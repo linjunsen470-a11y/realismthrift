@@ -40,7 +40,7 @@ export default async function BlogPage() {
               Used Branded Clothes, Shoes & Bags <br className="hidden md:block" /> Wholesale Market News
             </h1>
             <p className="rt-page-hero-sub max-w-[620px] mb-0 leading-[1.8] text-[1.05rem]">
-              Stay updated with the latest trends, sourcing strategies, and market reports from China's leading wholesale export hub.
+              Stay updated with the latest trends, sourcing strategies, and market reports from China&apos;s leading wholesale export hub.
             </p>
           </div>
         </div>

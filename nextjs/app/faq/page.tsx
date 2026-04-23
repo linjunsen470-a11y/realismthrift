@@ -1,5 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
+import Link from "next/link";
 import { FaqContent } from "@/components/faq/FaqContent";
 
 export const metadata: Metadata = {
@@ -48,7 +49,7 @@ export default function FAQPage() {
         <div className="rt-container relative z-10 text-center md:text-left">
           <div className="rt-fade-in">
             <nav className="rt-breadcrumb mb-5 justify-center md:justify-start">
-              <a href="/">Home</a>
+              <Link href="/">Home</Link>
               <span>›</span>
               <span className="text-white/70">FAQ</span>
             </nav>
