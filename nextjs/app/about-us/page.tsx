@@ -23,12 +23,12 @@ export default function AboutUsPage() {
     <main className="bg-white">
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
-          <Image 
-            src="/img/about-hero.jpg" 
-            alt="RealismThrift Team and Facility in Huizhou China - Professional Wholesale Exporter of Used Brand Fashion" 
-            fill 
-            className="object-cover" 
-            priority 
+          <Image
+            src="/img/about-hero.jpg"
+            alt="RealismThrift Team and Facility in Huizhou China - Professional Wholesale Exporter of Used Brand Fashion"
+            fill
+            className="object-cover"
+            priority
           />
         </div>
         <div className="rt-page-hero-overlay" />
@@ -96,7 +96,7 @@ export default function AboutUsPage() {
               Our Story: <span className="text-brand-red">From Guangzhou to the World</span>
             </h2>
             <p className="text-[0.9375rem] text-[#555] leading-[1.85] mb-5">
-              RealismThrift was founded in Guangzhou, China — the world&apos;s largest hub for used clothing trade. What began as a small sorting operation in {companyStats.foundedYear} has grown into one of China&apos;s most trusted wholesale exporters of second-hand branded fashion.
+              RealismThrift was founded in Guangzhou, China — the world&apos;s largest hub for used clothing trade. What began as a small sorting operation in {companyStats.foundedYear} &nbsp;has grown into one of China&apos;s most trusted wholesale exporters of second-hand branded fashion.
             </p>
             <p className="text-[0.9375rem] text-[#555] leading-[1.85] mb-5">
               Our founders recognized a critical gap in the market: overseas wholesale buyers needed a reliable Chinese supplier who could consistently deliver A-grade branded merchandise with transparent quality standards and professional export documentation. RealismThrift was built to fill that gap.
@@ -110,7 +110,7 @@ export default function AboutUsPage() {
                 <div className="text-[0.75rem] text-[#666] mt-1 uppercase font-semibold">Monthly Processing</div>
               </div>
               <div className="text-center px-6 py-4 bg-[#F5F5F0] rounded-[6px]">
-                <div className="font-montserrat text-[1.5rem] font-extrabold text-brand-red">200+</div>
+                <div className="font-montserrat text-[1.5rem] font-extrabold text-brand-red">80+</div>
                 <div className="text-[0.75rem] text-[#666] mt-1 uppercase font-semibold">Staff Members</div>
               </div>
               <div className="text-center px-6 py-4 bg-[#F5F5F0] rounded-[6px]">
@@ -119,16 +119,16 @@ export default function AboutUsPage() {
               </div>
             </div>
           </div>
-          
+
           <div className="grid grid-cols-2 gap-3.5">
             <div className="relative h-[200px] w-full rounded-[6px] overflow-hidden">
-               <Image src="/images/about/story-factory.jpg" alt="RealismThrift Modern Factory Exterior - China's Trusted Supplier of Bulk Second Hand Clothes" fill className="object-cover" />
+              <Image src="/images/about/story-factory.jpg" alt="RealismThrift Modern Factory Exterior - China's Trusted Supplier of Bulk Second Hand Clothes" fill className="object-cover" />
             </div>
             <div className="relative h-[200px] w-full rounded-[6px] overflow-hidden">
-               <Image src="/images/about/sorting-process.jpg" alt="RealismThrift Professional Sorting Process - Hand-Inspected Branded Used Clothing for Quality Assurance" fill className="object-cover" />
+              <Image src="/images/about/sorting-process.jpg" alt="RealismThrift Professional Sorting Process - Hand-Inspected Branded Used Clothing for Quality Assurance" fill className="object-cover" />
             </div>
             <div className="relative h-[200px] w-full col-span-2 rounded-[6px] overflow-hidden">
-               <Image src="/images/about/packing-process.jpg" alt="RealismThrift Secure Packing Process - Compressed Bales of Second Hand Clothes for Global Shipping" fill className="object-cover" />
+              <Image src="/images/about/packing-process.jpg" alt="RealismThrift Secure Packing Process - Compressed Bales of Second Hand Clothes for Global Shipping" fill className="object-cover" />
             </div>
           </div>
         </div>
@@ -141,27 +141,27 @@ export default function AboutUsPage() {
             <h2 className="font-montserrat text-[1.75rem] font-extrabold text-white mb-3.5">Meet Our Team</h2>
             <div className="rt-section-divider center mb-4" />
             <p className="text-white/65 text-[0.9375rem] max-w-[600px] mx-auto">
-              Our team of 200+ professionals is dedicated to delivering the highest quality used branded merchandise to wholesale buyers worldwide.
+              Our professional team is dedicated to delivering the highest quality used branded merchandise to wholesale buyers worldwide.
             </p>
           </div>
 
           <div className="rounded-[12px] overflow-hidden mb-10 relative">
             <div className="relative w-full h-[400px]">
-              <Image src="/images/about/team-group.jpg" alt="RealismThrift Export Team in Huizhou China - 200+ Professionals Dedicated to Wholesale Quality" fill className="object-cover" />
+              <Image src="/images/about/team-group.jpg" alt="RealismThrift Export Team in Huizhou China - Professionals Dedicated to Wholesale Quality" fill className="object-cover" />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
             <div className="absolute bottom-8 left-8 right-8">
               <div className="font-montserrat text-[1.25rem] font-extrabold text-white mb-2">RealismThrift Export Team — Huizhou, China</div>
-              <div className="text-[0.875rem] text-white/75">200+ dedicated professionals in sorting, quality control, sales, and logistics</div>
+              <div className="text-[0.875rem] text-white/75">Experienced professionals in sorting, quality control, sales, and logistics</div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { img: "sorting-process.jpg", title: "Sorting Team", desc: "80+ sorters with 3+ years experience each. Specialized teams for clothes, shoes, and bags." },
-              { img: "quality-control.jpg", title: "Quality Control", desc: "30+ QC inspectors. Every item passes 6-point inspection before packing." },
-              { img: "sales-team.jpg", title: "Sales Team", desc: "20+ multilingual sales staff. English, French, Spanish, Arabic, Swahili." },
-              { img: "logistics-team.jpg", title: "Logistics Team", desc: "15+ logistics specialists. Handle all export documentation and freight coordination." }
+              { img: "sorting-process.jpg", title: "Sorting Team", desc: "Specialized team for category-based sorting of clothes, shoes, and bags to ensure quality." },
+              { img: "quality-control.jpg", title: "Quality Control", desc: "Dedicated inspectors performing thorough checks on every item to maintain standards." },
+              { img: "sales-team.jpg", title: "Sales Team", desc: "Multilingual sales consultants providing professional export guidance and support." },
+              { img: "logistics-team.jpg", title: "Logistics Team", desc: "Logistics specialists managing export documentation and global freight coordination." }
             ].map(team => (
               <div key={team.title} className="bg-white/5 border border-white/10 rounded-[8px] overflow-hidden">
                 <div className="relative h-[140px] w-full">
@@ -188,34 +188,34 @@ export default function AboutUsPage() {
             <Image src="/images/about/factory-hall.jpg" alt="RealismThrift Main Sorting Hall - 15,000m² State-of-the-Art Used Clothing Facility" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-             <Image src="/images/about/packing-area-premium.png" alt="RealismThrift Packing Area - Professional Baling and Logistics for Wholesale Export" fill className="object-cover" />
+            <Image src="/images/about/packing-area-premium.png" alt="RealismThrift Packing Area - Professional Baling and Logistics for Wholesale Export" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-             <Image src="/images/about/loading-dock-premium.png" alt="RealismThrift Loading Dock - Fast 7-Day Shipment and Container Logistics to Global Ports" fill className="object-cover" />
+            <Image src="/images/about/loading-dock-premium.png" alt="RealismThrift Loading Dock - Fast 7-Day Shipment and Container Logistics to Global Ports" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-             <Image src="/images/about/sorting-process.jpg" alt="RealismThrift Shoe Sorting Station - Grade A Branded Sneaker Quality Control" fill className="object-cover" />
+            <Image src="/images/about/sorting-process.jpg" alt="RealismThrift Shoe Sorting Station - Grade A Branded Sneaker Quality Control" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-             <Image src="/images/about/bag-inspection.jpg" alt="RealismThrift Bag Inspection Room - Verifying Hardware and Material for Designer Handbags" fill className="object-cover" />
+            <Image src="/images/about/bag-inspection.jpg" alt="RealismThrift Bag Inspection Room - Verifying Hardware and Material for Designer Handbags" fill className="object-cover" />
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">
           <div className="bg-brand-light rounded-[6px] p-5">
             <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1.5">Main Sorting Hall</div>
-            <div className="text-[0.75rem] text-[#666] leading-[1.6]">15,000 m² dedicated sorting space with climate control</div>
+            <div className="text-[0.75rem] text-[#666] leading-[1.6]">15,000 m² dedicated sorting space optimized for large-scale operations.</div>
           </div>
           <div className="bg-brand-light rounded-[6px] p-5">
             <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1.5">Packing Area</div>
-            <div className="text-[0.75rem] text-[#666] leading-[1.6]">Hydraulic bale press and automated weighing system</div>
+            <div className="text-[0.75rem] text-[#666] leading-[1.6]">Industrial packing area equipped for secure baling and weight control.</div>
           </div>
           <div className="bg-brand-light rounded-[6px] p-5">
             <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1.5">Loading Dock</div>
-            <div className="text-[0.75rem] text-[#666] leading-[1.6]">4 loading bays for simultaneous container loading</div>
+            <div className="text-[0.75rem] text-[#666] leading-[1.6]">Integrated loading area designed for efficient container dispatch.</div>
           </div>
           <div className="bg-brand-light rounded-[6px] p-5">
-            <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1.5">QC Laboratory</div>
-            <div className="text-[0.75rem] text-[#666] leading-[1.6]">Dedicated quality inspection room with full lighting</div>
+            <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1.5">Quality Control Station</div>
+            <div className="text-[0.75rem] text-[#666] leading-[1.6]">Dedicated inspection station providing professional lighting for accurate grading.</div>
           </div>
         </div>
       </section>
@@ -228,15 +228,15 @@ export default function AboutUsPage() {
             <div className="rt-section-divider center mb-4" />
             <p className="text-[#666] text-[0.9375rem] max-w-[600px] mx-auto">From raw material collection to container loading — every step is managed by our dedicated team.</p>
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-10 relative">
             <div className="hidden lg:block absolute top-[2rem] left-[8.33%] right-[8.33%] h-[2px] bg-gradient-to-r from-brand-red to-brand-gold z-0"></div>
             {[
               { icon: <Building2 className="w-6 h-6 text-white" />, bg: 'bg-brand-red', title: 'Source Collection', desc: 'First-tier cities: Beijing, Shanghai, Guangzhou' },
               { icon: <Search className="w-6 h-6 text-white" />, bg: 'bg-brand-dark', title: 'Initial Sort', desc: 'Separate by type: clothes, shoes, bags' },
               { icon: <CheckCircle2 className="w-6 h-6 text-white" />, bg: 'bg-brand-red', title: 'Quality Grade', desc: 'A/B/C grading by trained inspectors' },
-              { icon: <Brush className="w-6 h-6 text-white" />, bg: 'bg-brand-dark', title: 'Clean & Prep', desc: 'Wash, deodorize, and prepare for packing' },
-              { icon: <Box className="w-6 h-6 text-white" />, bg: 'bg-brand-red', title: 'Pack & Weigh', desc: 'Hydraulic compression, exact weight labeling' },
+              { icon: <Brush className="w-6 h-6 text-white" />, bg: 'bg-brand-dark', title: 'Prep & Quality Check', desc: 'Pre-packing preparation and final quality inspection' },
+              { icon: <Box className="w-6 h-6 text-white" />, bg: 'bg-brand-red', title: 'Pack & Weigh', desc: 'Secure compression and accurate weight labeling' },
               { icon: <Ship className="w-6 h-6 text-white" />, bg: 'bg-brand-dark', title: 'Load & Export', desc: 'Container loading with full documentation' },
             ].map(step => (
               <div key={step.title} className="text-center px-2 relative z-10 w-full group">
@@ -264,7 +264,7 @@ export default function AboutUsPage() {
                 { title: 'Export License', desc: 'Official Chinese export license for used textile products.' },
                 { title: '12+ Years', desc: `Established ${companyStats.foundedYear}. Over a decade of trusted wholesale operations.` },
                 { title: `${companyStats.buyersCount} Buyers`, desc: `Active wholesale buyers across ${companyStats.countriesCount} countries worldwide.` },
-                { title: 'Quality Inspection', desc: 'Every item passes 6-point inspection before packing to ensure A-Grade quality.' },
+                { title: 'Quality Inspection', desc: 'Every item passes rigorous quality inspection before packing to ensure A-Grade quality.' },
                 { title: 'Secure Payment', desc: 'Standard 30% deposit and 70% balance payment terms via T/T or Western Union.' },
                 { title: 'Fast Loading', desc: 'Container loading in as fast as 7 days after order confirmation.' }
               ].map(cert => (
@@ -275,26 +275,26 @@ export default function AboutUsPage() {
               ))}
             </div>
           </div>
-          
+
           <div>
             <div className="rt-subsection-heading">
               <h2>What Our Buyers Say</h2>
               <div className="rt-section-divider" />
             </div>
             {[
-              { 
-                name: 'Emmanuel Osei', 
-                country: 'Ghana', 
+              {
+                name: 'Emmanuel Osei',
+                country: 'Ghana',
                 quote: "We've been importing summer clothes from RealismThrift for 3 years. The sorting is very clean compared to other factories we've tried. Very few 'waste' items in the bales, which really helps our profit margins."
               },
-              { 
-                name: 'Fatima Al-Hassan', 
-                country: 'Nigeria', 
+              {
+                name: 'Fatima Al-Hassan',
+                country: 'Nigeria',
                 quote: "The used shoes and bags are always in high demand. I appreciate that they send photos of the actual container loading process. Their documentation is professional, making customs clearance in Lagos much smoother."
               },
-              { 
-                name: 'Nguyen Van Minh', 
-                country: 'Vietnam', 
+              {
+                name: 'Nguyen Van Minh',
+                country: 'Vietnam',
                 quote: "Consistent A-grade quality. Mostly brand name items with very little wear. It's hard to find a supplier in China who stays this reliable month after month. Good communication from the sales team."
               }
             ].map(buyer => (
@@ -317,12 +317,12 @@ export default function AboutUsPage() {
           <h2 className="font-montserrat text-[1.75rem] font-extrabold text-white mb-4">Ready to Partner with RealismThrift?</h2>
           <p className="text-white/70 text-[0.9375rem] leading-[1.7] mb-8">Join 1,200+ wholesale buyers worldwide. Get a free price quotation within 12 hours.</p>
           <div className="flex justify-center gap-4 flex-wrap">
-             <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-colors">
-               Contact Us Now
-             </Link>
-             <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-[#1da851] transition-colors">
-               WhatsApp
-             </a>
+            <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-colors">
+              Contact Us Now
+            </Link>
+            <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-[#1da851] transition-colors">
+              WhatsApp
+            </a>
           </div>
         </div>
       </section>

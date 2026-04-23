@@ -2,7 +2,7 @@ import { Product, SiteFooter, SiteHeader } from "@/types";
 
 export const companyStats = {
   foundedYear: 2012,
-  staffCount: "200+",
+  staffCount: "80+",
   countriesCount: "100+",
   facilitySize: "15,000 m²",
   monthlyCapacity: "500 tonnes",
