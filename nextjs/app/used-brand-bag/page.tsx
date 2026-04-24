@@ -102,8 +102,8 @@ export default function UsedBrandBagPage() {
       </section>
 
       {/* STATS BAR — gold/brown brand color */}
-      <div className="bg-[#8B6914] py-[0.875rem]">
-        <div className="max-w-[1280px] mx-auto px-6 flex gap-8 flex-wrap justify-center">
+      <div className="bg-[#8B6914] py-4">
+        <div className="max-w-[1280px] mx-auto px-8 flex flex-wrap gap-6 justify-around items-center">
           {[
             { num: "20+", label: "Bag Brands" },
             { num: "A-Grade", label: "Quality Standard" },
@@ -112,8 +112,8 @@ export default function UsedBrandBagPage() {
             { num: "Cleaned", label: "Before Packing" },
           ].map((stat) => (
             <div key={stat.num} className="text-center text-white">
-              <div className="font-montserrat font-extrabold text-[1.1rem]">{stat.num}</div>
-              <div className="text-[0.7rem] opacity-85 tracking-[0.05em]">{stat.label}</div>
+              <div className="font-montserrat font-black text-[1.25rem]">{stat.num}</div>
+              <div className="text-[0.65rem] opacity-85 uppercase tracking-[0.07em] mt-[0.15rem]">{stat.label}</div>
             </div>
           ))}
         </div>

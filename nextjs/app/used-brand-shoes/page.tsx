@@ -102,8 +102,8 @@ export default function UsedBrandShoesPage() {
       </section>
 
       {/* KEY STATS BAR */}
-      <div className="bg-brand-dark py-3.5">
-        <div className="max-w-[1280px] mx-auto px-6 flex gap-8 flex-wrap justify-center">
+      <div className="bg-brand-dark py-4">
+        <div className="max-w-[1280px] mx-auto px-8 flex flex-wrap gap-6 justify-around items-center">
           {[
             { num: "30+", label: "Shoe Brands" },
             { num: "A-Grade", label: "Quality Standard" },
@@ -112,8 +112,8 @@ export default function UsedBrandShoesPage() {
             { num: "Cleaned", label: "Before Packing" }
           ].map((stat) => (
             <div key={stat.num} className="text-center text-white">
-              <div className="font-montserrat text-[1.1rem] font-extrabold text-brand-gold">{stat.num}</div>
-              <div className="text-[0.7rem] opacity-70 tracking-[0.05em]">{stat.label}</div>
+              <div className="font-montserrat font-black text-[1.25rem] text-brand-gold">{stat.num}</div>
+              <div className="text-[0.65rem] opacity-85 uppercase tracking-[0.07em] mt-[0.15rem]">{stat.label}</div>
             </div>
           ))}
         </div>
