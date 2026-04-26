@@ -7,7 +7,7 @@ export default function NotFound() {
     <div className="rt-not-found">
       <section className="rt-hero min-h-[85vh]">
         <Image
-          src="/img/sorting-facility.webp"
+          src="/images/about/sorting-process.webp"
           alt="RealismThrift sorting facility"
           fill
           priority

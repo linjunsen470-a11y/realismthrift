@@ -178,7 +178,7 @@ export default async function Home() {
       <JsonLd data={faqSchema} />
       <section className="rt-hero" id="home">
         <Image
-          src="/img/hero-bg.png"
+          src="/images/about/hero-bg.webp"
           alt="RealismThrift Export Co., Ltd - Leading China Wholesale Supplier of Premium Second Hand Branded Clothes, Shoes, and Bags Factory" 
           fill
           priority

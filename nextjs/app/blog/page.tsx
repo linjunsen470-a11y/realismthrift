@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "RealismThrift Blog | Wholesale Industry Market News",
     description: "Expert insights into the global wholesale used clothing market. Sourcing tips, container loading guides, and market trends.",
-    images: ['/img/blog-hero-wholesale.webp'],
+    images: ['/img/wholesale-inventory.webp'],
   },
   alternates: {
     canonical: "/blog",
@@ -24,7 +24,7 @@ export default async function BlogPage() {
   return (
     <div>
       <section
-        className="rt-page-hero rt-blog-hero rt-blog-hero-index bg-[url('/img/blog-hero-wholesale.webp')]"
+        className="rt-page-hero rt-blog-hero rt-blog-hero-index bg-[url('/img/wholesale-inventory.webp')]"
       >
         <div className="rt-page-hero-overlay" />
         <div className="rt-container relative z-10 text-center md:text-left">
