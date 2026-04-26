@@ -26,7 +26,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
           <div>
             <div className="rt-footer-logo">
               <Image
-                src="/img/rt-icon.png"
+                src="/img/logo.png"
                 alt="RealismThrift Logo"
                 width={56}
                 height={56}

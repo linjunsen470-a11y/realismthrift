@@ -10,7 +10,7 @@ export const metadata = {
   openGraph: {
     title: "Contact RealismThrift | Wholesale Sales & Support",
     description: "Ready to start your wholesale order? Contact our multilingual sales team for direct factory pricing and shipping estimates.",
-    images: ['/images/reconstructed/1578575437130-527eed3abbec.jpg'],
+    images: ['/images/hero/contact-hero.jpg'],
   },
   alternates: {
     canonical: "/contact-us",
@@ -24,7 +24,7 @@ export default function ContactUsPage() {
       <section className="relative py-16 md:py-24 bg-[#1A1A1A] overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/images/reconstructed/1578575437130-527eed3abbec.jpg" 
+            src="/images/hero/contact-hero.jpg" 
             alt="Contact background" 
             fill 
             className="object-cover opacity-[0.08]" 

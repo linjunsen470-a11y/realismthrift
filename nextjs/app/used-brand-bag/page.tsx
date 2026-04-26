@@ -40,7 +40,7 @@ export const metadata = {
   openGraph: {
     title: "Used Brand Bags Wholesale | China's Leading Exporter",
     description: "Premium second-hand branded bags. 6-point quality check. Individually wrapped for protection. Global shipping.",
-    images: ['/images/v2/bags/loewe-puzzle-bag-assorted-colors-display.webp'],
+    images: ['/images/bags/loewe-puzzle-bag-assorted-colors-display.webp'],
   },
   alternates: {
     canonical: "/used-brand-bag",
@@ -51,7 +51,7 @@ export default function UsedBrandBagPage() {
   const productSchema = getProductSchema({
     name: "Used Brand Bags Wholesale",
     description: "China's premium wholesale exporter of second-hand branded handbags, backpacks, and luggage. Coach, Michael Kors, Kate Spade, and more.",
-    image: "https://www.realismthrift.com/images/v2/bags/loewe-puzzle-bag-assorted-colors-display.webp",
+    image: "https://www.realismthrift.com/images/bags/loewe-puzzle-bag-assorted-colors-display.webp",
     url: "https://www.realismthrift.com/used-brand-bag"
   });
 
@@ -65,7 +65,7 @@ export default function UsedBrandBagPage() {
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/images/v2/bags/loewe-puzzle-bag-assorted-colors-display.webp" 
+            src="/images/bags/loewe-puzzle-bag-assorted-colors-display.webp" 
             alt="RealismThrift Designer Bag Warehouse - Premium Wholesale Used Branded Handbags and Backpacks Export from China" 
             fill 
             className="object-cover" 
@@ -154,12 +154,12 @@ export default function UsedBrandBagPage() {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[1.25rem]">
               {[
-                { title: 'Used Brand Handbags', img: '/images/v2/bags/abags.webp', desc: 'Coach, MK, Kate Spade', spec: '38kg/sack (~50 pcs)' },
-                { title: 'Used Brand Backpacks', img: '/images/v2/bags/bbags.webp', desc: 'Herschel, JanSport, NF', spec: '35kg/sack (~40 pcs)' },
-                { title: 'Used Brand Shoulder Bags', img: '/images/v2/bags/luxury-handbags-assorted-collection-display-1.webp', desc: 'Longchamp, Tory Burch', spec: '38kg/sack (~45 pcs)' },
-                { title: 'Used Brand Crossbody Bags', img: '/images/v2/bags/louis-vuitton-essential-trunk-black-monogram.webp', desc: 'Calvin Klein, DKNY', spec: '35kg/sack (~55 pcs)' },
-                { title: 'Used Brand Luggage', img: '/images/v2/bags/wholesale-luxury-bags-assorted-brands-pile.webp', desc: 'Samsonite, Tumi', spec: '40kg/sack (~15 pcs)' },
-                { title: 'Mixed Brand Bags', img: '/images/v2/bags/second-hand-designer-bags-warehouse-inventory-pile.webp', desc: 'All brands mixed', spec: '38kg/sack (~50 pcs)' },
+                { title: 'Used Brand Handbags', img: '/images/bags/abags.webp', desc: 'Coach, MK, Kate Spade', spec: '38kg/sack (~50 pcs)' },
+                { title: 'Used Brand Backpacks', img: '/images/bags/bbags.webp', desc: 'Herschel, JanSport, NF', spec: '35kg/sack (~40 pcs)' },
+                { title: 'Used Brand Shoulder Bags', img: '/images/bags/luxury-handbags-assorted-collection-display-1.webp', desc: 'Longchamp, Tory Burch', spec: '38kg/sack (~45 pcs)' },
+                { title: 'Used Brand Crossbody Bags', img: '/images/bags/louis-vuitton-essential-trunk-black-monogram.webp', desc: 'Calvin Klein, DKNY', spec: '35kg/sack (~55 pcs)' },
+                { title: 'Used Brand Luggage', img: '/images/bags/wholesale-luxury-bags-assorted-brands-pile.webp', desc: 'Samsonite, Tumi', spec: '40kg/sack (~15 pcs)' },
+                { title: 'Mixed Brand Bags', img: '/images/bags/second-hand-designer-bags-warehouse-inventory-pile.webp', desc: 'All brands mixed', spec: '38kg/sack (~50 pcs)' },
               ].map(prod => (
                 <div key={prod.title} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
                   <div className="relative overflow-hidden h-[180px]">
@@ -200,25 +200,25 @@ export default function UsedBrandBagPage() {
                 {
                   step: '01',
                   title: 'Initial Sorting by Type',
-                  img: '/images/v2/bags/mixed-designer-handbags-wholesale-batch-display.webp',
+                  img: '/images/bags/mixed-designer-handbags-wholesale-batch-display.webp',
                   desc: 'Incoming bags are sorted by type: handbags, backpacks, shoulder bags, crossbody bags, and luggage. Each type follows a different inspection protocol. Brand identification happens simultaneously during this stage.'
                 },
                 {
                   step: '02',
                   title: 'Hardware Inspection',
-                  img: '/images/v2/bags/designer-bags-collection-display-dior-chanel-gucci.webp',
+                  img: '/images/bags/designer-bags-collection-display-dior-chanel-gucci.webp',
                   desc: 'Every zipper is opened and closed 3 times. All clasps, buckles, magnetic closures, and rings are tested for functionality. Any bag with broken or stuck hardware is immediately downgraded. Chain straps are checked link by link.'
                 },
                 {
                   step: '03',
                   title: 'Interior & Exterior Cleaning',
-                  img: '/images/v2/bags/premium-handbags-collection-mixed-brands-display.webp',
+                  img: '/images/bags/premium-handbags-collection-mixed-brands-display.webp',
                   desc: 'Bags are cleaned inside and out using appropriate methods for each material type (leather, canvas, nylon, synthetic). Stubborn stains are treated. Bags with permanent staining or mold are rejected. Interiors are deodorized.'
                 },
                 {
                   step: '04',
                   title: 'Structural Integrity Check',
-                  img: '/images/v2/bags/designer-bags-collection-dior-mcm-coach-celine.webp',
+                  img: '/images/bags/designer-bags-collection-dior-mcm-coach-celine.webp',
                   desc: 'Straps are tested for strength and attachment points. Lining integrity is checked — no peeling, tearing, or separation allowed. The bag must hold its shape when loaded. Base corners are checked for wear-through.'
                 },
               ].map(process => (
@@ -239,7 +239,7 @@ export default function UsedBrandBagPage() {
               {/* STEP 05 — full width */}
               <div className="sm:col-span-2 bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] grid grid-cols-1 md:grid-cols-[300px_1fr]">
                 <div className="relative h-[200px] md:h-auto">
-                  <Image src="/images/v2/bags/gucci-handbags-collection-marmont-dionysus-ophidia.webp" alt="RealismThrift Final QC and Packing - Branded Second-Hand Bags Ready for Professional Export Shipment" fill className="object-cover" />
+                  <Image src="/images/bags/gucci-handbags-collection-marmont-dionysus-ophidia.webp" alt="RealismThrift Final QC and Packing - Branded Second-Hand Bags Ready for Professional Export Shipment" fill className="object-cover" />
                 </div>
                 <div className="p-[1.25rem]">
                   <div className="flex items-center gap-[0.625rem] mb-[0.625rem]">

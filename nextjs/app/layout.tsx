@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     description: 'Leading wholesale supplier of second-hand clothes, shoes and bags from China. Export to 100+ countries with A-Grade quality.',
     images: [
       {
-        url: '/img/rt-icon.png',
+        url: '/img/logo.png',
         width: 800,
         height: 600,
         alt: 'RealismThrift Logo',
@@ -52,12 +52,12 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'RealismThrift Export Co., Ltd | #1 Used Clothes & Shoes Supplier in China',
     description: 'Leading wholesale supplier of second-hand clothes, shoes and bags from China. Export to 100+ countries with A-Grade quality.',
-    images: ['/img/rt-icon.png'],
+    images: ['/img/logo.png'],
   },
   icons: {
-    icon: '/img/rt-icon.png',
-    shortcut: '/img/rt-icon.png',
-    apple: '/img/rt-icon.png',
+    icon: '/img/logo.png',
+    shortcut: '/img/logo.png',
+    apple: '/img/logo.png',
   },
 };
 
@@ -65,7 +65,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { isEnabled: isDraftModeEnabled } = await draftMode();
 
   return (
-    <html lang="en" className={`${montserrat.variable} ${openSans.variable}`}>
+    <html lang="en" className={`${montserrat.variable} ${openSans.variable}`} data-scroll-behavior="smooth">
       <body className="antialiased font-sans bg-white text-[#333]">
         <Analytics />
         <div className="flex min-h-screen flex-col">

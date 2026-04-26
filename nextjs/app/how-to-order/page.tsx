@@ -208,7 +208,7 @@ export default function HowToOrderPage() {
           </div>
           <div className="relative h-[260px] md:h-auto md:min-h-[280px]">
              <Image
-               src="/images/reconstructed/1494412574643-ff11b0a5c1c3.jpg"
+               src="/images/hero/how-to-order-hero.jpg"
                alt="RealismThrift Ordering Step 7 - Global Shipment Logistics and Professional After-Sales Support for Wholesale Buyers"
                fill
                sizes="(min-width: 768px) 50vw, 100vw"

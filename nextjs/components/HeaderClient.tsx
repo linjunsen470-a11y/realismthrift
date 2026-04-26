@@ -42,7 +42,7 @@ export function HeaderClient({ data }: HeaderClientProps) {
           <Link href="/" className="rt-logo-link" onClick={closeMenu}>
             <span className="rt-logo-combo">
               <Image
-                src="/img/rt-icon.png"
+                src="/img/logo.png"
                 alt="RealismThrift Logo"
                 width={48}
                 height={48}

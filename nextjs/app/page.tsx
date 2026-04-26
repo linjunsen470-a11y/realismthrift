@@ -283,6 +283,7 @@ export default async function Home() {
                   height={260}
                   sizes="(min-width: 1100px) 25vw, (min-width: 768px) 50vw, 100vw"
                   className="rt-product-card-image"
+                  style={{ height: "auto" }}
                 />
                 <span className="rt-product-card-badge">{product.category}</span>
                 <span className="rt-product-card-overlay">
@@ -314,6 +315,7 @@ export default async function Home() {
                 height={560}
                 sizes="(min-width: 900px) 50vw, 100vw"
                 className="rt-about-image"
+                style={{ height: "auto" }}
               />
               <div className="rt-about-image-badge">15,000m² Modern Facility</div>
               <div className="rt-about-deco rt-about-deco-dark" />

@@ -11,7 +11,7 @@ export const metadata = {
   openGraph: {
     title: "About RealismThrift | Professional Wholesale Exporter",
     description: "Learn about China's top wholesale supplier of premium second-hand goods. High-quality A-Grade sorting and global export experience.",
-    images: ['/images/about/hero-bg.jpg'],
+    images: ['/images/about/hero-bg.webp'],
   },
   alternates: {
     canonical: "/about-us",
@@ -24,7 +24,7 @@ export default function AboutUsPage() {
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/img/about-hero.jpg"
+            src="/images/about/hero-bg.webp"
             alt="RealismThrift Team and Facility in Huizhou China - Professional Wholesale Exporter of Used Brand Fashion"
             fill
             className="object-cover"
@@ -125,7 +125,7 @@ export default function AboutUsPage() {
               <Image src="/images/about/story-factory.jpg" alt="RealismThrift Modern Factory Exterior - China's Trusted Supplier of Bulk Second Hand Clothes" fill className="object-cover" />
             </div>
             <div className="relative h-[200px] w-full rounded-[6px] overflow-hidden">
-              <Image src="/images/about/sorting-process.jpg" alt="RealismThrift Professional Sorting Process - Hand-Inspected Branded Used Clothing for Quality Assurance" fill className="object-cover" />
+              <Image src="/images/about/team-sorting.webp" alt="RealismThrift Professional Sorting Process - Hand-Inspected Branded Used Clothing for Quality Assurance" fill className="object-cover" />
             </div>
             <div className="relative h-[200px] w-full col-span-2 rounded-[6px] overflow-hidden">
               <Image src="/images/about/packing-process.jpg" alt="RealismThrift Secure Packing Process - Compressed Bales of Second Hand Clothes for Global Shipping" fill className="object-cover" />
@@ -147,7 +147,7 @@ export default function AboutUsPage() {
 
           <div className="rounded-[12px] overflow-hidden mb-10 relative">
             <div className="relative w-full h-[400px]">
-              <Image src="/images/about/team-group.jpg" alt="RealismThrift Export Team in Huizhou China - Professionals Dedicated to Wholesale Quality" fill className="object-cover" />
+              <Image src="/images/about/team-group.webp" alt="RealismThrift Export Team in Huizhou China - Professionals Dedicated to Wholesale Quality" fill className="object-cover" />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
             <div className="absolute bottom-8 left-8 right-8">
@@ -158,10 +158,10 @@ export default function AboutUsPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { img: "sorting-process.jpg", title: "Sorting Team", desc: "Specialized team for category-based sorting of clothes, shoes, and bags to ensure quality." },
+              { img: "team-sorting.webp", title: "Sorting Team", desc: "Specialized team for category-based sorting of clothes, shoes, and bags to ensure quality." },
               { img: "quality-control.jpg", title: "Quality Control", desc: "Dedicated inspectors performing thorough checks on every item to maintain standards." },
-              { img: "sales-team.jpg", title: "Sales Team", desc: "Multilingual sales consultants providing professional export guidance and support." },
-              { img: "logistics-team.jpg", title: "Logistics Team", desc: "Logistics specialists managing export documentation and global freight coordination." }
+              { img: "team-sales.webp", title: "Sales Team", desc: "Multilingual sales consultants providing professional export guidance and support." },
+              { img: "team-logistics.webp", title: "Logistics Team", desc: "Logistics specialists managing export documentation and global freight coordination." }
             ].map(team => (
               <div key={team.title} className="bg-white/5 border border-white/10 rounded-[8px] overflow-hidden">
                 <div className="relative h-[140px] w-full">
@@ -185,7 +185,7 @@ export default function AboutUsPage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 grid-rows-2 gap-3.5 md:h-[400px]">
           <div className="relative rounded-[8px] overflow-hidden lg:col-span-2 row-span-2 min-h-[200px]">
-            <Image src="/images/about/factory-hall.jpg" alt="RealismThrift Main Sorting Hall - 15,000m² State-of-the-Art Used Clothing Facility" fill className="object-cover" />
+            <Image src="/images/about/factory-hall.webp" alt="RealismThrift Main Sorting Hall - 15,000m² State-of-the-Art Used Clothing Facility" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
             <Image src="/images/about/packing-area-premium.png" alt="RealismThrift Packing Area - Professional Baling and Logistics for Wholesale Export" fill className="object-cover" />
@@ -194,7 +194,7 @@ export default function AboutUsPage() {
             <Image src="/images/about/loading-dock-premium.png" alt="RealismThrift Loading Dock - Fast 7-Day Shipment and Container Logistics to Global Ports" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-            <Image src="/images/about/sorting-process.jpg" alt="RealismThrift Shoe Sorting Station - Grade A Branded Sneaker Quality Control" fill className="object-cover" />
+            <Image src="/images/about/sorting-process.webp" alt="RealismThrift Shoe Sorting Station - Grade A Branded Sneaker Quality Control" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
             <Image src="/images/about/bag-inspection.jpg" alt="RealismThrift Bag Inspection Room - Verifying Hardware and Material for Designer Handbags" fill className="object-cover" />
