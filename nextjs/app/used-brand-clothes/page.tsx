@@ -10,12 +10,12 @@ import { XCircle, CheckCircle2, Factory, Package, Ship, Zap, ShoppingBag, Footpr
 import { JsonLd, getProductSchema, getFaqSchema } from "@/components/JsonLd";
 
 const clothesStandards = [
-  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Stains or Dirt', desc: 'No dirty patches or discoloration on fabric surface', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Tears or Holes', desc: 'No cuts, rips, or openings anywhere on the garment', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Heavy Fading', desc: 'Colors remain vibrant, not washed out or bleached', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Pilling', desc: 'No fuzzy balls or fiber lumps on the fabric surface', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Heavy Wear', desc: 'No signs of excessive use or structural damage', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Missing Closures', desc: 'All buttons, zippers, and snaps fully functional', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Major Stains Rejected', desc: 'Items with obvious dirty patches or permanent discoloration are removed', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Major Tears Rejected', desc: 'Garments with large cuts, holes, or structural damage are removed', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Heavy Fading Rejected', desc: 'Washed-out or bleached garments are separated from higher grades', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Heavy Pilling Rejected', desc: 'Excessive fabric pilling is downgraded or removed during sorting', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Heavy Wear Rejected', desc: 'Items with excessive use are not packed as higher-grade stock', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Closure Issues Checked', desc: 'Buttons, zippers, and snaps are checked and graded accordingly', isNegative: true },
   { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Brand Label Intact', desc: 'Original brand label clearly visible and attached', isNegative: false },
   { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Clean & Odor-Free', desc: 'Washed and deodorized before packing', isNegative: false },
   { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Photo Verified', desc: 'Pre-shipment photos sent to buyer for approval', isNegative: false }
@@ -37,10 +37,10 @@ const clothesFaqs = [
 
 export const metadata = {
   title: "Used Brand Clothes Wholesale | A-Grade Sorted Supplier",
-  description: `China's top exporter of sorted, graded second-hand branded clothing. Nike, Adidas, H&M, Zara and 200+ brands. Strict 5-step sorting. MOQ 100 bales. Ships to ${companyStats.countriesCount} countries.`,
+  description: `Sorted and graded second-hand branded clothing from China. Nike, Adidas, H&M, Zara and 200+ brands. 5-step sorting. MOQ 100 bales. Export support available.`,
   openGraph: {
-    title: "Used Brand Clothes Wholesale | China's Leading Supplier",
-    description: "Premium A-Grade sorted second-hand branded clothes. nike, Adidas, and more. Global export to 100+ countries.",
+    title: "Used Brand Clothes Wholesale | China Export Supplier",
+    description: "Sorted second-hand branded clothes. Nike, Adidas, and more. Wholesale packing and export support from China.",
     images: ['/images/clothes/assorted-jeans-sweatpants-lee-fila-stack.webp'],
   },
   alternates: {
@@ -51,7 +51,7 @@ export const metadata = {
 export default function UsedBrandClothesPage() {
   const productSchema = getProductSchema({
     name: "Used Brand Clothes Wholesale",
-    description: "Premium A-Grade sorted second-hand branded clothes. Nike, Adidas, and more. Global export from China.",
+    description: "Sorted second-hand branded clothes. Nike, Adidas, and more. Global export support from China.",
     image: "https://www.realismthrift.com/images/clothes/assorted-jeans-sweatpants-lee-fila-stack.webp",
     url: "https://www.realismthrift.com/used-brand-clothes"
   });
@@ -69,7 +69,7 @@ export default function UsedBrandClothesPage() {
         <div className="absolute inset-0 z-0">
           <Image 
             src="/images/clothes/assorted-jeans-sweatpants-lee-fila-stack.webp" 
-            alt="RealismThrift Sorting Facility - Premium Wholesale Used Brand Clothes Inventory for Global B2B Export from China Factory" 
+            alt="RealismThrift Sorting Facility - Wholesale Used Brand Clothes Inventory for Global B2B Export from China Factory" 
             fill 
             priority
             className="object-cover object-center"
@@ -90,7 +90,7 @@ export default function UsedBrandClothesPage() {
               Used Brand Clothes<br /><span className="text-[#F0B429]">Wholesale Supplier</span>
             </h1>
             <p className="text-[0.9375rem] text-white/80 font-open-sans max-w-[500px] leading-[1.75] m-0 mb-[1.75rem]">
-              China&apos;s top exporter of sorted, graded second-hand branded clothing. Nike, Adidas, H&M, Zara and 200+ brands. Strict 5-step sorting. MOQ 100 bales. Ships to {companyStats.countriesCount} countries.
+              Sorted and graded second-hand branded clothing from China. Nike, Adidas, H&M, Zara and 200+ brands. 5-step sorting. MOQ 100 bales. Export support available.
             </p>
             <div className="flex gap-[0.875rem] flex-wrap">
                <a href="#inquiry" className="bg-[#F0B429] text-[#1A1A1A] font-montserrat font-extrabold text-[0.875rem] px-6 md:px-8 py-3 md:py-[0.875rem] rounded-[3px] no-underline tracking-[0.03em] hover:bg-[#d4a017] transition-colors whitespace-nowrap">GET PRICE NOW →</a>
@@ -130,7 +130,7 @@ export default function UsedBrandClothesPage() {
               <div className="w-[4px] h-[26px] bg-[#C0392B] rounded-[2px] shrink-0" />
               <h2 className="font-montserrat font-extrabold text-[1.4rem] text-[#1A1A1A] m-0">What We Supply</h2>
             </div>
-            <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0 mb-4">RealismThrift Export is a direct-source wholesale supplier of used branded clothing based in Huizhou, China. We operate a 15,000m² sorting facility with 200+ trained staff who process and grade second-hand garments from first-tier Chinese cities daily. Every bale we export has been through our standardized 5-step sorting and quality-control process — ensuring you receive consistent, accurately graded merchandise every time.</p>
+            <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0 mb-4">RealismThrift Export is a wholesale supplier of used branded clothing based in Huizhou, China. We operate a 15,000m² sorting facility with trained staff who process and grade second-hand garments from major Chinese cities. Each bale is packed through our standardized 5-step sorting and quality-control process.</p>
             <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0">We supply wholesale buyers, thrift store chains, market traders, and NGOs across Africa, Southeast Asia, the Middle East, Latin America, and Europe. Whether you need a 100-bale trial order or a full 40HQ container, we handle everything from sorting to door-to-door delivery.</p>
           </section>
 
@@ -167,7 +167,7 @@ export default function UsedBrandClothesPage() {
               <div className="w-[4px] h-[26px] bg-[#C0392B] rounded-[2px] shrink-0" />
               <h2 className="font-montserrat font-extrabold text-[1.4rem] text-[#1A1A1A] m-0">Our 5-Step Sorting Process</h2>
             </div>
-            <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0 mb-[2.5rem]">This is what separates RealismThrift Export from ordinary second-hand dealers. We don&apos;t just ship mixed bags — we deliver professionally sorted, consistently graded merchandise that your customers will trust. Every single bale passes through all five steps before it leaves our facility.</p>
+            <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0 mb-[2.5rem]">Our sorting process is designed to make each bale easier to evaluate before purchase. Bales are grouped by product type, grade, weight, and market use before leaving our facility.</p>
 
             {/* STEP 1 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem] items-center mb-[3rem]">
@@ -247,7 +247,7 @@ export default function UsedBrandClothesPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-[0.75rem]">
                   <div className="border-2 border-[#27AE60] rounded-[4px] p-[0.875rem] text-center">
                     <div className="font-montserrat font-extrabold text-[0.875rem] text-[#27AE60] mb-[0.4rem]">Grade A</div>
-                    <p className="text-[0.75rem] text-[#666] font-open-sans leading-[1.6] m-0">Like-new. No stains, tears or fading. Minimal wear. Premium resale quality.</p>
+                    <p className="text-[0.75rem] text-[#666] font-open-sans leading-[1.6] m-0">Higher-grade resale stock. Minor wear may appear, while major stains, tears, or heavy fading are rejected.</p>
                   </div>
                   <div className="border-2 border-[#F0B429] rounded-[4px] p-[0.875rem] text-center">
                     <div className="font-montserrat font-extrabold text-[0.875rem] text-[#F0B429] mb-[0.4rem]">Grade B</div>
@@ -260,7 +260,7 @@ export default function UsedBrandClothesPage() {
                 </div>
               </div>
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.14)] relative h-[300px]">
-                <Image src="/images/clothes/mixed-fila-puma-tshirts-polo-shirts.webp" alt="RealismThrift Grading Standards Step 3 - Precise A-Grade Selection for High-Quality Wholesale Clothing Batches from China" fill className="object-cover" />
+                <Image src="/images/clothes/mixed-fila-puma-tshirts-polo-shirts.webp" alt="RealismThrift Grading Standards Step 3 - Sorted Wholesale Clothing Batches from China" fill className="object-cover" />
               </div>
             </div>
 
@@ -272,7 +272,7 @@ export default function UsedBrandClothesPage() {
               <div>
                 <div className="text-[0.7rem] text-[#F0B429] font-montserrat font-bold tracking-[0.08em] uppercase mb-[0.3rem]">Step 04</div>
                 <h3 className="font-montserrat font-extrabold text-[1.1rem] text-white m-0 mb-[0.75rem]">Cleaning, Deodorizing & Steam Pressing</h3>
-                <p className="font-open-sans text-[0.9rem] text-white/70 leading-[1.8] m-0 mb-[1.25rem]">All Grade A garments undergo industrial cleaning and deodorizing before packing. Steam pressing restores the garment&apos;s original shape. This step ensures your customers receive merchandise that looks and smells fresh — a critical factor for retail resale success.</p>
+                <p className="font-open-sans text-[0.9rem] text-white/70 leading-[1.8] m-0 mb-[1.25rem]">Grade A garments go through cleaning and deodorizing before packing. Steam pressing helps restore shape and improves presentation for resale.</p>
                 <div className="flex flex-wrap gap-[0.625rem]">
                   {[
                     'Industrial steam cleaning',
@@ -336,7 +336,7 @@ export default function UsedBrandClothesPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem] items-center">
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12)] relative h-[320px]">
-                <Image src="/images/clothes/adidas-sport-shorts-pink-white-stripes.webp" alt="RealismThrift Typical Bale Composition - High-Quality Sorted Second-Hand Sportswear for Global Retail Resale Markets" fill className="object-cover" />
+                <Image src="/images/clothes/adidas-sport-shorts-pink-white-stripes.webp" alt="RealismThrift Typical Bale Composition - Sorted Second-Hand Sportswear for Retail Resale Markets" fill className="object-cover" />
               </div>
               <div>
                 <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1.25rem]">A typical Grade A Mixed Brand bale (45kg) contains approximately 120–180 individual garments across multiple categories and brands. The exact composition varies by batch, but our standard mix ratio ensures a balanced assortment that appeals to a wide customer base.</p>
@@ -386,7 +386,7 @@ export default function UsedBrandClothesPage() {
               ].map(prod => (
                 <div key={prod.title} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
                   <div className="relative h-[170px]">
-                    <Image src={prod.img} alt={`RealismThrift Wholesale ${prod.title} - Premium A-Grade Bulk Second-Hand Clothing Inventory from China`} fill className="object-cover" />
+                    <Image src={prod.img} alt={`RealismThrift Wholesale ${prod.title} - Sorted Bulk Second-Hand Clothing Inventory from China`} fill className="object-cover" />
                     <div className="absolute top-2 left-2 bg-[#C0392B] text-white text-[0.6rem] font-bold px-2 py-1 rounded-[2px] font-montserrat">A-GRADE</div>
                   </div>
                   <div className="p-[0.875rem]">

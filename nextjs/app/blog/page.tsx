@@ -41,7 +41,7 @@ export default async function BlogPage() {
               Used Clothes, Shoes & Bags <br className="hidden md:block" /> Wholesale Market News
             </h1>
             <p className="rt-page-hero-sub max-w-[620px] mb-0 leading-[1.8] text-[1.05rem]">
-              Stay updated with the latest trends, sourcing strategies, and market reports from China&apos;s leading wholesale export hub.
+              Stay updated with used goods trends, sourcing strategies, and market notes from China&apos;s wholesale export sector.
             </p>
           </div>
         </div>

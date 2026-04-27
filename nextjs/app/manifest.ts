@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'RealismThrift Export Co., Ltd',
     short_name: 'RealismThrift',
-    description: 'Leading wholesale supplier of second-hand clothes, shoes and bags from China. Export to 100+ countries with A-Grade quality.',
+    description: 'Wholesale supplier of sorted second-hand clothes, shoes and bags from China.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

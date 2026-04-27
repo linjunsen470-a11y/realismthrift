@@ -24,7 +24,7 @@ export default function HowToOrderPage() {
         <div className="absolute inset-0 z-0">
           <Image 
             src="/img/order/order-hero.webp" 
-            alt="RealismThrift Ordering Guide - Professional 7-Step Process to Wholesale Premium Second Hand Branded Fashion from China Factory" 
+            alt="RealismThrift Ordering Guide - 7-Step Process to Wholesale Second Hand Branded Fashion from China Factory" 
             fill 
             className="object-cover" 
             priority 
@@ -132,7 +132,7 @@ export default function HowToOrderPage() {
         {/* Step 4 */}
         <div className="grid grid-cols-1 md:grid-cols-2 border border-[#eee] border-b-0">
           <div className="relative min-h-[280px] order-2 md:order-1">
-             <Image src="/img/order/step-quality.webp" alt="RealismThrift Order Step 4 - Selecting Premium A-Grade or Quality B-Grade Branded Second Hand Wholesale Merchandise" fill className="object-cover" />
+             <Image src="/img/order/step-quality.webp" alt="RealismThrift Order Step 4 - Selecting A-Grade or B-Grade Branded Second Hand Wholesale Merchandise" fill className="object-cover" />
           </div>
           <div className="bg-[#F5F5F0] p-12 flex flex-col justify-center order-1 md:order-2">
             <div className="flex items-center gap-4 mb-5">
@@ -140,10 +140,10 @@ export default function HowToOrderPage() {
               <h3 className="font-montserrat text-[1.2rem] font-extrabold text-brand-dark m-0">Confirm Quality Grade</h3>
             </div>
             <p className="text-[0.9375rem] text-[#555] leading-[1.8] mb-6">
-              We offer A-grade and B-grade products. A-grade items are the highest quality — no stains, no tears, no broken hardware. B-grade items may have minor imperfections but remain fully wearable. All grades are clearly labeled and priced accordingly. We send you sample photos before you confirm.
+              We offer A-grade and B-grade products. A-grade items are selected for better resale condition, while minor signs of previous use may still appear. B-grade items may have visible imperfections but remain wearable or usable. All grades are clearly labeled and priced accordingly. We send you sample photos before you confirm.
             </p>
             <div className="flex gap-2.5 flex-wrap">
-              <span className="bg-white border border-[#e0e0e0] text-[#333] px-3 py-1.5 rounded-sm text-[0.75rem] font-montserrat font-semibold">A-Grade Premium</span>
+              <span className="bg-white border border-[#e0e0e0] text-[#333] px-3 py-1.5 rounded-sm text-[0.75rem] font-montserrat font-semibold">A-Grade Selected</span>
               <span className="bg-white border border-[#e0e0e0] text-[#333] px-3 py-1.5 rounded-sm text-[0.75rem] font-montserrat font-semibold">B-Grade Value</span>
               <span className="bg-white border border-[#e0e0e0] text-[#333] px-3 py-1.5 rounded-sm text-[0.75rem] font-montserrat font-semibold">Photo Verification</span>
             </div>
@@ -407,7 +407,7 @@ export default function HowToOrderPage() {
                 </div>
                 <div>
                   <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1">FCL (Full Container Load)</div>
-                  <div className="text-[0.8rem] text-[#666] leading-relaxed">20ft or 40ft containers. Best price per kg. Suitable for large orders. We handle all export documentation.</div>
+                  <div className="text-[0.8rem] text-[#666] leading-relaxed">20ft or 40ft containers. Lower cost per kg for large orders. We handle export documentation.</div>
                 </div>
               </div>
               <div className="bg-white rounded-[6px] p-5 mb-3.5 flex gap-4 items-start shadow-sm border border-transparent hover:border-brand-gold/20 transition-all group">
@@ -471,7 +471,7 @@ export default function HowToOrderPage() {
               },
               {
                 q: "What quality grades do you offer?",
-                a: "We primarily offer A-grade (highest quality, no visible defects) and B-grade (minor imperfections, fully wearable). All grades are clearly labeled and priced accordingly."
+                a: "We primarily offer A-grade (selected resale condition, minor wear may exist) and B-grade (visible imperfections, still wearable or usable). All grades are clearly labeled and priced accordingly."
               },
               {
                 q: "Do you handle customs clearance?",

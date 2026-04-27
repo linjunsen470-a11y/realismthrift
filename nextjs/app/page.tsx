@@ -30,10 +30,10 @@ import { JsonLd, getOrganizationSchema, getFaqSchema } from "@/components/JsonLd
 
 export const metadata: Metadata = {
   title: 'Global Wholesale Supplier of Used Clothes, Shoes & Bags',
-  description: 'RealismThrift is China\'s leading exporter of premium second-hand clothes, shoes, and bags. High-quality A-Grade sorting, competitive prices, and fast global shipping to 100+ countries.',
+  description: 'RealismThrift supplies sorted second-hand clothes, shoes, and bags from China with wholesale packing, grading, and export support.',
   openGraph: {
     title: 'RealismThrift | Global Wholesale Supplier of Used Clothes, Shoes & Bags',
-    description: 'China\'s leading exporter of premium second-hand clothes, shoes, and bags. High-quality A-Grade sorting and fast global shipping.',
+    description: 'Supplier of sorted second-hand clothes, shoes, and bags from China with grading and export support.',
   },
   alternates: {
     canonical: '/',
@@ -61,10 +61,10 @@ const heroTags = [
 ];
 
 const trustItems = [
-  { label: "A-Grade Quality Guarantee", icon: CheckCircle2 },
+  { label: "Clearly Graded Stock", icon: CheckCircle2 },
   { label: "12+ Years Experience", icon: Zap },
   { label: "Fast 7-Day Loading", icon: Ship },
-  { label: "80%+ Reorder Rate", icon: BarChart3 },
+  { label: "Repeat Buyer Support", icon: BarChart3 },
   { label: `${companyStats.countriesCount} Countries`, icon: Globe2 },
 ];
 
@@ -180,7 +180,7 @@ export default async function Home() {
       <section className="rt-hero" id="home">
         <Image
           src="/images/hero-main.webp"
-          alt="RealismThrift Export Co., Ltd - Leading China Wholesale Supplier of Premium Second Hand Branded Clothes, Shoes, and Bags Factory" 
+          alt="RealismThrift Export Co., Ltd - China Wholesale Supplier of Sorted Second Hand Branded Clothes, Shoes, and Bags"
           fill
           priority
           sizes="100vw"
@@ -189,12 +189,12 @@ export default async function Home() {
         <div className="rt-hero-overlay" />
         <div className="rt-container">
           <div className="rt-hero-content rt-fade-in">
-            <div className="rt-hero-badge">Premium Second Hand Fashion Exporter in China</div>
+            <div className="rt-hero-badge">Second Hand Fashion Exporter in China</div>
             <h1 className="rt-hero-title">
               Direct Second Hand Brand Clothes, Shoes & Bags Factory
             </h1>
             <p className="rt-hero-subtitle">
-              Wholesale to 100+ Countries | A-Grade Quality | Fast Delivery
+              Wholesale Packing | Graded Stock | Export Support
             </p>
             <div className="rt-hero-tags">
               {heroTags.map(({ label, icon: Icon }) => (
@@ -222,8 +222,8 @@ export default async function Home() {
                 <span className="rt-hero-stat-label">Countries Served</span>
               </div>
               <div className="rt-hero-stat">
-                <span className="rt-hero-stat-value">{companyStats.reorderRate}</span>
-                <span className="rt-hero-stat-label">Reorder Rate</span>
+                <span className="rt-hero-stat-value">Repeat</span>
+                <span className="rt-hero-stat-label">Buyer Support</span>
               </div>
               <div className="rt-hero-stat">
                 <span className="rt-hero-stat-value">A-Grade</span>
@@ -254,7 +254,7 @@ export default async function Home() {
             <h2 className="rt-section-title">SECOND HAND PRODUCT CATEGORIES</h2>
             <div className="rt-section-divider center" />
             <p className="rt-section-copy">
-              Over 200 categories with A-Grade sorting. Our items are carefully selected for being fashionable, bright, and clean.
+              Over 200 categories with practical grading. Stock is sorted by item type, brand level, condition, and market use.
             </p>
           </div>
 
@@ -277,7 +277,7 @@ export default async function Home() {
               >
                 <Image
                   src={product.image}
-                  alt={product.alt || `RealismThrift Wholesale ${product.title} - High-Quality A-Grade Bulk Inventory from China Sorting Facility`}
+                  alt={product.alt || `RealismThrift Wholesale ${product.title} - Sorted Bulk Inventory from China Sorting Facility`}
                   width={400}
                   height={260}
                   sizes="(min-width: 1100px) 25vw, (min-width: 768px) 50vw, 100vw"
@@ -329,10 +329,9 @@ export default async function Home() {
                 Your Most Reliable Partner in Used Clothing Export
               </p>
               <p className="rt-about-text">
-                RealismThrift Export Co., Ltd is a highly trusted partner in global used fashion recycling.
-                We help businesses in Africa, Southeast Asia, the Middle East, and the
-                Americas get the best second-hand clothes, shoes, and bags at wholesale
-                prices.
+                RealismThrift Export Co., Ltd supplies used fashion products for wholesale
+                buyers in Africa, Southeast Asia, the Middle East, and the Americas. We
+                focus on sorted stock, clear packing information, and export support.
               </p>
               <p className="rt-about-text">
                 We operate from a {companyStats.facilitySize} square-meter facility with {companyStats.staffCount} dedicated staff
@@ -341,8 +340,8 @@ export default async function Home() {
               </p>
               <div className="rt-about-stats">
                 <div className="rt-stat-box">
-                  <span className="rt-stat-value">{companyStats.reorderRate}</span>
-                  <span className="rt-stat-label">Reorder Rate</span>
+                  <span className="rt-stat-value">Repeat</span>
+                  <span className="rt-stat-label">Buyer Support</span>
                 </div>
                 <div className="rt-stat-box">
                   <span className="rt-stat-value">{companyStats.countriesCount}</span>
@@ -419,7 +418,7 @@ export default async function Home() {
           <div className="rt-partners-count">
             <span>
               <Globe2 size={16} strokeWidth={2.2} />
-              100+ Countries Served Worldwide
+              Export Support for Global Wholesale Buyers
             </span>
           </div>
         </div>
@@ -536,11 +535,11 @@ export default async function Home() {
           <div className="rt-seo-copy-inner">
             <h2>About RealismThrift Export Co., Ltd</h2>
             <p>
-              RealismThrift Export Co., Ltd is a leading
+              RealismThrift Export Co., Ltd is a China-based
               {" "}
               <strong>second hand clothes wholesale supplier</strong>
               {" "}
-              based in Huizhou, China. We specialize in exporting high-quality used
+              based in Huizhou, China. We specialize in exporting sorted used
               clothes, used shoes, and used bags to wholesalers and importers worldwide.
               With over 12 years of experience in the
               {" "}

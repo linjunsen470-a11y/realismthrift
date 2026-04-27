@@ -26,10 +26,10 @@ const openSans = Open_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.realismthrift.com'),
   title: {
-    default: 'RealismThrift Export Co., Ltd | #1 Used Clothes & Shoes Supplier in China',
+    default: 'RealismThrift Export Co., Ltd | Used Clothes, Shoes & Bags Supplier in China',
     template: '%s | RealismThrift'
   },
-  description: 'Leading wholesale supplier of second-hand clothes, shoes and bags from China. Export to 100+ countries with A-Grade quality.',
+  description: 'Wholesale supplier of sorted second-hand clothes, shoes and bags from China. Export support for used fashion buyers worldwide.',
   keywords: ['used clothes wholesale', 'second hand clothes china', 'used shoes supplier', 'used bags exporter', 'wholesale used clothing africa'],
   authors: [{ name: 'RealismThrift' }],
   openGraph: {
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://www.realismthrift.com',
     siteName: 'RealismThrift Export',
-    title: 'RealismThrift Export Co., Ltd | #1 Used Clothes & Shoes Supplier in China',
-    description: 'Leading wholesale supplier of second-hand clothes, shoes and bags from China. Export to 100+ countries with A-Grade quality.',
+    title: 'RealismThrift Export Co., Ltd | Used Clothes, Shoes & Bags Supplier in China',
+    description: 'Wholesale supplier of sorted second-hand clothes, shoes and bags from China. Export support for used fashion buyers worldwide.',
     images: [
       {
         url: '/img/logo.webp',
@@ -50,8 +50,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RealismThrift Export Co., Ltd | #1 Used Clothes & Shoes Supplier in China',
-    description: 'Leading wholesale supplier of second-hand clothes, shoes and bags from China. Export to 100+ countries with A-Grade quality.',
+    title: 'RealismThrift Export Co., Ltd | Used Clothes, Shoes & Bags Supplier in China',
+    description: 'Wholesale supplier of sorted second-hand clothes, shoes and bags from China. Export support for used fashion buyers worldwide.',
     images: ['/img/logo.webp'],
   },
   icons: {

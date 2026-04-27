@@ -6,11 +6,11 @@ import { companyStats } from "@/data/siteData";
 import { Building2, Search, CheckCircle2, Brush, Box, Ship, Globe2 } from "lucide-react";
 
 export const metadata = {
-  title: "About Us | Leading Used Clothes & Shoes Exporter in China",
+  title: "About Us | Used Clothes & Shoes Export Supplier in China",
   description: "RealismThrift Export Co., Ltd is a professional wholesale supplier of second-hand clothes, shoes, and bags based in Huizhou, China. 15,000m² facility, ISO certified, and GRS compliant.",
   openGraph: {
     title: "About RealismThrift | Professional Wholesale Exporter",
-    description: "Learn about China's top wholesale supplier of premium second-hand goods. High-quality A-Grade sorting and global export experience.",
+    description: "Learn about RealismThrift's sorting facility, grading process, and export support for second-hand goods.",
     images: ['/images/about/hero-bg.webp'],
   },
   alternates: {
@@ -25,7 +25,7 @@ export default function AboutUsPage() {
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/hero-main.webp"
-            alt="RealismThrift Professional Team and 15,000m² Facility in Huizhou China - Leading Wholesale Exporter of Used Brand Fashion"
+            alt="RealismThrift Professional Team and Sorting Facility in Huizhou China"
             fill
             className="object-cover"
             priority
@@ -46,7 +46,7 @@ export default function AboutUsPage() {
               About <span className="text-brand-gold">RealismThrift</span>
             </h1>
             <p className="rt-page-hero-sub max-w-[700px] mb-9 leading-[1.8] text-[1.0625rem]">
-              A premier wholesale exporter of used brand clothes, shoes, and bags. Over 10 years of experience. {companyStats.facilitySize} sorting facility. Trusted by {companyStats.buyersCount} wholesale buyers in {companyStats.countriesCount} countries.
+              A wholesale exporter of used brand clothes, shoes, and bags with over 10 years of experience, a {companyStats.facilitySize} sorting facility, and export support for international buyers.
             </p>
             <div className="flex gap-4 justify-center md:justify-start">
               <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-6 md:px-10 py-3 md:py-4 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-all shadow-[0_10px_20px_rgba(240,180,41,0.2)] whitespace-nowrap">
@@ -73,16 +73,16 @@ export default function AboutUsPage() {
               <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">Sorting Facility</div>
             </div>
             <div className="text-white">
-              <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">{companyStats.buyersCount}</div>
-              <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">Wholesale Buyers</div>
+              <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">B2B</div>
+              <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">Wholesale Supply</div>
             </div>
             <div className="text-white">
               <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">{companyStats.countriesCount}</div>
               <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">Export Countries</div>
             </div>
             <div className="text-white">
-              <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">80%</div>
-              <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">Repeat Order Rate</div>
+              <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">Repeat</div>
+              <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">Buyer Support</div>
             </div>
           </div>
         </div>
@@ -96,10 +96,10 @@ export default function AboutUsPage() {
               Our Story: <span className="text-brand-red">From Guangzhou to the World</span>
             </h2>
             <p className="text-[0.9375rem] text-[#555] leading-[1.85] mb-5">
-              RealismThrift was founded in Guangzhou, China — the world&apos;s largest hub for used clothing trade. What began as a small sorting operation in {companyStats.foundedYear} &nbsp;has grown into one of China&apos;s most trusted wholesale exporters of second-hand branded fashion.
+              RealismThrift started in Guangzhou, China, a major hub for used clothing trade. What began as a small sorting operation in {companyStats.foundedYear} &nbsp;has grown into a Huizhou-based exporter serving wholesale buyers in multiple markets.
             </p>
             <p className="text-[0.9375rem] text-[#555] leading-[1.85] mb-5">
-              Our founders recognized a critical gap in the market: overseas wholesale buyers needed a reliable Chinese supplier who could consistently deliver A-grade branded merchandise with transparent quality standards and professional export documentation. RealismThrift was built to fill that gap.
+              The business expanded as overseas buyers asked for clearer grading, more consistent packing, and export documentation support. RealismThrift was built around those practical requirements.
             </p>
             <p className="text-[0.9375rem] text-[#555] leading-[1.85] mb-7">
               Today, our {companyStats.facilitySize} facility in Huizhou processes over {companyStats.monthlyCapacity} of used branded clothing, shoes, and bags every month. Our {companyStats.staffCount} trained staff sort, grade, clean, and pack merchandise destined for wholesale markets across Africa, Southeast Asia, the Middle East, Europe, and the Americas.
@@ -122,7 +122,7 @@ export default function AboutUsPage() {
 
           <div className="grid grid-cols-2 gap-3.5">
             <div className="relative h-[200px] w-full rounded-[6px] overflow-hidden">
-              <Image src="/images/about/story-1.webp" alt="RealismThrift Modern Facility Exterior - China's Trusted Wholesale Supplier of Bulk Second Hand Clothes and Shoes" fill className="object-cover" />
+              <Image src="/images/about/story-1.webp" alt="RealismThrift Modern Facility Exterior - Wholesale Supplier of Bulk Second Hand Clothes and Shoes" fill className="object-cover" />
             </div>
             <div className="relative h-[200px] w-full rounded-[6px] overflow-hidden">
               <Image src="/images/about/story-2.webp" alt="RealismThrift Precision Sorting Process - Expert Hand-Inspected Branded Used Clothing for A-Grade Quality Export" fill className="object-cover" />
@@ -141,7 +141,7 @@ export default function AboutUsPage() {
             <h2 className="font-montserrat text-[1.75rem] font-extrabold text-white mb-3.5">Meet Our Team</h2>
             <div className="rt-section-divider center mb-4" />
             <p className="text-white/65 text-[0.9375rem] max-w-[600px] mx-auto">
-              Our professional team is dedicated to delivering the highest quality used branded merchandise to wholesale buyers worldwide.
+              Our team focuses on sorting, grading, packing, and export coordination for used branded merchandise.
             </p>
           </div>
 
@@ -149,7 +149,7 @@ export default function AboutUsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               { img: "team-sorting-new.webp", title: "Sorting Team", desc: "Specialized team for category-based sorting of clothes, shoes, and bags to ensure quality." },
-              { img: "qc-inspector-premium.webp", title: "Quality Control", desc: "Dedicated inspectors performing thorough checks on every item to maintain standards." },
+              { img: "qc-inspector-premium.webp", title: "Quality Control", desc: "Dedicated inspectors check batches against the agreed grading standard." },
               { img: "team-sales-new.webp", title: "Sales Team", desc: "Multilingual sales consultants providing professional export guidance and support." },
               { img: "team-logistics-new.webp", title: "Logistics Team", desc: "Logistics specialists managing export documentation and global freight coordination." }
             ].map(team => (
@@ -252,9 +252,9 @@ export default function AboutUsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 { title: 'Export License', desc: 'Official Chinese export license for used textile products.' },
-                { title: '12+ Years', desc: `Established ${companyStats.foundedYear}. Over a decade of trusted wholesale operations.` },
-                { title: `${companyStats.buyersCount} Buyers`, desc: `Active wholesale buyers across ${companyStats.countriesCount} countries worldwide.` },
-                { title: 'Quality Inspection', desc: 'Every item passes rigorous quality inspection before packing to ensure A-Grade quality.' },
+                { title: '12+ Years', desc: `Established ${companyStats.foundedYear}. Over a decade of wholesale export operations.` },
+                { title: 'Wholesale Buyers', desc: `Export support for used goods buyers across multiple regions.` },
+                { title: 'Quality Inspection', desc: 'Batches are inspected before packing and labeled by product type, grade, and weight.' },
                 { title: 'Secure Payment', desc: 'Standard 30% deposit and 70% balance payment terms via T/T or Western Union.' },
                 { title: 'Fast Loading', desc: 'Container loading in as fast as 7 days after order confirmation.' }
               ].map(cert => (
@@ -305,7 +305,7 @@ export default function AboutUsPage() {
       <section className="py-16 text-center bg-gradient-to-br from-brand-dark to-[#2a1515]">
         <div className="max-w-[700px] mx-auto px-6">
           <h2 className="font-montserrat text-[1.75rem] font-extrabold text-white mb-4">Ready to Partner with RealismThrift?</h2>
-          <p className="text-white/70 text-[0.9375rem] leading-[1.7] mb-8">Join {companyStats.buyersCount} wholesale buyers worldwide. Get a free price quotation within 12 hours.</p>
+          <p className="text-white/70 text-[0.9375rem] leading-[1.7] mb-8">Contact our team for a wholesale quotation, product photos, and shipping guidance.</p>
           <div className="flex justify-center gap-4 flex-wrap">
             <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-colors">
               Contact Us Now

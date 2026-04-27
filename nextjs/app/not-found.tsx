@@ -43,7 +43,7 @@ export default function NotFound() {
               <Link href="/used-brand-clothes" className="group p-8 bg-white/5 backdrop-blur-md border border-white/10 rounded-sm hover:bg-white/10 transition-all text-left">
                 <Shirt className="text-brand-gold mb-4 group-hover:scale-110 transition-transform" size={28} />
                 <h3 className="text-white font-extrabold mb-2 font-montserrat text-lg">USED CLOTHES</h3>
-                <p className="text-white/60 text-sm">Premium A-Grade selection from first-tier cities.</p>
+                <p className="text-white/60 text-sm">Sorted selection from major Chinese cities.</p>
               </Link>
               <Link href="/used-brand-shoes" className="group p-8 bg-white/5 backdrop-blur-md border border-white/10 rounded-sm hover:bg-white/10 transition-all text-left">
                 <ShoppingBag className="text-brand-gold mb-4 group-hover:scale-110 transition-transform" size={28} />

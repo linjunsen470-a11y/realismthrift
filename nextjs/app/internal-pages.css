@@ -7,7 +7,8 @@
   background-position: center;
   background-size: cover;
   padding-bottom: 8rem;
-  overflow: visible; /* Allow long titles to be visible */
+  overflow: visible;
+  /* Allow long titles to be visible */
 }
 
 .rt-blog-hero-index {
@@ -18,12 +19,10 @@
 }
 
 .rt-blog-hero .rt-page-hero-overlay {
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0.6) 50%,
-    rgba(26, 26, 26, 0.95) 100%
-  );
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(26, 26, 26, 0.95) 100%);
 }
 
 .rt-blog-title {
@@ -188,6 +187,23 @@
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
 }
 
+.rt-shoes-inquiry-card {
+  background: #fff;
+  border-color: #ecece6;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.rt-shoes-inquiry-card .rt-form-submit,
+.rt-shoes-inquiry-card a {
+  box-shadow: none;
+}
+
+.rt-shoes-inquiry-card .rt-sidebar-card-title {
+  border-radius: 9px 9px 0 0;
+}
+
 .rt-sidebar-card-header {
   padding: 1.25rem 1.5rem;
   background: #1a1a1a;
@@ -266,6 +282,12 @@
   background: var(--color-brand-red-dark);
   transform: translateY(-2px);
   box-shadow: 0 15px 30px rgba(192, 57, 43, 0.35);
+}
+
+.rt-shoes-inquiry-card .rt-inquiry-form.is-sidebar .rt-form-submit,
+.rt-shoes-inquiry-card .rt-inquiry-form.is-sidebar .rt-form-submit:hover,
+.rt-shoes-inquiry-card a {
+  box-shadow: none;
 }
 
 .rt-related-post-list {

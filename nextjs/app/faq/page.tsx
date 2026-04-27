@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Find answers to frequently asked questions about wholesale used clothes, shoes, and bags from RealismThrift. Learn about MOQ, shipping, quality grades, and payment terms.",
   openGraph: {
     title: "RealismThrift FAQ | Wholesale Used Goods Help Center",
-    description: "Everything you need to know about sourcing premium second-hand goods from China. Reliable A-Grade quality and global export.",
+    description: "Everything you need to know about sourcing sorted second-hand goods from China, including grading, packing, payment, and export.",
   },
   alternates: {
     canonical: "/faq",
@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     question: "How do you ensure the quality of the used goods?",
-    answer: "We have a strictly controlled 3-stage sorting process. Every bale is inspected visually for holes, stains, and excessive wear. Only Grade A and Cream Grade items are included in our premium collections.",
+    answer: "We use a 3-stage sorting process. Bales are inspected visually for holes, stains, and excessive wear, then packed according to the agreed grade.",
   },
   {
     question: "Which countries do you ship to?",
@@ -65,7 +65,7 @@ export default function FAQPage() {
               Frequently Asked <span className="text-brand-gold">Questions</span>
             </h1>
             <p className="rt-page-hero-sub max-w-[620px] mb-0 leading-relaxed text-[1.05rem]">
-              Everything you need to know about sourcing premium used goods from RealismThrift.
+              Everything you need to know about sourcing sorted used goods from RealismThrift.
             </p>
           </div>
         </div>

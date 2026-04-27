@@ -10,19 +10,19 @@ import { XCircle, CheckCircle2, ShieldCheck, Sparkles, Globe2, Camera, Footprint
 import { JsonLd, getProductSchema, getFaqSchema } from "@/components/JsonLd";
 
 const bagStandards = [
-  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Broken Zippers', desc: 'All zippers open and close smoothly without snagging', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Torn Straps', desc: 'Handles and straps fully intact, no fraying or tears', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Heavy Stains', desc: 'Interior and exterior cleaned, no permanent discoloration', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Broken Hardware', desc: 'All buckles, clasps, and rings fully functional', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Peeling Lining', desc: 'Interior lining intact, no separation or peeling', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'No Structural Damage', desc: 'Bag holds its shape, no crushing or deformation', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Zippers Checked', desc: 'Broken or stuck zippers are downgraded or removed', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Straps Checked', desc: 'Torn straps or weak attachment points are rejected from higher grades', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Heavy Stains Rejected', desc: 'Obvious permanent stains or mold are removed during sorting', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Hardware Checked', desc: 'Buckles, clasps, and rings are checked and graded accordingly', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Lining Checked', desc: 'Peeling, tearing, or separation is checked before packing', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Shape Checked', desc: 'Bags with major crushing or deformation are separated by grade', isNegative: true },
   { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Complete Accessories', desc: 'Dust bags, straps, and original accessories included where available', isNegative: false },
   { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Brand Label Visible', desc: 'Original brand label or embossing clearly present', isNegative: false },
   { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Individually Wrapped', desc: 'Each bag wrapped in plastic before packing', isNegative: false }
 ];
 
 const bagFeatures = [
-  { icon: <ShieldCheck className="w-6 h-6 text-brand-gold" />, title: '6-Pt Hardware Check', desc: 'Every zipper, clasp, and ring is tested 3 times for 100% functionality.' },
+  { icon: <ShieldCheck className="w-6 h-6 text-brand-gold" />, title: '6-Pt Hardware Check', desc: 'Zippers, clasps, and rings are tested before grading and packing.' },
   { icon: <Sparkles className="w-6 h-6 text-brand-gold" />, title: 'Deep Interior Cleaning', desc: 'Specialized cleaning for leather, canvas and nylon. Deodorized interiors.' },
   { icon: <Globe2 className="w-6 h-6 text-brand-gold" />, title: 'Worldwide Export', desc: `12+ years experience in global logistics and exporting to ${companyStats.countriesCount} countries.` },
   { icon: <Camera className="w-6 h-6 text-brand-gold" />, title: 'Photo Verification', desc: 'Live photos and videos of your specific order sent before shipment.' }
@@ -30,16 +30,16 @@ const bagFeatures = [
 
 const bagFaqs = [
   { q: 'What is the minimum order quantity for bags?', a: 'Minimum order is 100 pieces for sorted brand categories, or 200 pieces for mixed lots.' },
-  { q: 'Can I pick specific models or sizes?', a: 'You can specify categories (Handbags, Backpacks, etc.). For specific high-demand models, we offer premium sorting at custom rates.' },
+  { q: 'Can I pick specific models or sizes?', a: 'You can specify categories (Handbags, Backpacks, etc.). For specific high-demand models, we offer custom sorting at custom rates.' },
   { q: 'How are the bags packed?', a: 'Each bag is individually wrapped in plastic to prevent scratching, then packed in woven sacks or cartons.' }
 ];
 
 export const metadata = {
   title: "Used Brand Bags Wholesale | Coach, MK, Kate Spade Supplier",
-  description: `China's premium wholesale exporter of second-hand branded handbags, backpacks, and luggage. Coach, Michael Kors, Kate Spade, and more. 6-point inspection, individually wrapped. Exporting to ${companyStats.countriesCount} countries.`,
+  description: `Wholesale exporter of sorted second-hand branded handbags, backpacks, and luggage from China. Coach, Michael Kors, Kate Spade, and more. 6-point inspection and export packing.`,
   openGraph: {
-    title: "Used Brand Bags Wholesale | China's Leading Exporter",
-    description: "Premium second-hand branded bags. 6-point quality check. Individually wrapped for protection. Global shipping.",
+    title: "Used Brand Bags Wholesale | China Export Supplier",
+    description: "Sorted second-hand branded bags. 6-point quality check. Individually wrapped for protection. Global shipping support.",
     images: ['/images/bags/loewe-puzzle-bag-assorted-colors-display.webp'],
   },
   alternates: {
@@ -50,7 +50,7 @@ export const metadata = {
 export default function UsedBrandBagPage() {
   const productSchema = getProductSchema({
     name: "Used Brand Bags Wholesale",
-    description: "China's premium wholesale exporter of second-hand branded handbags, backpacks, and luggage. Coach, Michael Kors, Kate Spade, and more.",
+    description: "Wholesale exporter of sorted second-hand branded handbags, backpacks, and luggage from China.",
     image: "https://www.realismthrift.com/images/bags/loewe-puzzle-bag-assorted-colors-display.webp",
     url: "https://www.realismthrift.com/used-brand-bag"
   });
@@ -66,7 +66,7 @@ export default function UsedBrandBagPage() {
         <div className="absolute inset-0 z-0">
           <Image 
             src="/images/bags/loewe-puzzle-bag-assorted-colors-display.webp" 
-            alt="RealismThrift Designer Bag Warehouse - Industrial Wholesale Supplier of Premium Used Branded Handbags and Backpacks from China" 
+            alt="RealismThrift Designer Bag Warehouse - Wholesale Supplier of Sorted Used Branded Handbags and Backpacks from China" 
             fill 
             className="object-cover" 
             priority 
@@ -87,7 +87,7 @@ export default function UsedBrandBagPage() {
               Used Brand Bags <span className="text-brand-gold">Wholesale</span>
             </h1>
             <p className="rt-page-hero-sub max-w-[620px] mb-9 leading-[1.8] text-[1.05rem]">
-              Premium second-hand branded handbags, backpacks, and luggage — Coach, Michael Kors, Kate Spade, and 20+ international brands.
+              Sorted second-hand branded handbags, backpacks, and luggage — Coach, Michael Kors, Kate Spade, and 20+ international brands.
             </p>
             <div className="flex gap-4 justify-center md:justify-start">
               <a href="#inquiry" className="bg-brand-gold text-brand-dark px-6 md:px-10 py-3 md:py-4 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-all shadow-[0_10px_20px_rgba(240,180,41,0.2)] whitespace-nowrap">
@@ -219,7 +219,7 @@ export default function UsedBrandBagPage() {
                   step: '04',
                   title: 'Structural Integrity Check',
                   img: '/images/bags/designer-bags-collection-dior-mcm-coach-celine.webp',
-                  desc: 'Straps are tested for strength and attachment points. Lining integrity is checked — no peeling, tearing, or separation allowed. The bag must hold its shape when loaded. Base corners are checked for wear-through.'
+                  desc: 'Straps are tested for strength and attachment points. Lining integrity is checked, and peeling, tearing, or separation is graded accordingly. Shape and base corners are checked for resale use.'
                 },
               ].map(process => (
                 <div key={process.step} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">

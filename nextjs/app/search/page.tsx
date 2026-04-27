@@ -47,7 +47,7 @@ function SearchHero({
       <div className="absolute inset-0 z-0">
         <Image
           src="/img/wholesale-inventory.webp"
-          alt="RealismThrift Wholesale Inventory - Global Supplier of Premium Second Hand Branded Clothes, Shoes, and Bags from China"
+          alt="RealismThrift Wholesale Inventory - Supplier of Sorted Second Hand Branded Clothes, Shoes, and Bags from China"
           fill
           priority
           className="object-cover"

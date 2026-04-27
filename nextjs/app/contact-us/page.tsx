@@ -6,7 +6,7 @@ import { Mail, Phone, MapPin, Building2, Clock, MessageCircle, Send, Globe } fro
 
 export const metadata = {
   title: "Contact Us | Get Wholesale Quotes for Used Clothes & Shoes",
-  description: `Get in touch with RealismThrift for wholesale inquiries, price quotes, and export information. Professional sales support in English, French, Spanish, and Arabic. 12-hour response guarantee.`,
+  description: `Get in touch with RealismThrift for wholesale inquiries, price quotes, and export information. Sales support in English, French, Spanish, and Arabic during business hours.`,
   openGraph: {
     title: "Contact RealismThrift | Wholesale Sales & Support",
     description: "Ready to start your wholesale order? Contact our multilingual sales team for direct factory pricing and shipping estimates.",

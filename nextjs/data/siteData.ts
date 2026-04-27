@@ -6,8 +6,8 @@ export const companyStats = {
   countriesCount: "100+",
   facilitySize: "15,000 m²",
   monthlyCapacity: "200 tonnes",
-  reorderRate: "80%+",
-  buyersCount: "1,000+",
+  reorderRate: "Repeat",
+  buyersCount: "Wholesale",
 };
 
 export const siteHeader: SiteHeader = {
@@ -32,7 +32,7 @@ export const siteFooter: SiteFooter = {
   brand: {
     logo: "RealismThrift",
     description:
-      `RealismThrift Export Co., Ltd is a leading wholesale supplier of second-hand clothes, shoes and bags from China. Export to ${companyStats.countriesCount} countries with A-Grade quality.`,
+      "RealismThrift Export Co., Ltd supplies sorted second-hand clothes, shoes and bags from China for wholesale buyers and importers.",
     address: "Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China",
     phone: "+86 133 6748 1710",
     email: "sales@realismthrift.com",
@@ -85,7 +85,7 @@ export const productsData: Product[] = [
     title: "Used Brand Clothes",
     category: "WHOLESALE",
     image: "/images/clothes/adidas-kelme-athletic-shorts-pants-pile.webp",
-    alt: "RealismThrift Wholesale Used Brand Clothes - Premium A-Grade Sorted Second Hand Clothing Bulk Supply from China",
+    alt: "RealismThrift Wholesale Used Brand Clothes - Sorted Second Hand Clothing Bulk Supply from China",
     href: "/used-brand-clothes",
   },
   {
@@ -109,29 +109,29 @@ export const productsData: Product[] = [
     title: "Ukay Quality Bag",
     category: "WHOLESALE",
     image: "/img/cat-ukay.webp",
-    alt: "RealismThrift Ukay Quality Bags - Premium Grade Sorted Used Bags for Wholesale Export to Global Markets",
+    alt: "RealismThrift Ukay Quality Bags - Sorted Used Bags for Wholesale Export Markets",
     href: "/#contact",
   },
 ];
 
 export const features = [
   {
-    title: `${companyStats.reorderRate} Reorder Rate`,
+    title: "Repeat Buyer Support",
     icon: "bar-chart-3",
     description:
-      `Over ${companyStats.reorderRate} of our customers reorder because our stable quality helps them build a great reputation in their local markets.`,
+      "We support returning buyers with stable sorting standards, order photos, and practical loading advice.",
   },
   {
-    title: "Premium Raw Materials",
+    title: "Urban Sourcing Network",
     icon: "award",
     description:
-      "We source from first-tier cities including Beijing, Shanghai, Guangzhou, and Chengdu for the highest quality used items.",
+      "We source from collection networks in major Chinese cities including Beijing, Shanghai, Guangzhou, and Chengdu.",
   },
   {
     title: "Strict Quality Control",
     icon: "shield-check",
     description:
-      "Trained quality inspectors conduct random inspections on each batch to ensure A-Grade standard throughout.",
+      "Trained quality inspectors conduct batch checks so buyers receive clearly graded merchandise.",
   },
   {
     title: "Fast Loading & Delivery",
