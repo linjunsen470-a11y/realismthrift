@@ -178,7 +178,7 @@ export default async function Home() {
       <JsonLd data={faqSchema} />
       <section className="rt-hero" id="home">
         <Image
-          src="/images/about/hero-bg.webp"
+          src="/images/hero-main.webp"
           alt="RealismThrift Export Co., Ltd - Leading China Wholesale Supplier of Premium Second Hand Branded Clothes, Shoes, and Bags Factory" 
           fill
           priority
@@ -278,7 +278,7 @@ export default async function Home() {
               >
                 <Image
                   src={product.image}
-                  alt={`RealismThrift Wholesale ${product.title} - High-Quality A-Grade Bulk Inventory from China Sorting Facility`}
+                  alt={product.alt || `RealismThrift Wholesale ${product.title} - High-Quality A-Grade Bulk Inventory from China Sorting Facility`}
                   width={400}
                   height={260}
                   sizes="(min-width: 1100px) 25vw, (min-width: 768px) 50vw, 100vw"

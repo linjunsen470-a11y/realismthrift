@@ -10,7 +10,7 @@ Founded in **2012**, we have spent over a decade perfecting the art of "First-Pi
 ## 🏗️ Facility & Capacity
 Our operations are powered by a state-of-the-art infrastructure designed for scale and precision:
 - **Facility Size**: 15,000 m² dedicated sorting and warehouse space.
-- **Monthly Capacity**: 500+ tonnes of processed merchandise.
+- **Monthly Capacity**: 200+ tonnes of processed merchandise.
 - **Loading Speed**: Container loading in as fast as **7 days** from order confirmation.
 - **Team**: 200+ professionals, including specialized teams for sorting, QC, and global logistics.
 
@@ -100,8 +100,8 @@ AI generic wording / unrealistic	The description resembles template content and 
 9	Contact Us (/contact-us)	"Our sales team is available 24/7… We speak English, French, Spanish, and Arabic"
  with profiles of four staff members	AI generic wording / possible AI-generated images	The 24/7 claim conflicts with the listed business hours (Mon–Sat 8:00–20:00)
 . Names and languages could be stock photos or AI‑generated, eroding trust.	Provide realistic service hours and genuine staff bios. E.g., “Our sales representatives in Guangzhou respond within one business day. Meet Sarah Chen (Africa & Middle East), Michael Wang (Asia), Lisa Zhang (Europe & Americas) and James Liu (East Africa).”
-10	About Us (/about-us)	Claim that the 15 000 m² facility processes "over 500 tonnes of used branded clothing, shoes, and bags every month"
-Unverifiable / exaggerated	500 t/month implies huge throughput; combined with only 200–300 staff this seems implausible. Without production photos or certifications it looks like an inflated AI‑written number.	State approximate capacity honestly: “Our facility processes dozens of containers each month. We welcome visits from buyers to see our sorting and packing operations.”
+10	About Us (/about-us)	Claim that the 15 000 m² facility processes "over 200 tonnes of used branded clothing, shoes, and bags every month"
+Unverifiable / exaggerated	200 t/month implies significant throughput; combined with only 200–300 staff this seems more plausible. Without production photos or certifications it looks like an inflated AI‑written number.	State approximate capacity honestly: “Our facility processes dozens of containers each month. We welcome visits from buyers to see our sorting and packing operations.”
 Priority Fix List
 Tone down unrealistic superlatives on the home page – remove "#1" and “No stains/no tears/no fading” slogans
 .
@@ -155,7 +155,7 @@ Rationale:
 The site heavily markets itself with generic, superlative language that does not match the realities of the second‑hand industry. Claims like “no stains or tears” and “world leader” feel copied from templates
 .
 
-Unverifiable statistics (80 % reorder rate, 500 t/month capacity, 1 000+ containers/month) are repeated without proof
+Unverifiable statistics (80 % reorder rate, 200 t/month capacity, 1 000+ containers/month) are repeated without proof
 .
 
 Broken pages (e.g., used‑brand‑clothes, blog posts) and missing details (sourcing channels, authenticity checks) reduce transparency.

@@ -5,7 +5,7 @@ export const companyStats = {
   staffCount: "80+",
   countriesCount: "100+",
   facilitySize: "15,000 m²",
-  monthlyCapacity: "500 tonnes",
+  monthlyCapacity: "200 tonnes",
   reorderRate: "80%+",
   buyersCount: "1,000+",
 };
@@ -85,6 +85,7 @@ export const productsData: Product[] = [
     title: "Used Brand Clothes",
     category: "WHOLESALE",
     image: "/images/clothes/adidas-kelme-athletic-shorts-pants-pile.webp",
+    alt: "RealismThrift Wholesale Used Brand Clothes - Premium A-Grade Sorted Second Hand Clothing Bulk Supply from China",
     href: "/used-brand-clothes",
   },
   {
@@ -92,6 +93,7 @@ export const productsData: Product[] = [
     title: "Used Brand Shoes",
     category: "WHOLESALE",
     image: "/images/shoes/designer-sneakers-assorted-wholesale-display.webp",
+    alt: "RealismThrift Wholesale Used Brand Shoes - Branded Sneakers and Footwear Bulk Export Service from Huizhou Factory",
     href: "/used-brand-shoes",
   },
   {
@@ -99,13 +101,15 @@ export const productsData: Product[] = [
     title: "Used Brand Bags",
     category: "WHOLESALE",
     image: "/images/bags/designer-handbags-backpacks-mixed-collection-display.webp",
+    alt: "RealismThrift Wholesale Used Brand Bags - Designer Handbags and Backpacks Second Hand Bulk Inventory China Supplier",
     href: "/used-brand-bag",
   },
   {
     id: "ukay",
     title: "Ukay Quality Bag",
     category: "WHOLESALE",
-    image: "/img/cat-ukay.jpg",
+    image: "/img/cat-ukay.webp",
+    alt: "RealismThrift Ukay Quality Bags - Premium Grade Sorted Used Bags for Wholesale Export to Global Markets",
     href: "/#contact",
   },
 ];

@@ -10,7 +10,7 @@ export const metadata = {
   openGraph: {
     title: "Contact RealismThrift | Wholesale Sales & Support",
     description: "Ready to start your wholesale order? Contact our multilingual sales team for direct factory pricing and shipping estimates.",
-    images: ['/images/hero/contact-hero.jpg'],
+    images: ['/images/hero/contact-hero.webp'],
   },
   alternates: {
     canonical: "/contact-us",
@@ -24,8 +24,8 @@ export default function ContactUsPage() {
       <section className="relative py-16 md:py-24 bg-[#1A1A1A] overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/images/hero/contact-hero.jpg" 
-            alt="Contact background" 
+            src="/images/hero/contact-hero.webp" 
+            alt="RealismThrift Contact Center - Get Professional Wholesale Support for Used Clothes, Shoes, and Bags Export from China Factory" 
             fill 
             className="object-cover opacity-[0.08]" 
             priority 

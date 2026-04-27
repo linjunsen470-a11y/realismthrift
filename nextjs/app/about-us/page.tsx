@@ -24,8 +24,8 @@ export default function AboutUsPage() {
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/about/hero-bg.webp"
-            alt="RealismThrift Team and Facility in Huizhou China - Professional Wholesale Exporter of Used Brand Fashion"
+            src="/images/hero-main.webp"
+            alt="RealismThrift Professional Team and 15,000m² Facility in Huizhou China - Leading Wholesale Exporter of Used Brand Fashion"
             fill
             className="object-cover"
             priority
@@ -106,7 +106,7 @@ export default function AboutUsPage() {
             </p>
             <div className="flex gap-6 flex-wrap">
               <div className="text-center px-6 py-4 bg-[#F5F5F0] rounded-[6px]">
-                <div className="font-montserrat text-[1.5rem] font-extrabold text-brand-red">500t</div>
+                <div className="font-montserrat text-[1.5rem] font-extrabold text-brand-red">200t</div>
                 <div className="text-[0.75rem] text-[#666] mt-1 uppercase font-semibold">Monthly Processing</div>
               </div>
               <div className="text-center px-6 py-4 bg-[#F5F5F0] rounded-[6px]">
@@ -122,13 +122,13 @@ export default function AboutUsPage() {
 
           <div className="grid grid-cols-2 gap-3.5">
             <div className="relative h-[200px] w-full rounded-[6px] overflow-hidden">
-              <Image src="/images/about/story-factory.jpg" alt="RealismThrift Modern Factory Exterior - China's Trusted Supplier of Bulk Second Hand Clothes" fill className="object-cover" />
+              <Image src="/images/about/story-1.webp" alt="RealismThrift Modern Facility Exterior - China's Trusted Wholesale Supplier of Bulk Second Hand Clothes and Shoes" fill className="object-cover" />
             </div>
             <div className="relative h-[200px] w-full rounded-[6px] overflow-hidden">
-              <Image src="/images/about/team-sorting.webp" alt="RealismThrift Professional Sorting Process - Hand-Inspected Branded Used Clothing for Quality Assurance" fill className="object-cover" />
+              <Image src="/images/about/story-2.webp" alt="RealismThrift Precision Sorting Process - Expert Hand-Inspected Branded Used Clothing for A-Grade Quality Export" fill className="object-cover" />
             </div>
             <div className="relative h-[200px] w-full col-span-2 rounded-[6px] overflow-hidden">
-              <Image src="/images/about/packing-process.jpg" alt="RealismThrift Secure Packing Process - Compressed Bales of Second Hand Clothes for Global Shipping" fill className="object-cover" />
+              <Image src="/images/about/story-3-clear.webp" alt="RealismThrift Professional Baling and Packing - Compressed Bales of Second Hand Clothes Ready for Global Wholesale Shipping" fill className="object-cover" />
             </div>
           </div>
         </div>
@@ -145,23 +145,13 @@ export default function AboutUsPage() {
             </p>
           </div>
 
-          <div className="rounded-[12px] overflow-hidden mb-10 relative">
-            <div className="relative w-full h-[400px]">
-              <Image src="/images/about/team-group.webp" alt="RealismThrift Export Team in Huizhou China - Professionals Dedicated to Wholesale Quality" fill className="object-cover" />
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
-            <div className="absolute bottom-8 left-8 right-8">
-              <div className="font-montserrat text-[1.25rem] font-extrabold text-white mb-2">RealismThrift Export Team — Huizhou, China</div>
-              <div className="text-[0.875rem] text-white/75">Experienced professionals in sorting, quality control, sales, and logistics</div>
-            </div>
-          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { img: "team-sorting.webp", title: "Sorting Team", desc: "Specialized team for category-based sorting of clothes, shoes, and bags to ensure quality." },
-              { img: "quality-control.jpg", title: "Quality Control", desc: "Dedicated inspectors performing thorough checks on every item to maintain standards." },
-              { img: "team-sales.webp", title: "Sales Team", desc: "Multilingual sales consultants providing professional export guidance and support." },
-              { img: "team-logistics.webp", title: "Logistics Team", desc: "Logistics specialists managing export documentation and global freight coordination." }
+              { img: "team-sorting-new.webp", title: "Sorting Team", desc: "Specialized team for category-based sorting of clothes, shoes, and bags to ensure quality." },
+              { img: "qc-inspector-premium.webp", title: "Quality Control", desc: "Dedicated inspectors performing thorough checks on every item to maintain standards." },
+              { img: "team-sales-new.webp", title: "Sales Team", desc: "Multilingual sales consultants providing professional export guidance and support." },
+              { img: "team-logistics-new.webp", title: "Logistics Team", desc: "Logistics specialists managing export documentation and global freight coordination." }
             ].map(team => (
               <div key={team.title} className="bg-white/5 border border-white/10 rounded-[8px] overflow-hidden">
                 <div className="relative h-[140px] w-full">
@@ -188,16 +178,16 @@ export default function AboutUsPage() {
             <Image src="/images/about/factory-hall.webp" alt="RealismThrift Main Sorting Hall - 15,000m² State-of-the-Art Used Clothing Facility" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-            <Image src="/images/about/packing-area-premium.png" alt="RealismThrift Packing Area - Professional Baling and Logistics for Wholesale Export" fill className="object-cover" />
+            <Image src="/images/about/packing-area-premium.webp" alt="RealismThrift Industrial Packing Area - Professional Baling and Logistics for Worldwide Used Clothes Wholesale Export" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-            <Image src="/images/about/loading-dock-premium.png" alt="RealismThrift Loading Dock - Fast 7-Day Shipment and Container Logistics to Global Ports" fill className="object-cover" />
+            <Image src="/images/about/loading-dock-premium.webp" alt="RealismThrift Efficient Loading Dock - Fast 7-Day Container Shipment and Export Logistics of Second Hand Goods to Global Ports" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-            <Image src="/images/about/sorting-process.webp" alt="RealismThrift Shoe Sorting Station - Grade A Branded Sneaker Quality Control" fill className="object-cover" />
+            <Image src="/images/about/sorting-process.webp" alt="RealismThrift Branded Shoe Sorting Station - Strict Grade A Quality Control for Export Sneakers and Footwear" fill className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-            <Image src="/images/about/bag-inspection.jpg" alt="RealismThrift Bag Inspection Room - Verifying Hardware and Material for Designer Handbags" fill className="object-cover" />
+            <Image src="/images/about/bag-inspection.webp" alt="RealismThrift Designer Bag Inspection Room - Professional Quality Verification for Wholesale Used Handbags and Backpacks" fill className="object-cover" />
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">

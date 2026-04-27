@@ -26,8 +26,8 @@ export function SiteFooter({ data }: SiteFooterProps) {
           <div>
             <div className="rt-footer-logo">
               <Image
-                src="/img/logo.png"
-                alt="RealismThrift Logo"
+                src="/img/logo.webp"
+                alt="RealismThrift Logo - Leading Exporter of Premium Second Hand Branded Fashion from Huizhou China"
                 width={56}
                 height={56}
                 sizes="56px"

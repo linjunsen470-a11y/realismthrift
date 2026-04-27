@@ -37,7 +37,7 @@ This audit evaluates the site's content for AI-generated patterns, industry real
 | 7 | Shoes | Checklist: "No Glue Damage... No Cracking... No Heavy Odor..." | Unrealistic | Guaranteeing zero defects in used shoes is impossible and undermines trust. | "A-grade shoes may show minor wear but have intact soles and branding. We reject major defects." |
 | 8 | Bags | "Strict 6-point inspection... no broken zippers, no torn straps..." | AI Generic | Resembles template content; promises perfection for used items. | Acknowledge minor wear; detail how authenticity and hardware integrity are verified. |
 | 9 | Contact | "Sales team available 24/7... We speak English, French, Spanish, and Arabic." | Generic / Possible AI Images | 24/7 claim conflicts with listed Mon-Sat hours. Profiles may use stock/AI photos. | Provide realistic hours and genuine staff bios. "Our Guangzhou team responds within 1 business day." |
-| 10 | About Us | Processes "over 500 tonnes... every month". | Exaggerated | Implies massive throughput that seems implausible given the listed staff size. | State capacity honestly: "Our facility processes dozens of containers monthly. We welcome site visits." |
+| 10 | About Us | Processes "over 200 tonnes... every month". | Exaggerated | Implies significant throughput that seems more plausible given the listed staff size. | State capacity honestly: "Our facility processes dozens of containers monthly. We welcome site visits." |
 
 ---
 

@@ -21,7 +21,7 @@ Quality is our signature. Our QC team consists of **30+ dedicated inspectors** w
 - **Output**: Detailed grading reports used to maintain our **80%+ customer reorder rate**.
 
 ## 🏗️ The Sorting & Warehouse Agent (Operations)
-Operating within our **15,000 m² facility**, these agents manage the complex logistics of processing **500+ tonnes monthly**.
+Operating within our **15,000 m² facility**, these agents manage the complex logistics of processing **200+ tonnes monthly**.
 
 - **Specialization**: Teams are subdivided into specific categories (Used Clothes, Shoes, Bags) to ensure deep product expertise.
 - **Efficiency**: Optimized floor layout allows for container loading in as fast as **7 days**.

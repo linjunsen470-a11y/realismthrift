@@ -21,7 +21,7 @@ export function getOrganizationSchema() {
     "@type": "Organization",
     "name": "RealismThrift Export Co., Ltd.",
     "url": "https://www.realismthrift.com",
-    "logo": "https://www.realismthrift.com/logo.png",
+    "logo": "https://www.realismthrift.com/logo.webp",
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+86-133-6748-1710",

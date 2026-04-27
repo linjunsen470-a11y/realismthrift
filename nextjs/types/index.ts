@@ -51,6 +51,7 @@ export interface Product {
   id: string;
   title: string;
   image: string;
+  alt?: string;
   category: string;
   description?: string;
   href: string;

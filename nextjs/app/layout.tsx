@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     description: 'Leading wholesale supplier of second-hand clothes, shoes and bags from China. Export to 100+ countries with A-Grade quality.',
     images: [
       {
-        url: '/img/logo.png',
+        url: '/img/logo.webp',
         width: 800,
         height: 600,
         alt: 'RealismThrift Logo',
@@ -52,12 +52,12 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'RealismThrift Export Co., Ltd | #1 Used Clothes & Shoes Supplier in China',
     description: 'Leading wholesale supplier of second-hand clothes, shoes and bags from China. Export to 100+ countries with A-Grade quality.',
-    images: ['/img/logo.png'],
+    images: ['/img/logo.webp'],
   },
   icons: {
-    icon: '/img/logo.png',
-    shortcut: '/img/logo.png',
-    apple: '/img/logo.png',
+    icon: '/img/logo.webp',
+    shortcut: '/img/logo.webp',
+    apple: '/img/logo.webp',
   },
 };
 

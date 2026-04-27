@@ -87,7 +87,7 @@ export default async function BlogPostPage({
 
   const heroImage = hasUsableImageAsset(post.coverImage)
     ? urlForImage(post.coverImage).width(1600).height(700).fit("crop").url()
-    : "/img/blog-inner.jpg";
+    : "/img/blog-inner.webp";
   const authorImage = post.author?.avatar;
   const authorAvatar = hasUsableImageAsset(authorImage)
     ? urlForImage(authorImage).width(120).height(120).fit("crop").url()
@@ -101,7 +101,7 @@ export default async function BlogPostPage({
     dateModified: post._updatedAt,
     authorName: post.author?.name || "RealismThrift",
     publisherName: "RealismThrift Export Co., Ltd.",
-    publisherLogo: "https://www.realismthrift.com/logo.png",
+    publisherLogo: "https://www.realismthrift.com/logo.webp",
     url: `https://www.realismthrift.com/blog/${slug}`
   });
 

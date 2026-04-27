@@ -42,8 +42,8 @@ export function HeaderClient({ data }: HeaderClientProps) {
           <Link href="/" className="rt-logo-link" onClick={closeMenu}>
             <span className="rt-logo-combo">
               <Image
-                src="/img/logo.png"
-                alt="RealismThrift Logo"
+                src="/img/logo.webp"
+                alt="RealismThrift Logo - Professional Wholesale Supplier of Used Clothes, Shoes, and Bags in China"
                 width={48}
                 height={48}
                 sizes="48px"

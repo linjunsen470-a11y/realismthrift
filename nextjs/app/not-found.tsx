@@ -8,7 +8,7 @@ export default function NotFound() {
       <section className="rt-hero min-h-[85vh]">
         <Image
           src="/images/about/sorting-process.webp"
-          alt="RealismThrift sorting facility"
+          alt="RealismThrift Sorting Facility - High-Precision Wholesale Supply Center for Second Hand Branded Fashion in China"
           fill
           priority
           className="rt-hero-bg opacity-40"
