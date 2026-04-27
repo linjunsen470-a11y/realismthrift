@@ -1,61 +1,69 @@
 # RealismThrift Professional Service Network
 
-The success of RealismThrift's global wholesale operations is driven by a specialized network of professional human agents and structured workflows. This document outlines the core pillars of our service ecosystem.
+RealismThrift's wholesale operations are supported by a network of specialized human teams and digital workflows. This document gives agents and maintainers the operating context for the project.
 
-## 🏙️ The Sourcing Agent (Strategic Procurement)
-Our sourcing agents operate in China's first-tier cities—**Beijing, Shanghai, Guangzhou, and Chengdu**—to secure the highest quality raw materials.
+## The Sourcing Agent: Strategic Procurement
 
-- **Objective**: Identify and procure premium used brand clothes, shoes, and bags from high-income urban areas.
-- **Workflow**: Continuous monitoring of collection centers to ensure a steady flow of "First-Pick" merchandise.
-- **Key Metric**: 100% urban-sourced raw material to guarantee fashion relevance and minimal wear.
+Sourcing agents focus on first-tier Chinese cities, including Beijing, Shanghai, Guangzhou, and Chengdu.
 
-## 🔍 The QC Inspector Agent (Quality Assurance)
-Quality is our signature. Our QC team consists of **30+ dedicated inspectors** who perform a rigorous **6-point check** on every item.
+- Objective: Identify and procure used brand clothes, shoes, and bags from urban collection channels.
+- Workflow: Monitor collection centers and supply flow to support consistent "first-pick" raw material.
+- Boundary: First-pick sourcing can improve brand potential, wear level, and style freshness, but it does not mean every item is branded.
 
-- **Objective**: Maintain our industry-leading **A-Grade** quality standard.
-- **Verification Points**:
-  - No holes, stains, or fading.
-  - Functional zippers and hardware.
-  - Soles and lining integrity (for shoes).
-  - Brand authenticity and stylistic appeal.
-- **Output**: Detailed grading reports used to maintain our **80%+ customer reorder rate**.
+## The QC Inspector Agent: Quality Assurance
 
-## 🏗️ The Sorting & Warehouse Agent (Operations)
-Operating within our **15,000 m² facility**, these agents manage the complex logistics of processing **200+ tonnes monthly**.
+Quality control is based on sellable used-goods standards rather than new-goods promises.
 
-- **Specialization**: Teams are subdivided into specific categories (Used Clothes, Shoes, Bags) to ensure deep product expertise.
-- **Efficiency**: Optimized floor layout allows for container loading in as fast as **7 days**.
-- **Facility**: ISO 9001:2015 and GRS certified environment.
+- Objective: Maintain exportable A-grade standards for used clothes, shoes, and bags.
+- Verification points:
+  - No major holes, heavy stains, severe fading, or structural damage.
+  - Functional zippers, buttons, straps, and hardware.
+  - Usable soles and lining condition for shoes.
+  - Bag straps, lining, corners, zippers, and hardware checked before packing.
+  - Obvious counterfeit or unsuitable pieces removed from brand-focused batches.
+- Boundary: Light signs of use can be acceptable when the item remains clean, wearable, and sellable.
 
-## 🚢 The Global Logistics Agent (Supply Chain)
-Handling export to **100+ countries**, our logistics specialists manage the final bridge to the customer.
+## The Sorting and Warehouse Agent: Operations
 
-- **Objective**: Cost-effective and secure delivery to global ports.
-- **Responsibilities**:
-  - Container optimization (20ft/40ft mix).
-  - Professional export documentation (Export License, Certificates of Origin).
-  - Fast-track customs clearance coordination.
-- **Timeline**: 7-14 days from order confirmation to port dispatch.
+Warehouse teams manage sorting, grading, packing, and container preparation inside the RealismThrift facility.
 
-## 💬 The Sales Consultation Agent (Customer Success)
-A multilingual team (English, French, Spanish, Swahili) providing a bridge between the factory and global wholesalers.
+- Specialization: Teams are organized by category, including used clothes, shoes, and bags.
+- Focus: Build export batches that match buyer market needs rather than generic mixed lots.
+- Facility context: Fuyida Industrial Park, Boluo County, Huizhou City, Guangdong Province, China.
 
-- **Service Level**: Guaranteed **12-hour response time** to all digital inquiries.
-- **Consultation**: Providing custom price lists, shipping estimates, and product category advice tailored to specific African or Middle Eastern markets.
-- **Lead Channel**: Seamlessly integrated with our [Next.js Inquiry System](app/api/send).
+## The Global Logistics Agent: Supply Chain
 
----
+Logistics specialists coordinate export planning from order confirmation to port dispatch.
 
-## 🛠️ The Digital Orchestrator (Meta-Role)
-While our operations are human-led, the **Digital Orchestrator** is the technical infrastructure (Next.js Platform) that enables this global collaboration.
+- Responsibilities:
+  - Container planning for 20ft and 40ft orders.
+  - Packing method confirmation for bales, sacks, and cartons.
+  - Export documentation support, including commercial invoice, packing list, certificate of origin, and related buyer requirements.
+  - Port, consignee, notify party, and shipment detail coordination.
 
-- **Vision**: To provide a pixel-perfect, premium digital storefront that reflects the Physical Quality of RealismThrift.
-- **Package Management**: **Mandatory use of `pnpm`** for all dependency management. The project is configured with `only-allow pnpm` to prevent the use of `npm` or `yarn`.
-- **Maintainer Role**: Ensures data accuracy in `siteData.ts` and reliability of the inquiry pipeline.
+## The Sales Consultation Agent: Customer Success
 
----
-## Contact Us
-- **WhatsApp**: [+86 133 6748 1710](https://wa.me/8613367481710)
-- **Address**: Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
+The sales team supports overseas wholesale buyers with practical order advice.
 
-© 2026 RealismThrift Export Co., Ltd. — *Stability, Quality, Trust.*
+- Languages: English, French, Spanish, and Swahili support may be used depending on the inquiry.
+- Service expectation: Respond to digital inquiries within 12 hours where possible.
+- Consultation scope: Price list requests, product mix advice, shipping estimates, category recommendations, and export order planning.
+- Lead channel: The website inquiry system in `nextjs/app/api/send`.
+
+## The Digital Orchestrator: Next.js Platform
+
+The digital platform supports the public storefront, inquiry pipeline, Sanity blog, and SEO infrastructure.
+
+- Website: `nextjs/`
+- Sanity Studio: `sanity/studio-realismthrift/`
+- Content data: Sanity documents and `nextjs/data/siteData.ts`
+- Package management: `pnpm` is mandatory. Do not use `npm` or `yarn`.
+- Archive policy: `archive/` is ignored by Git and reserved for local historical audit or planning notes.
+
+## Contact
+
+- WhatsApp: [+86 133 6748 1710](https://wa.me/8613367481710)
+- Email: sales@realismthrift.com
+- Address: Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
+
+Copyright 2026 RealismThrift Export Co., Ltd. Stability, Quality, Trust.

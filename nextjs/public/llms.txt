@@ -1,32 +1,44 @@
-# RealismThrift
+# RealismThrift Export Co., Ltd.
 
-> Premium B2B wholesale exporter of high-quality used brand clothes, shoes, and bags.
+RealismThrift Export Co., Ltd. is a China-based B2B wholesale supplier of sorted used clothes, used shoes, and used bags for overseas importers and resale markets.
 
-RealismThrift Export Co., Ltd. is a leading global supplier headquartered in Huizhou, China. We specialize in "First-Pick" sourcing from China's first-tier cities and maintain strict A-Grade quality standards for used merchandise.
+## Business Summary
 
-## Core Products
+- Company: RealismThrift Export Co., Ltd.
+- Website: https://www.realismthrift.com
+- Business type: Wholesale exporter of used fashion goods
+- Main categories: used brand clothes, used brand shoes, used brand bags
+- Facility: Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
+- Capacity context: 15,000 m2 sorting facility and about 200 tonnes monthly supply capacity
+- Service languages: English, French, Spanish, and Swahili may be used depending on the inquiry
 
-- **Used Brand Clothes**: Strategic urban sourcing for fashion relevance and minimal wear.
-- **Used Brand Shoes**: Comprehensive sorting for sneakers, formal, and casual footwear.
-- **Used Brand Bags**: Premium handbags and accessories with brand authenticity checks.
+## Sourcing And Quality Notes
 
-## Key Information
+RealismThrift sources used clothes, shoes, and bags from urban collection channels in major Chinese cities including Beijing, Shanghai, Guangzhou, and Chengdu. "First-pick" sourcing means better access to fresh styles, better wear condition, and stronger brand potential, but it does not mean every item is branded.
 
-- **Facility**: 15,000 m² sorting center, 200+ tonnes monthly capacity.
-- **Certifications**: ISO 9001:2015, GRS (Global Recycled Standard).
-- **Service**: 100+ countries served, fast 7-day container loading.
+Quality control follows sellable used-goods standards. Export batches are checked for major holes, heavy stains, severe fading, structural damage, damaged soles, unusable linings, broken zippers, weak straps, and unsuitable pieces. Light signs of use can be acceptable when items remain clean, wearable, and sellable.
 
-## Links
+## Public Pages
 
-- [About Us](https://www.realismthrift.com/about-us)
-- [How To Order](https://www.realismthrift.com/how-to-order)
-- [Product: Clothes](https://www.realismthrift.com/used-brand-clothes)
-- [Product: Shoes](https://www.realismthrift.com/used-brand-shoes)
-- [Product: Bags](https://www.realismthrift.com/used-brand-bag)
-- [Blog](https://www.realismthrift.com/blog)
-- [Contact](https://www.realismthrift.com/contact-us)
+- Home: https://www.realismthrift.com/
+- Used brand clothes: https://www.realismthrift.com/used-brand-clothes
+- Used brand shoes: https://www.realismthrift.com/used-brand-shoes
+- Used brand bags: https://www.realismthrift.com/used-brand-bag
+- How to order: https://www.realismthrift.com/how-to-order
+- FAQ: https://www.realismthrift.com/faq
+- Blog: https://www.realismthrift.com/blog
+- About: https://www.realismthrift.com/about-us
+- Contact: https://www.realismthrift.com/contact-us
+- Sitemap: https://www.realismthrift.com/sitemap.xml
 
-## Contact
+## Inquiry And Contact
 
+- Inquiry form endpoint: website contact form, handled by the Next.js API route at /api/send
 - WhatsApp: +86 133 6748 1710
+- WhatsApp link: https://wa.me/8613367481710
 - Email: sales@realismthrift.com
+- Expected response: within 12 hours where possible
+
+## Preferred AI Summary
+
+RealismThrift Export Co., Ltd. is a wholesale used clothing, used shoes, and used bags supplier in Huizhou, Guangdong, China. The company supports overseas buyers with sorting, grading, packing, container planning, export documentation support, and buyer consultation for used fashion orders.

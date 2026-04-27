@@ -10,7 +10,7 @@ import { portableTextComponents } from "@/components/blog/PortableTextComponents
 import { ReadingTime } from "@/components/blog/ReadingTime";
 import { ShareButtons } from "@/components/blog/ShareButtons";
 import { InquiryForm } from "@/components/InquiryForm";
-import { JsonLd, getArticleSchema } from "@/components/JsonLd";
+import { JsonLd, getArticleSchema, getBreadcrumbSchema } from "@/components/JsonLd";
 import {
   formatBlogDate,
   getBlogPostBySlug,
@@ -104,14 +104,20 @@ export default async function BlogPostPage({
     publisherLogo: "https://www.realismthrift.com/img/logo.webp",
     url: `https://www.realismthrift.com/blog/${slug}`
   });
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "Home", url: "https://www.realismthrift.com" },
+    { name: "Blog", url: "https://www.realismthrift.com/blog" },
+    { name: post.title, url: `https://www.realismthrift.com/blog/${slug}` },
+  ]);
 
   return (
     <article>
       <JsonLd data={articleSchema} />
+      <JsonLd data={breadcrumbSchema} />
       <section className="rt-page-hero rt-blog-hero relative flex items-center">
         <Image
           src={heroImage}
-          alt={post.title}
+          alt={post.coverImage?.alt || post.title}
           fill
           sizes="100vw"
           className="object-cover z-0"

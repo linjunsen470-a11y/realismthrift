@@ -1,6 +1,14 @@
 User-agent: *
 Allow: /
+Allow: /blog/
+Allow: /used-brand-clothes
+Allow: /used-brand-shoes
+Allow: /used-brand-bag
+
 Disallow: /api/
+Disallow: /api/draft-mode/
+Disallow: /search
 Disallow: /studio/
 
 Sitemap: https://www.realismthrift.com/sitemap.xml
+Host: https://www.realismthrift.com

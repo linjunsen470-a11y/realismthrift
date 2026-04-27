@@ -26,7 +26,7 @@ import { InquiryForm } from "@/components/InquiryForm";
 import { getLatestBlogPosts } from "@/lib/blog";
 import { LatestBlogSection } from "@/components/blog/LatestBlogSection";
 import { Metadata } from "next";
-import { JsonLd, getOrganizationSchema, getFaqSchema } from "@/components/JsonLd";
+import { JsonLd, getOrganizationSchema, getWebsiteSchema, getFaqSchema } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   title: 'Global Wholesale Supplier of Used Clothes, Shoes & Bags',
@@ -171,11 +171,13 @@ export default async function Home() {
   const latestPosts = await getLatestBlogPosts();
 
   const organizationSchema = getOrganizationSchema();
+  const websiteSchema = getWebsiteSchema();
   const faqSchema = getFaqSchema(faqs.map(f => ({ q: f.question, a: f.answer })));
 
   return (
     <div className="rt-home">
       <JsonLd data={organizationSchema} />
+      <JsonLd data={websiteSchema} />
       <JsonLd data={faqSchema} />
       <section className="rt-hero" id="home">
         <Image

@@ -1,9 +1,11 @@
 import React from "react";
 
+type JsonLdData = Record<string, unknown>;
+
 /**
  * A simple component to inject JSON-LD structured data into the page.
  */
-export function JsonLd({ data }: { data: Record<string, any> }) {
+export function JsonLd({ data }: { data: JsonLdData }) {
   return (
     <script
       type="application/ld+json"
@@ -18,20 +20,104 @@ export function JsonLd({ data }: { data: Record<string, any> }) {
 export function getOrganizationSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": ["Organization", "LocalBusiness"],
+    "@id": "https://www.realismthrift.com/#organization",
     "name": "RealismThrift Export Co., Ltd.",
+    "alternateName": "RealismThrift",
     "url": "https://www.realismthrift.com",
     "logo": "https://www.realismthrift.com/img/logo.webp",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+86-133-6748-1710",
-      "contactType": "sales",
-      "email": "sales@realismthrift.com",
-      "availableLanguage": ["English", "French", "Spanish", "Swahili"]
+    "image": "https://www.realismthrift.com/images/hero-main.webp",
+    "description": "RealismThrift Export Co., Ltd. supplies sorted used clothes, shoes, and bags from China for wholesale importers and resale markets.",
+    "foundingDate": "2012",
+    "telephone": "+86-133-6748-1710",
+    "email": "sales@realismthrift.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Fuyida Industrial Park, No. 52 Yida Road",
+      "addressLocality": "Boluo County, Huizhou City",
+      "addressRegion": "Guangdong Province",
+      "addressCountry": "CN"
     },
+    "areaServed": [
+      "Africa",
+      "Middle East",
+      "Southeast Asia",
+      "South America",
+      "Europe",
+      "Oceania"
+    ],
+    "knowsAbout": [
+      "used clothes wholesale",
+      "second hand clothes export",
+      "used brand shoes wholesale",
+      "used bags wholesale",
+      "container loading",
+      "used goods sorting and grading"
+    ],
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "telephone": "+86-133-6748-1710",
+        "contactType": "sales",
+        "email": "sales@realismthrift.com",
+        "availableLanguage": ["English", "French", "Spanish", "Swahili"],
+        "areaServed": "Worldwide"
+      },
+      {
+        "@type": "ContactPoint",
+        "url": "https://wa.me/8613367481710",
+        "contactType": "customer support",
+        "availableLanguage": ["English", "French", "Spanish", "Swahili"],
+        "areaServed": "Worldwide"
+      }
+    ],
+    "makesOffer": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Wholesale used brand clothes"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Wholesale used brand shoes"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Wholesale used brand bags"
+        }
+      }
+    ],
     "sameAs": [
       "https://wa.me/8613367481710"
     ]
+  };
+}
+
+/**
+ * Generates WebSite Schema with site search.
+ */
+export function getWebsiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://www.realismthrift.com/#website",
+    "name": "RealismThrift",
+    "url": "https://www.realismthrift.com",
+    "publisher": {
+      "@id": "https://www.realismthrift.com/#organization"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.realismthrift.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
   };
 }
 
@@ -65,6 +151,7 @@ export function getProductSchema({
       "@type": "Brand",
       "name": "RealismThrift"
     },
+    "category": "Used goods wholesale",
     "offers": {
       "@type": "AggregateOffer",
       "url": url,
@@ -74,8 +161,7 @@ export function getProductSchema({
       ...(offerCount ? { "offerCount": offerCount } : {}),
       "availability": "https://schema.org/InStock",
       "seller": {
-        "@type": "Organization",
-        "name": "RealismThrift Export Co., Ltd."
+        "@id": "https://www.realismthrift.com/#organization"
       }
     }
   };
@@ -132,11 +218,11 @@ export function getArticleSchema({
     "datePublished": datePublished,
     "dateModified": dateModified || datePublished,
     "author": {
-      "@type": "Person",
+      "@type": "Organization",
       "name": authorName
     },
     "publisher": {
-      "@type": "Organization",
+      "@id": "https://www.realismthrift.com/#organization",
       "name": publisherName,
       "logo": {
         "@type": "ImageObject",
@@ -147,5 +233,63 @@ export function getArticleSchema({
       "@type": "WebPage",
       "@id": url
     }
+  };
+}
+
+/**
+ * Generates CollectionPage + ItemList Schema for listing pages.
+ */
+export function getCollectionPageSchema({
+  name,
+  description,
+  url,
+  items,
+}: {
+  name: string;
+  description: string;
+  url: string;
+  items: {
+    name: string;
+    url: string;
+    datePublished?: string;
+  }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": name,
+    "description": description,
+    "url": url,
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": items.map((item, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": item.url,
+        "name": item.name,
+        ...(item.datePublished ? { "datePublished": item.datePublished } : {}),
+      })),
+    },
+  };
+}
+
+/**
+ * Generates BreadcrumbList Schema.
+ */
+export function getBreadcrumbSchema(
+  items: {
+    name: string;
+    url: string;
+  }[]
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.name,
+      "item": item.url,
+    })),
   };
 }

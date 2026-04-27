@@ -1,46 +1,56 @@
-# RealismThrift Export Co., Ltd. — Professional Partner in Used Fashion
+# RealismThrift Export Co., Ltd. Professional Profile
 
-## 🌍 Our Identity
-Based in **Huizhou, Guangdong**, RealismThrift is a dedicated wholesale exporter specializing in **pre-owned branded clothing, shoes, and bags**. We serve as a reliable bridge between China’s high-quality secondary fashion market and wholesale importers across Africa, Southeast Asia, the Middle East, and beyond.
+## Company Identity
 
-Our business is built on a simple principle: **Consistency over Claims.** In an industry where quality can be unpredictable, we focus on standardized grading and transparent communication to ensure our partners can grow their businesses with confidence.
+RealismThrift Export Co., Ltd. is a used fashion wholesale exporter based in Huizhou, Guangdong, China. The company supplies sorted used clothes, used brand shoes, and used bags to overseas wholesalers, importers, and resale businesses.
 
----
+The business focuses on practical procurement support: stable sourcing, realistic grading, category sorting, packing coordination, and export documentation.
 
-## 🏗️ Our Operations: Precision at Scale
-Our sorting facility is designed for systematic processing rather than just volume. By maintaining a large, organized workspace, we ensure that every bale or container meets the specific requirements of its destination market.
+## Operating Principles
 
-- **Systematic Sorting**: Our teams are divided by product category (Clothing, Shoes, Bags) to ensure deep expertise in each line.
-- **Efficient Logistics**: Located in the heart of the Pearl River Delta, we leverage China's most advanced logistics network to provide fast turnaround times from order to port dispatch.
-- **Capacity for Growth**: We maintain a consistent inventory flow, allowing us to support both specialized boutique wholesalers and large-volume importers.
+RealismThrift uses a simple standard: consistency over exaggerated claims. Used goods are not new goods. A sellable batch should be clean, wearable, functional, and suitable for the buyer's market, while still acknowledging normal light signs of use.
 
----
+Key operating principles:
 
-## 🔍 The Real Standard of Quality
-We understand that "A-Grade" in the used goods industry doesn't mean "new," but it should mean **marketable and profitable** for the buyer. Our quality control process is focused on eliminating the risks that typically plague used-goods trading.
+- Source from urban collection channels where style turnover and brand exposure are stronger.
+- Sort by product category so clothes, shoes, and bags are inspected according to their own risks.
+- Remove items with major defects, heavy stains, severe odor, structural damage, or obvious counterfeit issues.
+- Communicate clearly about grade, category mix, packing method, container size, and export requirements before loading.
 
-1.  **Urban Sourcing**: We prioritize raw material collection from major metropolitan areas like Beijing, Shanghai, and Guangzhou. This ensures that the styles are modern and the wear is typically lighter.
-2.  **Realistic Grading**:
-    *   **Condition**: We check for structural integrity, functional hardware (zippers, buckles), and fabric quality.
-    *   **Marketability**: We select items based on fashion relevance and brand appeal in global markets.
-3.  **Rejection Policy**: Items with significant defects, heavy stains, or structural damage are strictly diverted from our premium lines.
+## Product Categories
 
----
+### Used Brand Clothes
 
-## 🤝 Transparency & Global Support
-We believe that trust is earned through transparency, not just slogans. 
+Sorted second-hand clothing for wholesale markets, including casualwear, sportswear, denim, tops, trousers, dresses, and seasonal goods. A-grade clothing may show light use but should remain wearable and sellable.
 
-- **Direct Communication**: Our sales team provides clear, realistic descriptions of our grades. We support multiple languages to ensure technical requirements are understood perfectly.
-- **Documentation**: We handle the complexities of export licensing and shipping documentation, providing a seamless experience for our partners.
-- **Open Door Policy**: We actively encourage our clients to visit our facility in Huizhou. For those who cannot travel, we offer live video inspections of the sorting process and final packing.
+### Used Brand Shoes
 
----
+Mixed used shoes can include sneakers, casual shoes, sandals, boots, and other market-suitable footwear. Sorting focuses on outsole life, upper condition, lining, odor, pair matching, and size mix.
 
-## 💬 Let’s Connect
-Whether you are starting a new wholesale business or looking for a more stable supplier for your existing operations, we are here to provide the stability you need.
+### Used Brand Bags
 
-- **Address**: Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
-- **WhatsApp**: [+86 133 6748 1710](https://wa.me/8613367481710)
-- **Website**: [www.realismthrift.com](http://www.realismthrift.com)
+Mixed used bags can include handbags, backpacks, shoulder bags, crossbody bags, and travel bags. Inspection focuses on zippers, straps, lining, corners, hardware, style appeal, and obvious counterfeit-risk removal.
 
-**RealismThrift — Stability, Quality, Transparency.**
+## Export Support
+
+RealismThrift supports buyers with:
+
+- Product category advice.
+- Mixed lot and container planning.
+- Packing format confirmation.
+- Commercial invoice and packing list coordination.
+- Certificate of origin and other export documentation where applicable.
+- Destination port, consignee, notify party, and shipment detail coordination.
+
+## Buyer Communication
+
+The sales team helps buyers choose product categories and grade expectations based on their target market. Buyers are encouraged to share their destination country, retail channel, container size, preferred category ratio, and packing requirements before order confirmation.
+
+## Contact
+
+- WhatsApp: [+86 133 6748 1710](https://wa.me/8613367481710)
+- Email: sales@realismthrift.com
+- Address: Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
+- Website: [www.realismthrift.com](https://www.realismthrift.com)
+
+RealismThrift: Stability, Quality, Transparency.
