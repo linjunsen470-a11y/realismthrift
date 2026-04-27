@@ -1,15 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Facebook,
-  Instagram,
   Mail,
   MapPin,
   MessageCircle,
   Phone,
-  Twitter,
-  Youtube,
-  X,
 } from "lucide-react";
 import { SiteFooter as SiteFooterType } from "@/types";
 import { FooterBackToTop } from "@/components/FooterBackToTop";
@@ -106,6 +101,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
               ))}
             </div>
 
+            {/* Social accounts are temporarily hidden until the channels are ready.
             {data.brand.socials && (
               <div className="rt-footer-socials">
                 {data.brand.socials.facebook && (
@@ -130,6 +126,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
                 )}
               </div>
             )}
+            */}
           </div>
         </div>
 
