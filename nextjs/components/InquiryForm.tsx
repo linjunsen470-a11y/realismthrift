@@ -74,7 +74,7 @@ export function InquiryForm({
 
   if (submission.status === "success") {
     return (
-      <div className={`rt-form-state rt-form-state-success${isSidebar ? " is-sidebar" : ""}`}>
+      <div className={`rt-form-state rt-form-state-success${isSidebar ? " is-sidebar" : ""}`} role="status" aria-live="polite">
         <CheckCircle2 size={24} strokeWidth={2.2} />
         <h3>Inquiry Received</h3>
         <p>{submission.message}</p>
@@ -104,6 +104,7 @@ export function InquiryForm({
             id={`${variant}-name`}
             name="name"
             type="text"
+            autoComplete="name"
             required
             placeholder="John Smith"
           />
@@ -115,6 +116,8 @@ export function InquiryForm({
             id={`${variant}-email`}
             name="email"
             type="email"
+            autoComplete="email"
+            inputMode="email"
             required
             placeholder="john@company.com"
           />
@@ -125,7 +128,9 @@ export function InquiryForm({
           <input
             id={`${variant}-whatsapp`}
             name="whatsapp"
-            type="text"
+            type="tel"
+            autoComplete="tel"
+            inputMode="tel"
             required
             placeholder="+1 234 567 8900"
           />
@@ -137,6 +142,7 @@ export function InquiryForm({
             id={`${variant}-country`}
             name="country"
             type="text"
+            autoComplete="country-name"
             placeholder="Nigeria, Philippines..."
           />
         </div>
@@ -170,6 +176,7 @@ export function InquiryForm({
           id={`${variant}-message`}
           name="message"
           rows={isSidebar ? 4 : 5}
+          spellCheck={true}
           placeholder="Tell us about your requirements, target market, quantity needed..."
         />
       </div>
@@ -202,7 +209,7 @@ export function InquiryForm({
       ) : null}
 
       {submission.status === "error" ? (
-        <div className="rt-form-state rt-form-state-error">
+        <div className="rt-form-state rt-form-state-error" role="alert" aria-live="polite">
           <TriangleAlert size={18} strokeWidth={2.2} />
           <p>{submission.message}</p>
         </div>

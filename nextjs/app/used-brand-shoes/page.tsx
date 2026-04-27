@@ -52,7 +52,10 @@ export default function UsedBrandShoesPage() {
     name: "Used Brand Shoes Wholesale",
     description: "Wholesale supplier of sorted second-hand branded shoes from China. Nike, Adidas, Jordan, and 30+ brands.",
     image: "https://www.realismthrift.com/images/shoes/wholesale-sneakers-assorted-styles-grid.webp",
-    url: "https://www.realismthrift.com/used-brand-shoes"
+    url: "https://www.realismthrift.com/used-brand-shoes",
+    lowPrice: "0.8",
+    highPrice: "6.0",
+    offerCount: 5,
   });
 
   const faqSchema = getFaqSchema(shoeFaqs);
@@ -68,6 +71,7 @@ export default function UsedBrandShoesPage() {
             src="/images/shoes/wholesale-sneakers-assorted-styles-grid.webp" 
             alt="RealismThrift Shoe Export Hub - Industrial Scale Wholesale Branded Sneakers and Nike Adidas Jordan Supplier in China" 
             fill 
+            sizes="100vw"
             className="object-cover" 
             priority 
           />
@@ -155,7 +159,7 @@ export default function UsedBrandShoesPage() {
               ].map(prod => (
                 <div key={prod.title} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
                   <div className="relative overflow-hidden h-[180px]">
-                    <Image src={prod.img} alt={`RealismThrift Wholesale ${prod.title} - Sorted Branded Second-Hand Shoes Bulk Inventory from China Factory`} fill className="object-cover" />
+                    <Image src={prod.img} alt={`RealismThrift Wholesale ${prod.title} - Sorted Branded Second-Hand Shoes Bulk Inventory from China Factory`} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
                     <div className="absolute top-2 left-2 bg-brand-dark text-brand-gold text-[0.65rem] font-bold px-2 py-1 rounded-[2px] font-montserrat">
                       A-GRADE
                     </div>
@@ -197,7 +201,7 @@ export default function UsedBrandShoesPage() {
               ].map(process => (
                 <div key={process.step} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
                   <div className="relative h-[160px]">
-                    <Image src={process.img} alt={`RealismThrift Shoe Quality Control Step ${process.step} - ${process.title} for Professional Bulk Branded Sneakers Export`} fill className="object-cover" />
+                    <Image src={process.img} alt={`RealismThrift Shoe Quality Control Step ${process.step} - ${process.title} for Professional Bulk Branded Sneakers Export`} fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover" />
                   </div>
                   <div className="p-5">
                     <div className="flex items-center gap-2.5 mb-2.5">
@@ -210,7 +214,7 @@ export default function UsedBrandShoesPage() {
               ))}
               <div className="sm:col-span-2 bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] flex flex-col md:flex-row">
                 <div className="relative md:w-[300px] h-[200px] md:h-auto shrink-0">
-                   <Image src="/images/shoes/timberland-6-inch-premium-wheat-boots-batch.webp" alt="RealismThrift Export Logistics - Final Sorting and Labeling of Branded Shoes for Global Wholesale Distribution" fill className="object-cover" />
+                   <Image src="/images/shoes/timberland-6-inch-premium-wheat-boots-batch.webp" alt="RealismThrift Export Logistics - Final Sorting and Labeling of Branded Shoes for Global Wholesale Distribution" fill sizes="(min-width: 768px) 300px, 100vw" className="object-cover" />
                 </div>
                 <div className="p-5">
                   <div className="flex items-center gap-2.5 mb-2.5">

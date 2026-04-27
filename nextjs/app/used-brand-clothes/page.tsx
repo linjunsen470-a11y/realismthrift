@@ -53,7 +53,10 @@ export default function UsedBrandClothesPage() {
     name: "Used Brand Clothes Wholesale",
     description: "Sorted second-hand branded clothes. Nike, Adidas, and more. Global export support from China.",
     image: "https://www.realismthrift.com/images/clothes/assorted-jeans-sweatpants-lee-fila-stack.webp",
-    url: "https://www.realismthrift.com/used-brand-clothes"
+    url: "https://www.realismthrift.com/used-brand-clothes",
+    lowPrice: "0.3",
+    highPrice: "5.0",
+    offerCount: 7,
   });
 
   const faqSchema = getFaqSchema(clothesFaqs);
@@ -71,6 +74,7 @@ export default function UsedBrandClothesPage() {
             src="/images/clothes/assorted-jeans-sweatpants-lee-fila-stack.webp" 
             alt="RealismThrift Sorting Facility - Wholesale Used Brand Clothes Inventory for Global B2B Export from China Factory" 
             fill 
+            sizes="100vw"
             priority
             className="object-cover object-center"
           />
@@ -193,14 +197,14 @@ export default function UsedBrandClothesPage() {
                 </div>
               </div>
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.14)] relative h-[280px]">
-                <Image src="/images/clothes/adidas-kelme-athletic-shorts-pants-pile.webp" alt="RealismThrift Sorting Process Step 1 - Raw Material Collection and Initial Separation of Bulk Second-Hand Clothing in China Factory" fill className="object-cover" />
+                <Image src="/images/clothes/adidas-kelme-athletic-shorts-pants-pile.webp" alt="RealismThrift Sorting Process Step 1 - Raw Material Collection and Initial Separation of Bulk Second-Hand Clothing in China Factory" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
               </div>
             </div>
 
             {/* STEP 2 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem] items-center mb-[3rem]">
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.14)] relative h-[280px] order-2 md:order-1">
-                <Image src="/images/clothes/assorted-designer-hats-caps-collection.webp" alt="RealismThrift Quality Control Step 2 - Brand Authentication and Identification for Professional Export Grade Wholesale Clothes" fill className="object-cover" />
+                <Image src="/images/clothes/assorted-designer-hats-caps-collection.webp" alt="RealismThrift Quality Control Step 2 - Brand Authentication and Identification for Professional Export Grade Wholesale Clothes" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
               </div>
               <div className="order-1 md:order-2">
                 <div className="flex items-center gap-[0.875rem] mb-[1rem]">
@@ -260,7 +264,7 @@ export default function UsedBrandClothesPage() {
                 </div>
               </div>
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.14)] relative h-[300px]">
-                <Image src="/images/clothes/mixed-fila-puma-tshirts-polo-shirts.webp" alt="RealismThrift Grading Standards Step 3 - Sorted Wholesale Clothing Batches from China" fill className="object-cover" />
+                <Image src="/images/clothes/mixed-fila-puma-tshirts-polo-shirts.webp" alt="RealismThrift Grading Standards Step 3 - Sorted Wholesale Clothing Batches from China" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
               </div>
             </div>
 
@@ -292,7 +296,7 @@ export default function UsedBrandClothesPage() {
             {/* STEP 5 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem] items-center mb-[2rem]">
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.14)] relative h-[280px] order-2 md:order-1">
-                <Image src="/images/clothes/athletic-track-jackets-lining-nike-stack.webp" alt="RealismThrift Export Logistics Step 5 - Hydraulic Compression Baling and Final QC for Global Wholesale Shipment" fill className="object-cover" />
+                <Image src="/images/clothes/athletic-track-jackets-lining-nike-stack.webp" alt="RealismThrift Export Logistics Step 5 - Hydraulic Compression Baling and Final QC for Global Wholesale Shipment" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
               </div>
               <div className="order-1 md:order-2">
                 <div className="flex items-center gap-[0.875rem] mb-[1rem]">
@@ -336,7 +340,7 @@ export default function UsedBrandClothesPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem] items-center">
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12)] relative h-[320px]">
-                <Image src="/images/clothes/adidas-sport-shorts-pink-white-stripes.webp" alt="RealismThrift Typical Bale Composition - Sorted Second-Hand Sportswear for Retail Resale Markets" fill className="object-cover" />
+                <Image src="/images/clothes/adidas-sport-shorts-pink-white-stripes.webp" alt="RealismThrift Typical Bale Composition - Sorted Second-Hand Sportswear for Retail Resale Markets" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
               </div>
               <div>
                 <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1.25rem]">A typical Grade A Mixed Brand bale (45kg) contains approximately 120–180 individual garments across multiple categories and brands. The exact composition varies by batch, but our standard mix ratio ensures a balanced assortment that appeals to a wide customer base.</p>
@@ -386,7 +390,7 @@ export default function UsedBrandClothesPage() {
               ].map(prod => (
                 <div key={prod.title} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
                   <div className="relative h-[170px]">
-                    <Image src={prod.img} alt={`RealismThrift Wholesale ${prod.title} - Sorted Bulk Second-Hand Clothing Inventory from China`} fill className="object-cover" />
+                    <Image src={prod.img} alt={`RealismThrift Wholesale ${prod.title} - Sorted Bulk Second-Hand Clothing Inventory from China`} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
                     <div className="absolute top-2 left-2 bg-[#C0392B] text-white text-[0.6rem] font-bold px-2 py-1 rounded-[2px] font-montserrat">A-GRADE</div>
                   </div>
                   <div className="p-[0.875rem]">

@@ -49,6 +49,7 @@ function SearchHero({
           src="/img/wholesale-inventory.webp"
           alt="RealismThrift Wholesale Inventory - Supplier of Sorted Second Hand Branded Clothes, Shoes, and Bags from China"
           fill
+          sizes="100vw"
           priority
           className="object-cover"
         />

@@ -66,7 +66,7 @@ export function ProductTrustSections({ features, faqs }: ProductTrustSectionsPro
                 key={idx} 
                 className="group border border-[#eee] rounded-[4px] bg-white overflow-hidden"
               >
-                <summary className="w-full bg-white p-4 text-left cursor-pointer flex justify-between items-center font-montserrat font-bold text-[0.85rem] text-[#1A1A1A] list-none focus:outline-none hover:bg-gray-50 transition-colors">
+                <summary className="w-full bg-white p-4 text-left cursor-pointer flex justify-between items-center font-montserrat font-bold text-[0.85rem] text-[#1A1A1A] list-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#C0392B] hover:bg-gray-50 transition-colors">
                   <span>{faq.q}</span>
                   <span className="text-[#C0392B] text-[0.75rem] transition-transform duration-200 group-open:rotate-180">
                     ▼

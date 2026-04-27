@@ -26,6 +26,7 @@ export default function HowToOrderPage() {
             src="/img/order/order-hero.webp" 
             alt="RealismThrift Ordering Guide - 7-Step Process to Wholesale Second Hand Branded Fashion from China Factory" 
             fill 
+            sizes="100vw"
             className="object-cover" 
             priority 
           />
@@ -83,14 +84,14 @@ export default function HowToOrderPage() {
             </div>
           </div>
           <div className="relative min-h-[280px]">
-            <Image src="/img/order/step-categories.webp" alt="RealismThrift Order Step 1 - Confirming Professional Wholesale Categories for Used Clothes, Shoes, and Bags Export" fill className="object-cover" />
+            <Image src="/img/order/step-categories.webp" alt="RealismThrift Order Step 1 - Confirming Professional Wholesale Categories for Used Clothes, Shoes, and Bags Export" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           </div>
         </div>
 
         {/* Step 2 */}
         <div className="grid grid-cols-1 md:grid-cols-2 border border-[#eee] border-b-0">
           <div className="relative min-h-[280px] order-2 md:order-1">
-            <Image src="/img/order/step-quantity.webp" alt="RealismThrift Order Step 2 - Determining Bulk Order Volume for 20ft or 40ft Container Shipment of Second Hand Fashion" fill className="object-cover" />
+            <Image src="/img/order/step-quantity.webp" alt="RealismThrift Order Step 2 - Determining Bulk Order Volume for 20ft or 40ft Container Shipment of Second Hand Fashion" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           </div>
           <div className="bg-[#F5F5F0] p-12 flex flex-col justify-center order-1 md:order-2">
             <div className="flex items-center gap-4 mb-5">
@@ -125,14 +126,14 @@ export default function HowToOrderPage() {
             </div>
           </div>
           <div className="relative min-h-[280px]">
-             <Image src="/img/order/step-prices.webp" alt="RealismThrift Order Step 3 - Negotiating Competitive Wholesale Prices and Bulk Volume Discounts for Global Export" fill className="object-cover" />
+             <Image src="/img/order/step-prices.webp" alt="RealismThrift Order Step 3 - Negotiating Competitive Wholesale Prices and Bulk Volume Discounts for Global Export" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           </div>
         </div>
 
         {/* Step 4 */}
         <div className="grid grid-cols-1 md:grid-cols-2 border border-[#eee] border-b-0">
           <div className="relative min-h-[280px] order-2 md:order-1">
-             <Image src="/img/order/step-quality.webp" alt="RealismThrift Order Step 4 - Selecting A-Grade or B-Grade Branded Second Hand Wholesale Merchandise" fill className="object-cover" />
+             <Image src="/img/order/step-quality.webp" alt="RealismThrift Order Step 4 - Selecting A-Grade or B-Grade Branded Second Hand Wholesale Merchandise" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           </div>
           <div className="bg-[#F5F5F0] p-12 flex flex-col justify-center order-1 md:order-2">
             <div className="flex items-center gap-4 mb-5">
@@ -167,14 +168,14 @@ export default function HowToOrderPage() {
             </div>
           </div>
           <div className="relative min-h-[280px]">
-             <Image src="/img/order/step-payment.webp" alt="RealismThrift Order Step 5 - Confirming Proforma Invoice and Secure 30% Deposit Payment for Industrial Export" fill className="object-cover" />
+             <Image src="/img/order/step-payment.webp" alt="RealismThrift Order Step 5 - Confirming Proforma Invoice and Secure 30% Deposit Payment for Industrial Export" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           </div>
         </div>
 
         {/* Step 6 */}
         <div className="grid grid-cols-1 md:grid-cols-2 border border-[#eee] border-b-0">
           <div className="relative min-h-[280px] order-2 md:order-1">
-             <Image src="/img/order/step-production-inspection.webp" alt="RealismThrift Order Step 6 - Professional Sorting, Packing, and Final Quality Inspection Before Bulk Loading" fill className="object-cover" />
+             <Image src="/img/order/step-production-inspection.webp" alt="RealismThrift Order Step 6 - Professional Sorting, Packing, and Final Quality Inspection Before Bulk Loading" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           </div>
           <div className="bg-[#F5F5F0] p-12 flex flex-col justify-center order-1 md:order-2">
             <div className="flex items-center gap-4 mb-5">

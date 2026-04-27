@@ -27,6 +27,7 @@ export default function AboutUsPage() {
             src="/images/hero-main.webp"
             alt="RealismThrift Professional Team and Sorting Facility in Huizhou China"
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
@@ -122,13 +123,13 @@ export default function AboutUsPage() {
 
           <div className="grid grid-cols-2 gap-3.5">
             <div className="relative h-[200px] w-full rounded-[6px] overflow-hidden">
-              <Image src="/images/about/story-1.webp" alt="RealismThrift Modern Facility Exterior - Wholesale Supplier of Bulk Second Hand Clothes and Shoes" fill className="object-cover" />
+              <Image src="/images/about/story-1.webp" alt="RealismThrift Modern Facility Exterior - Wholesale Supplier of Bulk Second Hand Clothes and Shoes" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
             </div>
             <div className="relative h-[200px] w-full rounded-[6px] overflow-hidden">
-              <Image src="/images/about/story-2.webp" alt="RealismThrift Precision Sorting Process - Expert Hand-Inspected Branded Used Clothing for A-Grade Quality Export" fill className="object-cover" />
+              <Image src="/images/about/story-2.webp" alt="RealismThrift Precision Sorting Process - Expert Hand-Inspected Branded Used Clothing for A-Grade Quality Export" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
             </div>
             <div className="relative h-[200px] w-full col-span-2 rounded-[6px] overflow-hidden">
-              <Image src="/images/about/story-3-clear.webp" alt="RealismThrift Professional Baling and Packing - Compressed Bales of Second Hand Clothes Ready for Global Wholesale Shipping" fill className="object-cover" />
+              <Image src="/images/about/story-3-clear.webp" alt="RealismThrift Professional Baling and Packing - Compressed Bales of Second Hand Clothes Ready for Global Wholesale Shipping" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
             </div>
           </div>
         </div>
@@ -155,7 +156,7 @@ export default function AboutUsPage() {
             ].map(team => (
               <div key={team.title} className="bg-white/5 border border-white/10 rounded-[8px] overflow-hidden">
                 <div className="relative h-[140px] w-full">
-                  <Image src={`/images/about/${team.img}`} alt={`RealismThrift ${team.title} - Experts in Bulk Second Hand ${team.title.split(' ')[0]}`} fill className="object-cover" />
+                  <Image src={`/images/about/${team.img}`} alt={`RealismThrift ${team.title} - Experts in Bulk Second Hand ${team.title.split(' ')[0]}`} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
                 </div>
                 <div className="p-4">
                   <div className="font-montserrat text-[0.875rem] font-bold text-brand-gold mb-2">{team.title}</div>
@@ -175,19 +176,19 @@ export default function AboutUsPage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 grid-rows-2 gap-3.5 md:h-[400px]">
           <div className="relative rounded-[8px] overflow-hidden lg:col-span-2 row-span-2 min-h-[200px]">
-            <Image src="/images/about/factory-hall.webp" alt="RealismThrift Main Sorting Hall - 15,000m² State-of-the-Art Used Clothing Facility" fill className="object-cover" />
+            <Image src="/images/about/factory-hall.webp" alt="RealismThrift Main Sorting Hall - 15,000m² State-of-the-Art Used Clothing Facility" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-            <Image src="/images/about/packing-area-premium.webp" alt="RealismThrift Industrial Packing Area - Professional Baling and Logistics for Worldwide Used Clothes Wholesale Export" fill className="object-cover" />
+            <Image src="/images/about/packing-area-premium.webp" alt="RealismThrift Industrial Packing Area - Professional Baling and Logistics for Worldwide Used Clothes Wholesale Export" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-            <Image src="/images/about/loading-dock-premium.webp" alt="RealismThrift Efficient Loading Dock - Fast 7-Day Container Shipment and Export Logistics of Second Hand Goods to Global Ports" fill className="object-cover" />
+            <Image src="/images/about/loading-dock-premium.webp" alt="RealismThrift Efficient Loading Dock - Fast 7-Day Container Shipment and Export Logistics of Second Hand Goods to Global Ports" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-            <Image src="/images/about/sorting-process.webp" alt="RealismThrift Branded Shoe Sorting Station - Strict Grade A Quality Control for Export Sneakers and Footwear" fill className="object-cover" />
+            <Image src="/images/about/sorting-process.webp" alt="RealismThrift Branded Shoe Sorting Station - Strict Grade A Quality Control for Export Sneakers and Footwear" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-            <Image src="/images/about/bag-inspection.webp" alt="RealismThrift Designer Bag Inspection Room - Professional Quality Verification for Wholesale Used Handbags and Backpacks" fill className="object-cover" />
+            <Image src="/images/about/bag-inspection.webp" alt="RealismThrift Designer Bag Inspection Room - Professional Quality Verification for Wholesale Used Handbags and Backpacks" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">

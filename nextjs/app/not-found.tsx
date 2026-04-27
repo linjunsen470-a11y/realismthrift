@@ -10,6 +10,7 @@ export default function NotFound() {
           src="/images/about/sorting-process.webp"
           alt="RealismThrift Sorting Facility - High-Precision Wholesale Supply Center for Second Hand Branded Fashion in China"
           fill
+          sizes="100vw"
           priority
           className="rt-hero-bg opacity-40"
         />

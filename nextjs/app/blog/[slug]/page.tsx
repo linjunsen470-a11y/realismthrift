@@ -101,7 +101,7 @@ export default async function BlogPostPage({
     dateModified: post._updatedAt,
     authorName: post.author?.name || "RealismThrift",
     publisherName: "RealismThrift Export Co., Ltd.",
-    publisherLogo: "https://www.realismthrift.com/logo.webp",
+    publisherLogo: "https://www.realismthrift.com/img/logo.webp",
     url: `https://www.realismthrift.com/blog/${slug}`
   });
 
@@ -113,6 +113,7 @@ export default async function BlogPostPage({
           src={heroImage}
           alt={post.title}
           fill
+          sizes="100vw"
           className="object-cover z-0"
           priority
         />
@@ -245,6 +246,7 @@ export default async function BlogPostPage({
                                   .url()}
                                 alt={rPost.title}
                                 fill
+                                sizes="90px"
                               />
                             ) : (
                               <div className="w-full h-full bg-gray-100 flex items-center justify-center">

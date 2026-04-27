@@ -52,7 +52,10 @@ export default function UsedBrandBagPage() {
     name: "Used Brand Bags Wholesale",
     description: "Wholesale exporter of sorted second-hand branded handbags, backpacks, and luggage from China.",
     image: "https://www.realismthrift.com/images/bags/loewe-puzzle-bag-assorted-colors-display.webp",
-    url: "https://www.realismthrift.com/used-brand-bag"
+    url: "https://www.realismthrift.com/used-brand-bag",
+    lowPrice: "3.0",
+    highPrice: "25.0",
+    offerCount: 5,
   });
 
   const faqSchema = getFaqSchema(bagFaqs);
@@ -68,6 +71,7 @@ export default function UsedBrandBagPage() {
             src="/images/bags/loewe-puzzle-bag-assorted-colors-display.webp" 
             alt="RealismThrift Designer Bag Warehouse - Wholesale Supplier of Sorted Used Branded Handbags and Backpacks from China" 
             fill 
+            sizes="100vw"
             className="object-cover" 
             priority 
           />
@@ -163,7 +167,7 @@ export default function UsedBrandBagPage() {
               ].map(prod => (
                 <div key={prod.title} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
                   <div className="relative overflow-hidden h-[180px]">
-                    <Image src={prod.img} alt={`RealismThrift Wholesale ${prod.title} - Luxury Branded Second-Hand Bags Bulk Inventory from China Factory`} fill className="object-cover" />
+                    <Image src={prod.img} alt={`RealismThrift Wholesale ${prod.title} - Luxury Branded Second-Hand Bags Bulk Inventory from China Factory`} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
                     <div className="absolute top-2 left-2 bg-brand-dark text-brand-gold text-[0.65rem] font-bold px-2 py-1 rounded-[2px] font-montserrat uppercase tracking-wider">
                       Grade A
                     </div>
@@ -224,7 +228,7 @@ export default function UsedBrandBagPage() {
               ].map(process => (
                 <div key={process.step} className="bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
                   <div className="relative h-[160px]">
-                    <Image src={process.img} alt={`RealismThrift Bag Quality Inspection Step ${process.step} - ${process.title} for Professional Global Wholesale Branded Bags`} fill className="object-cover" />
+                    <Image src={process.img} alt={`RealismThrift Bag Quality Inspection Step ${process.step} - ${process.title} for Professional Global Wholesale Branded Bags`} fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover" />
                   </div>
                   <div className="p-5">
                     <div className="flex items-center gap-2.5 mb-2.5">
@@ -239,7 +243,7 @@ export default function UsedBrandBagPage() {
               {/* STEP 05 — full width */}
               <div className="sm:col-span-2 bg-white border border-[#eee] rounded-[6px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)] grid grid-cols-1 md:grid-cols-[300px_1fr]">
                 <div className="relative h-[200px] md:h-auto">
-                  <Image src="/images/bags/gucci-handbags-collection-marmont-dionysus-ophidia.webp" alt="RealismThrift Final QC and Packing - Branded Second-Hand Bags Ready for Professional Wholesale Export Shipment from China" fill className="object-cover" />
+                  <Image src="/images/bags/gucci-handbags-collection-marmont-dionysus-ophidia.webp" alt="RealismThrift Final QC and Packing - Branded Second-Hand Bags Ready for Professional Wholesale Export Shipment from China" fill sizes="(min-width: 768px) 300px, 100vw" className="object-cover" />
                 </div>
                 <div className="p-[1.25rem]">
                   <div className="flex items-center gap-[0.625rem] mb-[0.625rem]">

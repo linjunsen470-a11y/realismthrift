@@ -21,7 +21,7 @@ export function getOrganizationSchema() {
     "@type": "Organization",
     "name": "RealismThrift Export Co., Ltd.",
     "url": "https://www.realismthrift.com",
-    "logo": "https://www.realismthrift.com/logo.webp",
+    "logo": "https://www.realismthrift.com/img/logo.webp",
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+86-133-6748-1710",
@@ -42,12 +42,18 @@ export function getProductSchema({
   name, 
   description, 
   image, 
-  url 
+  url,
+  lowPrice,
+  highPrice,
+  offerCount,
 }: { 
   name: string; 
   description: string; 
   image: string; 
   url: string;
+  lowPrice?: string;
+  highPrice?: string;
+  offerCount?: number;
 }) {
   return {
     "@context": "https://schema.org/",
@@ -63,6 +69,9 @@ export function getProductSchema({
       "@type": "AggregateOffer",
       "url": url,
       "priceCurrency": "USD",
+      ...(lowPrice ? { "lowPrice": lowPrice } : {}),
+      ...(highPrice ? { "highPrice": highPrice } : {}),
+      ...(offerCount ? { "offerCount": offerCount } : {}),
       "availability": "https://schema.org/InStock",
       "seller": {
         "@type": "Organization",

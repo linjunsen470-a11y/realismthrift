@@ -27,6 +27,7 @@ export default function ContactUsPage() {
             src="/images/hero/contact-hero.webp" 
             alt="RealismThrift Contact Center - Get Professional Wholesale Support for Used Clothes, Shoes, and Bags Export from China Factory" 
             fill 
+            sizes="100vw"
             className="object-cover opacity-[0.08]" 
             priority 
           />
@@ -59,7 +60,7 @@ export default function ContactUsPage() {
               { i: <Mail className="w-6 h-6 text-brand-red" />, t: "Email", s: "Send us an email", v: "sales@realismthrift.com", l: "mailto:sales@realismthrift.com", color: "bg-red-50" },
               { i: <MessageCircle className="w-6 h-6 text-[#25D366]" />, t: "WhatsApp", s: "Chat with us now", v: "+86 133 6748 1710", l: "https://wa.me/8613367481710", color: "bg-green-50" },
               { i: <Phone className="w-6 h-6 text-brand-gold" />, t: "Phone", s: "Call our sales team", v: "+86 133 6748 1710", l: "tel:+8613367481710", color: "bg-yellow-50" },
-              { i: <MapPin className="w-6 h-6 text-brand-dark" />, t: "Address", s: "Visit our factory", v: "Huizhou, China", l: "#", color: "bg-gray-100" },
+              { i: <MapPin className="w-6 h-6 text-brand-dark" />, t: "Address", s: "Visit our factory", v: "Huizhou, China", l: "https://www.google.com/maps/search/?api=1&query=Boluo%20Huizhou%20Guangdong%20China", color: "bg-gray-100" },
             ].map((item) => (
               <div key={item.t} className="bg-white border border-[#eee] rounded-[12px] p-8 text-center shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all transform hover:-translate-y-1.5 group">
                 <div className={`w-14 h-14 ${item.color} rounded-full flex items-center justify-center mx-auto mb-5 transition-transform group-hover:scale-110 group-hover:rotate-3`}>
@@ -67,7 +68,7 @@ export default function ContactUsPage() {
                 </div>
                 <div className="font-montserrat text-[0.9375rem] font-bold text-brand-dark mb-1">{item.t}</div>
                 <div className="text-[0.8125rem] text-[#666] mb-5 font-open-sans">{item.s}</div>
-                <a href={item.l} className="text-brand-red text-[0.875rem] font-bold font-montserrat hover:text-brand-red-dark transition-colors break-all block">
+                <a href={item.l} target={item.t === "Address" ? "_blank" : undefined} rel={item.t === "Address" ? "noopener noreferrer" : undefined} className="text-brand-red text-[0.875rem] font-bold font-montserrat hover:text-brand-red-dark transition-colors break-all block">
                   {item.v}
                 </a>
               </div>
