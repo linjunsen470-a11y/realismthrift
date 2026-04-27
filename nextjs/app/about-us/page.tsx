@@ -11,7 +11,7 @@ export const metadata = {
   openGraph: {
     title: "About RealismThrift | Professional Wholesale Exporter",
     description: "Learn about RealismThrift's sorting facility, grading process, and export support for second-hand goods.",
-    images: ['/images/about/hero-bg.webp'],
+    images: ['/images/about/factory-hall.webp'],
   },
   alternates: {
     canonical: "/about-us",

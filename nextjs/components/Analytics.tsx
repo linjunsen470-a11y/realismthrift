@@ -12,8 +12,8 @@ export default function Analytics() {
 
   useEffect(() => {
     // Track page views for FB Pixel manually since it's a SPA-like navigation in Next.js
-    if (FB_PIXEL_ID && (window as any).fbq) {
-      (window as any).fbq("track", "PageView");
+    if (FB_PIXEL_ID && window.fbq) {
+      window.fbq("track", "PageView");
     }
   }, [pathname, FB_PIXEL_ID]);
 
@@ -79,12 +79,12 @@ export const trackEvent = (eventName: string, params?: object) => {
   if (typeof window === "undefined") return;
 
   // Track in GA4
-  if ((window as any).gtag) {
-    (window as any).gtag("event", eventName, params);
+  if (window.gtag) {
+    window.gtag("event", eventName, params);
   }
 
   // Track in FB Pixel
-  if ((window as any).fbq) {
-    (window as any).fbq("track", eventName, params);
+  if (window.fbq) {
+    window.fbq("track", eventName, params);
   }
 };

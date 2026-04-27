@@ -41,10 +41,10 @@ export const metadata: Metadata = {
     description: 'Wholesale supplier of sorted second-hand clothes, shoes and bags from China. Export support for used fashion buyers worldwide.',
     images: [
       {
-        url: '/img/logo.webp',
-        width: 800,
-        height: 600,
-        alt: 'RealismThrift Logo',
+        url: '/img/og-realismthrift.png',
+        width: 1200,
+        height: 630,
+        alt: 'RealismThrift wholesale second hand fashion warehouse',
       },
     ],
   },
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'RealismThrift Export Co., Ltd | Used Clothes, Shoes & Bags Supplier in China',
     description: 'Wholesale supplier of sorted second-hand clothes, shoes and bags from China. Export support for used fashion buyers worldwide.',
-    images: ['/img/logo.webp'],
+    images: ['/img/og-realismthrift.png'],
   },
   icons: {
     icon: '/img/logo.webp',
@@ -73,12 +73,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <main className="flex-grow">{children}</main>
           <SiteFooter data={siteFooter} />
         </div>
-        {isDraftModeEnabled ? <VisualEditing /> : null}
-        <SanityLive
-          refreshOnMount={false}
-          refreshOnFocus={false}
-          refreshOnReconnect={false}
-        />
+        {isDraftModeEnabled ? (
+          <>
+            <VisualEditing />
+            <SanityLive
+              refreshOnMount={false}
+              refreshOnFocus={false}
+              refreshOnReconnect={false}
+            />
+          </>
+        ) : null}
       </body>
     </html>
   );

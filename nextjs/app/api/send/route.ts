@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 
 const MAX_REQUESTS_PER_WINDOW = 5;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const PRODUCTION_SITE_ORIGIN = 'https://www.realismthrift.com';
 
 type InquiryPayload = {
   name: string;
@@ -59,6 +60,65 @@ function getClientIp(request: Request) {
   return request.headers.get('x-real-ip')?.trim() || 'unknown';
 }
 
+function getConfiguredAppOrigin() {
+  const appUrl = process.env.APP_URL;
+  if (!appUrl || appUrl === 'MY_APP_URL') {
+    return null;
+  }
+
+  try {
+    return new URL(appUrl).origin;
+  } catch {
+    return null;
+  }
+}
+
+function getRequestOrigin(request: Request) {
+  const forwardedHost = request.headers.get('x-forwarded-host')?.split(',')[0]?.trim();
+  const host = forwardedHost || request.headers.get('host')?.trim();
+  if (!host) {
+    return null;
+  }
+
+  const forwardedProto = request.headers.get('x-forwarded-proto')?.split(',')[0]?.trim();
+  const protocol = forwardedProto || new URL(request.url).protocol.replace(':', '');
+  return `${protocol}://${host}`;
+}
+
+function getSourceOrigin(request: Request) {
+  const origin = request.headers.get('origin');
+  if (origin) {
+    return origin;
+  }
+
+  const referer = request.headers.get('referer');
+  if (!referer) {
+    return null;
+  }
+
+  try {
+    return new URL(referer).origin;
+  } catch {
+    return null;
+  }
+}
+
+function isAllowedRequestOrigin(request: Request) {
+  const sourceOrigin = getSourceOrigin(request);
+
+  if (!sourceOrigin) {
+    return process.env.NODE_ENV !== 'production';
+  }
+
+  const allowedOrigins = new Set<string>([
+    PRODUCTION_SITE_ORIGIN,
+    getRequestOrigin(request),
+    getConfiguredAppOrigin(),
+  ].filter((origin): origin is string => Boolean(origin)));
+
+  return allowedOrigins.has(sourceOrigin);
+}
+
 function isRateLimited(clientIp: string) {
   const now = Date.now();
   const attempts = rateLimitStore.get(clientIp) ?? [];
@@ -111,7 +171,9 @@ export async function POST(request: Request) {
   const contactEmail = process.env.CONTACT_EMAIL || 'sales@realismthrift.com';
   const fromEmail = process.env.CONTACT_FROM_EMAIL 
     ? normalizeText(process.env.CONTACT_FROM_EMAIL, 120).toLowerCase() 
-    : 'onboarding@resend.dev';
+    : process.env.NODE_ENV === 'production'
+      ? ''
+      : 'onboarding@resend.dev';
 
   if (!apiKey || !fromEmail || !emailPattern.test(fromEmail)) {
     return jsonError(
@@ -124,6 +186,14 @@ export async function POST(request: Request) {
   const resend = new Resend(apiKey);
 
   try {
+    if (!isAllowedRequestOrigin(request)) {
+      return jsonError(
+        'validation_error',
+        'Invalid request origin.',
+        403,
+      );
+    }
+
     const clientIp = getClientIp(request);
     if (isRateLimited(clientIp)) {
       return jsonError(
@@ -147,7 +217,7 @@ export async function POST(request: Request) {
     const result = await resend.emails.send({
       from: `RealismThrift <${fromEmail}>`,
       to: [contactEmail],
-      subject: `New Lead: ${escapeHtml(name)} from ${escapeHtml(country || 'Unknown Country')}`,
+      subject: `New Lead: ${name} from ${country || 'Unknown Country'}`,
       html: `
         <h2>New Inquiry from Website</h2>
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>

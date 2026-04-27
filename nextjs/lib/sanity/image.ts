@@ -1,14 +1,19 @@
-import { createImageUrlBuilder } from "@sanity/image-url";
+import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
 import { sanityClient } from "@/lib/sanity/client";
 import { SanityImage } from "@/types";
 
 const builder = createImageUrlBuilder(sanityClient);
 
-export function urlForImage(source: unknown) {
-  return builder.image(source as never);
+type SanityImageWithUsableAsset = SanityImage &
+  ({ asset: { _ref: string } } | { asset: { url: string } });
+
+export function urlForImage(source: SanityImageSource) {
+  return builder.image(source);
 }
 
-export function hasUsableImageAsset(image: SanityImage | null | undefined) {
+export function hasUsableImageAsset(
+  image: SanityImage | null | undefined,
+): image is SanityImageWithUsableAsset {
   const asset = image?.asset;
   return Boolean(asset && (asset._ref || asset.url));
 }
