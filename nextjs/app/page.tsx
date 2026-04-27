@@ -17,6 +17,7 @@ import {
   Phone,
   Ship,
   ShieldCheck,
+  Sparkles,
   Trophy,
   Zap,
 } from "lucide-react";
@@ -53,9 +54,9 @@ const featureIconMap = {
 } as const;
 
 const heroTags = [
-  { label: "No Stains", icon: CircleOff },
-  { label: "No Tears", icon: CircleOff },
-  { label: "No Fading", icon: CircleOff },
+  { label: "Strictly Inspected", icon: CheckCircle2 },
+  { label: "Minimal Wear", icon: CheckCircle2 },
+  { label: "Vibrant Colors", icon: Sparkles },
   { label: "A-Grade Quality", icon: CheckCircle2 },
 ];
 
@@ -68,10 +69,10 @@ const trustItems = [
 ];
 
 const productQualityBadges = [
-  { label: "NO Stains or Dirt", icon: CircleOff },
-  { label: "NO Tears or Holes", icon: CircleOff },
-  { label: "NO Fading or Overuse", icon: CircleOff },
-  { label: "Fashionable & Clean", icon: CheckCircle2 },
+  { label: "Strict Quality Control", icon: ShieldCheck },
+  { label: "Professional Sorting", icon: CheckCircle2 },
+  { label: "Vibrant & Fashionable", icon: Sparkles },
+  { label: "Clean & Ready to Wear", icon: CheckCircle2 },
 ];
 
 const partnerRegions = [
@@ -111,7 +112,7 @@ const faqs = [
   {
     question: "What is your monthly supply capacity?",
     answer:
-      `Our monthly supply capacity is 1,000+ containers (20ft and 40ft). We can handle large orders efficiently with our ${companyStats.facilitySize} facility and ${companyStats.staffCount} staff.`,
+      `Our monthly supply capacity is over 200 tonnes (approx. 8-10 40ft containers). We can handle large orders efficiently with our ${companyStats.facilitySize} facility and ${companyStats.staffCount} staff.`,
   },
   {
     question: "What products do you offer?",
@@ -131,7 +132,7 @@ const faqs = [
   {
     question: "How do you ensure quality?",
     answer:
-      "We use A-Grade sorting standards. Trained quality inspectors conduct random inspections on every batch. No stains, no tears, no holes, and no fading.",
+      "We use A-Grade sorting standards. Trained quality inspectors conduct random inspections on every batch to ensure minimal wear and high fashion relevance.",
   },
   {
     question: "Can I get a sample before placing a bulk order?",
@@ -188,7 +189,7 @@ export default async function Home() {
         <div className="rt-hero-overlay" />
         <div className="rt-container">
           <div className="rt-hero-content rt-fade-in">
-            <div className="rt-hero-badge">#1 Second Hand Clothes Supplier in China</div>
+            <div className="rt-hero-badge">Premium Second Hand Fashion Exporter in China</div>
             <h1 className="rt-hero-title">
               Direct Second Hand Brand Clothes, Shoes & Bags Factory
             </h1>
@@ -253,9 +254,7 @@ export default async function Home() {
             <h2 className="rt-section-title">SECOND HAND PRODUCT CATEGORIES</h2>
             <div className="rt-section-divider center" />
             <p className="rt-section-copy">
-              Over 200 categories with A-Grade sorting. No stains, no tears, no fading
-              {" "}
-              only fashionable, bright, and clean items.
+              Over 200 categories with A-Grade sorting. Our items are carefully selected for being fashionable, bright, and clean.
             </p>
           </div>
 
@@ -330,7 +329,7 @@ export default async function Home() {
                 Your Most Reliable Partner in Used Clothing Export
               </p>
               <p className="rt-about-text">
-                RealismThrift Export Co., Ltd is a world leader in recycling used fashion.
+                RealismThrift Export Co., Ltd is a highly trusted partner in global used fashion recycling.
                 We help businesses in Africa, Southeast Asia, the Middle East, and the
                 Americas get the best second-hand clothes, shoes, and bags at wholesale
                 prices.

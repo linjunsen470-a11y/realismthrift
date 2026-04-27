@@ -46,7 +46,7 @@ export default function AboutUsPage() {
               About <span className="text-brand-gold">RealismThrift</span>
             </h1>
             <p className="rt-page-hero-sub max-w-[700px] mb-9 leading-[1.8] text-[1.0625rem]">
-              China&apos;s leading wholesale exporter of used brand clothes, shoes, and bags. Over 10 years of experience. {companyStats.facilitySize} sorting facility. Trusted by {companyStats.buyersCount} wholesale buyers in {companyStats.countriesCount} countries.
+              A premier wholesale exporter of used brand clothes, shoes, and bags. Over 10 years of experience. {companyStats.facilitySize} sorting facility. Trusted by {companyStats.buyersCount} wholesale buyers in {companyStats.countriesCount} countries.
             </p>
             <div className="flex gap-4 justify-center md:justify-start">
               <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-6 md:px-10 py-3 md:py-4 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-all shadow-[0_10px_20px_rgba(240,180,41,0.2)] whitespace-nowrap">
@@ -305,7 +305,7 @@ export default function AboutUsPage() {
       <section className="py-16 text-center bg-gradient-to-br from-brand-dark to-[#2a1515]">
         <div className="max-w-[700px] mx-auto px-6">
           <h2 className="font-montserrat text-[1.75rem] font-extrabold text-white mb-4">Ready to Partner with RealismThrift?</h2>
-          <p className="text-white/70 text-[0.9375rem] leading-[1.7] mb-8">Join 1,200+ wholesale buyers worldwide. Get a free price quotation within 12 hours.</p>
+          <p className="text-white/70 text-[0.9375rem] leading-[1.7] mb-8">Join {companyStats.buyersCount} wholesale buyers worldwide. Get a free price quotation within 12 hours.</p>
           <div className="flex justify-center gap-4 flex-wrap">
             <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-colors">
               Contact Us Now

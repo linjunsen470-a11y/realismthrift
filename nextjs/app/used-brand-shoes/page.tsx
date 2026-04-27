@@ -10,19 +10,19 @@ import { XCircle, CheckCircle2, Footprints, Sparkles, Package, Globe2, ShoppingB
 import { JsonLd, getProductSchema, getFaqSchema } from "@/components/JsonLd";
 
 const shoeStandards = [
-  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'No Glue Damage', desc: 'No sticky parts coming loose from sole or upper', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'No Cracking', desc: 'Surface stays smooth, no layers peeling or cracking', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'No Missing Pieces', desc: 'All parts present — laces, insoles, tongue included', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'No Heavy Odor', desc: 'Cleaned and deodorized, no persistent smell', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'No Broken Soles', desc: 'Bottom part fully solid, no separation from upper', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'No Structural Damage', desc: 'Shape maintained, no crushing or deformation', isNegative: true },
-  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Complete Pairs Only', desc: 'Every sack contains 100% matched pairs', isNegative: false },
-  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Brand Label Intact', desc: 'Original brand label clearly visible on tongue/sole', isNegative: false },
-  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Wearable Condition', desc: 'All items are immediately wearable upon receipt', isNegative: false }
+  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'Strict Glue Inspection', desc: 'Soles and uppers are checked for bonding integrity', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'Surface Integrity', desc: 'Inspected for layers peeling or major cracking', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'Complete Parts Check', desc: 'Ensuring laces, insoles, and tongues are present', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'Deodorized & Sterilized', desc: 'Professional cleaning and UV treatment', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'Sole Integrity', desc: 'Checked for breakage or separation', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'Shape Maintenance', desc: 'Checking for crushing or major deformation', isNegative: true },
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Carefully Paired', desc: 'Every sack contains matched pairs', isNegative: false },
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Visible Branding', desc: 'Original brand label is clearly visible', isNegative: false },
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Ready to Wear', desc: 'Items are sorted to be immediately wearable', isNegative: false }
 ];
 
 const shoeFeatures = [
-  { icon: <Footprints className="w-6 h-6 text-brand-gold" />, title: 'Precise Pairing', desc: '100% manual check ensures no single shoes or mismatched pairs.' },
+  { icon: <Footprints className="w-6 h-6 text-brand-gold" />, title: 'Rigorous Pairing', desc: 'Manual checking minimizes the risk of mismatched pairs.' },
   { icon: <Sparkles className="w-6 h-6 text-brand-gold" />, title: 'Professional Sterilization', desc: 'Cleaned, deodorized, and UV sterilized for international health standards.' },
   { icon: <Package className="w-6 h-6 text-brand-gold" />, title: 'Secure Sacking', desc: 'Hydraulic compressed packing to maximize container space and protect shoes.' },
   { icon: <Globe2 className="w-6 h-6 text-brand-gold" />, title: `${companyStats.countriesCount} Export Ports`, desc: 'Direct shipping to major ports in Africa, Middle East, and Southeast Asia.' }
@@ -36,7 +36,7 @@ const shoeFaqs = [
 
 export const metadata = {
   title: "Used Brand Shoes Wholesale | Nike, Adidas, Jordan Supplier",
-  description: `China's premium wholesale supplier of second-hand branded shoes. Nike, Adidas, Jordan, and 30+ brands. 100% matched pairs, cleaned and sterilized. Exporting to ${companyStats.countriesCount} countries.`,
+  description: `A premium wholesale supplier of second-hand branded shoes. Nike, Adidas, Jordan, and 30+ brands. Matched pairs, cleaned and sterilized. Exporting to ${companyStats.countriesCount} countries.`,
   openGraph: {
     title: "Used Brand Shoes Wholesale | Premium A-Grade Supplier",
     description: "Premium second-hand branded shoes from China. Nike, Adidas, and more. 100% manual check for matched pairs and quality.",
