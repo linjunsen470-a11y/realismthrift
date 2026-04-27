@@ -34,6 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'RealismThrift | Global Wholesale Supplier of Used Clothes, Shoes & Bags',
     description: 'Supplier of sorted second-hand clothes, shoes, and bags from China with grading and export support.',
+    images: ['/img/og-realismthrift.webp'],
   },
   alternates: {
     canonical: '/',
@@ -179,7 +180,7 @@ export default async function Home() {
       <JsonLd data={organizationSchema} />
       <JsonLd data={websiteSchema} />
       <JsonLd data={faqSchema} />
-      <section className="rt-hero" id="home">
+      <section className="rt-hero" id="home" aria-label="Hero Section">
         <Image
           src="/images/hero-main.webp"
           alt="RealismThrift Export Co., Ltd - China Wholesale Supplier of Sorted Second Hand Branded Clothes, Shoes, and Bags"
@@ -250,11 +251,11 @@ export default async function Home() {
         </div>
       </div>
 
-      <section className="rt-home-section rt-products" id="products">
+      <section className="rt-home-section rt-products" id="products" aria-labelledby="products-title">
         <div className="rt-container">
           <div className="rt-section-header center">
             <span className="rt-section-badge">WHOLESALE PRODUCTS</span>
-            <h2 className="rt-section-title">SECOND HAND PRODUCT CATEGORIES</h2>
+            <h2 className="rt-section-title" id="products-title">SECOND HAND PRODUCT CATEGORIES</h2>
             <div className="rt-section-divider center" />
             <p className="rt-section-copy">
               Over 200 categories with practical grading. Stock is sorted by item type, brand level, condition, and market use.
@@ -272,9 +273,9 @@ export default async function Home() {
 
           <div className="rt-products-grid">
             {productsData.map((product) => (
-              <Link 
-                key={product.id} 
-                href={product.href} 
+              <Link
+                key={product.id}
+                href={product.href}
                 className="rt-product-card"
               >
                 <Image
@@ -305,7 +306,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="rt-home-section rt-about" id="about">
+      <section className="rt-home-section rt-about" id="about" aria-labelledby="about-title">
         <div className="rt-container">
           <div className="rt-about-inner">
             <div className="rt-about-image-wrap">
@@ -325,7 +326,7 @@ export default async function Home() {
 
             <div className="rt-about-copy">
               <span className="rt-section-badge">ABOUT US</span>
-              <h2 className="rt-section-title">WHY CHOOSE US</h2>
+              <h2 className="rt-section-title" id="about-title">WHY CHOOSE US</h2>
               <div className="rt-section-divider" />
               <p className="rt-about-subtitle">
                 Your Most Reliable Partner in Used Clothing Export
@@ -358,8 +359,8 @@ export default async function Home() {
                   <span className="rt-stat-label">Staff Members</span>
                 </div>
               </div>
-              <Link 
-                href="#contact" 
+              <Link
+                href="#contact"
                 className="rt-btn-primary"
                 aria-label="Know more about RealismThrift export services"
               >
@@ -370,11 +371,11 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="rt-home-section rt-features" id="why-choose-us">
+      <section className="rt-home-section rt-features" id="why-choose-us" aria-labelledby="features-title">
         <div className="rt-container">
           <div className="rt-section-header center">
             <span className="rt-section-badge">OUR ADVANTAGES</span>
-            <h2 className="rt-section-title">WHY CHOOSE REALISMTHRIFT EXPORT CO., LTD</h2>
+            <h2 className="rt-section-title" id="features-title">WHY CHOOSE REALISMTHRIFT EXPORT CO., LTD</h2>
             <div className="rt-section-divider center" />
           </div>
 
@@ -426,11 +427,11 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="rt-home-section rt-order" id="how-to-order">
+      <section className="rt-home-section rt-order" id="how-to-order" aria-labelledby="order-title">
         <div className="rt-container">
           <div className="rt-section-header center">
             <span className="rt-section-badge">SIMPLE PROCESS</span>
-            <h2 className="rt-section-title">HOW TO ORDER</h2>
+            <h2 className="rt-section-title" id="order-title">HOW TO ORDER</h2>
             <div className="rt-section-divider center" />
           </div>
 
@@ -454,11 +455,11 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="rt-home-section rt-faq" id="faq">
+      <section className="rt-home-section rt-faq" id="faq" aria-labelledby="faq-title">
         <div className="rt-container rt-faq-container">
           <div className="rt-section-header center">
             <span className="rt-section-badge">FAQ</span>
-            <h2 className="rt-section-title">FREQUENTLY ASKED QUESTIONS</h2>
+            <h2 className="rt-section-title" id="faq-title">FREQUENTLY ASKED QUESTIONS</h2>
             <div className="rt-section-divider center" />
           </div>
 
@@ -480,11 +481,11 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="rt-home-section rt-contact" id="contact">
+      <section className="rt-home-section rt-contact" id="contact" aria-labelledby="contact-title">
         <div className="rt-container">
           <div className="rt-section-header center">
             <span className="rt-section-badge light">CONTACT US</span>
-            <h2 className="rt-section-title light">GET IN TOUCH</h2>
+            <h2 className="rt-section-title light" id="contact-title">GET IN TOUCH</h2>
             <div className="rt-section-divider center" />
           </div>
 

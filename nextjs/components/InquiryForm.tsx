@@ -54,7 +54,7 @@ export function InquiryForm({
           content_name: "Inquiry Form",
           content_category: payload.product || "General",
         });
-        
+
         return;
       }
 
@@ -86,6 +86,7 @@ export function InquiryForm({
     <form
       className={`rt-inquiry-form${isSidebar ? " is-sidebar" : ""}`}
       onSubmit={handleSubmit}
+      aria-busy={submission.status === "loading" ? "true" : "false"}
     >
       <div className="rt-form-grid">
         <input

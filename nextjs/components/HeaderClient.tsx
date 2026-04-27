@@ -68,6 +68,7 @@ export function HeaderClient({ data }: HeaderClientProps) {
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
                 placeholder="Search catalog..."
+                aria-label="Search catalog"
                 className="bg-transparent focus:ring-0 text-sm"
               />
               <button
@@ -109,6 +110,7 @@ export function HeaderClient({ data }: HeaderClientProps) {
                   <Link
                     href={item.href}
                     className={isActive ? "is-active" : undefined}
+                    aria-current={isActive ? "page" : undefined}
                     onClick={closeMenu}
                   >
                     {item.label}

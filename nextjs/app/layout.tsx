@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     description: 'Wholesale supplier of sorted second-hand clothes, shoes and bags from China. Export support for used fashion buyers worldwide.',
     images: [
       {
-        url: '/img/og-realismthrift.png',
+        url: '/img/og-realismthrift.webp',
         width: 1200,
         height: 630,
         alt: 'RealismThrift wholesale second hand fashion warehouse',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'RealismThrift Export Co., Ltd | Used Clothes, Shoes & Bags Supplier in China',
     description: 'Wholesale supplier of sorted second-hand clothes, shoes and bags from China. Export support for used fashion buyers worldwide.',
-    images: ['/img/og-realismthrift.png'],
+    images: ['/img/og-realismthrift.webp'],
   },
   icons: {
     icon: '/img/logo.webp',

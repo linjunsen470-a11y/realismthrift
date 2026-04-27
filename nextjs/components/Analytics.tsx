@@ -4,6 +4,8 @@ import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
+const isAnalyticsEnabled = process.env.NEXT_PUBLIC_ANALYTICS_ENABLED !== "false";
+
 export default function Analytics() {
   const pathname = usePathname();
   
@@ -12,12 +14,12 @@ export default function Analytics() {
 
   useEffect(() => {
     // Track page views for FB Pixel manually since it's a SPA-like navigation in Next.js
-    if (FB_PIXEL_ID && window.fbq) {
+    if (isAnalyticsEnabled && FB_PIXEL_ID && window.fbq) {
       window.fbq("track", "PageView");
     }
   }, [pathname, FB_PIXEL_ID]);
 
-  if (!GA_ID && !FB_PIXEL_ID) return null;
+  if (!isAnalyticsEnabled || (!GA_ID && !FB_PIXEL_ID)) return null;
 
   return (
     <>
@@ -77,6 +79,7 @@ export default function Analytics() {
  */
 export const trackEvent = (eventName: string, params?: object) => {
   if (typeof window === "undefined") return;
+  if (!isAnalyticsEnabled) return;
 
   // Track in GA4
   if (window.gtag) {

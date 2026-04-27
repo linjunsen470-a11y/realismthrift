@@ -60,32 +60,36 @@ export function SiteFooter({ data }: SiteFooterProps) {
 
           {data.sections.map((section) => (
             <div key={section.title}>
-              <p className="rt-footer-col-title">{section.title}</p>
-              <ul className="rt-footer-links">
-                {section.links.map((link) => (
-                  <li key={link.label}>
-                    <Link href={link.href}>{link.label}</Link>
-                  </li>
-                ))}
-              </ul>
+              <p className="rt-footer-col-title" id={`footer-nav-${section.title.toLowerCase().replace(/\s/g, '-')}`}>{section.title}</p>
+              <nav aria-labelledby={`footer-nav-${section.title.toLowerCase().replace(/\s/g, '-')}`}>
+                <ul className="rt-footer-links">
+                  {section.links.map((link) => (
+                    <li key={link.label}>
+                      <Link href={link.href}>{link.label}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
           ))}
 
           <div>
-            <p className="rt-footer-col-title">Contact</p>
-            <ul className="rt-footer-links">
-              <li>
-                <a href={`https://wa.me/${data.contact.whatsapp.replace(/\s/g, "")}`} target="_blank" rel="noreferrer">
-                  WhatsApp
-                </a>
-              </li>
-              <li>
-                <a href={`mailto:${data.contact.email}`}>Email Us</a>
-              </li>
-              <li>
-                <Link href="/#contact">Inquiry Form</Link>
-              </li>
-            </ul>
+            <p className="rt-footer-col-title" id="footer-nav-contact">Contact</p>
+            <nav aria-labelledby="footer-nav-contact">
+              <ul className="rt-footer-links">
+                <li>
+                  <a href={`https://wa.me/${data.contact.whatsapp.replace(/\s/g, "")}`} target="_blank" rel="noreferrer">
+                    WhatsApp
+                  </a>
+                </li>
+                <li>
+                  <a href={`mailto:${data.contact.email}`}>Email Us</a>
+                </li>
+                <li>
+                  <Link href="/#contact">Inquiry Form</Link>
+                </li>
+              </ul>
+            </nav>
 
             <div className="rt-footer-note">
               {data.contact.inquiryTime.split(". ").map((text, idx) => (
@@ -100,33 +104,6 @@ export function SiteFooter({ data }: SiteFooterProps) {
                 </div>
               ))}
             </div>
-
-            {/* Social accounts are temporarily hidden until the channels are ready.
-            {data.brand.socials && (
-              <div className="rt-footer-socials">
-                {data.brand.socials.facebook && (
-                  <a href={data.brand.socials.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="rt-footer-social-link">
-                    <Facebook size={18} />
-                  </a>
-                )}
-                {data.brand.socials.instagram && (
-                  <a href={data.brand.socials.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="rt-footer-social-link">
-                    <Instagram size={18} />
-                  </a>
-                )}
-                {data.brand.socials.youtube && (
-                  <a href={data.brand.socials.youtube} target="_blank" rel="noreferrer" aria-label="YouTube" className="rt-footer-social-link">
-                    <Youtube size={18} />
-                  </a>
-                )}
-                {data.brand.socials.twitter && (
-                  <a href={data.brand.socials.twitter} target="_blank" rel="noreferrer" aria-label="X (Twitter)" className="rt-footer-social-link">
-                    <X size={18} />
-                  </a>
-                )}
-              </div>
-            )}
-            */}
           </div>
         </div>
 
