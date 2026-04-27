@@ -179,7 +179,7 @@ export default function AboutUsPage() {
             <Image src="/images/about/factory-hall.webp" alt="RealismThrift Main Sorting Hall - 15,000m² State-of-the-Art Used Clothing Facility" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
-            <Image src="/images/about/packing-area-premium.webp" alt="RealismThrift Industrial Packing Area - Professional Baling and Logistics for Worldwide Used Clothes Wholesale Export" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+            <Image src="/images/about/warehouse-inventory.webp" alt="RealismThrift Massive Warehouse Inventory - Large Scale Stock of Sorted Second Hand Sneakers Ready for Wholesale Export" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           </div>
           <div className="relative rounded-[8px] overflow-hidden min-h-[190px]">
             <Image src="/images/about/loading-dock-premium.webp" alt="RealismThrift Efficient Loading Dock - Fast 7-Day Container Shipment and Export Logistics of Second Hand Goods to Global Ports" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
