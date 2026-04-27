@@ -65,7 +65,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
 
           {data.sections.map((section) => (
             <div key={section.title}>
-              <h4 className="rt-footer-col-title">{section.title}</h4>
+              <p className="rt-footer-col-title">{section.title}</p>
               <ul className="rt-footer-links">
                 {section.links.map((link) => (
                   <li key={link.label}>
@@ -77,7 +77,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
           ))}
 
           <div>
-            <h4 className="rt-footer-col-title">Contact</h4>
+            <p className="rt-footer-col-title">Contact</p>
             <ul className="rt-footer-links">
               <li>
                 <a href={`https://wa.me/${data.contact.whatsapp.replace(/\s/g, "")}`} target="_blank" rel="noreferrer">

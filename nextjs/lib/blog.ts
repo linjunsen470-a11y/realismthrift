@@ -79,6 +79,7 @@ export async function getLatestBlogPosts(): Promise<BlogPostCard[]> {
     query: latestPostsQuery,
     tags: ["post"],
     requestTag: "blog.latest",
+    stega: false,
   });
 
   return data as BlogPostCard[];
@@ -89,6 +90,7 @@ export async function getAllBlogPosts(): Promise<BlogPostCard[]> {
     query: allPostsQuery,
     tags: ["post"],
     requestTag: "blog.all",
+    stega: false,
   });
 
   return data as BlogPostCard[];
@@ -134,6 +136,7 @@ export async function getRelatedBlogPosts(
     },
     tags: ["post", "category"],
     requestTag: "blog.related",
+    stega: false,
   });
 
   return data as BlogPostCard[];

@@ -185,6 +185,7 @@ export default async function Home() {
           alt="RealismThrift Export Co., Ltd - China Wholesale Supplier of Sorted Second Hand Branded Clothes, Shoes, and Bags"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="rt-hero-bg"
         />
@@ -275,7 +276,6 @@ export default async function Home() {
                 key={product.id} 
                 href={product.href} 
                 className="rt-product-card"
-                aria-label={`View details for ${product.title}`}
               >
                 <Image
                   src={product.image}
