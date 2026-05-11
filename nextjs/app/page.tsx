@@ -322,6 +322,19 @@ export default async function Home() {
               <div className="rt-about-image-badge">15,000m² Modern Facility</div>
               <div className="rt-about-deco rt-about-deco-dark" />
               <div className="rt-about-deco rt-about-deco-red" />
+              
+              <div className="absolute -bottom-6 -right-6 hidden md:flex gap-3 bg-white p-3 rounded-[12px] shadow-xl z-20 border border-[#eee]">
+                <div className="relative w-32 h-20 rounded-[6px] overflow-hidden">
+                  <Image src="/images/about/working-qc-shoes.webp" alt="RealismThrift QC Inspection - Sorting Branded Used Shoes" fill className="object-cover" />
+                </div>
+                <div className="relative w-24 h-20 rounded-[6px] overflow-hidden">
+                  <Image src="/images/about/working-qc-clothes.webp" alt="RealismThrift Quality Control - Inspecting Used Clothing" fill className="object-cover" />
+                </div>
+                <div className="flex flex-col justify-center pr-2">
+                  <span className="text-[0.6rem] font-bold text-brand-red uppercase tracking-tighter">Real-time QC</span>
+                  <span className="text-[0.5rem] text-brand-dark font-semibold">Huizhou Facility</span>
+                </div>
+              </div>
             </div>
 
             <div className="rt-about-copy">

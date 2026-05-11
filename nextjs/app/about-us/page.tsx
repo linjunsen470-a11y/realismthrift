@@ -123,10 +123,10 @@ export default function AboutUsPage() {
 
           <div className="grid grid-cols-2 gap-3.5">
             <div className="relative h-[200px] w-full rounded-[6px] overflow-hidden">
-              <Image src="/images/about/story-1.webp" alt="RealismThrift Modern Facility Exterior - Wholesale Supplier of Bulk Second Hand Clothes and Shoes" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+              <Image src="/images/about/working-qc-shoes.webp" alt="RealismThrift QC Inspection - Expertly Checking Branded Sneakers for A-Grade Quality" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
             </div>
             <div className="relative h-[200px] w-full rounded-[6px] overflow-hidden">
-              <Image src="/images/about/story-2.webp" alt="RealismThrift Precision Sorting Process - Expert Hand-Inspected Branded Used Clothing for A-Grade Quality Export" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+              <Image src="/images/about/working-qc-clothes.webp" alt="RealismThrift Quality Control - Detailed Inspection of Used Branded Clothing" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
             </div>
             <div className="relative h-[200px] w-full col-span-2 rounded-[6px] overflow-hidden">
               <Image src="/images/about/story-3-clear.webp" alt="RealismThrift Professional Baling and Packing - Compressed Bales of Second Hand Clothes Ready for Global Wholesale Shipping" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
@@ -147,21 +147,23 @@ export default function AboutUsPage() {
           </div>
 
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { img: "team-sorting-new.webp", title: "Sorting Team", desc: "Specialized team for category-based sorting of clothes, shoes, and bags to ensure quality." },
-              { img: "qc-inspector-premium.webp", title: "Quality Control", desc: "Dedicated inspectors check batches against the agreed grading standard." },
-              { img: "team-sales-new.webp", title: "Sales Team", desc: "Multilingual sales consultants providing professional export guidance and support." },
-              { img: "team-logistics-new.webp", title: "Logistics Team", desc: "Logistics specialists managing export documentation and global freight coordination." }
-            ].map(team => (
-              <div key={team.title} className="bg-white/5 border border-white/10 rounded-[8px] overflow-hidden">
-                <div className="relative h-[140px] w-full">
-                  <Image src={`/images/about/${team.img}`} alt={`RealismThrift ${team.title} - Experts in Bulk Second Hand ${team.title.split(' ')[0]}`} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+              { img: "ahmad-akbar.webp", name: "Ahmad Akbar", desc: "Expert sales consultant providing professional export guidance for global buyers." },
+              { img: "bella.webp", name: "Bella", desc: "Dedicated sales specialist focused on customer success and order planning." },
+              { img: "levi.webp", name: "Levi", desc: "Customer service professional assisting with category selection and pricing." },
+              { img: "luna.webp", name: "Luna", desc: "Sales coordinator managing inquiries and international trade logistics support." }
+            ].map(staff => (
+              <div key={staff.name} className="group bg-white/5 border border-white/10 rounded-[12px] p-5 text-center hover:bg-white/[0.08] transition-all duration-300">
+                <div className="relative w-24 h-24 mx-auto mb-4">
+                  <div className="absolute inset-0 bg-brand-gold/20 rounded-full scale-110 group-hover:scale-125 transition-transform duration-500 blur-md"></div>
+                  <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-brand-gold/30">
+                    <Image src={`/images/staff/${staff.img}`} alt={`RealismThrift Sales Consultant - ${staff.name}`} fill sizes="96px" className="object-cover" />
+                  </div>
                 </div>
-                <div className="p-4">
-                  <div className="font-montserrat text-[0.875rem] font-bold text-brand-gold mb-2">{team.title}</div>
-                  <div className="text-[0.75rem] text-white/60 leading-[1.6]">{team.desc}</div>
-                </div>
+                <div className="font-montserrat text-[0.9375rem] font-bold text-white mb-1 group-hover:text-brand-gold transition-colors">{staff.name}</div>
+                <div className="text-[0.65rem] font-montserrat font-bold text-brand-gold uppercase tracking-wider mb-3 px-2 py-0.5 bg-brand-gold/10 inline-block rounded-[2px]">Sales Consultant</div>
+                <div className="text-[0.75rem] text-white/60 leading-[1.6] px-2 line-clamp-2">{staff.desc}</div>
               </div>
             ))}
           </div>
