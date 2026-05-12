@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { InquiryForm } from "@/components/InquiryForm";
 import { companyStats } from "@/data/siteData";
-import { Building2, Search, CheckCircle2, Brush, Box, Ship, Globe2 } from "lucide-react";
+import { Building2, Search, CheckCircle2, Brush, Box, Ship, Globe2, MessageCircle, Mail } from "lucide-react";
 
 export const metadata = {
   title: "About Us | Used Clothes & Shoes Export Supplier in China",
@@ -147,12 +147,55 @@ export default function AboutUsPage() {
           </div>
 
 
+          <div className="bg-white/5 border border-white/10 rounded-[12px] overflow-hidden mb-12 flex flex-col md:flex-row items-center group relative hover:border-brand-gold/30 hover:shadow-[0_0_30px_rgba(240,180,41,0.1)] transition-all duration-500">
+            {/* Image Side */}
+            <div className="w-full md:w-5/12 relative overflow-hidden bg-[#1A1A1A]">
+              <div className="absolute inset-0 bg-brand-gold/5 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
+              <Image 
+                src="/images/staff/sales-manager-leo.webp" 
+                alt="Leo - Professional Sales Manager at RealismThrift Export Co., Ltd. Expert in wholesale used clothing, shoes, and bags export support and A-grade quality assurance for global buyers." 
+                width={500}
+                height={900}
+                sizes="(min-width: 768px) 40vw, 100vw"
+                className="w-full h-auto object-cover object-center group-hover:scale-110 transition-transform duration-1000 ease-in-out" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-transparent md:hidden z-20 pointer-events-none" />
+            </div>
+            
+            {/* Text Side */}
+            <div className="w-full md:w-7/12 p-8 md:p-12 relative z-30 -mt-20 md:mt-0">
+              <div className="inline-block bg-brand-gold/15 border border-brand-gold/30 text-brand-gold font-montserrat font-bold text-[0.7rem] tracking-[0.15em] px-3 py-1.5 rounded-[3px] mb-5 uppercase shadow-[0_0_15px_rgba(240,180,41,0.15)]">
+                Leadership Team
+              </div>
+              <h3 className="font-montserrat text-[2.25rem] font-extrabold text-white mb-1">Leo</h3>
+              <p className="text-brand-gold font-semibold text-[1.1rem] mb-7">Sales Manager</p>
+              
+              <div className="relative mb-8 pl-5 border-l-2 border-white/20">
+                <span className="absolute -top-3 -left-3 text-5xl text-brand-gold/20 font-serif">"</span>
+                <p className="text-white/80 text-[1rem] leading-[1.8] relative z-10 italic font-open-sans">
+                  Our goal is not just to sell used goods, but to build long-term partnerships with global wholesale buyers. We enforce strict A-grade quality control on our clothes, shoes, and bags to ensure your business thrives. From the first inquiry to container loading, our team is committed to your success.
+                </p>
+              </div>
+
+              <div className="flex gap-4 flex-wrap">
+                <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-6 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.875rem] hover:bg-[#1da851] transition-all shadow-lg hover:-translate-y-0.5 flex items-center gap-2">
+                  <MessageCircle className="w-4 h-4" />
+                  Chat on WhatsApp
+                </a>
+                <a href="mailto:sales@realismthrift.com" className="bg-white/10 text-white border border-white/20 px-6 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.875rem] hover:bg-white/20 transition-all flex items-center gap-2">
+                  <Mail className="w-4 h-4" />
+                  Email Leo
+                </a>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { img: "ahmad-akbar.webp", name: "Ahmad Akbar", desc: "Expert sales consultant providing professional export guidance for global buyers." },
               { img: "bella.webp", name: "Bella", desc: "Dedicated sales specialist focused on customer success and order planning." },
               { img: "levi.webp", name: "Levi", desc: "Customer service professional assisting with category selection and pricing." },
-              { img: "luna.webp", name: "Luna", desc: "Sales coordinator managing inquiries and international trade logistics support." }
+              { img: "luna.webp", name: "Luna", desc: "Sales coordinator managing inquiries and international trade logistics support." },
+              { img: "ahmad-akbar.webp", name: "Ahmad Akbar", desc: "Expert sales consultant providing professional export guidance for global buyers." }
             ].map(staff => (
               <div key={staff.name} className="group bg-white/5 border border-white/10 rounded-[12px] p-5 text-center hover:bg-white/[0.08] transition-all duration-300">
                 <div className="relative w-24 h-24 mx-auto mb-4">
