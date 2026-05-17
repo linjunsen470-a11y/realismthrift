@@ -168,20 +168,34 @@ export default function ContactUsPage() {
             </div>
             <div className="w-full h-[450px] rounded-[16px] overflow-hidden border border-[#eee] shadow-2xl relative">
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117468.61833008985!2d114.29792556519213!3d23.136269931818274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x340338c47f711f11%3A0xc3b8dc0a45bdada1!2sBoluo%2C%20Huizhou%2C%20Guangdong%20Province%2C%20China!5e0!3m2!1sen!2sus!4v1713500000000!5m2!1sen!2sus" 
+                  src="https://www.google.com/maps/d/embed?mid=1tQMcpDr1wCiqu03ci3gFUnP7RlUudME&ehbc=2E312F" 
                   width="100%" 
                   height="100%" 
                   title="Google Maps location of RealismThrift in Huizhou, China"
                   allowFullScreen={true} 
                   loading="lazy" 
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="absolute inset-0 border-0"
+                  className="absolute w-full h-[calc(100%+85px)] -top-[85px] left-0 border-0"
                 ></iframe>
             </div>
-            <div className="mt-8 p-6 bg-brand-light rounded-[10px] border-l-4 border-brand-gold">
-              <p className="text-[0.875rem] text-[#555] font-open-sans leading-relaxed">
-                <strong className="text-brand-dark">Visiting our factory?</strong> We welcome international buyers to visit our {companyStats.facilitySize} facility. Please contact your regional sales agent to schedule a tour and arrange airport pickup in Huizhou or Guangzhou.
-              </p>
+            <div className="mt-8 p-6 bg-brand-light rounded-[10px] border-l-4 border-brand-gold space-y-4">
+              <div>
+                <h4 className="font-montserrat font-bold text-brand-dark text-[1rem] mb-2 flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-brand-red" />
+                  Factory Address
+                </h4>
+                <p className="text-[0.9375rem] text-[#444] font-open-sans leading-relaxed">
+                  Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
+                </p>
+                <p className="text-[0.875rem] text-[#666] font-open-sans mt-1">
+                  (中文地址：广东惠州博罗县园洲镇丰宜路 RealismThrift，创深U家公寓旁)
+                </p>
+              </div>
+              <div className="pt-4 border-t border-black/5">
+                <p className="text-[0.875rem] text-[#555] font-open-sans leading-relaxed">
+                  <strong className="text-brand-dark">Visiting our factory?</strong> We welcome international buyers to visit our {companyStats.facilitySize} facility. Please contact your regional sales agent to schedule a tour and arrange airport pickup in Huizhou or Guangzhou.
+                </p>
+              </div>
             </div>
           </div>
         </div>
