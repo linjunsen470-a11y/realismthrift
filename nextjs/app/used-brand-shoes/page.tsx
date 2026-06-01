@@ -53,8 +53,8 @@ export default function UsedBrandShoesPage() {
     description: "Wholesale supplier of sorted second-hand branded shoes from China. Nike, Adidas, Jordan, and 30+ brands.",
     image: "https://www.realismthrift.com/images/shoes/wholesale-sneakers-assorted-styles-grid.webp",
     url: "https://www.realismthrift.com/used-brand-shoes",
-    lowPrice: "0.8",
-    highPrice: "6.0",
+    lowPrice: 0.8,
+    highPrice: 6.0,
     offerCount: 5,
   });
 

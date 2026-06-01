@@ -75,22 +75,25 @@ export function getOrganizationSchema() {
       {
         "@type": "Offer",
         "itemOffered": {
-          "@type": "Product",
-          "name": "Wholesale used brand clothes"
+          "@type": "Service",
+          "name": "Wholesale used brand clothes",
+          "url": "https://www.realismthrift.com/used-brand-clothes"
         }
       },
       {
         "@type": "Offer",
         "itemOffered": {
-          "@type": "Product",
-          "name": "Wholesale used brand shoes"
+          "@type": "Service",
+          "name": "Wholesale used brand shoes",
+          "url": "https://www.realismthrift.com/used-brand-shoes"
         }
       },
       {
         "@type": "Offer",
         "itemOffered": {
-          "@type": "Product",
-          "name": "Wholesale used brand bags"
+          "@type": "Service",
+          "name": "Wholesale used brand bags",
+          "url": "https://www.realismthrift.com/used-brand-bag"
         }
       }
     ],
@@ -137,8 +140,8 @@ export function getProductSchema({
   description: string; 
   image: string; 
   url: string;
-  lowPrice?: string;
-  highPrice?: string;
+  lowPrice?: number;
+  highPrice?: number;
   offerCount?: number;
 }) {
   return {
@@ -156,9 +159,9 @@ export function getProductSchema({
       "@type": "AggregateOffer",
       "url": url,
       "priceCurrency": "USD",
-      ...(lowPrice ? { "lowPrice": lowPrice } : {}),
-      ...(highPrice ? { "highPrice": highPrice } : {}),
-      ...(offerCount ? { "offerCount": offerCount } : {}),
+      ...(lowPrice !== undefined ? { "lowPrice": lowPrice } : {}),
+      ...(highPrice !== undefined ? { "highPrice": highPrice } : {}),
+      ...(offerCount !== undefined ? { "offerCount": offerCount } : {}),
       "availability": "https://schema.org/InStock",
       "seller": {
         "@id": "https://www.realismthrift.com/#organization"

@@ -53,8 +53,8 @@ export default function UsedBrandBagPage() {
     description: "Wholesale exporter of sorted second-hand branded handbags, backpacks, and luggage from China.",
     image: "https://www.realismthrift.com/images/bags/loewe-puzzle-bag-assorted-colors-display.webp",
     url: "https://www.realismthrift.com/used-brand-bag",
-    lowPrice: "3.0",
-    highPrice: "25.0",
+    lowPrice: 3.0,
+    highPrice: 25.0,
     offerCount: 5,
   });
 
@@ -64,7 +64,6 @@ export default function UsedBrandBagPage() {
     <main className="bg-white">
       <JsonLd data={productSchema} />
       <JsonLd data={faqSchema} />
-      {/* PAGE HERO */}
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <Image 

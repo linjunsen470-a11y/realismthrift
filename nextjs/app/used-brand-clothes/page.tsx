@@ -54,8 +54,8 @@ export default function UsedBrandClothesPage() {
     description: "Sorted second-hand branded clothes. Nike, Adidas, and more. Global export support from China.",
     image: "https://www.realismthrift.com/images/clothes/assorted-jeans-sweatpants-lee-fila-stack.webp",
     url: "https://www.realismthrift.com/used-brand-clothes",
-    lowPrice: "0.3",
-    highPrice: "5.0",
+    lowPrice: 0.3,
+    highPrice: 5.0,
     offerCount: 7,
   });
 
