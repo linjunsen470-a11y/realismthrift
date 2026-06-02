@@ -1,7 +1,7 @@
 import "../internal-pages.css";
 import Image from "next/image";
 import { InquiryForm } from "@/components/InquiryForm";
-import { companyStats } from "@/data/siteData";
+import { companyStats, siteFooter } from "@/data/siteData";
 import { Mail, Phone, MapPin, Building2, Clock, MessageCircle, Send, Globe } from "lucide-react";
 
 export const metadata = {
@@ -102,7 +102,7 @@ export default function ContactUsPage() {
                 <div className="space-y-5">
                   {[
                     { i: <Building2 className="w-5 h-5 text-brand-gold" />, l: "Full Name", v: "RealismThrift Export Co., Ltd." },
-                    { i: <MapPin className="w-5 h-5 text-brand-gold" />, l: "Location", v: "Huizhou, Guangdong, China" },
+                    { i: <MapPin className="w-5 h-5 text-brand-gold" />, l: "Location", v: siteFooter.brand.address },
                     { i: <Mail className="w-5 h-5 text-brand-gold" />, l: "Official Email", v: "sales@realismthrift.com" },
                     { i: <Phone className="w-5 h-5 text-brand-gold" />, l: "Sales Hotline", v: "+86 133 6748 1710" },
                     { i: <Clock className="w-5 h-5 text-brand-gold" />, l: "Business Hours", v: "Mon–Sat 8:00–20:00 (GMT+8)" },
