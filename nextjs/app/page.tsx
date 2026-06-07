@@ -163,7 +163,7 @@ const contactMethods = [
   },
   {
     label: "ADDRESS",
-    value: "Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China",
+    value: "RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China",
     icon: MapPin,
   },
 ];

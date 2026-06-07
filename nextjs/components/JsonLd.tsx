@@ -33,9 +33,9 @@ export function getOrganizationSchema() {
     "email": "sales@realismthrift.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Fuyida Industrial Park, No. 52 Yida Road",
-      "addressLocality": "Boluo County, Huizhou City",
-      "addressRegion": "Guangdong Province",
+      "streetAddress": "RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou",
+      "addressLocality": "Boluo, Huizhou",
+      "addressRegion": "Guangdong",
       "addressCountry": "CN"
     },
     "areaServed": [

@@ -60,7 +60,7 @@ export default function ContactUsPage() {
               { i: <Mail className="w-6 h-6 text-brand-red" />, t: "Email", s: "Send us an email", v: "sales@realismthrift.com", l: "mailto:sales@realismthrift.com", color: "bg-red-50" },
               { i: <MessageCircle className="w-6 h-6 text-[#25D366]" />, t: "WhatsApp", s: "Chat with us now", v: "+86 133 6748 1710", l: "https://wa.me/8613367481710", color: "bg-green-50" },
               { i: <Phone className="w-6 h-6 text-brand-gold" />, t: "Phone", s: "Call our sales team", v: "+86 133 6748 1710", l: "tel:+8613367481710", color: "bg-yellow-50" },
-              { i: <MapPin className="w-6 h-6 text-brand-dark" />, t: "Address", s: "Visit our factory", v: "Huizhou, China", l: "https://www.google.com/maps/search/?api=1&query=Boluo%20Huizhou%20Guangdong%20China", color: "bg-gray-100" },
+              { i: <MapPin className="w-6 h-6 text-brand-dark" />, t: "Address", s: "Visit our factory", v: "Huizhou, China", l: "https://www.google.com/maps/search/?api=1&query=Fengyi%20Road%20Yuanzhou%20Boluo%20Huizhou%20Guangdong%20China", color: "bg-gray-100" },
             ].map((item) => (
               <div key={item.t} className="bg-white border border-[#eee] rounded-[12px] p-8 text-center shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all transform hover:-translate-y-1.5 group">
                 <div className={`w-14 h-14 ${item.color} rounded-full flex items-center justify-center mx-auto mb-5 transition-transform group-hover:scale-110 group-hover:rotate-3`}>
@@ -185,7 +185,7 @@ export default function ContactUsPage() {
                   Factory Address
                 </h4>
                 <p className="text-[0.9375rem] text-[#444] font-open-sans leading-relaxed">
-                  Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
+                  RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China
                 </p>
                 <p className="text-[0.875rem] text-[#666] font-open-sans mt-1">
                   (中文地址：广东惠州博罗县园洲镇丰宜路 RealismThrift，创深U家公寓旁)

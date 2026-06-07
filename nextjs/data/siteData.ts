@@ -33,7 +33,7 @@ export const siteFooter: SiteFooter = {
     logo: "RealismThrift",
     description:
       "RealismThrift Export Co., Ltd supplies sorted second-hand clothes, shoes and bags from China for wholesale buyers and importers.",
-    address: "Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China",
+    address: "RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China",
     phone: "+86 133 6748 1710",
     email: "sales@realismthrift.com",
     whatsapp: "+86 133 6748 1710",
