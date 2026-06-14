@@ -59,6 +59,11 @@ export const metadata: Metadata = {
     shortcut: '/img/logo.webp',
     apple: '/img/logo.webp',
   },
+  verification: {
+    other: {
+      'facebook-domain-verification': ['sfeva1yjqtp74l34zrf0b68l4vzb6p'],
+    },
+  },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
