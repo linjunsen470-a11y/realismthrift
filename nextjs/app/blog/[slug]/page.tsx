@@ -3,17 +3,17 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
-import { ArrowLeft, ArrowRight, Mail, MessageCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { TypedObject } from "sanity";
 import { portableTextComponents } from "@/components/blog/PortableTextComponents";
 import { ReadingTime } from "@/components/blog/ReadingTime";
 import { ShareButtons } from "@/components/blog/ShareButtons";
-import { InquiryForm } from "@/components/InquiryForm";
 import { JsonLd, getArticleSchema, getBreadcrumbSchema } from "@/components/JsonLd";
 import {
   formatBlogDate,
   getBlogPostBySlug,
+  getPrevNextPosts,
   getRelatedBlogPosts,
 } from "@/lib/blog";
 import { hasUsableImageAsset, urlForImage } from "@/lib/sanity/image";
@@ -84,6 +84,7 @@ export default async function BlogPostPage({
   }
 
   const relatedPosts = await getRelatedBlogPosts(post._id, post.category?._id || "");
+  const { prev: prevPost, next: nextPost } = await getPrevNextPosts(post.publishedAt);
 
   const heroImage = hasUsableImageAsset(post.coverImage)
     ? urlForImage(post.coverImage).width(1600).height(700).fit("crop").url()
@@ -111,218 +112,141 @@ export default async function BlogPostPage({
   ]);
 
   return (
-    <article>
+    <article className="bg-[#fcfcf9] min-h-screen">
       <JsonLd data={articleSchema} />
       <JsonLd data={breadcrumbSchema} />
-      <section className="rt-page-hero rt-blog-hero relative flex items-center">
-        <Image
-          src={heroImage}
-          alt={post.coverImage?.alt || post.title}
-          fill
-          sizes="100vw"
-          className="object-cover z-0"
-          priority
-        />
-        <div className="rt-page-hero-overlay relative z-1" />
-        <div className="rt-container relative z-10 pt-8 md:pt-24">
-          <div className="rt-fade-in max-w-4xl">
-            <Link href="/blog" className="rt-blog-back-link mb-4 md:mb-8">
+      
+      <section className="pt-8 md:pt-16 pb-16">
+        <div className="rt-container max-w-4xl mx-auto px-4">
+          {/* Back to Blog Button */}
+          <div className="mb-6">
+            <Link href="/blog" className="rt-blog-back-link inline-flex items-center gap-2">
               <ArrowLeft size={14} strokeWidth={3} />
               Back to Blog
             </Link>
-            <div className="rt-page-hero-meta mb-3 md:mb-4">
-              <span className="rt-news-card-category bg-brand-red text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">
-                {post.category?.title || "Industry Insights"}
-              </span>
-              <span className="rt-blog-meta-dot mx-2" />
-              <span className="text-white/80">{formatBlogDate(post.publishedAt)}</span>
-              <span className="rt-blog-meta-dot mx-2" />
-              <ReadingTime content={post.body} />
-            </div>
-            <h1 className="rt-blog-title text-white font-black leading-tight mb-4 md:mb-6">
-              {post.title}
-            </h1>
-            <div className="rt-breadcrumb flex items-center gap-2 text-white/60 text-sm">
-              <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
-              <span>/</span>
-              <Link href="/blog" className="hover:text-brand-gold transition-colors">Blog</Link>
-              <span>/</span>
-              <span className="text-white/40 truncate max-w-[200px] md:max-w-md">
-                {post.title}
-              </span>
-            </div>
           </div>
-        </div>
-      </section>
 
-      {/* MAIN CONTENT SECTION */}
-      <section className="rt-home-section rt-blog-detail-section">
-        <div className="rt-container">
-          <div className="rt-blog-grid">
-            {/* LEFT COLUMN: ARTICLE CONTENT */}
-            <div className="rt-blog-article-shell">
-              <p className="rt-blog-excerpt">{post.excerpt}</p>
+          {/* Meta Information */}
+          <div className="flex items-center flex-wrap gap-2 text-sm text-gray-500 mb-4 font-semibold uppercase tracking-wider">
+            <span className="bg-brand-red text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">
+              {post.category?.title || "Industry Insights"}
+            </span>
+            <span className="mx-1">•</span>
+            <span>{formatBlogDate(post.publishedAt)}</span>
+            <span className="mx-1">•</span>
+            <ReadingTime content={post.body} />
+          </div>
 
-              <div className="rt-prose">
-                <PortableText
-                  value={post.body as TypedObject[]}
-                  components={portableTextComponents}
-                />
-              </div>
+          {/* Blog Title */}
+          <h1 className="text-3xl md:text-5xl font-black text-brand-dark leading-tight mb-6">
+            {post.title}
+          </h1>
 
-              <ShareButtons title={post.title} />
+          {/* Breadcrumbs */}
+          <div className="rt-blog-breadcrumb flex items-center gap-2 text-gray-500 text-sm mb-8">
+            <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
+            <span>/</span>
+            <Link href="/blog" className="hover:text-brand-gold transition-colors">Blog</Link>
+            <span>/</span>
+            <span className="text-gray-400 truncate max-w-[200px] md:max-w-md">
+              {post.title}
+            </span>
+          </div>
 
-              {post.author?.name ? (
-                <div className="rt-blog-author-card">
-                  <div className="flex items-center gap-4 mb-4">
-                    {authorAvatar ? (
-                      <Image
-                        src={authorAvatar}
-                        alt={post.author.avatar?.alt || post.author.name}
-                        width={64}
-                        height={64}
-                        className="rt-blog-author-avatar shadow-sm"
-                      />
-                    ) : (
-                      <div className="rt-blog-author-avatar rt-blog-author-avatar-fallback shadow-sm">
-                        {post.author.name.charAt(0)}
-                      </div>
-                    )}
-                    <div>
-                      <div className="rt-blog-author-name font-bold">{post.author.name}</div>
-                      {post.author.role ? (
-                        <div className="rt-blog-author-role text-brand-red font-bold uppercase tracking-wider">
-                          {post.author.role}
-                        </div>
-                      ) : null}
-                    </div>
-                  </div>
-                  {post.author.bio ? (
-                    <p className="rt-blog-author-bio italic text-gray-600 border-t pt-4 mt-2">
-                      {post.author.bio}
-                    </p>
-                  ) : null}
-                </div>
-              ) : null}
+          {/* Featured Image */}
+          <div className="relative w-full h-[240px] sm:h-[380px] md:h-[480px] rounded-2xl overflow-hidden mb-10 shadow-md">
+            <Image
+              src={heroImage}
+              alt={post.coverImage?.alt || post.title}
+              fill
+              sizes="(max-w-768px) 100vw, 960px"
+              className="object-cover"
+              priority
+            />
+          </div>
 
-              <div className="rt-blog-bottom-nav">
-                <Link href="/blog" className="rt-news-view-all font-bold flex items-center gap-2">
-                  <ArrowLeft size={16} strokeWidth={2.5} /> Back to All Articles
-                </Link>
-              </div>
+          {/* Main Article Container */}
+          <div className="rt-blog-article-shell no-sidebar">
+            <p className="rt-blog-excerpt">{post.excerpt}</p>
+
+            <div className="rt-prose">
+              <PortableText
+                value={post.body as TypedObject[]}
+                components={portableTextComponents}
+              />
             </div>
 
-            {/* RIGHT COLUMN: SIDEBAR */}
-            <aside className="rt-blog-sidebar">
-              {/* INQUIRY FORM CARD */}
-              <div className="rt-sidebar-card rt-sidebar-inquiry-card">
-                <div className="rt-sidebar-card-header">
-                  <h3>Get Wholesale Price List</h3>
-                </div>
-                <div className="rt-sidebar-card-body">
-                  <p className="text-[0.875rem] text-gray-600 mb-6 leading-relaxed">
-                    Consult our used clothing export specialists and get the latest
-                    wholesale quotation within 12 hours.
-                  </p>
-                  <InquiryForm variant="sidebar" />
-                </div>
-              </div>
+            <ShareButtons title={post.title} />
 
-              {/* RELATED POSTS CARD */}
-              {relatedPosts.length > 0 && (
-                <div className="rt-sidebar-card">
-                  <div className="rt-sidebar-card-header">
-                    <h3>Related Articles</h3>
-                  </div>
-                  <div className="rt-sidebar-card-body">
-                    <div className="rt-related-post-list">
-                      {relatedPosts.map((rPost) => (
-                        <Link
-                          key={rPost._id}
-                          href={`/blog/${rPost.slug}`}
-                          className="rt-related-post-item"
-                        >
-                          <div className="rt-related-post-thumb">
-                            {hasUsableImageAsset(rPost.coverImage) ? (
-                              <Image
-                                src={urlForImage(rPost.coverImage)
-                                  .width(180)
-                                  .height(140)
-                                  .fit("crop")
-                                  .url()}
-                                alt={rPost.title}
-                                fill
-                                sizes="90px"
-                              />
-                            ) : (
-                              <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                                <span className="text-[10px] text-gray-400 uppercase font-bold">
-                                  No Image
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                          <div className="rt-related-post-info">
-                            <h4 className="rt-related-post-title">
-                              {rPost.title}
-                            </h4>
-                            <div className="rt-related-post-date">
-                              <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
-                              {formatBlogDate(rPost.publishedAt)}
-                            </div>
-                          </div>
-                        </Link>
-                      ))}
+            {post.author?.name ? (
+              <div className="rt-blog-author-card">
+                <div className="flex items-center gap-4 mb-4">
+                  {authorAvatar ? (
+                    <Image
+                      src={authorAvatar}
+                      alt={post.author.avatar?.alt || post.author.name}
+                      width={64}
+                      height={64}
+                      className="rt-blog-author-avatar shadow-sm"
+                    />
+                  ) : (
+                    <div className="rt-blog-author-avatar rt-blog-author-avatar-fallback shadow-sm">
+                      {post.author.name.charAt(0)}
                     </div>
+                  )}
+                  <div>
+                    <div className="rt-blog-author-name font-bold">{post.author.name}</div>
+                    {post.author.role ? (
+                      <div className="rt-blog-author-role text-brand-red font-bold uppercase tracking-wider">
+                        {post.author.role}
+                      </div>
+                    ) : null}
                   </div>
                 </div>
+                {post.author.bio ? (
+                  <p className="rt-blog-author-bio italic text-gray-600 border-t pt-4 mt-2">
+                    {post.author.bio}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
+
+            {/* Bottom Nav Links */}
+            <div className="rt-blog-bottom-nav flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-6">
+              {prevPost ? (
+                <Link
+                  href={`/blog/${prevPost.slug}`}
+                  className="rt-blog-nav-btn group text-left flex items-center"
+                >
+                  <ArrowLeft size={20} className="text-gray-400 group-hover:-translate-x-1 group-hover:text-brand-red transition-all flex-shrink-0" />
+                  <div className="ml-2">
+                    <span className="rt-blog-nav-label">Previous Post</span>
+                    <span className="rt-blog-nav-title line-clamp-1">{prevPost.title}</span>
+                  </div>
+                </Link>
+              ) : (
+                <div className="hidden sm:block w-[280px]" />
               )}
 
-              {/* CONTACT CARD */}
-              <div className="rt-sidebar-card">
-                <div className="rt-sidebar-card-header">
-                  <h3>Direct Contact</h3>
-                </div>
-                <div className="rt-sidebar-card-body">
-                  <div className="flex flex-col gap-4">
-                    <a
-                      href="https://wa.me/8613367481710"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-4 p-4 border border-gray-100 rounded-xl hover:border-[#25D366] hover:bg-[#25D366]/5 transition-all group"
-                    >
-                      <div className="w-12 h-12 bg-[#25D366] text-white flex items-center justify-center rounded-full shadow-lg shadow-[#25D366]/20">
-                        <MessageCircle size={22} />
-                      </div>
-                      <div>
-                        <div className="text-[0.7rem] text-[#25D366] font-extrabold uppercase tracking-widest mb-0.5">
-                          WhatsApp
-                        </div>
-                        <div className="text-[0.95rem] font-extrabold text-brand-dark">
-                          +86 133 6748 1710
-                        </div>
-                      </div>
-                    </a>
-                    <a
-                      href="mailto:sales@realismthrift.com"
-                      className="flex items-center gap-4 p-4 border border-gray-100 rounded-xl hover:border-brand-red hover:bg-brand-red/5 transition-all group"
-                    >
-                      <div className="w-12 h-12 bg-brand-red text-white flex items-center justify-center rounded-full shadow-lg shadow-brand-red/20">
-                        <Mail size={22} />
-                      </div>
-                      <div>
-                        <div className="text-[0.7rem] text-brand-red font-extrabold uppercase tracking-widest mb-0.5">
-                          Email Us
-                        </div>
-                        <div className="text-[0.95rem] font-extrabold text-brand-dark">
-                          sales@realismthrift.com
-                        </div>
-                      </div>
-                    </a>
+              <Link href="/blog" className="rt-news-view-all font-bold flex items-center justify-center gap-2 self-center">
+                Back to Blog
+              </Link>
+
+              {nextPost ? (
+                <Link
+                  href={`/blog/${nextPost.slug}`}
+                  className="rt-blog-nav-btn group text-right flex items-center justify-end"
+                >
+                  <div className="mr-2">
+                    <span className="rt-blog-nav-label">Next Post</span>
+                    <span className="rt-blog-nav-title line-clamp-1">{nextPost.title}</span>
                   </div>
-                </div>
-              </div>
-            </aside>
+                  <ArrowRight size={20} className="text-gray-400 group-hover:translate-x-1 group-hover:text-brand-red transition-all flex-shrink-0" />
+                </Link>
+              ) : (
+                <div className="hidden sm:block w-[280px]" />
+              )}
+            </div>
           </div>
         </div>
       </section>

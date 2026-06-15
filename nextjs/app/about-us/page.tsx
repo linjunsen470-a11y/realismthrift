@@ -171,7 +171,7 @@ export default function AboutUsPage() {
               <p className="text-brand-gold font-semibold text-[1.1rem] mb-7">Sales Manager</p>
               
               <div className="relative mb-8 pl-5 border-l-2 border-white/20">
-                <span className="absolute -top-3 -left-3 text-5xl text-brand-gold/20 font-serif">"</span>
+                <span className="absolute -top-3 -left-3 text-5xl text-brand-gold/20 font-serif">&quot;</span>
                 <p className="text-white/80 text-[1rem] leading-[1.8] relative z-10 italic font-open-sans">
                   Our goal is not just to sell used goods, but to build long-term partnerships with global wholesale buyers. We enforce strict A-grade quality control on our clothes, shoes, and bags to ensure your business thrives. From the first inquiry to container loading, our team is committed to your success.
                 </p>

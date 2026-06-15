@@ -74,6 +74,21 @@ const relatedPostsQuery = groq`*[
   ${ACTIVE_POST_FILTER} && _id != $currentId && category._ref == $categoryId
 ] | order(publishedAt desc)[0...3] ${POST_CARD_PROJECTION}`;
 
+const prevNextQuery = groq`{
+  "prev": *[
+    ${ACTIVE_POST_FILTER} && publishedAt < $publishedAt
+  ] | order(publishedAt desc)[0] {
+    title,
+    "slug": slug.current
+  },
+  "next": *[
+    ${ACTIVE_POST_FILTER} && publishedAt > $publishedAt
+  ] | order(publishedAt asc)[0] {
+    title,
+    "slug": slug.current
+  }
+}`;
+
 export async function getLatestBlogPosts(): Promise<BlogPostCard[]> {
   const { data } = await sanityFetch({
     query: latestPostsQuery,
@@ -140,6 +155,24 @@ export async function getRelatedBlogPosts(
   });
 
   return data as BlogPostCard[];
+}
+
+export async function getPrevNextPosts(publishedAt: string): Promise<{
+  prev: { title: string; slug: string } | null;
+  next: { title: string; slug: string } | null;
+}> {
+  const { data } = await sanityFetch({
+    query: prevNextQuery,
+    params: { publishedAt },
+    tags: ["post"],
+    requestTag: "blog.prev-next",
+    stega: false,
+  });
+
+  return (data as {
+    prev: { title: string; slug: string } | null;
+    next: { title: string; slug: string } | null;
+  }) || { prev: null, next: null };
 }
 
 export function formatBlogDate(date: string) {
