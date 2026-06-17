@@ -26,7 +26,7 @@ const openSans = Open_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.realismthrift.com'),
   title: {
-    default: 'RealismThrift Export Co., Ltd | Used Clothes, Shoes & Bags Supplier in China',
+    default: 'Dongguan Huihe Realismthrift Trading Co., Ltd. | Used Clothes, Shoes & Bags Supplier in China',
     template: '%s | RealismThrift'
   },
   description: 'Wholesale supplier of sorted second-hand clothes, shoes and bags from China. Export support for used fashion buyers worldwide.',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://www.realismthrift.com',
     siteName: 'RealismThrift Export',
-    title: 'RealismThrift Export Co., Ltd | Used Clothes, Shoes & Bags Supplier in China',
+    title: 'Dongguan Huihe Realismthrift Trading Co., Ltd. | Used Clothes, Shoes & Bags Supplier in China',
     description: 'Wholesale supplier of sorted second-hand clothes, shoes and bags from China. Export support for used fashion buyers worldwide.',
     images: [
       {
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RealismThrift Export Co., Ltd | Used Clothes, Shoes & Bags Supplier in China',
+    title: 'Dongguan Huihe Realismthrift Trading Co., Ltd. | Used Clothes, Shoes & Bags Supplier in China',
     description: 'Wholesale supplier of sorted second-hand clothes, shoes and bags from China. Export support for used fashion buyers worldwide.',
     images: ['/img/og-realismthrift.webp'],
   },

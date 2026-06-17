@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ShieldCheck, Lock, Eye, Globe } from "lucide-react";
 
 export const metadata = {
-  title: "Privacy Policy | RealismThrift Export Co., Ltd",
+  title: "Privacy Policy | Dongguan Huihe Realismthrift Trading Co., Ltd.",
   description: "Learn how RealismThrift handles and protects your personal information and data in our global wholesale operations.",
   openGraph: {
     title: "RealismThrift Privacy Policy",

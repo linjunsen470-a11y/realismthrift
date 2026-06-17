@@ -80,12 +80,12 @@ export default function TermsOfServicePage() {
 
                 <h2>6. Intellectual Property</h2>
                 <p>
-                  The website and its original content, features, and functionality are owned by RealismThrift Export Co., Ltd and are protected by international copyright, trademark, and other intellectual property laws.
+                  The website and its original content, features, and functionality are owned by Dongguan Huihe Realismthrift Trading Co., Ltd. and are protected by international copyright, trademark, and other intellectual property laws.
                 </p>
 
                 <h2>7. Limitation of Liability</h2>
                 <p>
-                  RealismThrift Export Co., Ltd shall not be liable for any indirect, incidental, special, consequential or punitive damages resulting from your use of the service or products purchased.
+                  Dongguan Huihe Realismthrift Trading Co., Ltd. shall not be liable for any indirect, incidental, special, consequential or punitive damages resulting from your use of the service or products purchased.
                 </p>
 
                 <h2>8. Governing Law</h2>

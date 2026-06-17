@@ -13,7 +13,7 @@ export const companyStats = {
 export const siteHeader: SiteHeader = {
   brand: {
     logo: "RealismThrift",
-    name: "RealismThrift Export Co., Ltd",
+    name: "Dongguan Huihe Realismthrift Trading Co., Ltd.",
   },
   navItems: [
     { label: "Home", href: "/" },

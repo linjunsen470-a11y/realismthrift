@@ -183,7 +183,7 @@ export default async function Home() {
       <section className="rt-hero" id="home" aria-label="Hero Section">
         <Image
           src="/images/hero-main.webp"
-          alt="RealismThrift Export Co., Ltd - China Wholesale Supplier of Sorted Second Hand Branded Clothes, Shoes, and Bags"
+          alt="Dongguan Huihe Realismthrift Trading Co., Ltd. - China Wholesale Supplier of Sorted Second Hand Branded Clothes, Shoes, and Bags"
           fill
           priority
           fetchPriority="high"
@@ -345,7 +345,7 @@ export default async function Home() {
                 Your Most Reliable Partner in Used Clothing Export
               </p>
               <p className="rt-about-text">
-                RealismThrift Export Co., Ltd supplies used fashion products for wholesale
+                Dongguan Huihe Realismthrift Trading Co., Ltd. supplies used fashion products for wholesale
                 buyers in Africa, Southeast Asia, the Middle East, and the Americas. We
                 focus on sorted stock, clear packing information, and export support.
               </p>
@@ -388,7 +388,7 @@ export default async function Home() {
         <div className="rt-container">
           <div className="rt-section-header center">
             <span className="rt-section-badge">OUR ADVANTAGES</span>
-            <h2 className="rt-section-title" id="features-title">WHY CHOOSE REALISMTHRIFT EXPORT CO., LTD</h2>
+            <h2 className="rt-section-title" id="features-title">WHY CHOOSE DONGGUAN HUIHE REALISMTHRIFT TRADING CO., LTD.</h2>
             <div className="rt-section-divider center" />
           </div>
 
@@ -549,9 +549,9 @@ export default async function Home() {
       <section className="rt-seo-copy">
         <div className="rt-container">
           <div className="rt-seo-copy-inner">
-            <h2>About RealismThrift Export Co., Ltd</h2>
+            <h2>About Dongguan Huihe Realismthrift Trading Co., Ltd.</h2>
             <p>
-              RealismThrift Export Co., Ltd is a China-based
+              Dongguan Huihe Realismthrift Trading Co., Ltd. is a China-based
               {" "}
               <strong>second hand clothes wholesale supplier</strong>
               {" "}

@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'RealismThrift Export Co., Ltd',
+    name: 'Dongguan Huihe Realismthrift Trading Co., Ltd.',
     short_name: 'RealismThrift',
     description: 'Wholesale supplier of sorted second-hand clothes, shoes and bags from China.',
     start_url: '/',
