@@ -83,7 +83,7 @@ export default function PrivacyPolicyPage() {
                   If there are any questions regarding this privacy policy, you may contact us using the information below:
                 </p>
                 <p className="font-bold">
-                  RealismThrift Export Co., Ltd<br />
+                  Dongguan Huihe Realismthrift Trading Co., Ltd.<br />
                   RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China<br />
                   Email: sales@realismthrift.com
                 </p>

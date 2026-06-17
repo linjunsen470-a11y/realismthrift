@@ -32,7 +32,7 @@ export const siteFooter: SiteFooter = {
   brand: {
     logo: "RealismThrift",
     description:
-      "RealismThrift Export Co., Ltd supplies sorted second-hand clothes, shoes and bags from China for wholesale buyers and importers.",
+      "Dongguan Huihe Realismthrift Trading Co., Ltd. supplies sorted second-hand clothes, shoes and bags from China for wholesale buyers and importers.",
     address: "RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China",
     phone: "+86 133 6748 1710",
     email: "sales@realismthrift.com",
@@ -71,7 +71,7 @@ export const siteFooter: SiteFooter = {
     inquiryTime: "Reply within 12 hours. Urgent? Contact via WhatsApp.",
   },
   bottom: {
-    copyright: "© 2026 RealismThrift Export Co., Ltd. All Rights Reserved.",
+    copyright: "© 2026 Dongguan Huihe Realismthrift Trading Co., Ltd. All Rights Reserved.",
     links: [
       { label: "Privacy Policy", href: "/privacy-policy" },
       { label: "Terms of Service", href: "/terms-of-service" },

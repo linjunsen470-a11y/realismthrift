@@ -153,7 +153,7 @@ export default function AboutUsPage() {
               <div className="absolute inset-0 bg-brand-gold/5 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
               <Image 
                 src="/images/staff/sales-manager-leo.webp" 
-                alt="Leo - Professional Sales Manager at RealismThrift Export Co., Ltd. Expert in wholesale used clothing, shoes, and bags export support and A-grade quality assurance for global buyers." 
+                alt="Leo - Professional Sales Manager at Dongguan Huihe Realismthrift Trading Co., Ltd. Expert in wholesale used clothing, shoes, and bags export support and A-grade quality assurance for global buyers." 
                 width={500}
                 height={900}
                 sizes="(min-width: 768px) 40vw, 100vw"

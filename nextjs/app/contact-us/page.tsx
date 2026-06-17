@@ -101,7 +101,7 @@ export default function ContactUsPage() {
                 <h4 className="font-montserrat text-[0.9375rem] font-black text-brand-gold mb-6 uppercase tracking-[0.1em]">Company Profile</h4>
                 <div className="space-y-5">
                   {[
-                    { i: <Building2 className="w-5 h-5 text-brand-gold" />, l: "Full Name", v: "RealismThrift Export Co., Ltd." },
+                    { i: <Building2 className="w-5 h-5 text-brand-gold" />, l: "Full Name", v: "Dongguan Huihe Realismthrift Trading Co., Ltd." },
                     { i: <MapPin className="w-5 h-5 text-brand-gold" />, l: "Location", v: siteFooter.brand.address },
                     { i: <Mail className="w-5 h-5 text-brand-gold" />, l: "Official Email", v: "sales@realismthrift.com" },
                     { i: <Phone className="w-5 h-5 text-brand-gold" />, l: "Sales Hotline", v: "+86 133 6748 1710" },

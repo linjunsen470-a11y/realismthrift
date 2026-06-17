@@ -101,7 +101,7 @@ export default async function BlogPostPage({
     datePublished: post.publishedAt,
     dateModified: post._updatedAt,
     authorName: post.author?.name || "RealismThrift",
-    publisherName: "RealismThrift Export Co., Ltd.",
+    publisherName: "Dongguan Huihe Realismthrift Trading Co., Ltd.",
     publisherLogo: "https://www.realismthrift.com/img/logo.webp",
     url: `https://www.realismthrift.com/blog/${slug}`
   });

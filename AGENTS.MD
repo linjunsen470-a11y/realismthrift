@@ -66,4 +66,4 @@ The digital platform supports the public storefront, inquiry pipeline, Sanity bl
 - Email: sales@realismthrift.com
 - Address: Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
 
-Copyright 2026 RealismThrift Export Co., Ltd. Stability, Quality, Trust.
+Copyright 2026 Dongguan Huihe Realismthrift Trading Co., Ltd. Stability, Quality, Trust.

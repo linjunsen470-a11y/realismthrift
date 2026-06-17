@@ -221,4 +221,4 @@ pnpm build
 - **Address**: Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
 - **Website**: [www.realismthrift.com](https://www.realismthrift.com)
 
-Copyright 2026 RealismThrift Export Co., Ltd.
+Copyright 2026 Dongguan Huihe Realismthrift Trading Co., Ltd.

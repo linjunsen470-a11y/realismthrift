@@ -1,8 +1,8 @@
-# RealismThrift Export Co., Ltd. Professional Profile
+# Dongguan Huihe Realismthrift Trading Co., Ltd. Professional Profile
 
 ## Company Identity
 
-RealismThrift Export Co., Ltd. is a used fashion wholesale exporter based in Huizhou, Guangdong, China. The company supplies sorted used clothes, used brand shoes, and used bags to overseas wholesalers, importers, and resale businesses.
+Dongguan Huihe Realismthrift Trading Co., Ltd. is a used fashion wholesale exporter based in Huizhou, Guangdong, China. The company supplies sorted used clothes, used brand shoes, and used bags to overseas wholesalers, importers, and resale businesses.
 
 The business focuses on practical procurement support: stable sourcing, realistic grading, category sorting, packing coordination, and export documentation.
 

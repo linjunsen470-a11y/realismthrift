@@ -1,8 +1,8 @@
-# RealismThrift Export Co., Ltd. Company Introduction
+# Dongguan Huihe Realismthrift Trading Co., Ltd. Company Introduction
 
 ## About RealismThrift
 
-RealismThrift Export Co., Ltd. is a wholesale exporter of used brand clothes, used brand shoes, and used bags from China. The company is based in Huizhou, Guangdong, and works with overseas buyers who need practical sourcing, grading, packing, and export support.
+Dongguan Huihe Realismthrift Trading Co., Ltd. is a wholesale exporter of used brand clothes, used brand shoes, and used bags from China. The company is based in Huizhou, Guangdong, and works with overseas buyers who need practical sourcing, grading, packing, and export support.
 
 RealismThrift serves wholesale buyers in markets including Africa, Southeast Asia, the Middle East, Latin America, and other regions where second-hand fashion has strong resale demand.
 
@@ -55,4 +55,4 @@ RealismThrift supports buyers with:
 - Website: [www.realismthrift.com](https://www.realismthrift.com)
 - Address: Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
 
-RealismThrift Export Co., Ltd. Stability, Quality, Trust.
+Dongguan Huihe Realismthrift Trading Co., Ltd. Stability, Quality, Trust.

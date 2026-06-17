@@ -24,7 +24,7 @@ export default function TermsOfServicePage() {
             <div className="rt-legal-tag">TERMS</div>
             <h1 className="rt-page-hero-title text-white mb-4">Terms of <span className="text-brand-gold">Service</span></h1>
             <p className="text-white/60 text-lg leading-relaxed">
-              Effective Date: April 21, 2026. These terms govern your business relationship with RealismThrift Export Co., Ltd.
+              Effective Date: April 21, 2026. These terms govern your business relationship with Dongguan Huihe Realismthrift Trading Co., Ltd.
             </p>
           </div>
         </div>
@@ -49,7 +49,7 @@ export default function TermsOfServicePage() {
 
                 <h2>3. Ordering & Payment</h2>
                 <p>
-                  All orders are subject to acceptance by RealismThrift Export Co., Ltd.
+                  All orders are subject to acceptance by Dongguan Huihe Realismthrift Trading Co., Ltd.
                 </p>
                 <ul>
                   <li><strong>Price Quotations:</strong> Valid for 15 days unless otherwise specified.</li>
