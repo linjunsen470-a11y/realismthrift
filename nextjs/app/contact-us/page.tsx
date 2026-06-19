@@ -1,5 +1,6 @@
 import "../internal-pages.css";
 import Image from "next/image";
+import Link from "next/link";
 import { InquiryForm } from "@/components/InquiryForm";
 import { companyStats, siteFooter } from "@/data/siteData";
 import { Mail, Phone, MapPin, Building2, Clock, MessageCircle, Send, Globe } from "lucide-react";
@@ -33,6 +34,11 @@ export default function ContactUsPage() {
           />
         </div>
         <div className="rt-container relative z-10 text-center">
+          <nav className="rt-breadcrumb mb-5 justify-center">
+            <Link href="/">Home</Link>
+            <span>›</span>
+            <span className="text-white/70">Contact Us</span>
+          </nav>
           <h1 className="font-montserrat text-[clamp(2.5rem,5vw,3rem)] font-extrabold text-white mb-4">
             Contact <span className="text-brand-gold">Us</span>
           </h1>

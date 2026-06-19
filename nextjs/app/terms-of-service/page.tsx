@@ -21,6 +21,11 @@ export default function TermsOfServicePage() {
       <section className="rt-legal-hero relative overflow-hidden bg-[#1a1a1a]">
         <div className="rt-container relative z-10">
           <div className="max-w-[800px]">
+            <nav className="rt-breadcrumb mb-5 justify-start">
+              <Link href="/">Home</Link>
+              <span>›</span>
+              <span className="text-white/70">Terms of Service</span>
+            </nav>
             <div className="rt-legal-tag">TERMS</div>
             <h1 className="rt-page-hero-title text-white mb-4">Terms of <span className="text-brand-gold">Service</span></h1>
             <p className="text-white/60 text-lg leading-relaxed">
