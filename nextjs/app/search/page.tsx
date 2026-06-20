@@ -7,7 +7,7 @@ import { getAllBlogPosts } from "@/lib/blog";
 import { searchAllContent, type SearchResult } from "@/lib/search";
 
 export const metadata: Metadata = {
-  title: "Search | RealismThrift",
+  title: "Search",
   description: "Search products, FAQs, order information, and blog content.",
   robots: {
     index: false,

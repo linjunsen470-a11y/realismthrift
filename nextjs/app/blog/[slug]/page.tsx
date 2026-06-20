@@ -39,11 +39,11 @@ export async function generateMetadata({
 
   if (!post) {
     return {
-      title: "Article Not Found | RealismThrift",
+      title: "Article Not Found",
     };
   }
 
-  const title = post.seo?.metaTitle || `${post.title} | RealismThrift Blog`;
+  const title = post.seo?.metaTitle || `${post.title} | Blog`;
   const description = post.seo?.metaDescription || post.excerpt;
   const image = resolveSeoImage(post);
 

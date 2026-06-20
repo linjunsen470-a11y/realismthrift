@@ -38,9 +38,9 @@ export function ProductTrustSections({ features, faqs }: ProductTrustSectionsPro
               >
                 <div className="text-[1.25rem] shrink-0 leading-none mt-1">{why.icon}</div>
                 <div>
-                  <h4 className="font-montserrat font-bold text-[0.875rem] text-[#1A1A1A] m-0 mb-1">
+                  <h3 className="font-montserrat font-bold text-[0.875rem] text-[#1A1A1A] m-0 mb-1">
                     {why.title}
-                  </h4>
+                  </h3>
                   <p className="font-open-sans text-[0.8rem] text-[#666] leading-[1.6] m-0">
                     {why.desc}
                   </p>
