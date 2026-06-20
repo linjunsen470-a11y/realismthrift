@@ -6,5 +6,4 @@ export const { sanityFetch, SanityLive } = defineLive({
   client: sanityClient,
   serverToken: sanityReadToken || false,
   browserToken: false,
-  stega: true,
 });

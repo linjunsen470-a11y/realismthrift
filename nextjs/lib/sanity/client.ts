@@ -14,6 +14,7 @@ export const sanityClient = createClient({
   useCdn: true,
   perspective: "published",
   stega: {
+    enabled: process.env.NEXT_PUBLIC_SANITY_VISUAL_EDITING === "true",
     studioUrl: sanityStudioUrl,
   },
 });

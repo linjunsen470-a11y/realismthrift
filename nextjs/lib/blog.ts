@@ -120,7 +120,7 @@ export async function getBlogPostBySlug(
     params: { slug },
     tags: ["post"],
     requestTag: "blog.by-slug",
-    stega: options?.stega ?? true,
+    stega: options?.stega,
   });
 
   return (data as BlogPostDetail | null) ?? null;
