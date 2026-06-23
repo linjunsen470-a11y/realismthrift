@@ -35,8 +35,8 @@ const bagFaqs = [
 ];
 
 export const metadata = {
-  title: "Used Brand Bags Wholesale | Coach, MK, Kate Spade Supplier",
-  description: `Wholesale exporter of sorted second-hand branded handbags, backpacks, and luggage from China. Coach, Michael Kors, Kate Spade, and more. 6-point inspection and export packing.`,
+  title: "Used Brand Bags Wholesale | Coach & MK Bags",
+  description: "Wholesale exporter of sorted second-hand branded handbags, backpacks, and luggage. Coach, Michael Kors, Kate Spade. 6-point inspection and export packing.",
   openGraph: {
     title: "Used Brand Bags Wholesale | China Export Supplier",
     description: "Sorted second-hand branded bags. 6-point quality check. Individually wrapped for protection. Global shipping support.",
@@ -196,7 +196,7 @@ export default function UsedBrandBagPage() {
               Bag Inspection & Sorting Process
             </h2>
             <p className="text-[0.9375rem] text-[#555] leading-[1.75] mb-[1.75rem]">
-              Bags require the most detailed inspection of all our product categories. Our dedicated bag sorting team checks every zipper, strap, clasp, and lining before grading. Only fully functional bags pass our A-grade standard.
+              Bags require the most detailed inspection of all our product categories. If you are ordering multiple categories, we can easily pack bags alongside <Link href="/used-brand-clothes" className="text-[#C0392B] font-bold hover:underline">Used Brand Clothes</Link> or <Link href="/used-brand-shoes" className="text-[#C0392B] font-bold hover:underline">Used Brand Shoes</Link> in a single container. Our dedicated bag sorting team checks every zipper, strap, clasp, and lining before grading. Only fully functional bags pass our A-grade standard.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-[1.25rem]">
               {[

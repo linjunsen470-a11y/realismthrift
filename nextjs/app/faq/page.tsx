@@ -7,7 +7,7 @@ import { JsonLd, getFaqSchema } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   title: "FAQ | Used Clothes Wholesale Common Questions",
-  description: "Find answers to frequently asked questions about wholesale used clothes, shoes, and bags from RealismThrift. Learn about MOQ, shipping, quality grades, and payment terms.",
+  description: "Answers to frequently asked questions about wholesale used clothes, shoes, and bags. Learn about MOQ, shipping, quality grades, and payment terms.",
   openGraph: {
     title: "RealismThrift FAQ | Wholesale Used Goods Help Center",
     description: "Everything you need to know about sourcing sorted second-hand goods from China, including grading, packing, payment, and export.",

@@ -36,8 +36,8 @@ const clothesFaqs = [
 ];
 
 export const metadata = {
-  title: "Used Brand Clothes Wholesale | A-Grade Sorted Supplier",
-  description: `Sorted and graded second-hand branded clothing from China. Nike, Adidas, H&M, Zara and 200+ brands. 5-step sorting. MOQ 100 bales. Export support available.`,
+  title: "Used Brand Clothes Wholesale | China Supplier",
+  description: "Sorted second-hand branded clothing from China. Nike, Adidas, Zara and 200+ brands. 5-step sorting. MOQ 100 bales. Export shipping support available.",
   openGraph: {
     title: "Used Brand Clothes Wholesale | China Export Supplier",
     description: "Sorted second-hand branded clothes. Nike, Adidas, and more. Wholesale packing and export support from China.",
@@ -135,7 +135,7 @@ export default function UsedBrandClothesPage() {
               <h2 className="font-montserrat font-extrabold text-[1.4rem] text-[#1A1A1A] m-0">What We Supply</h2>
             </div>
             <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0 mb-4">RealismThrift Export is a wholesale supplier of used branded clothing based in Huizhou, China. We operate a 15,000m² sorting facility with trained staff who process and grade second-hand garments from major Chinese cities. Each bale is packed through our standardized 5-step sorting and quality-control process.</p>
-            <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0">We supply wholesale buyers, thrift store chains, market traders, and NGOs across Africa, Southeast Asia, the Middle East, Latin America, and Europe. Whether you need a 100-bale trial order or a full 40HQ container, we handle everything from sorting to door-to-door delivery.</p>
+            <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0">We supply wholesale buyers, thrift store chains, market traders, and NGOs across Africa, Southeast Asia, the Middle East, Latin America, and Europe. To complement your clothing orders, we also supply wholesale <Link href="/used-brand-shoes" className="text-[#C0392B] font-bold hover:underline">Used Brand Shoes</Link> and <Link href="/used-brand-bag" className="text-[#C0392B] font-bold hover:underline">Used Brand Bags</Link> directly from our specialized sorting lines. Whether you need a 100-bale trial order or a full 40HQ container, we handle everything from sorting to door-to-door delivery.</p>
           </section>
 
           {/* BRAND SHOWCASE */}

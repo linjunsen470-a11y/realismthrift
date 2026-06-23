@@ -6,8 +6,8 @@ import { companyStats, siteFooter } from "@/data/siteData";
 import { Mail, Phone, MapPin, Building2, Clock, MessageCircle, Send, Globe } from "lucide-react";
 
 export const metadata = {
-  title: "Contact Us | Get Wholesale Quotes for Used Clothes & Shoes",
-  description: `Get in touch with RealismThrift for wholesale inquiries, price quotes, and export information. Sales support in English, French, Spanish, and Arabic during business hours.`,
+  title: "Contact Us | Get Wholesale Used Clothes Quote",
+  description: "Get in touch for wholesale quotes and export information. Multilingual B2B sales support in English, French, Spanish, and Swahili during business hours.",
   openGraph: {
     title: "Contact RealismThrift | Wholesale Sales & Support",
     description: "Ready to start your wholesale order? Contact our multilingual sales team for direct factory pricing and shipping estimates.",

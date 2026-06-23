@@ -35,7 +35,7 @@ const shoeFaqs = [
 ];
 
 export const metadata = {
-  title: "Used Brand Shoes Wholesale | Nike, Adidas, Jordan Supplier",
+  title: "Used Brand Shoes Wholesale | Nike & Adidas",
   description: `Wholesale supplier of sorted second-hand branded shoes. Nike, Adidas, Jordan, and 30+ brands. Paired, cleaned, graded, and packed for export.`,
   openGraph: {
     title: "Used Brand Shoes Wholesale | Sorted Export Supplier",
@@ -190,7 +190,7 @@ export default function UsedBrandShoesPage() {
               <div className="rt-section-divider" />
             </div>
             <p className="text-[0.9375rem] text-[#555] leading-[1.75] mb-7">
-              Used brand shoes require a more detailed sorting process than clothing. Our dedicated shoe sorting team handles each pair individually to ensure quality and pairing accuracy.
+              Used brand shoes require a more detailed sorting process than clothing. If you also need textiles, feel free to check our <Link href="/used-brand-clothes" className="text-[#C0392B] font-bold hover:underline">Used Brand Clothes</Link> sorting lines. Our dedicated shoe sorting team handles each pair individually to ensure quality and pairing accuracy.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {[

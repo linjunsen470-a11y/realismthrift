@@ -29,7 +29,7 @@ import { Metadata } from "next";
 import { JsonLd, getOrganizationSchema, getWebsiteSchema, getFaqSchema } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
-  title: 'Global Wholesale Supplier of Used Clothes, Shoes & Bags',
+  title: 'Wholesale Used Clothes, Shoes & Bags Supplier',
   description: 'RealismThrift supplies sorted second-hand clothes, shoes, and bags from China with wholesale packing, grading, and export support.',
   openGraph: {
     title: 'RealismThrift | Global Wholesale Supplier of Used Clothes, Shoes & Bags',

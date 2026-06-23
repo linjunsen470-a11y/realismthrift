@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Scale, FileText, CheckCircle, HelpCircle } from "lucide-react";
 
 export const metadata = {
-  title: "Terms of Service | Wholesale Order Conditions & Export Rules",
+  title: "Terms of Service | Wholesale Order Rules",
   description: "Read the official terms and conditions for wholesale orders, payment schedules, shipping responsibilities, and quality claims at RealismThrift.",
   openGraph: {
     title: "RealismThrift Terms of Service",

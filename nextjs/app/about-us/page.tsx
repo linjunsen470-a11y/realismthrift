@@ -6,8 +6,8 @@ import { companyStats } from "@/data/siteData";
 import { Building2, Search, CheckCircle2, Brush, Box, Ship, Globe2, MessageCircle, Mail } from "lucide-react";
 
 export const metadata = {
-  title: "About Us | Used Clothes & Shoes Export Supplier in China",
-  description: "Dongguan Huihe Realismthrift Trading Co., Ltd. is a professional wholesale supplier of second-hand clothes, shoes, and bags based in Huizhou, China. 15,000m² facility, ISO certified, and GRS compliant.",
+  title: "About Us | Used Clothes & Shoes China Supplier",
+  description: "Professional wholesale supplier of second-hand clothes, shoes, and bags based in Huizhou, China. 15,000m² facility, GRS certified and export ready.",
   openGraph: {
     title: "About RealismThrift | Professional Wholesale Exporter",
     description: "Learn about RealismThrift's sorting facility, grading process, and export support for second-hand goods.",

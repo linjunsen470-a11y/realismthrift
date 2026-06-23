@@ -5,8 +5,8 @@ import { InquiryForm } from "@/components/InquiryForm";
 import { Landmark, Wallet, CreditCard, Ship, Package, Plane } from "lucide-react";
 
 export const metadata = {
-  title: "How to Order Wholesale Used Clothes & Shoes | 7-Step Process",
-  description: "Learn the 7-step wholesale process at RealismThrift. From inquiry and price negotiation to quality inspection and global shipment. Simple, transparent, and professional.",
+  title: "How to Order Wholesale Used Clothes & Shoes",
+  description: "Learn our 7-step B2B wholesale process. From inquiry and price negotiation to quality inspection and global container shipment. Simple and transparent.",
   openGraph: {
     title: "How to Order Wholesale from RealismThrift | Step-by-Step Guide",
     description: "Our simple 7-step process for wholesale used brand clothes, shoes and bags. High quality, competitive pricing, and reliable shipping.",

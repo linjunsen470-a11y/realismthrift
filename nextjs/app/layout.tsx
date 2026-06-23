@@ -26,11 +26,10 @@ const openSans = Open_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.realismthrift.com'),
   title: {
-    default: 'Dongguan Huihe Realismthrift Trading Co., Ltd. | Used Clothes, Shoes & Bags Supplier in China',
+    default: 'RealismThrift | Used Clothes, Shoes & Bags Supplier in China',
     template: '%s | RealismThrift'
   },
   description: 'Wholesale supplier of sorted second-hand clothes, shoes and bags from China. Export support for used fashion buyers worldwide.',
-  keywords: ['used clothes wholesale', 'second hand clothes china', 'used shoes supplier', 'used bags exporter', 'wholesale used clothing africa'],
   authors: [{ name: 'RealismThrift' }],
   openGraph: {
     type: 'website',
