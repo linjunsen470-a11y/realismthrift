@@ -491,6 +491,12 @@ export default async function Home() {
               </details>
             ))}
           </div>
+
+          <div className="mt-10 text-center">
+            <Link href="/faq" className="rt-news-view-all">
+              View All FAQs <ArrowRight size={16} strokeWidth={2.25} />
+            </Link>
+          </div>
         </div>
       </section>
 

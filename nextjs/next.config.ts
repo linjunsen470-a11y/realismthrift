@@ -16,6 +16,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'realismthrift.com' }],
+        destination: 'https://www.realismthrift.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
