@@ -73,9 +73,15 @@ export default function PrivacyPolicyPage() {
                   We do not sell, trade, or otherwise transfer to outside parties your personally identifiable information. This does not include website hosting partners and other parties who assist us in operating our website, conducting our business, or serving our users, so long as those parties agree to keep this information confidential.
                 </p>
 
-                <h2>5. Cookies Policy</h2>
+                <h2>5. Cookies and Web Analytics Policy</h2>
                 <p>
                   Cookies are small files that a site or its service provider transfers to your computer&apos;s hard drive through your Web browser that enables the site&apos;s or service provider&apos;s systems to recognize your browser and capture and remember certain information. We use cookies to help us understand your preferences based on previous or current site activity.
+                </p>
+                <p>
+                  Specifically, we use Google Analytics 4 (GA4) to collect and analyze website traffic, user interactions, and demographic data. This helps us optimize website performance and user experience.
+                </p>
+                <p>
+                  <strong>Google Signals:</strong> We may enable Google Signals data collection within Google Analytics. Google Signals associates visitor traffic data collected from our site with Google information from accounts of signed-in users who have consented to this association for ads personalization. This Google information may include end-user location, search history, YouTube history, and data from partner sites. You can access or delete your data at any time via Google&apos;s &quot;My Activity&quot; controls.
                 </p>
 
                 <h2>6. Your Rights</h2>

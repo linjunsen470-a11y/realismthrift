@@ -19,6 +19,40 @@ export default function Analytics() {
     }
   }, [pathname, FB_PIXEL_ID]);
 
+  useEffect(() => {
+    if (!isAnalyticsEnabled) return;
+
+    const handleGlobalClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest("a");
+      if (!anchor) return;
+
+      const href = anchor.getAttribute("href") || "";
+
+      // Track WhatsApp link clicks
+      if (href.includes("wa.me") || href.includes("whatsapp.com")) {
+        trackEvent("Contact_WhatsApp", {
+          link_url: href,
+          page_path: window.location.pathname,
+        });
+      }
+
+      // Track Email link clicks
+      if (href.startsWith("mailto:")) {
+        const email = href.replace(/^mailto:/i, "").trim();
+        trackEvent("Contact_Email", {
+          email_address: email,
+          page_path: window.location.pathname,
+        });
+      }
+    };
+
+    document.addEventListener("click", handleGlobalClick);
+    return () => {
+      document.removeEventListener("click", handleGlobalClick);
+    };
+  }, []);
+
   if (!isAnalyticsEnabled || (!GA_ID && !FB_PIXEL_ID)) return null;
 
   return (
