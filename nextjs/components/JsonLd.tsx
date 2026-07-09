@@ -1,4 +1,5 @@
 import React from "react";
+import { companyPostalAddress } from "@/data/siteData";
 
 type JsonLdData = Record<string, unknown>;
 
@@ -33,10 +34,10 @@ export function getOrganizationSchema() {
     "email": "sales@realismthrift.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou",
-      "addressLocality": "Boluo, Huizhou",
-      "addressRegion": "Guangdong",
-      "addressCountry": "CN"
+      "streetAddress": companyPostalAddress.streetAddress,
+      "addressLocality": companyPostalAddress.addressLocality,
+      "addressRegion": companyPostalAddress.addressRegion,
+      "addressCountry": companyPostalAddress.addressCountry,
     },
     "areaServed": [
       "Africa",

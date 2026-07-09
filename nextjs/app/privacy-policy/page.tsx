@@ -1,6 +1,7 @@
 import "../internal-pages.css";
 import Link from "next/link";
 import { ShieldCheck, Lock, Eye, Globe } from "lucide-react";
+import { companyAddress, siteFooter } from "@/data/siteData";
 
 export const metadata = {
   title: "Privacy Policy",
@@ -95,8 +96,8 @@ export default function PrivacyPolicyPage() {
                 </p>
                 <p className="font-bold">
                   Dongguan Huihe Realismthrift Trading Co., Ltd.<br />
-                  RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China<br />
-                  Email: sales@realismthrift.com
+                  {companyAddress}<br />
+                  Email: {siteFooter.brand.email}
                 </p>
               </div>
             </div>

@@ -11,9 +11,9 @@
 分类：公司身份
 适用意图：询问所在地与地址
 买家常见问法：你们在中国哪里？工厂地址在哪里？
-标准答案：我们位于中国广东省惠州市，地址是 Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China。这里是 RealismThrift 的分拣、仓储和出口订单支持地点。您如果需要安排沟通，可以先把采购品类和预计数量发给我们。
+标准答案：我们位于中国广东省惠州市，地址是 RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China。这里是 RealismThrift 的分拣、仓储和出口订单支持地点。您如果需要安排沟通，可以先把采购品类和预计数量发给我们。
 建议追问：您是想确认地址用于验厂、物流文件，还是用于供应商资料登记？
-事实依据：地址为 Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China。
+事实依据：地址为 RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China。
 禁用口径：不要添加未提供的分公司、海外仓或其他办公地址。
 
 ### QA-003: 公司成立时间
@@ -517,14 +517,14 @@
 买家常见问法：可以参观你们工厂吗？
 标准答案：我们的设施位于广东省惠州市博罗县福益达工业园 52 号益达路。若买家需要进一步了解公司和现场情况，建议先通过 WhatsApp 或邮箱与销售预约沟通。请说明您的公司、采购品类和计划时间。
 建议追问：您希望线上先沟通，还是安排到访前资料确认？
-事实依据：地址为 Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China；联系方式已知。
+事实依据：地址为 RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China；联系方式已知。
 禁用口径：不要承诺无需预约随时进厂或提供未确认接待安排。
 
 ### QA-059: 工厂地址英文写法
 分类：联系方式
 适用意图：提供英文地址
 买家常见问法：请给我英文地址。
-标准答案：Our address is Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China。该地址可用于买家记录供应商资料或进一步沟通。若用于文件，请先和销售确认具体订单信息。
+标准答案：Our address is RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China。该地址可用于买家记录供应商资料或进一步沟通。若用于文件，请先和销售确认具体订单信息。
 建议追问：您需要地址用于供应商登记、拜访，还是订单文件？
 事实依据：完整英文地址为已知事实。
 禁用口径：不要提供未确认的邮编、税号或其他登记资料。
@@ -535,7 +535,7 @@
 买家常见问法：中文地址怎么写？
 标准答案：我们的地址可写为中国广东省惠州市博罗县益达路 52 号福益达工业园。公司位于中国广东惠州，支持二手品牌衣服、鞋子和包类出口询盘。若您需要用于正式文件，请先与销售确认订单细节。
 建议追问：您需要中文地址用于拜访、快递，还是资料登记？
-事实依据：地址为 Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China。
+事实依据：地址为 RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China。
 禁用口径：不要补充未提供的楼栋、门牌细节或邮编。
 
 ### QA-061: 为什么选择 RealismThrift

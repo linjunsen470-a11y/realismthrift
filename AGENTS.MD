@@ -29,7 +29,7 @@ Warehouse teams manage sorting, grading, packing, and container preparation insi
 
 - Specialization: Teams are organized by category, including used clothes, shoes, and bags.
 - Focus: Build export batches that match buyer market needs rather than generic mixed lots.
-- Facility context: Fuyida Industrial Park, Boluo County, Huizhou City, Guangdong Province, China.
+- Facility context: RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China.
 
 ## The Global Logistics Agent: Supply Chain
 
@@ -64,6 +64,6 @@ The digital platform supports the public storefront, inquiry pipeline, Sanity bl
 
 - WhatsApp: [+86 133 6748 1710](https://wa.me/8613367481710)
 - Email: sales@realismthrift.com
-- Address: Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
+- Address: RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China
 
 Copyright 2026 Dongguan Huihe Realismthrift Trading Co., Ltd. Stability, Quality, Trust.

@@ -10,6 +10,19 @@ export const companyStats = {
   buyersCount: "Wholesale",
 };
 
+/** Canonical factory address — single source of truth for site + structured data. */
+export const companyAddress =
+  "RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China";
+
+/** Structured postal fields for schema.org / maps query strings. */
+export const companyPostalAddress = {
+  streetAddress: "RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou",
+  addressLocality: "Boluo, Huizhou",
+  addressRegion: "Guangdong",
+  addressCountry: "CN",
+  mapsQuery: "Fengyi Road Yuanzhou Boluo Huizhou Guangdong China",
+} as const;
+
 export const siteHeader: SiteHeader = {
   brand: {
     logo: "RealismThrift",
@@ -34,7 +47,7 @@ export const siteFooter: SiteFooter = {
     logo: "RealismThrift",
     description:
       "Dongguan Huihe Realismthrift Trading Co., Ltd. supplies sorted second-hand clothes, shoes and bags from China for wholesale buyers and importers.",
-    address: "RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China",
+    address: companyAddress,
     phone: "+86 133 6748 1710",
     email: "sales@realismthrift.com",
     whatsapp: "+86 133 6748 1710",

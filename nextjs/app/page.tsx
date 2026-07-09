@@ -21,7 +21,7 @@ import {
   Trophy,
   Zap,
 } from "lucide-react";
-import { features, orderSteps, productsData, companyStats } from "@/data/siteData";
+import { features, orderSteps, productsData, companyStats, companyAddress } from "@/data/siteData";
 import { InquiryForm } from "@/components/InquiryForm";
 import { getLatestBlogPosts } from "@/lib/blog";
 import { LatestBlogSection } from "@/components/blog/LatestBlogSection";
@@ -163,7 +163,7 @@ const contactMethods = [
   },
   {
     label: "ADDRESS",
-    value: "RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China",
+    value: companyAddress,
     icon: MapPin,
   },
 ];

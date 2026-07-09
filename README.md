@@ -218,7 +218,7 @@ pnpm build
 
 - **WhatsApp**: [+86 133 6748 1710](https://wa.me/8613367481710)
 - **Email**: sales@realismthrift.com
-- **Address**: Fuyida Industrial Park, No. 52 Yida Road, Boluo County, Huizhou City, Guangdong Province, China
+- **Address**: RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China
 - **Website**: [www.realismthrift.com](https://www.realismthrift.com)
 
 Copyright 2026 Dongguan Huihe Realismthrift Trading Co., Ltd.
