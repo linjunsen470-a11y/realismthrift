@@ -1,68 +1,46 @@
-import { Resend } from 'resend';
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import { InquiryConfigurationError } from "@/lib/inquiries/clients";
+import { getInquiryEmailSettings } from "@/lib/inquiries/config";
+import { processPendingEmailJobs } from "@/lib/inquiries/email-jobs";
+import { createInquiry, InquiryStorageError } from "@/lib/inquiries/repository";
+import { validateInquiryPayload } from "@/lib/inquiries/validation";
+
+export const preferredRegion = "sin1";
 
 const MAX_REQUESTS_PER_WINDOW = 5;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
-const PRODUCTION_SITE_ORIGIN = 'https://www.realismthrift.com';
-
-type InquiryPayload = {
-  name: string;
-  email: string;
-  whatsapp: string;
-  country: string;
-  product: string;
-  quantity: string;
-  message: string;
-  website: string;
-};
+const PRODUCTION_SITE_ORIGIN = "https://www.realismthrift.com";
 
 type ApiErrorCode =
-  | 'validation_error'
-  | 'rate_limited'
-  | 'delivery_failed'
-  | 'config_error';
+  | "validation_error"
+  | "rate_limited"
+  | "storage_failed"
+  | "config_error";
 
 type RateLimitStore = Map<string, number[]>;
 
-const rateLimitStore: RateLimitStore =
-  (globalThis as typeof globalThis & { __inquiryRateLimitStore?: RateLimitStore })
-    .__inquiryRateLimitStore ?? new Map<string, number[]>();
+const globalRateLimitState = globalThis as typeof globalThis & {
+  __inquiryRateLimitStore?: RateLimitStore;
+};
 
-if (!(globalThis as typeof globalThis & { __inquiryRateLimitStore?: RateLimitStore }).__inquiryRateLimitStore) {
-  (globalThis as typeof globalThis & { __inquiryRateLimitStore?: RateLimitStore }).__inquiryRateLimitStore = rateLimitStore;
-}
-
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-function normalizeText(value: unknown, maxLength: number) {
-  return String(value ?? '').replace(/\s+/g, ' ').trim().slice(0, maxLength);
-}
+const rateLimitStore = globalRateLimitState.__inquiryRateLimitStore ?? new Map<string, number[]>();
+globalRateLimitState.__inquiryRateLimitStore ??= rateLimitStore;
 
 function jsonError(code: ApiErrorCode, message: string, status: number) {
   return NextResponse.json({ ok: false, code, message }, { status });
 }
 
-function escapeHtml(value: string) {
-  return value
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#39;');
-}
-
 function getClientIp(request: Request) {
-  const forwardedFor = request.headers.get('x-forwarded-for');
+  const forwardedFor = request.headers.get("x-forwarded-for");
   if (forwardedFor) {
-    return forwardedFor.split(',')[0]?.trim() || 'unknown';
+    return forwardedFor.split(",")[0]?.trim() || "unknown";
   }
-
-  return request.headers.get('x-real-ip')?.trim() || 'unknown';
+  return request.headers.get("x-real-ip")?.trim() || "unknown";
 }
 
 function getConfiguredAppOrigin() {
   const appUrl = process.env.APP_URL;
-  if (!appUrl || appUrl === 'MY_APP_URL') {
+  if (!appUrl || appUrl === "MY_APP_URL") {
     return null;
   }
 
@@ -74,24 +52,24 @@ function getConfiguredAppOrigin() {
 }
 
 function getRequestOrigin(request: Request) {
-  const forwardedHost = request.headers.get('x-forwarded-host')?.split(',')[0]?.trim();
-  const host = forwardedHost || request.headers.get('host')?.trim();
+  const forwardedHost = request.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
+  const host = forwardedHost || request.headers.get("host")?.trim();
   if (!host) {
     return null;
   }
 
-  const forwardedProto = request.headers.get('x-forwarded-proto')?.split(',')[0]?.trim();
-  const protocol = forwardedProto || new URL(request.url).protocol.replace(':', '');
+  const forwardedProto = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim();
+  const protocol = forwardedProto || new URL(request.url).protocol.replace(":", "");
   return `${protocol}://${host}`;
 }
 
 function getSourceOrigin(request: Request) {
-  const origin = request.headers.get('origin');
+  const origin = request.headers.get("origin");
   if (origin) {
     return origin;
   }
 
-  const referer = request.headers.get('referer');
+  const referer = request.headers.get("referer");
   if (!referer) {
     return null;
   }
@@ -105,16 +83,15 @@ function getSourceOrigin(request: Request) {
 
 function isAllowedRequestOrigin(request: Request) {
   const sourceOrigin = getSourceOrigin(request);
-
   if (!sourceOrigin) {
-    return process.env.NODE_ENV !== 'production';
+    return process.env.NODE_ENV !== "production";
   }
 
-  const allowedOrigins = new Set<string>([
-    PRODUCTION_SITE_ORIGIN,
-    getRequestOrigin(request),
-    getConfiguredAppOrigin(),
-  ].filter((origin): origin is string => Boolean(origin)));
+  const allowedOrigins = new Set(
+    [PRODUCTION_SITE_ORIGIN, getRequestOrigin(request), getConfiguredAppOrigin()].filter(
+      (origin): origin is string => Boolean(origin),
+    ),
+  );
 
   return allowedOrigins.has(sourceOrigin);
 }
@@ -134,122 +111,69 @@ function isRateLimited(clientIp: string) {
   return false;
 }
 
-function validatePayload(body: unknown): { data?: InquiryPayload; error?: string } {
-  if (!body || typeof body !== 'object') {
-    return { error: 'Invalid request payload.' };
-  }
-
-  const record = body as Record<string, unknown>;
-  const data: InquiryPayload = {
-    name: normalizeText(record.name, 80),
-    email: normalizeText(record.email, 120).toLowerCase(),
-    whatsapp: normalizeText(record.whatsapp, 32),
-    country: normalizeText(record.country, 80),
-    product: normalizeText(record.product, 40),
-    quantity: normalizeText(record.quantity, 20),
-    message: normalizeText(record.message, 2000),
-    website: normalizeText(record.website, 80),
-  };
-
-  if (data.website) {
-    return { error: 'Invalid request payload.' };
-  }
-
-  if (!data.name || !data.email || !data.whatsapp) {
-    return { error: 'Missing required fields.' };
-  }
-
-  if (!emailPattern.test(data.email)) {
-    return { error: 'Invalid email address.' };
-  }
-
-  return { data };
-}
-
 export async function POST(request: Request) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const contactEmail = process.env.CONTACT_EMAIL || 'sales@realismthrift.com';
-  const fromEmail = process.env.CONTACT_FROM_EMAIL 
-    ? normalizeText(process.env.CONTACT_FROM_EMAIL, 120).toLowerCase() 
-    : process.env.NODE_ENV === 'production'
-      ? ''
-      : 'onboarding@resend.dev';
+  if (!isAllowedRequestOrigin(request)) {
+    return jsonError("validation_error", "Invalid request origin.", 403);
+  }
 
-  if (!apiKey || !fromEmail || !emailPattern.test(fromEmail)) {
+  if (isRateLimited(getClientIp(request))) {
     return jsonError(
-      'config_error',
-      'Inquiry service is temporarily unavailable. Please contact us via WhatsApp or email directly.',
-      500,
+      "rate_limited",
+      "Too many inquiries were submitted from this connection. Please wait a few minutes and try again.",
+      429,
     );
   }
 
-  const resend = new Resend(apiKey);
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return jsonError("validation_error", "Invalid request payload.", 400);
+  }
+
+  const parsed = validateInquiryPayload(body);
+  if (!parsed.data) {
+    return jsonError("validation_error", parsed.error, 400);
+  }
+
+  let inquiryId: string;
+  try {
+    const settings = getInquiryEmailSettings();
+    const inquiry = await createInquiry(parsed.data, settings);
+    inquiryId = inquiry.id;
+  } catch (error) {
+    if (error instanceof InquiryConfigurationError) {
+      console.error("Inquiry service configuration error", { errorName: error.name });
+      return jsonError(
+        "config_error",
+        "Inquiry service is temporarily unavailable. Please contact us via WhatsApp or email directly.",
+        500,
+      );
+    }
+
+    console.error("Inquiry persistence failed", {
+      errorName: error instanceof Error ? error.name : "UnknownError",
+      storageError: error instanceof InquiryStorageError,
+    });
+    return jsonError(
+      "storage_failed",
+      "We could not securely save your inquiry right now. Please try again or contact us via WhatsApp.",
+      503,
+    );
+  }
 
   try {
-    if (!isAllowedRequestOrigin(request)) {
-      return jsonError(
-        'validation_error',
-        'Invalid request origin.',
-        403,
-      );
-    }
-
-    const clientIp = getClientIp(request);
-    if (isRateLimited(clientIp)) {
-      return jsonError(
-        'rate_limited',
-        'Too many inquiries were submitted from this connection. Please wait a few minutes and try again.',
-        429,
-      );
-    }
-
-    const parsed = validatePayload(await request.json());
-    if (!parsed.data) {
-      return jsonError(
-        'validation_error',
-        parsed.error ?? 'Invalid request payload.',
-        400,
-      );
-    }
-
-    const { name, email, whatsapp, country, product, quantity, message } = parsed.data;
-
-    const result = await resend.emails.send({
-      from: `RealismThrift <${fromEmail}>`,
-      to: [contactEmail],
-      subject: `New Lead: ${name} from ${country || 'Unknown Country'}`,
-      html: `
-        <h2>New Inquiry from Website</h2>
-        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        <p><strong>WhatsApp:</strong> ${escapeHtml(whatsapp)}</p>
-        <p><strong>Country:</strong> ${escapeHtml(country || 'Not provided')}</p>
-        <p><strong>Product Interest:</strong> ${escapeHtml(product || 'Not provided')}</p>
-        <p><strong>Quantity:</strong> ${escapeHtml(quantity || 'Not provided')}</p>
-        <p><strong>Message:</strong> ${escapeHtml(message || 'Not provided')}</p>
-      `,
-    });
-
-    if (result.error || !result.data?.id) {
-      console.error('Failed to send inquiry', result.error);
-      return jsonError(
-        'delivery_failed',
-        'We could not send your inquiry right now. Please try again or contact us via WhatsApp.',
-        502,
-      );
-    }
-
-    return NextResponse.json({
-      ok: true,
-      id: result.data.id,
-      message: 'Inquiry received. Our sales team will contact you within 12 hours.',
-    });
+    await processPendingEmailJobs({ inquiryId, limit: 2 });
   } catch (error) {
-    console.error('Failed to send inquiry', error);
-    return jsonError(
-      'delivery_failed',
-      'We could not send your inquiry right now. Please try again or contact us via WhatsApp.',
-      500,
-    );
+    // The inquiry and its outbox jobs already exist. The scheduled retry worker will recover them.
+    console.error("Immediate inquiry email processing failed", {
+      inquiryId,
+      errorName: error instanceof Error ? error.name : "UnknownError",
+    });
   }
+
+  return NextResponse.json({
+    ok: true,
+    message: "Inquiry received. Our sales team will contact you within 12 hours.",
+  });
 }

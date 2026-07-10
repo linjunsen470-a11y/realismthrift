@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { ArrowRight, CheckCircle2, MessageCircle, TriangleAlert } from "lucide-react";
 import { trackEvent } from "./Analytics";
 
@@ -19,6 +19,7 @@ export function InquiryForm({
   showWhatsApp = false,
 }: InquiryFormProps) {
   const [submission, setSubmission] = useState<SubmissionState>({ status: "idle" });
+  const submissionAttemptRef = useRef<{ id: string; fingerprint: string } | null>(null);
   const isSidebar = variant === "sidebar";
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -27,7 +28,21 @@ export function InquiryForm({
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const payload = Object.fromEntries(formData.entries());
+    const formValues = Object.fromEntries(formData.entries()) as Record<string, string>;
+    const fingerprint = JSON.stringify(formValues);
+
+    if (submissionAttemptRef.current?.fingerprint !== fingerprint) {
+      submissionAttemptRef.current = {
+        id: crypto.randomUUID(),
+        fingerprint,
+      };
+    }
+
+    const payload = {
+      ...formValues,
+      submissionId: submissionAttemptRef.current.id,
+      sourcePath: window.location.pathname,
+    };
 
     try {
       const response = await fetch("/api/send", {
@@ -44,6 +59,7 @@ export function InquiryForm({
 
       if (response.ok && result?.ok) {
         form.reset();
+        submissionAttemptRef.current = null;
         setSubmission({
           status: "success",
           message: result.message ?? "Inquiry received. Our sales team will contact you within 12 hours.",
@@ -52,7 +68,7 @@ export function InquiryForm({
         // Track conversion
         trackEvent("Lead", {
           content_name: "Inquiry Form",
-          content_category: payload.product || "General",
+          content_category: formValues.product || "General",
         });
 
         return;

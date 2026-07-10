@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "test:unit": "vitest run",
     "test:smoke": "playwright test",
     "test:smoke:ui": "playwright test --ui",
     "test:smoke:report": "playwright show-report",
@@ -20,7 +21,9 @@
   "packageManager": "pnpm@10.33.0",
   "dependencies": {
     "@portabletext/react": "^6.0.3",
+    "@react-email/components": "^1.0.12",
     "@sanity/image-url": "^2.1.1",
+    "@supabase/supabase-js": "^2.110.2",
     "autoprefixer": "^10.4.21",
     "clsx": "^2.1.1",
     "lucide-react": "^0.553.0",
@@ -48,6 +51,7 @@
     "firebase-tools": "^15.0.0",
     "sharp": "^0.34.5",
     "tailwindcss": "4.1.11",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "^4.1.10"
   }
 }

@@ -4,7 +4,7 @@ test.describe("RealismThrift smoke tests", () => {
   test("homepage renders the primary sales path", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page).toHaveTitle(/RealismThrift|Global Wholesale Supplier/i);
+    await expect(page).toHaveTitle(/RealismThrift|Wholesale Used Clothes|Global Wholesale Supplier/i);
     await expect(
       page.getByRole("heading", {
         name: /Direct Second Hand Brand Clothes, Shoes & Bags Factory/i,
@@ -37,6 +37,13 @@ test.describe("RealismThrift smoke tests", () => {
 
   test("inquiry form submits through the local API contract", async ({ page }) => {
     await page.route("**/api/send", async (route) => {
+      const payload = route.request().postDataJSON() as {
+        submissionId?: string;
+        sourcePath?: string;
+      };
+      expect(payload.submissionId).toMatch(/^[0-9a-f-]{36}$/i);
+      expect(payload.sourcePath).toBe("/contact-us");
+
       await route.fulfill({
         status: 200,
         contentType: "application/json",

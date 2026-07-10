@@ -59,3 +59,8 @@ archive/
 .playwright-mcp/
 code_audit_report_*.md
 index_filter.sh
+.agents/
+mcps/
+terminals/
+.nextjs-build/
+nextjs/.build-log.txt

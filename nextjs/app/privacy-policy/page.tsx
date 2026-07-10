@@ -30,7 +30,7 @@ export default function PrivacyPolicyPage() {
             <div className="rt-legal-tag">PRIVACY</div>
             <h1 className="rt-page-hero-title text-white mb-4">Privacy <span className="text-brand-gold">Policy</span></h1>
             <p className="text-white/60 text-lg leading-relaxed">
-              Last updated: April 21, 2026. This policy explains how we protect your personal data in our global wholesale operations.
+              Last updated: July 10, 2026. This policy explains how we protect your personal data in our global wholesale operations.
             </p>
           </div>
         </div>
@@ -68,10 +68,16 @@ export default function PrivacyPolicyPage() {
                 <p>
                   We implement a variety of security measures to maintain the safety of your personal information. Your personal information is contained behind secured networks and is only accessible by a limited number of persons who have special access rights to such systems.
                 </p>
+                <p>
+                  Website inquiry records and their delivery history are normally retained for 24 months from submission and are then deleted automatically, unless a longer period is required for an active business relationship or by law.
+                </p>
 
                 <h2>4. Disclosure to Third Parties</h2>
                 <p>
                   We do not sell, trade, or otherwise transfer to outside parties your personally identifiable information. This does not include website hosting partners and other parties who assist us in operating our website, conducting our business, or serving our users, so long as those parties agree to keep this information confidential.
+                </p>
+                <p>
+                  We use Vercel to host and operate the website, Resend to deliver inquiry notifications and automated confirmations, and Supabase to securely store inquiry records. These providers process only the information needed to perform those services on our behalf.
                 </p>
 
                 <h2>5. Cookies and Web Analytics Policy</h2>
@@ -87,7 +93,7 @@ export default function PrivacyPolicyPage() {
 
                 <h2>6. Your Rights</h2>
                 <p>
-                  You have the right to access, correct, or delete your personal data. If you wish to exercise these rights, please contact us at <a href="mailto:privacy@realismthrift.com">privacy@realismthrift.com</a>.
+                  You have the right to access, correct, or delete your personal data, including information submitted through our inquiry form. If you wish to exercise these rights, please contact us at <a href="mailto:privacy@realismthrift.com">privacy@realismthrift.com</a>.
                 </p>
 
                 <h2>7. Contact Us</h2>
