@@ -62,7 +62,7 @@ export default function UsedBrandClothesPage() {
   const faqSchema = getFaqSchema(clothesFaqs);
 
   return (
-    <main className="bg-white">
+    <div className="bg-white">
       <JsonLd data={productSchema} />
       <JsonLd data={faqSchema} />
       {/* ═══════════════════════════════════════════════════════
@@ -531,6 +531,6 @@ export default function UsedBrandClothesPage() {
         whatsappMessage="Hi, I want to wholesale used brand clothes. Can I get a price list?"
       />
 
-    </main>
+    </div>
   );
 }

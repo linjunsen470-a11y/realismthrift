@@ -85,6 +85,29 @@ select cron.schedule(
 
 Use the Supabase Cron history and `inquiry_delivery_overview` view to audit retries and delivery failures. Never commit either secret value to this repository.
 
+## Troubleshoot retry-worker 500 responses
+
+The application logs a non-sensitive `storageOperation` and Supabase `providerCode` for storage failures. Start with the failing operation, then verify the migration and credentials instead of logging inquiry payloads.
+
+Run these read-only checks in the Supabase SQL Editor:
+
+```sql
+select to_regclass('public.inquiry_email_jobs') as jobs_table;
+
+select routine_name
+from information_schema.routines
+where routine_schema = 'public'
+  and routine_name in (
+    'create_inquiry_with_email_jobs',
+    'claim_inquiry_email_jobs',
+    'apply_resend_email_state',
+    'record_resend_webhook_event'
+  )
+order by routine_name;
+```
+
+If a table or function is missing, apply `migrations/202607100001_inquiry_pipeline.sql`. If all objects exist, confirm that Vercel Production has the matching `SUPABASE_URL`, a server-only `SUPABASE_SECRET_KEY`, and the same `INQUIRY_RETRY_SECRET` stored in Supabase Vault. Redeploy only after correcting environment variables; never print their values in logs.
+
 ## Built-in abuse and retry boundaries
 
 - Every valid submission is stored and creates a sales notification job.

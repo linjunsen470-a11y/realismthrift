@@ -20,7 +20,7 @@ export const metadata = {
 
 export default function AboutUsPage() {
   return (
-    <main className="bg-white">
+    <div className="bg-white">
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <Image
@@ -362,6 +362,6 @@ export default function AboutUsPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

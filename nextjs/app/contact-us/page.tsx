@@ -20,7 +20,7 @@ export const metadata = {
 
 export default function ContactUsPage() {
   return (
-    <main className="bg-white">
+    <div className="bg-white">
       {/* 1. PAGE HERO */}
       <section className="relative py-16 md:py-24 bg-[#1A1A1A] overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -206,6 +206,6 @@ export default function ContactUsPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

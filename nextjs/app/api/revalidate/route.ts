@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { parseBody } from "next-sanity/webhook";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,13 +24,16 @@ export async function POST(req: NextRequest) {
 
     if (documentType === "post") {
       revalidateTag("post", { expire: 0 });
+      revalidatePath("/sitemap.xml");
       console.log("[Revalidate Webhook] Revalidated tag: post");
     } else if (documentType === "category") {
       revalidateTag("category", { expire: 0 });
       revalidateTag("post", { expire: 0 });
+      revalidatePath("/sitemap.xml");
       console.log("[Revalidate Webhook] Revalidated tags: category, post");
     } else if (documentType === "author") {
       revalidateTag("post", { expire: 0 });
+      revalidatePath("/sitemap.xml");
       console.log("[Revalidate Webhook] Revalidated tag: post (due to author update)");
     }
 

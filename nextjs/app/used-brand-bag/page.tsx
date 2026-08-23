@@ -61,7 +61,7 @@ export default function UsedBrandBagPage() {
   const faqSchema = getFaqSchema(bagFaqs);
 
   return (
-    <main className="bg-white">
+    <div className="bg-white">
       <JsonLd data={productSchema} />
       <JsonLd data={faqSchema} />
       <section className="rt-page-hero">
@@ -344,6 +344,6 @@ export default function UsedBrandBagPage() {
         whatsappMessage="Hi, I want to wholesale used brand bags. Can I get a price list?"
       />
 
-    </main>
+    </div>
   );
 }

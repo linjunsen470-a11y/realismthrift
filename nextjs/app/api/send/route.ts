@@ -154,6 +154,8 @@ export async function POST(request: Request) {
     console.error("Inquiry persistence failed", {
       errorName: error instanceof Error ? error.name : "UnknownError",
       storageError: error instanceof InquiryStorageError,
+      storageOperation: error instanceof InquiryStorageError ? error.operation : undefined,
+      providerCode: error instanceof InquiryStorageError ? error.providerCode : undefined,
     });
     return jsonError(
       "storage_failed",

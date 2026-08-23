@@ -5,12 +5,15 @@ export default defineCliConfig({
     projectId: 'unxd1ije',
     dataset: 'production'
   },
+  typegen: {
+    path: '../../nextjs/lib/blog.ts',
+    schema: './schema.json',
+    generates: '../../nextjs/types/sanity.types.ts',
+    overloadClientMethods: true,
+  },
   deployment: {
-    /**
-     * Enable auto-updates for studios.
-     * Learn more at https://www.sanity.io/docs/studio/latest-version-of-sanity#k47faf43faf56
-     */
     appId: 'yzsls8imau8dvpulgqab7hbo',
-    autoUpdates: true,
+    // Keep production Studio on the version tested and committed in package.json.
+    autoUpdates: false,
   }
 })

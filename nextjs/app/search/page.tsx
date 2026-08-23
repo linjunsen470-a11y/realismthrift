@@ -166,7 +166,7 @@ export default async function SearchPage({
   const hasResults = results.length > 0;
 
   return (
-    <main className="bg-[#f7f3ea]">
+    <div className="bg-[#f7f3ea]">
       <SearchHero query={query} showSuggestedTerms={!hasQuery || hasResults} />
 
       {hasQuery && hasResults ? (
@@ -362,6 +362,6 @@ export default async function SearchPage({
           )}
         </div>
       </section>
-    </main>
+    </div>
   );
 }

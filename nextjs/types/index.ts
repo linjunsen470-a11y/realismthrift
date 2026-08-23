@@ -77,42 +77,8 @@ export interface SanityImage {
   asset?: SanityImageAsset;
 }
 
-export interface BlogCategory {
-  _id: string;
-  title: string;
-  slug?: string;
-  description?: string;
-}
-
-export interface BlogAuthor {
-  name: string;
-  role?: string;
-  bio?: string;
-  avatar?: SanityImage;
-}
-
-export interface BlogSeo {
-  metaTitle?: string;
-  metaDescription?: string;
-  ogImage?: SanityImage;
-}
-
-export interface BlogPostCard {
-  _id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  publishedAt: string;
-  _updatedAt: string;
-  coverImage?: SanityImage;
-  category?: BlogCategory;
-  author?: BlogAuthor;
-}
-
-export interface BlogPostDetail extends BlogPostCard {
-  body: unknown[];
-  seo?: BlogSeo;
-}
+export type BlogPostCard = LatestPostsQueryResult[number];
+export type BlogPostDetail = NonNullable<PostBySlugQueryResult>;
 
 export interface HomePageData {
   hero: {
@@ -135,3 +101,7 @@ export interface HomePageData {
     buttonHref?: string;
   }[];
 }
+import type {
+  LatestPostsQueryResult,
+  PostBySlugQueryResult,
+} from "./sanity.types";

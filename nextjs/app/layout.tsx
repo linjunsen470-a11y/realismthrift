@@ -71,10 +71,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={`${montserrat.variable} ${openSans.variable}`} data-scroll-behavior="smooth">
       <body className="antialiased font-sans bg-white text-[#333]">
+        <a className="rt-skip-link" href="#main-content">Skip to main content</a>
         <Analytics />
         <div className="flex min-h-screen flex-col">
           <SiteHeader data={siteHeader} />
-          <main className="flex-grow">{children}</main>
+          <main id="main-content" className="flex-grow">{children}</main>
           <SiteFooter data={siteFooter} />
         </div>
         {isDraftModeEnabled ? (

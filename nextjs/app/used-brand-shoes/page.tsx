@@ -61,7 +61,7 @@ export default function UsedBrandShoesPage() {
   const faqSchema = getFaqSchema(shoeFaqs);
 
   return (
-    <main className="bg-white">
+    <div className="bg-white">
       <JsonLd data={productSchema} />
       <JsonLd data={faqSchema} />
       {/* PAGE HERO */}
@@ -334,6 +334,6 @@ export default function UsedBrandShoesPage() {
         description="Get a free price quotation within 12 hours. Minimum order 200 pairs. Worldwide shipping available."
         whatsappMessage="Hi, I want to wholesale used brand shoes. Can I get a price list?"
       />
-    </main>
+    </div>
   );
 }

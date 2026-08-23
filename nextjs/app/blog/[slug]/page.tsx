@@ -83,8 +83,10 @@ export default async function BlogPostPage({
     notFound();
   }
 
-  const relatedPosts = await getRelatedBlogPosts(post._id, post.category?._id || "");
-  const { prev: prevPost, next: nextPost } = await getPrevNextPosts(post.publishedAt);
+  const [relatedPosts, { prev: prevPost, next: nextPost }] = await Promise.all([
+    getRelatedBlogPosts(post._id, post.category?._id || ""),
+    getPrevNextPosts(post.publishedAt),
+  ]);
 
   const heroImage = hasUsableImageAsset(post.coverImage)
     ? urlForImage(post.coverImage).width(1600).height(700).fit("crop").url()
@@ -184,7 +186,7 @@ export default async function BlogPostPage({
                   {authorAvatar ? (
                     <Image
                       src={authorAvatar}
-                      alt={post.author.avatar?.alt || post.author.name}
+                      alt={post.author.name}
                       width={64}
                       height={64}
                       className="rt-blog-author-avatar shadow-sm"

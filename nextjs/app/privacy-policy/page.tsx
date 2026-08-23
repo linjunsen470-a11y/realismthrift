@@ -17,7 +17,7 @@ export const metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="bg-[#fcfcf9]">
+    <div className="bg-[#fcfcf9]">
       {/* PAGE HERO */}
       <section className="rt-legal-hero relative overflow-hidden bg-[#1a1a1a]">
         <div className="rt-container relative z-10">
@@ -145,6 +145,6 @@ export default function PrivacyPolicyPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

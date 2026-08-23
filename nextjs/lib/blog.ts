@@ -1,43 +1,30 @@
-import { groq } from "next-sanity";
+import { defineQuery } from "next-sanity";
 import { BlogPostCard, BlogPostDetail } from "@/types";
 import { sanityFetch } from "@/lib/sanity/live";
 
-const POST_CARD_PROJECTION = groq`{
-  _id,
-  title,
-  "slug": slug.current,
-  excerpt,
-  publishedAt,
-  _updatedAt,
-  coverImage,
-  category->{
-    _id,
-    title,
-    "slug": slug.current,
-    description
-  },
-  author->{
-    name,
-    role,
-    bio,
-    avatar
-  }
-}`;
+const latestPostsQuery = defineQuery(`*[
+  _type == "post" && defined(slug.current) && defined(publishedAt) &&
+  publishedAt <= now() && isArchived != true
+] | order(publishedAt desc)[0...3] {
+  _id, title, "slug": slug.current, excerpt, publishedAt, _updatedAt, coverImage,
+  category->{_id, title, "slug": slug.current, description},
+  author->{name, role, bio, avatar}
+}`);
 
-// Public blog routes only expose posts that are actually ready for the site.
-const ACTIVE_POST_FILTER =
-  `_type == "post" && defined(slug.current) && defined(publishedAt) && isArchived != true`;
+// A generous cap prevents an accidental unbounded CMS read without adding
+// pagination infrastructure that this small site does not currently need.
+const allPostsQuery = defineQuery(`*[
+  _type == "post" && defined(slug.current) && defined(publishedAt) &&
+  publishedAt <= now() && isArchived != true
+] | order(publishedAt desc)[0...200] {
+  _id, title, "slug": slug.current, excerpt, publishedAt, _updatedAt, coverImage,
+  category->{_id, title, "slug": slug.current, description},
+  author->{name, role, bio, avatar}
+}`);
 
-const latestPostsQuery = groq`*[
-  ${ACTIVE_POST_FILTER}
-] | order(publishedAt desc)[0...3] ${POST_CARD_PROJECTION}`;
-
-const allPostsQuery = groq`*[
-  ${ACTIVE_POST_FILTER}
-] | order(publishedAt desc) ${POST_CARD_PROJECTION}`;
-
-const postBySlugQuery = groq`*[
-  ${ACTIVE_POST_FILTER} && slug.current == $slug
+const postBySlugQuery = defineQuery(`*[
+  _type == "post" && defined(slug.current) && defined(publishedAt) &&
+  publishedAt <= now() && isArchived != true && slug.current == $slug
 ][0] {
   _id,
   title,
@@ -64,30 +51,39 @@ const postBySlugQuery = groq`*[
     metaDescription,
     ogImage
   }
-}`;
+}`);
 
-const postSlugsQuery = groq`*[
-  ${ACTIVE_POST_FILTER}
-].slug.current`;
+const postSlugsQuery = defineQuery(`*[
+  _type == "post" && defined(slug.current) && defined(publishedAt) &&
+  publishedAt <= now() && isArchived != true
+].slug.current`);
 
-const relatedPostsQuery = groq`*[
-  ${ACTIVE_POST_FILTER} && _id != $currentId && category._ref == $categoryId
-] | order(publishedAt desc)[0...3] ${POST_CARD_PROJECTION}`;
+const relatedPostsQuery = defineQuery(`*[
+  _type == "post" && defined(slug.current) && defined(publishedAt) &&
+  publishedAt <= now() && isArchived != true &&
+  _id != $currentId && category._ref == $categoryId
+] | order(publishedAt desc)[0...3] {
+  _id, title, "slug": slug.current, excerpt, publishedAt, _updatedAt, coverImage,
+  category->{_id, title, "slug": slug.current, description},
+  author->{name, role, bio, avatar}
+}`);
 
-const prevNextQuery = groq`{
+const prevNextQuery = defineQuery(`{
   "prev": *[
-    ${ACTIVE_POST_FILTER} && publishedAt < $publishedAt
+    _type == "post" && defined(slug.current) && defined(publishedAt) &&
+    publishedAt <= now() && isArchived != true && publishedAt < $publishedAt
   ] | order(publishedAt desc)[0] {
     title,
     "slug": slug.current
   },
   "next": *[
-    ${ACTIVE_POST_FILTER} && publishedAt > $publishedAt
+    _type == "post" && defined(slug.current) && defined(publishedAt) &&
+    publishedAt <= now() && isArchived != true && publishedAt > $publishedAt
   ] | order(publishedAt asc)[0] {
     title,
     "slug": slug.current
   }
-}`;
+}`);
 
 export async function getLatestBlogPosts(): Promise<BlogPostCard[]> {
   const { data } = await sanityFetch({
@@ -97,7 +93,7 @@ export async function getLatestBlogPosts(): Promise<BlogPostCard[]> {
     stega: false,
   });
 
-  return data as BlogPostCard[];
+  return data;
 }
 
 export async function getAllBlogPosts(): Promise<BlogPostCard[]> {
@@ -108,7 +104,7 @@ export async function getAllBlogPosts(): Promise<BlogPostCard[]> {
     stega: false,
   });
 
-  return data as BlogPostCard[];
+  return data;
 }
 
 export async function getBlogPostBySlug(
@@ -123,7 +119,7 @@ export async function getBlogPostBySlug(
     stega: options?.stega,
   });
 
-  return (data as BlogPostDetail | null) ?? null;
+  return data ?? null;
 }
 
 export async function getBlogSlugs(): Promise<string[]> {
@@ -134,7 +130,7 @@ export async function getBlogSlugs(): Promise<string[]> {
     stega: false,
   });
 
-  return data as string[];
+  return data;
 }
 
 export async function getRelatedBlogPosts(
@@ -154,7 +150,7 @@ export async function getRelatedBlogPosts(
     stega: false,
   });
 
-  return data as BlogPostCard[];
+  return data;
 }
 
 export async function getPrevNextPosts(publishedAt: string): Promise<{
@@ -169,10 +165,7 @@ export async function getPrevNextPosts(publishedAt: string): Promise<{
     stega: false,
   });
 
-  return (data as {
-    prev: { title: string; slug: string } | null;
-    next: { title: string; slug: string } | null;
-  }) || { prev: null, next: null };
+  return data || { prev: null, next: null };
 }
 
 export function formatBlogDate(date: string) {
