@@ -1,22 +1,11 @@
-"use client";
-
-import { Facebook, Linkedin, Mail, MessageCircle, Share2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Facebook, Linkedin, Mail, MessageCircle } from "lucide-react";
 
 interface ShareButtonsProps {
   title: string;
+  url: string;
 }
 
-export function ShareButtons({ title }: ShareButtonsProps) {
-  const [url, setUrl] = useState("");
-
-  useEffect(() => {
-    // Only set the URL once on the client to avoid SSR mismatch and unnecessary renders
-    const currentUrl = window.location.href;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setUrl(currentUrl);
-  }, []);
-
+export function ShareButtons({ title, url }: ShareButtonsProps) {
   const shareLinks = [
     {
       name: "WhatsApp",

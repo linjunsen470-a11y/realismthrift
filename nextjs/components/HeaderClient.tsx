@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState, useTransition } from "react";
+import { FormEvent, useRef, useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -17,6 +17,7 @@ export function HeaderClient({ data }: HeaderClientProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [searchQuery, setSearchQuery] = useState("");
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   function closeMenu() {
     setIsMenuOpen(false);
@@ -43,7 +44,7 @@ export function HeaderClient({ data }: HeaderClientProps) {
             <span className="rt-logo-combo">
               <Image
                 src="/img/logo.webp"
-                alt="RealismThrift Logo - Professional Wholesale Supplier of Used Clothes, Shoes, and Bags in China"
+                alt=""
                 width={48}
                 height={48}
                 sizes="48px"
@@ -51,14 +52,14 @@ export function HeaderClient({ data }: HeaderClientProps) {
               />
               <span className="rt-logo-combo-text">
                 <span className="rt-logo-combo-name">RealismThrift</span>
-                <span className="rt-logo-combo-sub">Export Co., Ltd</span>
+                <span className="rt-logo-combo-sub">Wholesale Export</span>
               </span>
             </span>
           </Link>
 
           <div className="flex items-center gap-3">
             <form
-              className="hidden md:flex rt-search-form focus-within:border-brand-red focus-within:shadow-[0_0_0_1px_#c0392b] transition-all duration-300"
+              className="rt-search-form"
               role="search"
               onSubmit={handleSubmit}
             >
@@ -67,7 +68,8 @@ export function HeaderClient({ data }: HeaderClientProps) {
                 name="q"
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Search catalog..."
+                placeholder="Search products, shipping…"
+                maxLength={120}
                 aria-label="Search catalog"
                 className="bg-transparent focus:ring-0 text-sm"
               />
@@ -86,11 +88,15 @@ export function HeaderClient({ data }: HeaderClientProps) {
             </Link>
             <button
               type="button"
-              className="rt-hamburger md:hidden"
+              className="rt-hamburger"
+              ref={menuButtonRef}
               aria-expanded={isMenuOpen}
               aria-controls="rt-nav-list"
               aria-label="Toggle navigation"
               onClick={() => setIsMenuOpen((open) => !open)}
+              onKeyDown={(event) => {
+                if (event.key === "Escape") closeMenu();
+              }}
             >
               {isMenuOpen ? <X size={24} strokeWidth={2.4} /> : <Menu size={24} strokeWidth={2.4} />}
             </button>
@@ -98,9 +104,21 @@ export function HeaderClient({ data }: HeaderClientProps) {
         </div>
       </div>
 
-      <nav className="rt-mainnav" id="rt-mainnav" aria-label="Main navigation">
+      <nav className="rt-mainnav" id="rt-mainnav" aria-label="Main navigation"
+        onKeyDown={(event) => {
+          if (event.key === "Escape" && isMenuOpen) {
+            closeMenu();
+            menuButtonRef.current?.focus();
+          }
+        }}
+      >
         <div className="rt-container">
           <ul id="rt-nav-list" className={`rt-nav-list${isMenuOpen ? " is-open" : ""}`}>
+            <li className="rt-mobile-search-item">
+              <Link href="/search" onClick={closeMenu}>
+                <Search size={16} aria-hidden="true" /> Search the Site
+              </Link>
+            </li>
             {data.navItems.map((item) => {
               const isActive =
                 item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);

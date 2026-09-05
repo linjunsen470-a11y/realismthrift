@@ -17,22 +17,21 @@ export default function NotFound() {
         <div className="rt-hero-overlay bg-black/60" />
         <div className="rt-container relative z-10 text-center flex flex-col items-center justify-center">
           <div className="mb-8 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-brand-red/20 border border-brand-red/30 text-brand-gold font-montserrat text-sm font-bold uppercase tracking-widest rt-fade-in">
-            <Package size={16} /> Out of Stock
+            <Package size={16} /> Page Not Found
           </div>
           
-          <div className="relative mb-12 rt-fade-in-delayed">
-            <h1 className="text-[clamp(5rem,20vw,12rem)] font-black text-white/5 leading-none font-montserrat select-none">
+          <div className="mb-8 w-full rt-fade-in-delayed">
+            <p aria-hidden="true" className="text-[clamp(5rem,20vw,9rem)] font-black text-white/30 leading-none font-montserrat select-none">
               404
-            </h1>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <h2 className="rt-hero-title mb-4">PAGE NOT IN INVENTORY</h2>
+            </p>
+            <div className="flex flex-col items-center justify-center">
+              <h1 className="rt-hero-title mb-4">Page Not Found</h1>
               <div className="rt-section-divider center w-20 h-1.5" />
             </div>
           </div>
 
           <p className="rt-hero-subtitle max-w-2xl mx-auto mb-12 text-white/80 rt-fade-in-delayed">
-            The requested URL has been sorted out of our current system. 
-            It may have been moved, deleted, or is temporarily unavailable in our wholesale catalog.
+            This page may have moved or the link may be incorrect. Browse our product categories below or return to the homepage.
           </p>
 
           <div className="flex flex-col items-center gap-12 w-full rt-fade-in-delayed">

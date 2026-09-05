@@ -32,7 +32,7 @@ export function CustomerAcknowledgementEmail({
   return (
     <Html lang="en">
       <Head />
-      <Preview>We received your wholesale inquiry and will reply within 12 hours.</Preview>
+      <Preview>We received your wholesale inquiry and aim to reply within 12 hours.</Preview>
       <Body style={bodyStyle}>
         <Container style={containerStyle}>
           <Section style={headerStyle}>
@@ -44,8 +44,8 @@ export function CustomerAcknowledgementEmail({
             <Text style={automaticStyle}>AUTOMATED CONFIRMATION</Text>
             <Heading style={headingStyle}>Thank you, {name}.</Heading>
             <Text style={copyStyle}>
-              We have received your wholesale inquiry. Our sales team will review your requirements
-              and contact you within 12 hours.
+              We have received your wholesale inquiry. Our sales team will review your requirements.
+              We aim to reply within 12 hours.
             </Text>
 
             <Section style={summaryStyle}>
@@ -100,7 +100,7 @@ export function customerAcknowledgementText({
     `Thank you, ${name}.`,
     "",
     "This is an automated confirmation that we received your wholesale inquiry.",
-    "Our sales team will review your requirements and contact you within 12 hours.",
+    "Our sales team will review your requirements. We aim to reply within 12 hours.",
     "",
     "YOUR INQUIRY SUMMARY",
     `Product: ${display(product)}`,
@@ -185,4 +185,3 @@ const dividerStyle = { borderColor: "#e1dccf", margin: "22px 0 16px" };
 const noticeStyle = { color: "#827c70", fontSize: "11px", lineHeight: "1.55", margin: 0, textAlign: "center" as const };
 const footerStyle = { backgroundColor: "#eeeae0", padding: "15px 24px", textAlign: "center" as const };
 const footerTextStyle = { color: "#706a5e", fontSize: "11px", margin: 0 };
-

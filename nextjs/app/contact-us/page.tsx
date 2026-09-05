@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import "../internal-pages.css";
 import Image from "next/image";
 import Link from "next/link";
@@ -5,7 +6,7 @@ import { InquiryForm } from "@/components/InquiryForm";
 import { companyStats, companyAddress, companyPostalAddress, siteFooter } from "@/data/siteData";
 import { Mail, Phone, MapPin, Building2, Clock, MessageCircle, Send, Globe } from "lucide-react";
 
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "Contact Us | Get Wholesale Used Clothes Quote",
   description: "Get in touch for wholesale quotes and export information. Multilingual B2B sales support in English, French, Spanish, and Swahili during business hours.",
   openGraph: {
@@ -16,7 +17,7 @@ export const metadata = {
   alternates: {
     canonical: "/contact-us",
   },
-};
+});
 
 export default function ContactUsPage() {
   return (
@@ -43,7 +44,7 @@ export default function ContactUsPage() {
             Contact <span className="text-brand-gold">Us</span>
           </h1>
           <p className="text-white/80 text-[1.0625rem] max-w-[600px] md:max-w-[850px] mx-auto mb-10 font-open-sans leading-[1.7]">
-            Our sales team is available during business hours to answer your questions and provide price quotations. We speak English, French, Spanish, and Arabic.
+            Our sales team is available during business hours to answer your questions and provide price quotations. We speak English, French, Spanish, and Swahili.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a href="mailto:sales@realismthrift.com" className="group bg-brand-gold text-brand-dark px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-brand-gold-dark hover:-translate-y-0.5 shadow-lg active:scale-95 flex items-center gap-2">
@@ -61,7 +62,7 @@ export default function ContactUsPage() {
       {/* 2. CONTACT INFO CARDS - GRID OF 4 */}
       <div className="-mt-10 relative z-20 mb-12">
         <div className="rt-container">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
             {[
               { i: <Mail className="w-6 h-6 text-brand-red" />, t: "Email", s: "Send us an email", v: "sales@realismthrift.com", l: "mailto:sales@realismthrift.com", color: "bg-red-50" },
               { i: <MessageCircle className="w-6 h-6 text-[#25D366]" />, t: "WhatsApp", s: "Chat with us now", v: "+86 133 6748 1710", l: "https://wa.me/8613367481710", color: "bg-green-50" },
@@ -143,10 +144,10 @@ export default function ContactUsPage() {
             {[
               { r: "Africa", c: "Nigeria, Ghana, Kenya, Tanzania, Ethiopia, Senegal, Ivory Coast, Cameroon, Uganda, Mozambique" },
               { r: "Southeast Asia", c: "Vietnam, Thailand, Philippines, Indonesia, Malaysia, Cambodia, Myanmar, Laos" },
-              { r: "Middle East", c: "UAE, Saudi Arabia, Jordan, Lebanon, Egypt, Morocco, Tunisia, Algeria" },
+              { r: "Middle East", c: "UAE, Saudi Arabia, Jordan, Lebanon, Yemen, Iraq" },
               { r: "Americas", c: "USA, Canada, Mexico, Brazil, Colombia, Peru, Chile, Ecuador" },
               { r: "Europe", c: "UK, France, Germany, Poland, Romania, Ukraine, Bulgaria, Hungary" },
-              { r: "Oceania", c: "Australia, New Zealand, Kazakhstan, Uzbekistan, Pakistan, Bangladesh" },
+              { r: "Oceania", c: "Australia, New Zealand, Papua New Guinea, Fiji, Solomon Islands" },
             ].map((market) => (
               <div key={market.r} className="bg-white p-7 rounded-[12px] shadow-sm hover:shadow-md transition-all border border-transparent hover:border-brand-red/10 group">
                 <div className="flex items-center gap-3 mb-4 border-b border-brand-light pb-3">

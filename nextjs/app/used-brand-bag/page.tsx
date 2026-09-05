@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import "../internal-pages.css";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,7 +8,7 @@ import { ProductTrustSections } from "@/components/product/ProductTrustSections"
 import { ProductCTA } from "@/components/product/ProductCTA";
 import { companyStats } from "@/data/siteData";
 import { XCircle, CheckCircle2, ShieldCheck, Sparkles, Globe2, Camera, Footprints, ShoppingBag, ClipboardList, Mail } from "lucide-react";
-import { JsonLd, getProductSchema, getFaqSchema } from "@/components/JsonLd";
+import { JsonLd, getWholesaleCatalogSchema, getFaqSchema } from "@/components/JsonLd";
 
 const bagStandards = [
   { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Zippers Checked', desc: 'Broken or stuck zippers are downgraded or removed', isNegative: true },
@@ -24,7 +25,7 @@ const bagStandards = [
 const bagFeatures = [
   { icon: <ShieldCheck className="w-6 h-6 text-brand-gold" />, title: '6-Pt Hardware Check', desc: 'Zippers, clasps, and rings are tested before grading and packing.' },
   { icon: <Sparkles className="w-6 h-6 text-brand-gold" />, title: 'Deep Interior Cleaning', desc: 'Specialized cleaning for leather, canvas and nylon. Deodorized interiors.' },
-  { icon: <Globe2 className="w-6 h-6 text-brand-gold" />, title: 'Worldwide Export', desc: `12+ years experience in global logistics and exporting to ${companyStats.countriesCount} countries.` },
+  { icon: <Globe2 className="w-6 h-6 text-brand-gold" />, title: 'Worldwide Export', desc: `Experience since 2012 in global logistics and exporting to ${companyStats.countriesCount} countries.` },
   { icon: <Camera className="w-6 h-6 text-brand-gold" />, title: 'Photo Verification', desc: 'Live photos and videos of your specific order sent before shipment.' }
 ];
 
@@ -34,7 +35,7 @@ const bagFaqs = [
   { q: 'How are the bags packed?', a: 'Each bag is individually wrapped in plastic to prevent scratching, then packed in woven sacks or cartons.' }
 ];
 
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "Used Brand Bags Wholesale | Coach & MK Bags",
   description: "Wholesale exporter of sorted second-hand branded handbags, backpacks, and luggage. Coach, Michael Kors, Kate Spade. 6-point inspection and export packing.",
   openGraph: {
@@ -45,17 +46,14 @@ export const metadata = {
   alternates: {
     canonical: "/used-brand-bag",
   },
-};
+});
 
 export default function UsedBrandBagPage() {
-  const productSchema = getProductSchema({
+  const productSchema = getWholesaleCatalogSchema({
     name: "Used Brand Bags Wholesale",
     description: "Wholesale exporter of sorted second-hand branded handbags, backpacks, and luggage from China.",
     image: "https://www.realismthrift.com/images/bags/loewe-puzzle-bag-assorted-colors-display.webp",
     url: "https://www.realismthrift.com/used-brand-bag",
-    lowPrice: 3.0,
-    highPrice: 25.0,
-    offerCount: 5,
   });
 
   const faqSchema = getFaqSchema(bagFaqs);
@@ -252,7 +250,7 @@ export default function UsedBrandBagPage() {
                     <h3 className="font-montserrat text-[0.9375rem] font-bold text-[#1A1A1A] m-0">Brand Verification & Packing</h3>
                   </div>
                   <p className="text-[0.8125rem] text-[#666] leading-[1.7] m-0">
-                    Brand labels, serial numbers, and authenticity markers are verified. Each bag is individually wrapped in plastic before being packed into woven sacks. Sacks are labeled with brand, type, grade, and piece count.
+                    Brand labels, hardware, and condition are checked. Obvious counterfeits and unsuitable items are removed from brand-focused batches. Each bag is individually wrapped in plastic before being packed into woven sacks. Sacks are labeled with brand, type, grade, and piece count.
                   </p>
                 </div>
               </div>
@@ -317,7 +315,7 @@ export default function UsedBrandBagPage() {
             {/* Sidebar header — gold/brown */}
             <div className="bg-[#8B6914] text-white -mx-[1.75rem] -mt-[1.75rem] px-[1.75rem] py-[1.25rem] rounded-t-[8px] mb-6">
               <h3 className="font-montserrat text-[1rem] font-extrabold m-0 mb-[0.25rem]">Get Bag Price Now</h3>
-              <p className="text-[0.75rem] opacity-85 m-0">Reply within 12 hours · Free samples available</p>
+              <p className="text-[0.75rem] opacity-85 m-0">We aim to reply within 12 hours · Ask about sample pricing</p>
             </div>
 
             <InquiryForm variant="sidebar" />

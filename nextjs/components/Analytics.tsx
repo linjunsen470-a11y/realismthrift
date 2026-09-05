@@ -8,10 +8,15 @@ import { useEffect, useSyncExternalStore } from "react";
 const isAnalyticsEnabled = process.env.NEXT_PUBLIC_ANALYTICS_ENABLED !== "false";
 const CONSENT_KEY = "rt_analytics_consent_v1";
 type Consent = "unknown" | "granted" | "denied";
+let memoryConsent: Consent = "unknown";
 
 function getConsentSnapshot(): Consent {
-  const value = window.localStorage.getItem(CONSENT_KEY);
-  return value === "granted" || value === "denied" ? value : "unknown";
+  try {
+    const value = window.localStorage.getItem(CONSENT_KEY);
+    return value === "granted" || value === "denied" ? value : memoryConsent;
+  } catch {
+    return memoryConsent;
+  }
 }
 
 function subscribeToConsent(onChange: () => void) {
@@ -72,7 +77,12 @@ export default function Analytics() {
   }, [consent]);
 
   const chooseConsent = (choice: Exclude<Consent, "unknown">) => {
-    window.localStorage.setItem(CONSENT_KEY, choice);
+    memoryConsent = choice;
+    try {
+      window.localStorage.setItem(CONSENT_KEY, choice);
+    } catch {
+      // Storage may be unavailable in restricted browsing sessions.
+    }
     window.dispatchEvent(new Event("rt-consent-change"));
   };
 
@@ -142,7 +152,7 @@ export default function Analytics() {
 export const trackEvent = (eventName: string, params?: object) => {
   if (typeof window === "undefined") return;
   if (!isAnalyticsEnabled) return;
-  if (window.localStorage.getItem(CONSENT_KEY) !== "granted") return;
+  if (getConsentSnapshot() !== "granted") return;
 
   // Track in GA4
   if (window.gtag) {

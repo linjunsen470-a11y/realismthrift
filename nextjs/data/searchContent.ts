@@ -269,7 +269,7 @@ export const staticSearchEntries: SearchEntry[] = [
     type: "contact",
     title: "Get wholesale price list",
     description:
-      "Request the latest wholesale quotation, stock list, and shipping estimate within 12 hours.",
+      "Request the latest wholesale quotation, stock list, and shipping estimate from our sales team.",
     href: "/#contact",
     keywords: [
       "price list",

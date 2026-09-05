@@ -82,7 +82,7 @@ export const siteFooter: SiteFooter = {
   contact: {
     whatsapp: "+86 133 6748 1710",
     email: "sales@realismthrift.com",
-    inquiryTime: "Reply within 12 hours. Urgent? Contact via WhatsApp.",
+    inquiryTime: "We aim to reply within 12 hours. Urgent? Contact via WhatsApp.",
   },
   bottom: {
     copyright: "© 2026 Dongguan Huihe Realismthrift Trading Co., Ltd. All Rights Reserved.",
@@ -120,11 +120,11 @@ export const productsData: Product[] = [
   },
   {
     id: "ukay",
-    title: "Ukay Quality Bag",
+    title: "Ukay Quality Bags",
     category: "WHOLESALE",
     image: "/img/cat-ukay.webp",
     alt: "RealismThrift Ukay Quality Bags - Sorted Used Bags for Wholesale Export Markets",
-    href: "/#contact",
+    href: "/used-brand-bag",
   },
 ];
 
@@ -154,7 +154,7 @@ export const features = [
       "Efficient sorting and reliable logistics allow us to load containers in as fast as 7 days after order placement.",
   },
   {
-    title: "12+ Years Experience",
+    title: "Export Experience Since 2012",
     icon: "clock-3",
     description:
       `Founded in ${companyStats.foundedYear}, we have rich experience in used clothes, shoes, and bags wholesale export to global markets.`,
@@ -180,20 +180,20 @@ export const orderSteps = [
     icon: "clipboard-list",
     title: "Get Price List",
     description:
-      "We will send you our latest wholesale price list and product catalog within 12 hours.",
+      "Request our latest wholesale price list and product catalog. We aim to reply within 12 hours.",
   },
   {
     num: "03",
     icon: "check-circle-2",
     title: "Confirm Order",
     description:
-      "Choose your products, confirm quantities, and pay 30% deposit to start production.",
+      "Choose your products, confirm quantities, and confirm the deposit and payment schedule in your pro forma invoice.",
   },
   {
     num: "04",
     icon: "ship",
     title: "Receive Goods",
     description:
-      "We load your container and ship to your port. Fastest delivery: 7 days after order.",
+      "We arrange container loading and shipment to your port. Transit time depends on the route and sailing schedule.",
   },
 ];

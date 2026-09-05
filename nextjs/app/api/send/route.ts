@@ -176,6 +176,6 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     ok: true,
-    message: "Inquiry received. Our sales team will contact you within 12 hours.",
+    message: "Inquiry received. Our sales team aims to reply within 12 hours.",
   });
 }

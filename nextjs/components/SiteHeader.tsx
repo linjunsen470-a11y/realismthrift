@@ -11,7 +11,7 @@ export function SiteHeader({ data }: SiteHeaderProps) {
       <div className="rt-topbar">
         <div className="rt-container">
           <span className="rt-topbar-brand">
-            TOP SECOND HAND CLOTHES &amp; SHOES SUPPLIER IN CHINA
+            USED CLOTHES, SHOES &amp; BAGS WHOLESALE FROM CHINA
           </span>
 
           <div className="rt-topbar-ticker" aria-hidden="true">

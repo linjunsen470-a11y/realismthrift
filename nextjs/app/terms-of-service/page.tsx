@@ -1,8 +1,9 @@
+import { createPageMetadata } from "@/lib/metadata";
 import "../internal-pages.css";
 import Link from "next/link";
 import { Scale, FileText, CheckCircle, HelpCircle } from "lucide-react";
 
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "Terms of Service | Wholesale Order Rules",
   description: "Read the official terms and conditions for wholesale orders, payment schedules, shipping responsibilities, and quality claims at RealismThrift.",
   openGraph: {
@@ -12,7 +13,7 @@ export const metadata = {
   alternates: {
     canonical: "/terms-of-service",
   },
-};
+});
 
 export default function TermsOfServicePage() {
   return (

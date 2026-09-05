@@ -8,6 +8,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { SanityLive } from '@/lib/sanity/live';
 import Analytics from '@/components/Analytics';
 import { siteHeader, siteFooter } from '@/data/siteData';
+import { siteUrl } from '@/lib/metadata';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -24,7 +25,7 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.realismthrift.com'),
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'RealismThrift | Used Clothes, Shoes & Bags Supplier in China',
     template: '%s | RealismThrift'

@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import "../internal-pages.css";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -6,7 +7,7 @@ import { BlogCard } from "@/components/blog/BlogCard";
 import { JsonLd, getCollectionPageSchema } from "@/components/JsonLd";
 import { getAllBlogPosts } from "@/lib/blog";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Used Goods Wholesale Buying Guides & Export Notes",
   description:
     "Practical buying guides for used clothes, shoes, and bags wholesale, covering sourcing, grading, mixed lots, container orders, and export preparation.",
@@ -19,10 +20,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/blog",
   },
-};
+});
+
+export const revalidate = 300;
 
 export default async function BlogPage() {
-  const posts = await getAllBlogPosts();
+  const result = await getAllBlogPosts().catch(() => null);
+  const posts = result ?? [];
   const blogSchema = getCollectionPageSchema({
     name: "Used Goods Wholesale Buying Guides",
     description:
@@ -82,10 +86,11 @@ export default async function BlogPage() {
             </div>
           ) : (
             <div className="rt-empty-state">
-              <h3>No published articles yet</h3>
+              <h3>{result === null ? "Articles temporarily unavailable" : "Buying guides coming soon"}</h3>
               <p>
-                The blog is connected to Sanity and ready. Publish your first post in the
-                Studio to populate this page.
+                {result === null
+                  ? "Please try again shortly. You can still browse our products or contact our team for buying advice."
+                  : "We are preparing wholesale buying guides. Browse our products or contact our team for help with your order."}
               </p>
               <Link href="/" className="rt-news-footer-link">
                 Return Home <ArrowRight size={16} strokeWidth={2.25} />

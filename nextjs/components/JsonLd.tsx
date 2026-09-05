@@ -1,5 +1,6 @@
 import React from "react";
 import { companyPostalAddress } from "@/data/siteData";
+import { serializeJsonLd } from "@/lib/structured-data";
 
 type JsonLdData = Record<string, unknown>;
 
@@ -10,7 +11,7 @@ export function JsonLd({ data }: { data: JsonLdData }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }}
     />
   );
 }
@@ -126,45 +127,33 @@ export function getWebsiteSchema() {
 }
 
 /**
- * Generates Product Schema
+ * These pages describe wholesale categories, not individually priced products.
  */
-export function getProductSchema({ 
+export function getWholesaleCatalogSchema({
   name, 
   description, 
   image, 
   url,
-  lowPrice,
-  highPrice,
-  offerCount,
 }: { 
   name: string; 
   description: string; 
   image: string; 
   url: string;
-  lowPrice?: number;
-  highPrice?: number;
-  offerCount?: number;
 }) {
   return {
     "@context": "https://schema.org/",
-    "@type": "Product",
+    "@type": "CollectionPage",
     "name": name,
     "image": image,
     "description": description,
-    "brand": {
-      "@type": "Brand",
-      "name": "RealismThrift"
-    },
-    "category": "Used goods wholesale",
-    "offers": {
-      "@type": "AggregateOffer",
-      "url": url,
-      "priceCurrency": "USD",
-      ...(lowPrice !== undefined ? { "lowPrice": lowPrice } : {}),
-      ...(highPrice !== undefined ? { "highPrice": highPrice } : {}),
-      ...(offerCount !== undefined ? { "offerCount": offerCount } : {}),
-      "availability": "https://schema.org/InStock",
-      "seller": {
+    "url": url,
+    "about": {
+      "@type": "Service",
+      "name": name,
+      "serviceType": "Used goods wholesale",
+      "provider": {
+        "@type": "Organization",
+        "name": "RealismThrift",
         "@id": "https://www.realismthrift.com/#organization"
       }
     }
@@ -201,7 +190,8 @@ export function getArticleSchema({
   authorName,
   publisherName,
   publisherLogo,
-  url
+  url,
+  authorType = "Organization",
 }: {
   title: string;
   description: string;
@@ -212,6 +202,7 @@ export function getArticleSchema({
   publisherName: string;
   publisherLogo: string;
   url: string;
+  authorType?: "Person" | "Organization";
 }) {
   return {
     "@context": "https://schema.org",
@@ -222,7 +213,7 @@ export function getArticleSchema({
     "datePublished": datePublished,
     "dateModified": dateModified || datePublished,
     "author": {
-      "@type": "Organization",
+      "@type": authorType,
       "name": authorName
     },
     "publisher": {
