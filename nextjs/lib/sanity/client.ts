@@ -12,6 +12,8 @@ export const sanityClient = createClient({
   dataset: sanityDataset,
   apiVersion: sanityApiVersion,
   useCdn: true,
+  timeout: 8000,
+  maxRetries: 1,
   perspective: "published",
   stega: {
     enabled: process.env.NEXT_PUBLIC_SANITY_VISUAL_EDITING === "true",

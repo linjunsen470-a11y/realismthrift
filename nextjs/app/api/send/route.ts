@@ -154,6 +154,8 @@ export async function POST(request: Request) {
     console.error("Inquiry persistence failed", {
       errorName: error instanceof Error ? error.name : "UnknownError",
       storageError: error instanceof InquiryStorageError,
+      storageOperation: error instanceof InquiryStorageError ? error.operation : undefined,
+      providerCode: error instanceof InquiryStorageError ? error.providerCode : undefined,
     });
     return jsonError(
       "storage_failed",
@@ -174,6 +176,6 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     ok: true,
-    message: "Inquiry received. Our sales team will contact you within 12 hours.",
+    message: "Inquiry received. Our sales team aims to reply within 12 hours.",
   });
 }

@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import "../internal-pages.css";
 import Image from "next/image";
 import Link from "next/link";
@@ -5,9 +6,9 @@ import { InquiryForm } from "@/components/InquiryForm";
 import { companyStats } from "@/data/siteData";
 import { Building2, Search, CheckCircle2, Brush, Box, Ship, Globe2, MessageCircle, Mail } from "lucide-react";
 
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "About Us | Used Clothes & Shoes China Supplier",
-  description: "Professional wholesale supplier of second-hand clothes, shoes, and bags based in Huizhou, China. 15,000m² facility, GRS certified and export ready.",
+  description: "Wholesale supplier of second-hand clothes, shoes, and bags based in Huizhou, China. A 15,000m² sorting facility with grading, packing, and export support.",
   openGraph: {
     title: "About RealismThrift | Professional Wholesale Exporter",
     description: "Learn about RealismThrift's sorting facility, grading process, and export support for second-hand goods.",
@@ -16,11 +17,11 @@ export const metadata = {
   alternates: {
     canonical: "/about-us",
   },
-};
+});
 
 export default function AboutUsPage() {
   return (
-    <main className="bg-white">
+    <div className="bg-white">
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <Image
@@ -41,15 +42,15 @@ export default function AboutUsPage() {
               <span className="text-white/70">About Us</span>
             </nav>
             <div className="inline-block bg-brand-red text-white font-montserrat font-bold text-[0.65rem] tracking-[0.12em] px-[0.875rem] py-[0.3rem] rounded-[2px] mb-[1rem] uppercase">
-              China Supplier · ISO Certified · {companyStats.foundedYear}
+              China Supplier · Wholesale Export · Since {companyStats.foundedYear}
             </div>
             <h1 className="rt-page-hero-title mb-5 text-[clamp(2rem,5.5vw,3rem)] leading-[1.1]">
               About <span className="text-brand-gold">RealismThrift</span>
             </h1>
             <p className="rt-page-hero-sub max-w-[700px] mb-9 leading-[1.8] text-[1.0625rem]">
-              A wholesale exporter of used brand clothes, shoes, and bags with over 10 years of experience, a {companyStats.facilitySize} sorting facility, and export support for international buyers.
+              A wholesale exporter of used brand clothes, shoes, and bags with export experience since 2012, a {companyStats.facilitySize} sorting facility, and export support for international buyers.
             </p>
-            <div className="flex gap-4 justify-center md:justify-start">
+            <div className="flex flex-wrap gap-4 justify-center md:justify-start">
               <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-6 md:px-10 py-3 md:py-4 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-all shadow-[0_10px_20px_rgba(240,180,41,0.2)] whitespace-nowrap">
                 Contact Our Team
               </Link>
@@ -362,6 +363,6 @@ export default function AboutUsPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

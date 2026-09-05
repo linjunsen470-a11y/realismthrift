@@ -30,7 +30,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
               />
               <div className="rt-footer-logo-copy">
                 <span className="rt-footer-logo-name">RealismThrift</span>
-                <span className="rt-footer-logo-sub">Export Co., Ltd</span>
+                <span className="rt-footer-logo-sub">Wholesale Export</span>
               </div>
             </div>
 
@@ -43,7 +43,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
             {data.brand.whatsapp && (
               <div className="rt-footer-contact-item">
                 <MessageCircle size={18} strokeWidth={2.2} />
-                <a href={`https://wa.me/${data.brand.whatsapp.replace(/\s/g, "")}`} target="_blank" rel="noreferrer">
+                <a href={`https://wa.me/${data.brand.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noreferrer">
                   {data.brand.whatsapp}
                 </a>
               </div>
@@ -78,7 +78,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
             <nav aria-labelledby="footer-nav-contact">
               <ul className="rt-footer-links">
                 <li>
-                  <a href={`https://wa.me/${data.contact.whatsapp.replace(/\s/g, "")}`} target="_blank" rel="noreferrer">
+                  <a href={`https://wa.me/${data.contact.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noreferrer">
                     WhatsApp
                   </a>
                 </li>
@@ -96,7 +96,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
                 <div key={idx}>
                   {text.includes("12 hours") ? (
                     <>
-                      Reply within <span className="rt-footer-note-gold">12 hours</span>.
+                      We aim to reply within <span className="rt-footer-note-gold">12 hours</span>.
                     </>
                   ) : (
                     text
@@ -122,7 +122,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
 
       <div className="rt-floating-actions">
         <a
-          href={`https://wa.me/${data.contact.whatsapp.replace(/\s/g, "")}`}
+          href={`https://wa.me/${data.contact.whatsapp.replace(/\D/g, "")}`}
           target="_blank"
           rel="noreferrer"
           aria-label="Contact via WhatsApp"

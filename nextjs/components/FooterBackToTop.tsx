@@ -23,7 +23,7 @@ export function FooterBackToTop() {
       aria-hidden={!showBackToTop}
       hidden={!showBackToTop}
       className={`rt-floating-top${showBackToTop ? " is-visible" : ""}`}
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      onClick={() => window.scrollTo({ top: 0, behavior: "auto" })}
     >
       <span className="rt-floating-top-glyph">↑</span>
     </button>

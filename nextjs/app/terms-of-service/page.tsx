@@ -1,8 +1,9 @@
+import { createPageMetadata } from "@/lib/metadata";
 import "../internal-pages.css";
 import Link from "next/link";
 import { Scale, FileText, CheckCircle, HelpCircle } from "lucide-react";
 
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "Terms of Service | Wholesale Order Rules",
   description: "Read the official terms and conditions for wholesale orders, payment schedules, shipping responsibilities, and quality claims at RealismThrift.",
   openGraph: {
@@ -12,11 +13,11 @@ export const metadata = {
   alternates: {
     canonical: "/terms-of-service",
   },
-};
+});
 
 export default function TermsOfServicePage() {
   return (
-    <main className="bg-[#fcfcf9]">
+    <div className="bg-[#fcfcf9]">
       {/* PAGE HERO */}
       <section className="rt-legal-hero relative overflow-hidden bg-[#1a1a1a]">
         <div className="rt-container relative z-10">
@@ -138,6 +139,6 @@ export default function TermsOfServicePage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

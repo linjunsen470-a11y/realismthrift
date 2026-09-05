@@ -1,4 +1,5 @@
 import "../../internal-pages.css";
+import { defaultSocialImage } from "@/lib/metadata";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +15,6 @@ import {
   formatBlogDate,
   getBlogPostBySlug,
   getPrevNextPosts,
-  getRelatedBlogPosts,
 } from "@/lib/blog";
 import { hasUsableImageAsset, urlForImage } from "@/lib/sanity/image";
 
@@ -45,7 +45,7 @@ export async function generateMetadata({
 
   const title = post.seo?.metaTitle || `${post.title} | Blog`;
   const description = post.seo?.metaDescription || post.excerpt;
-  const image = resolveSeoImage(post);
+  const image = resolveSeoImage(post) || defaultSocialImage;
 
   return {
     title,
@@ -55,6 +55,8 @@ export async function generateMetadata({
       description,
       images: image ? [{ url: image }] : undefined,
       type: "article",
+      url: `/blog/${slug}`,
+      modifiedTime: post._updatedAt,
       publishedTime: post.publishedAt,
       authors: [post.author?.name || 'RealismThrift'],
       section: post.category?.title,
@@ -83,7 +85,6 @@ export default async function BlogPostPage({
     notFound();
   }
 
-  const relatedPosts = await getRelatedBlogPosts(post._id, post.category?._id || "");
   const { prev: prevPost, next: nextPost } = await getPrevNextPosts(post.publishedAt);
 
   const heroImage = hasUsableImageAsset(post.coverImage)
@@ -101,6 +102,7 @@ export default async function BlogPostPage({
     datePublished: post.publishedAt,
     dateModified: post._updatedAt,
     authorName: post.author?.name || "RealismThrift",
+    authorType: post.author?.name && post.author.name !== "RealismThrift" ? "Person" : "Organization",
     publisherName: "Dongguan Huihe Realismthrift Trading Co., Ltd.",
     publisherLogo: "https://www.realismthrift.com/img/logo.webp",
     url: `https://www.realismthrift.com/blog/${slug}`
@@ -159,7 +161,7 @@ export default async function BlogPostPage({
               src={heroImage}
               alt={post.coverImage?.alt || post.title}
               fill
-              sizes="(max-w-768px) 100vw, 960px"
+              sizes="(max-width: 768px) 100vw, 896px"
               className="object-cover"
               priority
             />
@@ -176,7 +178,7 @@ export default async function BlogPostPage({
               />
             </div>
 
-            <ShareButtons title={post.title} />
+            <ShareButtons title={post.title} url={`https://www.realismthrift.com/blog/${slug}`} />
 
             {post.author?.name ? (
               <div className="rt-blog-author-card">
@@ -184,7 +186,7 @@ export default async function BlogPostPage({
                   {authorAvatar ? (
                     <Image
                       src={authorAvatar}
-                      alt={post.author.avatar?.alt || post.author.name}
+                      alt={post.author.name}
                       width={64}
                       height={64}
                       className="rt-blog-author-avatar shadow-sm"

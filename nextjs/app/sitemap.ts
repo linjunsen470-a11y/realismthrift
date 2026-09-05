@@ -14,17 +14,17 @@ type StaticPageConfig = {
 
 // Per-page lastmod dates — update the relevant entry when page content changes.
 const staticPages: StaticPageConfig[] = [
-  { path: '/', lastModified: '2026-06-23', changeFrequency: 'weekly', priority: 1 },
-  { path: '/used-brand-clothes', lastModified: '2026-06-02', changeFrequency: 'weekly', priority: 0.95 },
-  { path: '/used-brand-shoes', lastModified: '2026-06-02', changeFrequency: 'weekly', priority: 0.95 },
-  { path: '/used-brand-bag', lastModified: '2026-06-02', changeFrequency: 'weekly', priority: 0.95 },
-  { path: '/how-to-order', lastModified: '2026-04-27', changeFrequency: 'monthly', priority: 0.85 },
-  { path: '/contact-us', lastModified: '2026-06-19', changeFrequency: 'monthly', priority: 0.85 },
-  { path: '/about-us', lastModified: '2026-06-18', changeFrequency: 'monthly', priority: 0.8 },
-  { path: '/faq', lastModified: '2026-04-27', changeFrequency: 'monthly', priority: 0.75 },
-  { path: '/blog', lastModified: '2026-04-27', changeFrequency: 'weekly', priority: 0.75 },
-  { path: '/privacy-policy', lastModified: '2026-06-21', changeFrequency: 'yearly', priority: 0.3 },
-  { path: '/terms-of-service', lastModified: '2026-06-19', changeFrequency: 'yearly', priority: 0.3 },
+  { path: '/', lastModified: '2026-09-05', changeFrequency: 'weekly', priority: 1 },
+  { path: '/used-brand-clothes', lastModified: '2026-09-05', changeFrequency: 'weekly', priority: 0.95 },
+  { path: '/used-brand-shoes', lastModified: '2026-09-05', changeFrequency: 'weekly', priority: 0.95 },
+  { path: '/used-brand-bag', lastModified: '2026-09-05', changeFrequency: 'weekly', priority: 0.95 },
+  { path: '/how-to-order', lastModified: '2026-09-05', changeFrequency: 'monthly', priority: 0.85 },
+  { path: '/contact-us', lastModified: '2026-09-05', changeFrequency: 'monthly', priority: 0.85 },
+  { path: '/about-us', lastModified: '2026-09-05', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/faq', lastModified: '2026-09-05', changeFrequency: 'monthly', priority: 0.75 },
+  { path: '/blog', lastModified: '2026-09-05', changeFrequency: 'weekly', priority: 0.75 },
+  { path: '/privacy-policy', lastModified: '2026-09-05', changeFrequency: 'yearly', priority: 0.3 },
+  { path: '/terms-of-service', lastModified: '2026-09-05', changeFrequency: 'yearly', priority: 0.3 },
 ];
 
 function resolveLatestPostDate(

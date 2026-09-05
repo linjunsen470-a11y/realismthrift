@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import "../internal-pages.css";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,25 +8,25 @@ import { ProductTrustSections } from "@/components/product/ProductTrustSections"
 import { ProductCTA } from "@/components/product/ProductCTA";
 import { companyStats } from "@/data/siteData";
 import { XCircle, CheckCircle2, Footprints, Sparkles, Package, Globe2, ShoppingBag, ClipboardList, Mail } from "lucide-react";
-import { JsonLd, getProductSchema, getFaqSchema } from "@/components/JsonLd";
+import { JsonLd, getWholesaleCatalogSchema, getFaqSchema } from "@/components/JsonLd";
 
 const shoeStandards = [
   { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'Strict Glue Inspection', desc: 'Soles and uppers are checked for bonding integrity', isNegative: true },
   { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'Surface Integrity', desc: 'Inspected for layers peeling or major cracking', isNegative: true },
   { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'Complete Parts Check', desc: 'Ensuring laces, insoles, and tongues are present', isNegative: true },
-  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'Deodorized & Sterilized', desc: 'Professional cleaning and UV treatment', isNegative: true },
+  { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'Persistent Odors Rejected', desc: 'Shoes with persistent odors or mold are removed during sorting', isNegative: true },
   { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'Sole Integrity', desc: 'Checked for breakage or separation', isNegative: true },
   { icon: <XCircle className="w-5 h-5 text-brand-red" />, title: 'Shape Maintenance', desc: 'Checking for crushing or major deformation', isNegative: true },
   { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Carefully Paired', desc: 'Every sack contains matched pairs', isNegative: false },
   { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Visible Branding', desc: 'Original brand label is clearly visible', isNegative: false },
-  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Ready to Wear', desc: 'Items are sorted to be immediately wearable', isNegative: false }
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Checked for Resale', desc: 'Wearable pairs are sorted by condition and market requirements', isNegative: false }
 ];
 
 const shoeFeatures = [
   { icon: <Footprints className="w-6 h-6 text-brand-gold" />, title: 'Rigorous Pairing', desc: 'Manual checking minimizes the risk of mismatched pairs.' },
-  { icon: <Sparkles className="w-6 h-6 text-brand-gold" />, title: 'Professional Sterilization', desc: 'Cleaned, deodorized, and UV sterilized for international health standards.' },
+  { icon: <Sparkles className="w-6 h-6 text-brand-gold" />, title: 'Condition Checks', desc: 'Soles, lining, closures, and wear are checked before packing.' },
   { icon: <Package className="w-6 h-6 text-brand-gold" />, title: 'Secure Sacking', desc: 'Hydraulic compressed packing to maximize container space and protect shoes.' },
-  { icon: <Globe2 className="w-6 h-6 text-brand-gold" />, title: `${companyStats.countriesCount} Export Ports`, desc: 'Direct shipping to major ports in Africa, Middle East, and Southeast Asia.' }
+  { icon: <Globe2 className="w-6 h-6 text-brand-gold" />, title: `${companyStats.countriesCount} Countries Served`, desc: 'Shipping coordination for ports in Africa, the Middle East, and Southeast Asia.' }
 ];
 
 const shoeFaqs = [
@@ -34,7 +35,7 @@ const shoeFaqs = [
   { q: 'Do you provide the shoes in boxes?', a: 'To maximize shipping efficiency and lower your costs, we typically pack shoes in woven sacks. Box packing is available upon request for selected orders.' }
 ];
 
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "Used Brand Shoes Wholesale | Nike & Adidas",
   description: `Wholesale supplier of sorted second-hand branded shoes. Nike, Adidas, Jordan, and 30+ brands. Paired, cleaned, graded, and packed for export.`,
   openGraph: {
@@ -45,23 +46,20 @@ export const metadata = {
   alternates: {
     canonical: "/used-brand-shoes",
   },
-};
+});
 
 export default function UsedBrandShoesPage() {
-  const productSchema = getProductSchema({
+  const productSchema = getWholesaleCatalogSchema({
     name: "Used Brand Shoes Wholesale",
     description: "Wholesale supplier of sorted second-hand branded shoes from China. Nike, Adidas, Jordan, and 30+ brands.",
     image: "https://www.realismthrift.com/images/shoes/wholesale-sneakers-assorted-styles-grid.webp",
     url: "https://www.realismthrift.com/used-brand-shoes",
-    lowPrice: 0.8,
-    highPrice: 6.0,
-    offerCount: 5,
   });
 
   const faqSchema = getFaqSchema(shoeFaqs);
 
   return (
-    <main className="bg-white">
+    <div className="bg-white">
       <JsonLd data={productSchema} />
       <JsonLd data={faqSchema} />
       {/* PAGE HERO */}
@@ -281,7 +279,7 @@ export default function UsedBrandShoesPage() {
           <div id="inquiry" className="sticky top-[100px] rt-sidebar-card rt-shoes-inquiry-card">
             <div className="rt-sidebar-card-title">
               <h3 className="text-[1rem] font-extrabold m-0 uppercase tracking-wider">Get Shoe Price Now</h3>
-              <p className="text-[0.7rem] opacity-80 m-0 mt-0.5 font-open-sans normal-case tracking-normal">Reply within 12 hours · Samples available</p>
+              <p className="text-[0.7rem] opacity-80 m-0 mt-0.5 font-open-sans normal-case tracking-normal">We aim to reply within 12 hours · Samples available</p>
             </div>
             
             <div className="p-5">
@@ -331,9 +329,9 @@ export default function UsedBrandShoesPage() {
       {/* CTA BLOCK */}
       <ProductCTA 
         title="Ready to Order Used Brand Shoes?"
-        description="Get a free price quotation within 12 hours. Minimum order 200 pairs. Worldwide shipping available."
+        description="Request a free wholesale price quotation. Minimum order 200 pairs. Worldwide shipping available."
         whatsappMessage="Hi, I want to wholesale used brand shoes. Can I get a price list?"
       />
-    </main>
+    </div>
   );
 }

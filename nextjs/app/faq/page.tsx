@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import "../internal-pages.css";
 import React from "react";
 import { Metadata } from "next";
@@ -5,7 +6,7 @@ import Link from "next/link";
 import { FaqContent } from "@/components/faq/FaqContent";
 import { JsonLd, getFaqSchema } from "@/components/JsonLd";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "FAQ | Used Clothes Wholesale Common Questions",
   description: "Answers to frequently asked questions about wholesale used clothes, shoes, and bags. Learn about MOQ, shipping, quality grades, and payment terms.",
   openGraph: {
@@ -15,20 +16,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/faq",
   },
-};
+});
 
 const faqs = [
   {
     question: "What is your minimum order quantity (MOQ)?",
-    answer: "Our standard MOQ is a 20ft container. However, for trial orders, we can discuss smaller quantities or LCL (Less than Container Load) shipping depending on the destination.",
+    answer: "Minimum quantities depend on the product category, grade, and packing. Contact us to confirm the minimum for clothes, shoes, bags, or a mixed order. Smaller trial shipments and container orders can be discussed for your destination.",
   },
   {
     question: "How do you ensure the quality of the used goods?",
-    answer: "We use a 3-stage sorting process. Bales are inspected visually for holes, stains, and excessive wear, then packed according to the agreed grade.",
+    answer: "We sort goods by category, condition, and the agreed grade. Bales are inspected visually for holes, stains, and excessive wear, then packed according to the agreed grade.",
   },
   {
     question: "Which countries do you ship to?",
-    answer: "We ship globally, with a strong focus on markets in Africa, Southeast Asia, South America, and the Middle East. We handle all export documentation and can assist with custom clearance advice.",
+    answer: "We ship globally, with a strong focus on markets in Africa, Southeast Asia, South America, and the Middle East. We handle all export documentation and can assist with customs clearance advice.",
   },
   {
     question: "Can I customize the items in my order?",
@@ -36,7 +37,7 @@ const faqs = [
   },
   {
     question: "What are your payment terms?",
-    answer: "Typically, we require a 30% deposit to begin sorting and production, with the remaining 70% balance due against the copy of the Bill of Lading (B/L).",
+    answer: "Payment methods and the deposit and balance schedule are confirmed in your pro forma invoice. Review the agreed terms with our sales team before making a payment.",
   },
 ];
 

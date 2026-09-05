@@ -467,6 +467,7 @@
 }
 
 .rt-page-hero-title {
+  overflow-wrap: anywhere;
   margin-bottom: 0.5rem;
   color: #fff;
   font-family: var(--font-montserrat);
@@ -644,23 +645,25 @@
 }
 
 .rt-legal-hero {
-  min-height: 320px;
+  min-height: 360px;
   background: #1a1a1a;
   display: flex;
   align-items: center;
-  padding-bottom: 4rem;
+  padding: 3rem 0 4rem;
 }
 
 .rt-legal-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 2.5rem;
-  margin-top: -6rem;
+  margin-top: -2rem;
   position: relative;
   z-index: 10;
 }
 
 .rt-legal-content-shell {
+  min-width: 0;
+  overflow-wrap: anywhere;
   background: #fff;
   padding: 3rem;
   border-radius: 4px;
@@ -746,6 +749,12 @@
 }
 
 @media (max-width: 560px) {
+  .rt-inquiry-form.is-sidebar input,
+  .rt-inquiry-form.is-sidebar select,
+  .rt-inquiry-form.is-sidebar textarea { font-size: 1rem; }
+  .rt-page-hero-title { font-size: 2rem; }
+  .rt-legal-content-shell { padding: 1.5rem; }
+  .rt-page-hero { padding: 3rem 0; }
   .rt-blog-article-shell {
     padding: 1.25rem;
   }
@@ -753,6 +762,8 @@
 
 /* Previous & Next Navigation Buttons */
 .rt-blog-nav-btn {
+  min-width: 0;
+  flex: 1 1 0;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -773,6 +784,7 @@
 }
 
 .rt-blog-nav-title {
+  overflow-wrap: anywhere;
   display: block;
   font-size: 0.85rem;
   font-weight: 700;

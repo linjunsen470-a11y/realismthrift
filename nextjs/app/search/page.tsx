@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import "../internal-pages.css";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -6,14 +7,14 @@ import { ArrowRight, MessageCircle, SearchX } from "lucide-react";
 import { getAllBlogPosts } from "@/lib/blog";
 import { searchAllContent, type SearchResult } from "@/lib/search";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Search",
   description: "Search products, FAQs, order information, and blog content.",
   robots: {
     index: false,
-    follow: false,
+    follow: true,
   },
-};
+});
 
 const suggestedTerms = ["used shoes", "clothes", "price list", "shipping", "moq", "bags"];
 const popularSearches = [
@@ -79,6 +80,13 @@ function SearchHero({
             </p>
           )}
 
+          <form action="/search" method="get" role="search" className="rt-page-search-form">
+            <label htmlFor="page-search">Search the site</label>
+            <div>
+              <input id="page-search" name="q" type="search" defaultValue={query} key={query} maxLength={120} placeholder="Try clothes, shipping, or MOQ…" />
+              <button type="submit">Search</button>
+            </div>
+          </form>
           {showSuggestedTerms ? (
             <div className="flex flex-wrap gap-2.5 justify-center md:justify-start">
               {suggestedTerms.map((term) => (
@@ -155,19 +163,22 @@ function ResultGroup({
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string | string[] }>;
 }) {
   const { q = "" } = await searchParams;
-  const query = q.trim();
-  const posts = query ? await getAllBlogPosts() : [];
-  const results = query ? searchAllContent(query, posts) : [];
+  const query = (Array.isArray(q) ? q[0] ?? "" : q).trim().slice(0, 120);
+  const posts = query ? await getAllBlogPosts().catch(() => null) : [];
+  const results = query ? searchAllContent(query, posts ?? []) : [];
   const grouped = splitResults(results);
   const hasQuery = Boolean(query);
   const hasResults = results.length > 0;
 
   return (
-    <main className="bg-[#f7f3ea]">
+    <div className="rt-search-page bg-[#f7f3ea]">
       <SearchHero query={query} showSuggestedTerms={!hasQuery || hasResults} />
+      {posts === null ? (
+        <p className="rt-container py-4" role="status">Blog search is temporarily unavailable. Product and ordering results are still available.</p>
+      ) : null}
 
       {hasQuery && hasResults ? (
         <div className="border-b border-black/5 bg-white/75">
@@ -345,7 +356,7 @@ export default async function SearchPage({
                   <div className="mb-3 text-center text-[0.72rem] font-montserrat font-bold uppercase tracking-[0.14em] text-[#8e7d70]">
                     Try These Searches Instead
                   </div>
-                  <div className="flex flex-wrap justify-center gap-2 sm:flex-nowrap sm:gap-3">
+                  <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
                     {suggestedTerms.map((term) => (
                       <Link
                         key={term}
@@ -362,6 +373,6 @@ export default async function SearchPage({
           )}
         </div>
       </section>
-    </main>
+    </div>
   );
 }

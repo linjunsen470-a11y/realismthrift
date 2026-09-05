@@ -7,9 +7,17 @@ import type {
 import type { InquiryEmailSettings } from "./config";
 
 export class InquiryStorageError extends Error {
-  constructor(message: string, options?: ErrorOptions) {
+  readonly operation: string;
+  readonly providerCode?: string;
+
+  constructor(message: string, operation: string, options?: ErrorOptions) {
     super(message, options);
     this.name = "InquiryStorageError";
+    this.operation = operation;
+    const cause = options?.cause;
+    if (cause && typeof cause === "object" && "code" in cause && typeof cause.code === "string") {
+      this.providerCode = cause.code;
+    }
   }
 }
 
@@ -36,12 +44,12 @@ export async function createInquiry(
   );
 
   if (error || !data) {
-    throw new InquiryStorageError("Failed to persist inquiry.", { cause: error });
+    throw new InquiryStorageError("Failed to persist inquiry.", "create_inquiry", { cause: error });
   }
 
   const result = data as unknown as CreateInquiryResult;
   if (!result.id) {
-    throw new InquiryStorageError("Inquiry persistence returned no identifier.");
+    throw new InquiryStorageError("Inquiry persistence returned no identifier.", "create_inquiry_result");
   }
 
   return result;
@@ -75,7 +83,7 @@ export async function claimEmailJobs(inquiryId?: string, limit = 20) {
   ]);
 
   if (pendingExpiry.error || processingExpiry.error) {
-    throw new InquiryStorageError("Failed to expire stale inquiry email jobs.", {
+    throw new InquiryStorageError("Failed to expire stale inquiry email jobs.", "expire_email_jobs", {
       cause: pendingExpiry.error ?? processingExpiry.error,
     });
   }
@@ -89,7 +97,7 @@ export async function claimEmailJobs(inquiryId?: string, limit = 20) {
   );
 
   if (error) {
-    throw new InquiryStorageError("Failed to claim inquiry email jobs.", { cause: error });
+    throw new InquiryStorageError("Failed to claim inquiry email jobs.", "claim_email_jobs", { cause: error });
   }
 
   return (data ?? []) as unknown as ClaimedEmailJob[];
@@ -112,7 +120,7 @@ export async function markEmailJobAccepted(jobId: string, resendEmailId: string)
     .maybeSingle();
 
   if (error) {
-    throw new InquiryStorageError("Failed to record accepted inquiry email.", { cause: error });
+    throw new InquiryStorageError("Failed to record accepted inquiry email.", "accept_email_job", { cause: error });
   }
 
   if (!data) {
@@ -124,7 +132,7 @@ export async function markEmailJobAccepted(jobId: string, resendEmailId: string)
   });
 
   if (reconcileError) {
-    throw new InquiryStorageError("Failed to reconcile inquiry email state.", {
+    throw new InquiryStorageError("Failed to reconcile inquiry email state.", "reconcile_email_state", {
       cause: reconcileError,
     });
   }
@@ -151,7 +159,7 @@ export async function markEmailJobFailed(jobId: string, update: FailureUpdate) {
     .eq("status", "processing");
 
   if (error) {
-    throw new InquiryStorageError("Failed to record inquiry email failure.", { cause: error });
+    throw new InquiryStorageError("Failed to record inquiry email failure.", "fail_email_job", { cause: error });
   }
 }
 
@@ -172,7 +180,7 @@ export async function recordWebhookEvent(input: {
   );
 
   if (error) {
-    throw new InquiryStorageError("Failed to record Resend webhook event.", { cause: error });
+    throw new InquiryStorageError("Failed to record Resend webhook event.", "record_resend_webhook", { cause: error });
   }
 
   return Boolean(data);

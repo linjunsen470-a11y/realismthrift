@@ -1,26 +1,49 @@
 "use client";
 
 import Script from "next/script";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 
 const isAnalyticsEnabled = process.env.NEXT_PUBLIC_ANALYTICS_ENABLED !== "false";
+const CONSENT_KEY = "rt_analytics_consent_v1";
+type Consent = "unknown" | "granted" | "denied";
+let memoryConsent: Consent = "unknown";
+
+function getConsentSnapshot(): Consent {
+  try {
+    const value = window.localStorage.getItem(CONSENT_KEY);
+    return value === "granted" || value === "denied" ? value : memoryConsent;
+  } catch {
+    return memoryConsent;
+  }
+}
+
+function subscribeToConsent(onChange: () => void) {
+  window.addEventListener("storage", onChange);
+  window.addEventListener("rt-consent-change", onChange);
+  return () => {
+    window.removeEventListener("storage", onChange);
+    window.removeEventListener("rt-consent-change", onChange);
+  };
+}
 
 export default function Analytics() {
   const pathname = usePathname();
+  const consent = useSyncExternalStore(subscribeToConsent, getConsentSnapshot, () => "unknown");
   
   const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
   const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
 
   useEffect(() => {
     // Track page views for FB Pixel manually since it's a SPA-like navigation in Next.js
-    if (isAnalyticsEnabled && FB_PIXEL_ID && window.fbq) {
+    if (consent === "granted" && isAnalyticsEnabled && FB_PIXEL_ID && window.fbq) {
       window.fbq("track", "PageView");
     }
-  }, [pathname, FB_PIXEL_ID]);
+  }, [pathname, FB_PIXEL_ID, consent]);
 
   useEffect(() => {
-    if (!isAnalyticsEnabled) return;
+    if (!isAnalyticsEnabled || consent !== "granted") return;
 
     const handleGlobalClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -51,14 +74,39 @@ export default function Analytics() {
     return () => {
       document.removeEventListener("click", handleGlobalClick);
     };
-  }, []);
+  }, [consent]);
+
+  const chooseConsent = (choice: Exclude<Consent, "unknown">) => {
+    memoryConsent = choice;
+    try {
+      window.localStorage.setItem(CONSENT_KEY, choice);
+    } catch {
+      // Storage may be unavailable in restricted browsing sessions.
+    }
+    window.dispatchEvent(new Event("rt-consent-change"));
+  };
 
   if (!isAnalyticsEnabled || (!GA_ID && !FB_PIXEL_ID)) return null;
 
   return (
     <>
+      {consent === "unknown" ? (
+        <aside className="rt-consent" role="dialog" aria-label="Analytics preferences">
+          <p>
+            We use optional analytics to understand site usage. Essential site functions work
+            without them. <Link href="/privacy-policy">Privacy policy</Link>
+          </p>
+          <div className="rt-consent-actions">
+            <button type="button" onClick={() => chooseConsent("denied")}>Essential only</button>
+            <button type="button" className="rt-consent-accept" onClick={() => chooseConsent("granted")}>
+              Accept analytics
+            </button>
+          </div>
+        </aside>
+      ) : null}
+
       {/* Google Analytics (GA4) */}
-      {GA_ID && (
+      {consent === "granted" && GA_ID && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
@@ -76,7 +124,7 @@ export default function Analytics() {
       )}
 
       {/* Facebook Pixel */}
-      {FB_PIXEL_ID && (
+      {consent === "granted" && FB_PIXEL_ID && (
         <>
           <Script id="fb-pixel" strategy="lazyOnload">
             {`
@@ -92,16 +140,6 @@ export default function Analytics() {
               fbq('track', 'PageView');
             `}
           </Script>
-          <noscript>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              height="1"
-              width="1"
-              className="hidden"
-              src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`}
-              alt=""
-            />
-          </noscript>
         </>
       )}
     </>
@@ -114,6 +152,7 @@ export default function Analytics() {
 export const trackEvent = (eventName: string, params?: object) => {
   if (typeof window === "undefined") return;
   if (!isAnalyticsEnabled) return;
+  if (getConsentSnapshot() !== "granted") return;
 
   // Track in GA4
   if (window.gtag) {

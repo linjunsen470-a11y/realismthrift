@@ -1,9 +1,10 @@
+import { createPageMetadata } from "@/lib/metadata";
 import "../internal-pages.css";
 import Link from "next/link";
 import { ShieldCheck, Lock, Eye, Globe } from "lucide-react";
 import { companyAddress, siteFooter } from "@/data/siteData";
 
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "Privacy Policy",
   description: "Learn how RealismThrift handles and protects your personal information and data in our global wholesale operations.",
   openGraph: {
@@ -13,11 +14,11 @@ export const metadata = {
   alternates: {
     canonical: "/privacy-policy",
   },
-};
+});
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="bg-[#fcfcf9]">
+    <div className="bg-[#fcfcf9]">
       {/* PAGE HERO */}
       <section className="rt-legal-hero relative overflow-hidden bg-[#1a1a1a]">
         <div className="rt-container relative z-10">
@@ -145,6 +146,6 @@ export default function PrivacyPolicyPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

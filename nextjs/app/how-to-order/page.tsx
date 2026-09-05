@@ -1,10 +1,11 @@
+import { createPageMetadata } from "@/lib/metadata";
 import "../internal-pages.css";
 import Image from "next/image";
 import Link from "next/link";
 import { InquiryForm } from "@/components/InquiryForm";
 import { Landmark, Wallet, CreditCard, Ship, Package, Plane } from "lucide-react";
 
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "How to Order Wholesale Used Clothes & Shoes",
   description: "Learn our 7-step B2B wholesale process. From inquiry and price negotiation to quality inspection and global container shipment. Simple and transparent.",
   openGraph: {
@@ -15,11 +16,11 @@ export const metadata = {
   alternates: {
     canonical: "/how-to-order",
   },
-};
+});
 
 export default function HowToOrderPage() {
   return (
-    <main className="bg-white">
+    <div className="bg-white">
       <section className="rt-page-hero">
         <div className="absolute inset-0 z-0">
           <Image 
@@ -117,7 +118,7 @@ export default function HowToOrderPage() {
               <h3 className="font-montserrat text-[1.2rem] font-extrabold text-brand-dark m-0">Discuss Prices & Discounts</h3>
             </div>
             <p className="text-[0.9375rem] text-[#555] leading-[1.8] mb-6">
-              Our professional sales team will provide you with a detailed price quotation within 12 hours. Prices are based on product category, grade, quantity, and destination port. Long-term partners enjoy additional discounts, priority loading, and dedicated account management.
+              Our professional sales team aims to respond to your quotation request within 12 hours. Prices are based on product category, grade, quantity, and destination port. Long-term partners enjoy additional discounts, priority loading, and dedicated account management.
             </p>
             <div className="flex gap-2.5 flex-wrap">
               <span className="bg-[#F5F5F0] border border-[#e0e0e0] text-[#333] px-3 py-1.5 rounded-sm text-[0.75rem] font-montserrat font-semibold">Price Quotation</span>
@@ -440,7 +441,7 @@ export default function HowToOrderPage() {
           <div className="bg-white border border-[#eee] rounded-[12px] shadow-[0_8px_40px_rgba(0,0,0,0.08)] overflow-hidden">
             <div className="bg-gradient-to-br from-[#C0392B] to-[#1A1A1A] p-10 text-center">
               <h2 className="font-montserrat text-[1.6rem] font-extrabold text-white mb-2.5">Send Us Your Inquiry</h2>
-              <p className="text-white/75 text-[0.9375rem] font-open-sans">Get a price quotation within 12 hours. Our team speaks English, French, Spanish, and Arabic.</p>
+              <p className="text-white/75 text-[0.9375rem] font-open-sans">Request a wholesale price quotation. Our team speaks English, French, Spanish, and Swahili.</p>
             </div>
             <div className="p-10">
               <InquiryForm showWhatsApp />
@@ -498,6 +499,6 @@ export default function HowToOrderPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

@@ -21,6 +21,11 @@ export function QualityStandards({
       <h2 className="font-montserrat text-[1.25rem] font-extrabold text-[#1A1A1A] m-0 mb-6 uppercase tracking-tight">
         {title}
       </h2>
+      <p className="mb-6 text-sm leading-relaxed text-[#555]">
+        A-grade describes sellable used goods. Light signs of use can be acceptable;
+        major damage, heavy stains, and unsuitable pieces are removed. Brand availability
+        varies by batch, and first-pick sourcing does not mean every item is branded.
+      </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
         {standards.map((std, idx) => (
           <div 

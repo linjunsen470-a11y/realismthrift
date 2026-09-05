@@ -9,16 +9,20 @@ import type {NextConfig} from 'next';
  *
  * next/font self-hosts fonts, so no fonts.googleapis.com entry is required.
  */
+const scriptSources = [
+  "'self'",
+  "'unsafe-inline'",
+  ...(process.env.NODE_ENV === 'development' ? ["'unsafe-eval'"] : []),
+  'https://www.googletagmanager.com',
+  'https://www.google-analytics.com',
+  'https://connect.facebook.net',
+];
+
 const contentSecurityPolicy = [
   "default-src 'self'",
   [
     "script-src",
-    "'self'",
-    "'unsafe-inline'",
-    "'unsafe-eval'",
-    'https://www.googletagmanager.com',
-    'https://www.google-analytics.com',
-    'https://connect.facebook.net',
+    ...scriptSources,
   ].join(' '),
   "style-src 'self' 'unsafe-inline'",
   [

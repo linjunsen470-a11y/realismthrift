@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import "../internal-pages.css";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,7 +8,7 @@ import { ProductTrustSections } from "@/components/product/ProductTrustSections"
 import { ProductCTA } from "@/components/product/ProductCTA";
 import { companyStats } from "@/data/siteData";
 import { XCircle, CheckCircle2, Factory, Package, Ship, Zap, ShoppingBag, Footprints, ClipboardList, Mail } from "lucide-react";
-import { JsonLd, getProductSchema, getFaqSchema } from "@/components/JsonLd";
+import { JsonLd, getWholesaleCatalogSchema, getFaqSchema } from "@/components/JsonLd";
 
 const clothesStandards = [
   { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Major Stains Rejected', desc: 'Items with obvious dirty patches or permanent discoloration are removed', isNegative: true },
@@ -17,14 +18,14 @@ const clothesStandards = [
   { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Heavy Wear Rejected', desc: 'Items with excessive use are not packed as higher-grade stock', isNegative: true },
   { icon: <XCircle className="w-5 h-5 text-[#C0392B]" />, title: 'Closure Issues Checked', desc: 'Buttons, zippers, and snaps are checked and graded accordingly', isNegative: true },
   { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Brand Label Intact', desc: 'Original brand label clearly visible and attached', isNegative: false },
-  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Clean & Odor-Free', desc: 'Washed and deodorized before packing', isNegative: false },
+  { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Clean & Odor-Free', desc: 'Checked for heavy stains and persistent odors before packing', isNegative: false },
   { icon: <CheckCircle2 className="w-5 h-5 text-[#27AE60]" />, title: 'Photo Verified', desc: 'Pre-shipment photos sent to buyer for approval', isNegative: false }
 ];
 
 const clothesFeatures = [
   { icon: <Factory className="w-6 h-6 text-[#C0392B]" />, title: 'Direct Factory Source', desc: '15,000m² facility. No middlemen — you buy directly from the source.' },
   { icon: <Package className="w-6 h-6 text-[#C0392B]" />, title: 'Consistent Grading', desc: 'Standardized grading across all batches. What you see is what you get.' },
-  { icon: <Ship className="w-6 h-6 text-[#C0392B]" />, title: 'Global Export', desc: `12+ years experience exporting to ${companyStats.countriesCount} countries with full documentation.` },
+  { icon: <Ship className="w-6 h-6 text-[#C0392B]" />, title: 'Global Export', desc: `Experience since 2012 exporting to ${companyStats.countriesCount} countries with full documentation.` },
   { icon: <Zap className="w-6 h-6 text-[#C0392B]" />, title: 'Fast Lead Time', desc: 'Orders ready in 7–14 days. Large ready-stock inventory for immediate dispatch.' }
 ];
 
@@ -35,7 +36,7 @@ const clothesFaqs = [
   { q: 'What payment methods do you accept?', a: 'We accept T/T (30% deposit), Western Union, and L/C for large orders.' }
 ];
 
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "Used Brand Clothes Wholesale | China Supplier",
   description: "Sorted second-hand branded clothing from China. Nike, Adidas, Zara and 200+ brands. 5-step sorting. MOQ 100 bales. Export shipping support available.",
   openGraph: {
@@ -46,23 +47,20 @@ export const metadata = {
   alternates: {
     canonical: "/used-brand-clothes",
   },
-};
+});
 
 export default function UsedBrandClothesPage() {
-  const productSchema = getProductSchema({
+  const productSchema = getWholesaleCatalogSchema({
     name: "Used Brand Clothes Wholesale",
     description: "Sorted second-hand branded clothes. Nike, Adidas, and more. Global export support from China.",
     image: "https://www.realismthrift.com/images/clothes/assorted-jeans-sweatpants-lee-fila-stack.webp",
     url: "https://www.realismthrift.com/used-brand-clothes",
-    lowPrice: 0.3,
-    highPrice: 5.0,
-    offerCount: 7,
   });
 
   const faqSchema = getFaqSchema(clothesFaqs);
 
   return (
-    <main className="bg-white">
+    <div className="bg-white">
       <JsonLd data={productSchema} />
       <JsonLd data={faqSchema} />
       {/* ═══════════════════════════════════════════════════════
@@ -80,7 +78,7 @@ export default function UsedBrandClothesPage() {
           />
         </div>
         <div className="rt-page-hero-overlay" />
-        <div className="absolute inset-0 flex items-center">
+        <div className="relative z-10 w-full">
           <div className="max-w-[1280px] mx-auto px-8 w-full">
             <nav className="text-[0.75rem] text-white/45 mb-4 flex gap-[0.4rem] items-center flex-wrap">
               <Link href="/" className="text-white/45 no-underline hover:text-white/60 transition-colors">Home</Link>
@@ -113,7 +111,7 @@ export default function UsedBrandClothesPage() {
             { num: '100 bales', label: 'Min. Order' },
             { num: '7–14 days', label: 'Lead Time' },
             { num: companyStats.countriesCount, label: 'Export Countries' },
-            { num: '12 yrs', label: 'Experience' },
+            { num: 'Since 2012', label: 'Experience' },
           ].map((stat, i) => (
             <div key={i} className="text-center text-white">
               <div className="font-montserrat font-black text-[1.25rem]">{stat.num}</div>
@@ -135,7 +133,7 @@ export default function UsedBrandClothesPage() {
               <h2 className="font-montserrat font-extrabold text-[1.4rem] text-[#1A1A1A] m-0">What We Supply</h2>
             </div>
             <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0 mb-4">RealismThrift Export is a wholesale supplier of used branded clothing based in Huizhou, China. We operate a 15,000m² sorting facility with trained staff who process and grade second-hand garments from major Chinese cities. Each bale is packed through our standardized 5-step sorting and quality-control process.</p>
-            <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0">We supply wholesale buyers, thrift store chains, market traders, and NGOs across Africa, Southeast Asia, the Middle East, Latin America, and Europe. To complement your clothing orders, we also supply wholesale <Link href="/used-brand-shoes" className="text-[#C0392B] font-bold hover:underline">Used Brand Shoes</Link> and <Link href="/used-brand-bag" className="text-[#C0392B] font-bold hover:underline">Used Brand Bags</Link> directly from our specialized sorting lines. Whether you need a 100-bale trial order or a full 40HQ container, we handle everything from sorting to door-to-door delivery.</p>
+            <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0">We supply wholesale buyers, thrift store chains, market traders, and NGOs across Africa, Southeast Asia, the Middle East, Latin America, and Europe. To complement your clothing orders, we also supply wholesale <Link href="/used-brand-shoes" className="text-[#C0392B] font-bold hover:underline">Used Brand Shoes</Link> and <Link href="/used-brand-bag" className="text-[#C0392B] font-bold hover:underline">Used Brand Bags</Link> directly from our specialized sorting lines. Whether you need a 100-bale trial order or a full 40HQ container, we coordinate sorting, packing, and export shipment planning.</p>
           </section>
 
           {/* BRAND SHOWCASE */}
@@ -216,14 +214,14 @@ export default function UsedBrandClothesPage() {
                     <h3 className="font-montserrat font-extrabold text-[1.1rem] text-[#1A1A1A] m-0">Brand Identification & Authentication</h3>
                   </div>
                 </div>
-                <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1rem]">Our trained sorters examine every garment&apos;s brand label, care label, and stitching quality under magnified lighting. The team has memorized the label characteristics of 200+ brands and can quickly identify authentic branded items from generic ones. Items are grouped into brand-specific bins for downstream processing.</p>
+                <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1rem]">Our trained sorters examine every garment&apos;s brand label, care label, and stitching quality under magnified lighting. The team has memorized the label characteristics of 200+ brands and check brand labels and separate unsuitable items from brand-focused batches. Items are grouped into brand-specific bins for downstream processing.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-[0.625rem]">
                   {[
                     'Label verification (brand, origin, fabric)',
                     'Stitching & seam integrity check',
                     'Zipper and button function test',
                     'Brand-specific bin sorting',
-                    'Logo authenticity verification',
+                    'Label and logo condition checks',
                     'Counterfeit rejection protocol'
                   ].map(chk => (
                     <div key={chk} className="flex items-start gap-[0.4rem] font-open-sans text-[0.8rem] text-[#555]">
@@ -269,7 +267,7 @@ export default function UsedBrandClothesPage() {
             </div>
 
             {/* STEP 4 */}
-            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2d2020] rounded-[8px] p-8 mb-[2rem] grid grid-cols-[auto_1fr] gap-[1.5rem] items-start">
+            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2d2020] rounded-[8px] p-6 sm:p-8 mb-[2rem] grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-[1.5rem] items-start">
               <div className="w-[52px] h-[52px] bg-[#C0392B] rounded-full flex items-center justify-center shrink-0">
                 <span className="font-montserrat font-black text-[1.25rem] text-white">4</span>
               </div>
@@ -473,7 +471,7 @@ export default function UsedBrandClothesPage() {
             <div id="inquiry" className="bg-white border border-[#eee] rounded-[8px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] overflow-hidden mb-[1.5rem]">
               <div className="bg-[#C0392B] p-[1.25rem_1.5rem]">
                 <h3 className="font-montserrat text-[1rem] font-extrabold text-white m-0 mb-[0.25rem]">Get Wholesale Price</h3>
-                <p className="text-[0.75rem] text-white/80 m-0">Reply within 12 hours · Free samples available</p>
+                <p className="text-[0.75rem] text-white/80 m-0">We aim to reply within 12 hours · Ask about sample pricing</p>
               </div>
               <div className="p-[1.5rem]">
                  <InquiryForm variant="sidebar" />
@@ -527,10 +525,10 @@ export default function UsedBrandClothesPage() {
       {/* BOTTOM CTA BANNER */}
       <ProductCTA 
         title="Ready to Order Used Brand Clothes?"
-        description="Get a free price quotation within 12 hours. Our sales team speaks English, French, Spanish, and Arabic."
+        description="Request a free wholesale price quotation. Our sales team speaks English, French, Spanish, and Swahili."
         whatsappMessage="Hi, I want to wholesale used brand clothes. Can I get a price list?"
       />
 
-    </main>
+    </div>
   );
 }

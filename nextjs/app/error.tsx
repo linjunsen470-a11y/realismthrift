@@ -25,12 +25,11 @@ export default function Error({
           </div>
         </div>
 
-        <h1 className="rt-section-title mb-4">CONNECTION INTERRUPTED</h1>
+        <h1 className="rt-section-title mb-4">Unable to Load This Page</h1>
         <div className="rt-section-divider center" />
         
         <p className="rt-section-copy mb-12">
-          Our logistics pipeline encountered an unexpected delay while processing your request. 
-          This might be a temporary connection issue.
+          Please try again. If the problem continues, contact our sales team for product and order information.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -38,7 +37,7 @@ export default function Error({
             onClick={() => reset()}
             className="rt-btn-primary px-8 py-3 flex items-center gap-2 cursor-pointer"
           >
-            <RefreshCw size={18} /> RETRY CONNECTION
+            <RefreshCw size={18} /> TRY AGAIN
           </button>
           
           <Link
@@ -49,11 +48,11 @@ export default function Error({
           </Link>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-200">
+        {error.digest ? <div className="mt-12 pt-8 border-t border-gray-200">
           <p className="text-xs text-gray-400 font-mono">
-            Error ID: {error.digest || "Logistics-ERR-500"}
+            Error reference: {error.digest}
           </p>
-        </div>
+        </div> : null}
       </div>
     </div>
   );

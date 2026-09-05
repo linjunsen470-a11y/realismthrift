@@ -1,3 +1,4 @@
+import { createPageMetadata } from "@/lib/metadata";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -28,7 +29,7 @@ import { LatestBlogSection } from "@/components/blog/LatestBlogSection";
 import { Metadata } from "next";
 import { JsonLd, getOrganizationSchema, getWebsiteSchema, getFaqSchema } from "@/components/JsonLd";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: 'Wholesale Used Clothes, Shoes & Bags Supplier',
   description: 'RealismThrift supplies sorted second-hand clothes, shoes, and bags from China with wholesale packing, grading, and export support.',
   openGraph: {
@@ -39,7 +40,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
-};
+});
+
+export const revalidate = 300;
 
 const featureIconMap = {
   "award": Award,
@@ -63,8 +66,8 @@ const heroTags = [
 
 const trustItems = [
   { label: "Clearly Graded Stock", icon: CheckCircle2 },
-  { label: "12+ Years Experience", icon: Zap },
-  { label: "Fast 7-Day Loading", icon: Ship },
+  { label: "Exporting Since 2012", icon: Zap },
+  { label: "Container Loading Support", icon: Ship },
   { label: "Repeat Buyer Support", icon: BarChart3 },
   { label: `${companyStats.countriesCount} Countries`, icon: Globe2 },
 ];
@@ -73,7 +76,7 @@ const productQualityBadges = [
   { label: "Strict Quality Control", icon: ShieldCheck },
   { label: "Professional Sorting", icon: CheckCircle2 },
   { label: "Vibrant & Fashionable", icon: Sparkles },
-  { label: "Clean & Ready to Wear", icon: CheckCircle2 },
+  { label: "Checked for Resale", icon: CheckCircle2 },
 ];
 
 const partnerRegions = [
@@ -123,12 +126,12 @@ const faqs = [
   {
     question: "What is the minimum order quantity (MOQ)?",
     answer:
-      "Minimum order is 100 bales (approx. 4,500 kg) for clothes, or 2,000 pairs for shoes. We also accept mixed orders.",
+      "Minimum quantities depend on the product category, grade, and packing. Contact us to confirm the minimum for clothes, shoes, bags, or a mixed order before planning shipment.",
   },
   {
     question: "What are your payment methods?",
     answer:
-      "We accept T/T (bank transfer), L/C (letter of credit), and Western Union. Standard terms: 30% deposit and 70% before shipment.",
+      "We accept T/T (bank transfer), L/C (letter of credit), and Western Union. Confirm the deposit and balance schedule in your pro forma invoice before payment.",
   },
   {
     question: "How do you ensure quality?",
@@ -169,7 +172,7 @@ const contactMethods = [
 ];
 
 export default async function Home() {
-  const latestPosts = await getLatestBlogPosts();
+  const latestPosts = await getLatestBlogPosts().catch(() => null);
 
   const organizationSchema = getOrganizationSchema();
   const websiteSchema = getWebsiteSchema();
@@ -195,7 +198,7 @@ export default async function Home() {
           <div className="rt-hero-content rt-fade-in">
             <div className="rt-hero-badge">Second Hand Fashion Exporter in China</div>
             <h1 className="rt-hero-title">
-              Direct Second Hand Brand Clothes, Shoes & Bags Factory
+              Wholesale Used Clothes, Shoes & Bags from China
             </h1>
             <p className="rt-hero-subtitle">
               Wholesale Packing | Graded Stock | Export Support
@@ -323,7 +326,7 @@ export default async function Home() {
               <div className="rt-about-deco rt-about-deco-dark" />
               <div className="rt-about-deco rt-about-deco-red" />
               
-              <div className="absolute -bottom-6 -right-6 hidden md:flex gap-3 bg-white p-3 rounded-[12px] shadow-xl z-20 border border-[#eee]">
+              <div className="absolute -bottom-6 right-0 hidden md:flex gap-3 bg-white p-3 rounded-[12px] shadow-xl z-20 border border-[#eee]">
                 <div className="relative w-32 h-20 rounded-[6px] overflow-hidden">
                   <Image src="/images/about/working-qc-shoes.webp" alt="RealismThrift QC Inspection - Sorting Branded Used Shoes" fill className="object-cover" />
                 </div>
@@ -331,7 +334,7 @@ export default async function Home() {
                   <Image src="/images/about/working-qc-clothes.webp" alt="RealismThrift Quality Control - Inspecting Used Clothing" fill className="object-cover" />
                 </div>
                 <div className="flex flex-col justify-center pr-2">
-                  <span className="text-[0.6rem] font-bold text-brand-red uppercase tracking-tighter">Real-time QC</span>
+                  <span className="text-[0.6rem] font-bold text-brand-red uppercase tracking-tighter">Quality Checks</span>
                   <span className="text-[0.5rem] text-brand-dark font-semibold">Huizhou Facility</span>
                 </div>
               </div>
@@ -350,9 +353,9 @@ export default async function Home() {
                 focus on sorted stock, clear packing information, and export support.
               </p>
               <p className="rt-about-text">
-                We operate from a {companyStats.facilitySize} square-meter facility with {companyStats.staffCount} dedicated staff
+                We operate from a {companyStats.facilitySize} facility with {companyStats.staffCount} dedicated staff
                 members. Our strict quality control ensures long-term partnerships with
-                clients in more than {companyStats.countriesCount} countries.
+                clients in {companyStats.countriesCount} countries.
               </p>
               <div className="rt-about-stats">
                 <div className="rt-stat-box">
@@ -364,8 +367,8 @@ export default async function Home() {
                   <span className="rt-stat-label">Countries Served</span>
                 </div>
                 <div className="rt-stat-box">
-                  <span className="rt-stat-value">12+</span>
-                  <span className="rt-stat-label">Years Experience</span>
+                  <span className="rt-stat-value">2012</span>
+                  <span className="rt-stat-label">Founded</span>
                 </div>
                 <div className="rt-stat-box">
                   <span className="rt-stat-value">{companyStats.staffCount}</span>
@@ -373,7 +376,7 @@ export default async function Home() {
                 </div>
               </div>
               <Link
-                href="#contact"
+                href="/about-us"
                 className="rt-btn-primary"
                 aria-label="Know more about RealismThrift export services"
               >
@@ -388,7 +391,7 @@ export default async function Home() {
         <div className="rt-container">
           <div className="rt-section-header center">
             <span className="rt-section-badge">OUR ADVANTAGES</span>
-            <h2 className="rt-section-title" id="features-title">WHY CHOOSE DONGGUAN HUIHE REALISMTHRIFT TRADING CO., LTD.</h2>
+            <h2 className="rt-section-title" id="features-title">WHY CHOOSE REALISMTHRIFT</h2>
             <div className="rt-section-divider center" />
           </div>
 
@@ -536,9 +539,9 @@ export default async function Home() {
                 <p>
                   <MessageCircle size={16} strokeWidth={2.2} />
                   <span>
-                    <strong>Online Now</strong>
+                    <strong>Sales Support</strong>
                     <br />
-                    Our sales team replies within <strong>12 hours</strong>.
+                    Our sales team aims to reply within <strong>12 hours</strong>.
                   </span>
                 </p>
               </div>
@@ -557,17 +560,17 @@ export default async function Home() {
           <div className="rt-seo-copy-inner">
             <h2>About Dongguan Huihe Realismthrift Trading Co., Ltd.</h2>
             <p>
-              Dongguan Huihe Realismthrift Trading Co., Ltd. is a China-based
+              Dongguan Huihe Realismthrift Trading Co., Ltd. is a
               {" "}
               <strong>second hand clothes wholesale supplier</strong>
               {" "}
               based in Huizhou, China. We specialize in exporting sorted used
               clothes, used shoes, and used bags to wholesalers and importers worldwide.
-              With over 12 years of experience in the
+              With experience since 2012 in the
               {" "}
               <strong>used clothing export</strong>
               {" "}
-              industry, we have built strong relationships with buyers in more than {companyStats.countriesCount}
+              industry, we have built strong relationships with buyers in {companyStats.countriesCount}
               countries across Africa, Southeast Asia, the Middle East, and the Americas.
             </p>
             <p>
@@ -580,7 +583,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <LatestBlogSection posts={latestPosts} />
+      {latestPosts ? <LatestBlogSection posts={latestPosts} /> : null}
     </div>
   );
 }

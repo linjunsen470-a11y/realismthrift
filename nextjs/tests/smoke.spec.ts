@@ -7,7 +7,7 @@ test.describe("RealismThrift smoke tests", () => {
     await expect(page).toHaveTitle(/RealismThrift|Wholesale Used Clothes|Global Wholesale Supplier/i);
     await expect(
       page.getByRole("heading", {
-        name: /Direct Second Hand Brand Clothes, Shoes & Bags Factory/i,
+        name: /Wholesale Used Clothes, Shoes & Bags from China/i,
       }),
     ).toBeVisible();
     await expect(page.getByRole("link", { name: /View Products/i })).toBeVisible();
