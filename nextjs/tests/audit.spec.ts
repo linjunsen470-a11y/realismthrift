@@ -3,7 +3,13 @@ import { expect, test } from "@playwright/test";
 test.beforeEach(async ({ page }) => {
   // No test inquiry may reach the live email/storage services.
   await page.route("**/api/send", route => route.fulfill({ status: 503, json: { ok: false, message: "Please try again." } }));
-  await page.addInitScript(() => localStorage.setItem("rt_analytics_consent_v1", "denied"));
+});
+
+test("homepage has no cookie consent prompt or settings entry", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".rt-consent")).toHaveCount(0);
+  await expect(page.getByText("Cookie Settings", { exact: true })).toHaveCount(0);
+  await expect(page.getByText("Privacy choices", { exact: true })).toHaveCount(0);
 });
 
 test("mobile navigation exposes search and closes with Escape", async ({ page, isMobile }) => {
