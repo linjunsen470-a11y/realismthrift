@@ -71,11 +71,14 @@ export function InquiryForm({
           message: result.message ?? "Inquiry received. Our sales team aims to reply within 12 hours.",
         });
 
-        // Track conversion
+        // Track only non-identifying lead metadata. Never send contact details or free text to GA4.
         try {
-          trackEvent("Lead", {
-            content_name: "Inquiry Form",
-            content_category: formValues.product || "General",
+          trackEvent("generate_lead", {
+            form_name: "wholesale_inquiry",
+            product_interest: formValues.product || "not_specified",
+            quantity: formValues.quantity || "not_specified",
+            country: formValues.country || "not_specified",
+            page_path: window.location.pathname,
           });
         } catch {
           // Analytics must not turn an accepted inquiry into a displayed error.

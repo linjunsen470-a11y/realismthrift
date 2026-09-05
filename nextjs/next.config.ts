@@ -3,7 +3,7 @@ import type {NextConfig} from 'next';
 /**
  * CSP tuned for this site's runtime third parties:
  * - Next.js hydration / inline boot scripts
- * - GA4 (gtag) + Meta Pixel
+ * - GA4 (gtag)
  * - Sanity CDN images + draft/live API
  * - Google Maps embed on contact page
  *
@@ -15,7 +15,6 @@ const scriptSources = [
   ...(process.env.NODE_ENV === 'development' ? ["'unsafe-eval'"] : []),
   'https://www.googletagmanager.com',
   'https://www.google-analytics.com',
-  'https://connect.facebook.net',
 ];
 
 const contentSecurityPolicy = [
@@ -31,7 +30,6 @@ const contentSecurityPolicy = [
     'data:',
     'blob:',
     'https://cdn.sanity.io',
-    'https://www.facebook.com',
     'https://www.google-analytics.com',
     'https://www.googletagmanager.com',
     'https://*.google.com',
@@ -46,8 +44,6 @@ const contentSecurityPolicy = [
     'https://analytics.google.com',
     'https://*.google-analytics.com',
     'https://*.analytics.google.com',
-    'https://www.facebook.com',
-    'https://connect.facebook.net',
     'https://cdn.sanity.io',
     'https://*.api.sanity.io',
     'https://*.sanity.io',
