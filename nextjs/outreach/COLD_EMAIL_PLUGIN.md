@@ -33,18 +33,20 @@ ChatGPT 将直接声明 MCP 服务器的导入插件标为 Desktop only，远程
 
 真实 MCP 地址为 https://www.realismthrift.com/api/mcp，streamable-http。公开资源元数据能返回 Supabase 授权服务器，未认证 MCP 返回 401。Gmail 网站授权与 ChatGPT 插件 OAuth 是两层独立授权；已有 Gmail connected 不等于插件 connected。
 
-发现的接入缺口：
-1. Supabase 当前静态 OAuth 客户端 0634381c-0081-451c-a9a9-714d3356f297（RealismThrift Outreach MCP）为 confidential，redirect_uri 指向网站自己的 /api/outreach/auth/callback。这不是已验证的 ChatGPT 插件回调，不能把它当作可用连接。
-2. 服务器需要 OUTREACH_OAUTH_CLIENT_ID 固定为实际插件客户端。未配置时保持拒绝连接，不能临时接受所有 OAuth 客户端。
+已确认并处理的接入配置：
+1. 原 Supabase 静态客户端 0634381c-0081-451c-a9a9-714d3356f297 使用网站自己的回调，保留。经本人明确批准，已独立创建 ChatGPT PKCE public 客户端 62369d93-d1ed-423c-9604-f3928e40f465，token endpoint auth method 为 none，不使用 client secret。实际创建表单显示的精确回调为 https://chatgpt.com/connector/oauth/V3RGmY4ygzgA，已核对保存值。
+2. Vercel Production OUTREACH_OAUTH_CLIENT_ID 已固定为新客户端。网关继续强制客户端和管理员身份校验，不能临时接受所有 OAuth 客户端。
 3. Supabase 当前 OAuth access token 使用 aud=authenticated；代码已按其官方文档修正并保留 issuer、签名算法、过期时间、管理员 sub、client_id 的强校验。普通网站登录 token 缺少 client_id，仍被拒绝。
 
-插件保存后，从该插件的实际连接设置读取准确的 OAuth redirect URI 和客户端身份。创建或修正 Supabase 静态客户端；配置正确的授权页面和相应 Vercel client_id。若平台明确支持并要求 DCR，则需单独审查启用方式与具体客户端登记；不为方便连接开放任意客户端。不把 OAuth secret 放入插件 ZIP、Git 或聊天。
+实际云端 OAuth 跳转还发现 Supabase 配置的 consent path 为 /oauth/consent，而网站实际授权页在 /outreach/authorize。新增兼容 GET 入口校验并保留 authorization_id，仅跳转到本站授权页；GET 不批准权限、不接受外部 redirect_uri。明确批准仍由管理员在授权页 POST 完成。
+
+ChatGPT 已建立云端连接流程，等待本人登录及确认，再取得实际 App ID 更新原插件。DCR/CIMD 未启用；不为方便连接开放任意客户端。不把 OAuth secret 放入插件 ZIP、Git 或聊天。
 
 新的插件访问授权须由本人在 ChatGPT 的连接流程确认。第一项测试只调用只读 lookup，不发送或恢复任何订阅。连接通过后才能称为插件端到端可用。
 
 ## 验收与上线边界
 
-32 项相关单元测试、类型检查和相关 ESLint 已通过；包含内容 HTML 转义、真实 MIME 双版本、退订联系人/暂停会话拒绝起草、无发送调用、普通 Supabase token 和其他客户端/用户被拒绝，以及代理环境下 OAuth challenge 指向实际资源元数据路由。
+34 项相关单元测试、类型检查和相关 ESLint 已通过；包含内容 HTML 转义、真实 MIME 双版本、退订联系人/暂停会话拒绝起草、无发送调用、普通 Supabase token 和其他客户端/用户被拒绝，以及 OAuth 元数据发现和实际 consent path 兼容入口。
 
 私有插件包与部署结果随后记录于本地验收文件。发送开关保持关闭，测试地址保持退订。本轮没有实际发送邮件或修改联系人营销许可。新 HTML 样式尚需正式插件连接后的受控收件验收；不能把本地截图视为 Gmail 实际显示验收。
 
