@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "realismthrift-cold-email": {
+      "type": "streamable-http",
+      "url": "https://www.realismthrift.com/api/mcp"
+    }
+  }
+}

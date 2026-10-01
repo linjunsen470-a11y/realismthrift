@@ -1,0 +1,31 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "realismthrift-cold-email",
+  "version": "0.1.0",
+  "description": "Private RealismThrift cold email workflow: check registered contacts, create styled Gmail drafts, review exact content, send approved drafts through the suppression gateway, and reconcile uncertain sends.",
+  "author": {
+    "name": "RealismThrift"
+  },
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "RealismThrift Cold Email",
+        "shortDescription": "专用开发信起草、审核与发送",
+        "longDescription": "仅处理 RealismThrift 开发信。使用 Jason 邮箱和网站发送网关，保留 Neon 退订、回复暂停、单收件人和每日额度检查。支持纯文本与简洁 HTML 草稿，每封明确批准后发送。普通 Gmail 插件授权不能替代本插件 OAuth 连接。",
+        "developerName": "RealismThrift",
+        "category": "Productivity",
+        "capabilities": [
+          "Interactive"
+        ],
+        "defaultPrompt": [
+          "为一个已审核的联系人起草简洁的英文开发信，保存草稿后展示给我审核。",
+          "查询这个联系人的营销资格和草稿状态。",
+          "对账一封结果不明的开发信，不要重发。"
+        ],
+        "logo": "./assets/icon.svg",
+        "composerIcon": "./assets/icon.svg",
+        "brandColor": "#B38B45"
+      }
+    }
+  }
+}

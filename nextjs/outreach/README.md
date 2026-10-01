@@ -81,6 +81,8 @@ RFC8058 头由网关在审批后加入；已有草稿的正文、附件必须与
 
 ## 起草、审批、发送
 
+专用 ChatGPT 插件及简洁 HTML 起草实现见 [COLD_EMAIL_PLUGIN.md](./COLD_EMAIL_PLUGIN.md)。新增起草工具只处理已审核联系人，保存纯文本/HTML 双版本 Gmail 草稿。MCP 工具限定 cold_marketing，不提供普通回复或通用收件箱操作。OAuth 连接完成前不得把插件包创建当作可发送验收。
+
 以下 SQL 经授权的 Neon 连接使用。占位符替换为实际值，禁止直接批量修改营销状态。
 
 ```sql

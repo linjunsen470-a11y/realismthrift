@@ -12,7 +12,9 @@ export async function verifyMcpToken(_request: Request, token?: string): Promise
   if (!token) return undefined;
   try {
     jwks ??= createRemoteJWKSet(new URL(`${authIssuer()}/.well-known/jwks.json`));
-    const { payload } = await jwtVerify(token, jwks, { issuer: authIssuer(), audience: mcpResource(), algorithms: ["ES256", "RS256"], requiredClaims: ["sub", "exp", "iat", "client_id"] });
+    // Supabase OAuth access tokens use aud=authenticated. The pinned client_id and operator
+    // distinguish this integration from ordinary Supabase sessions and other OAuth apps.
+    const { payload } = await jwtVerify(token, jwks, { issuer: authIssuer(), audience: "authenticated", algorithms: ["ES256", "RS256"], requiredClaims: ["sub", "exp", "iat", "client_id"] });
     if (payload.sub !== requiredSetting("OUTREACH_OPERATOR_USER_ID") || payload.client_id !== requiredSetting("OUTREACH_OAUTH_CLIENT_ID")) return undefined;
     return { token, clientId: payload.client_id as string, scopes: typeof payload.scope === "string" ? payload.scope.split(" ") : [], extra: { userId: payload.sub } };
   } catch { return undefined; }

@@ -16,15 +16,22 @@ afterAll(() => { vi.restoreAllMocks(); vi.unstubAllEnvs(); });
 async function token(overrides: Record<string, unknown> = {}) {
   return new SignJWT({ client_id: "approved-client", ...overrides })
     .setProtectedHeader({ alg: "ES256", kid: "test" }).setSubject("operator-id")
-    .setIssuer("https://auth.example.invalid/auth/v1").setAudience("https://www.realismthrift.com/api/mcp")
+    .setIssuer("https://auth.example.invalid/auth/v1").setAudience("authenticated")
     .setIssuedAt().setExpirationTime("1h").sign(key);
 }
 describe("private MCP authentication", () => {
-  it("accepts a signed, audience-bound operator token", async () => {
+  it("accepts a signed Supabase OAuth token for the pinned operator and client", async () => {
     expect(await verifyMcpToken(new Request("https://www.realismthrift.com/api/mcp"), await token())).toMatchObject({ clientId: "approved-client", extra: { userId: "operator-id" } });
   });
   it("rejects a different OAuth client", async () => {
     expect(await verifyMcpToken(new Request("https://www.realismthrift.com/api/mcp"), await token({ client_id: "other-client" }))).toBeUndefined();
+  });
+  it("rejects a regular Supabase session without an OAuth client claim", async () => {
+    expect(await verifyMcpToken(new Request("https://www.realismthrift.com/api/mcp"), await token({ client_id: undefined }))).toBeUndefined();
+  });
+  it("rejects another operator even with the approved OAuth client", async () => {
+    const other = await new SignJWT({ client_id: "approved-client" }).setProtectedHeader({ alg: "ES256", kid: "test" }).setSubject("other-user").setIssuer("https://auth.example.invalid/auth/v1").setAudience("authenticated").setIssuedAt().setExpirationTime("1h").sign(key);
+    expect(await verifyMcpToken(new Request("https://www.realismthrift.com/api/mcp"), other)).toBeUndefined();
   });
   it("rejects unsigned or absent tokens", async () => {
     expect(await verifyMcpToken(new Request("https://www.realismthrift.com/api/mcp"), "fake.token.value")).toBeUndefined();
