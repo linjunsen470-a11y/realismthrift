@@ -109,6 +109,14 @@ const nextConfig: NextConfig = {
         source: '/(.*)',
         headers: securityHeaders,
       },
+      ...['/email-preferences/:path*', '/api/email-preferences/:path*', '/outreach/:path*', '/api/outreach/:path*', '/api/mcp'].map(source => ({
+        source,
+        headers: [
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+          { key: 'Cache-Control', value: 'private, no-store' },
+        ],
+      })),
     ];
   },
   output: 'standalone',

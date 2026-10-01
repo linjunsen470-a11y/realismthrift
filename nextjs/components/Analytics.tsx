@@ -3,6 +3,7 @@
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import { isUtilityPath } from "./SiteChrome";
 
 const isAnalyticsEnabled = process.env.NEXT_PUBLIC_ANALYTICS_ENABLED !== "false";
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
@@ -11,7 +12,7 @@ export default function Analytics() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!isAnalyticsEnabled || !GA_ID || !window.gtag) return;
+    if (isUtilityPath(pathname) || !isAnalyticsEnabled || !GA_ID || !window.gtag) return;
 
     const pageLocation = `${window.location.origin}${window.location.pathname}`;
     window.gtag("event", "page_view", {
@@ -21,7 +22,7 @@ export default function Analytics() {
     });
   }, [pathname]);
 
-  if (!isAnalyticsEnabled || !GA_ID) return null;
+  if (isUtilityPath(pathname) || !isAnalyticsEnabled || !GA_ID) return null;
 
   return (
     <>
@@ -57,5 +58,6 @@ export default function Analytics() {
  */
 export function trackEvent(eventName: string, params?: Record<string, string>) {
   if (typeof window === "undefined" || !isAnalyticsEnabled || !window.gtag) return;
+  if (isUtilityPath(window.location.pathname)) return;
   window.gtag("event", eventName, params);
 }
