@@ -1,57 +1,36 @@
-# RealismThrift 专用开发信插件：轻量实现
+# RealismThrift Cold Email：个人使用
 
-## 目标与第一版
+复用现有 Vercel 网关、Neon 联系人状态和 Jason 的 Gmail 授权。插件只提供查询联系人、起草、审核、批准发送和发送对账五个工具；不另建 CRM、用户体系、批量发送或多邮箱调度。
 
-复用 www.realismthrift.com 的 Vercel 网关、现有 Neon 联系人状态和 Jason 的 Gmail 授权。插件独立命名 RealismThrift Cold Email；不绑定通用 Gmail 插件，不复制收件箱或建立新的 CRM。
+## 日常流程
 
-邮件为纯文本和 HTML 双版本：560px 最大宽度、白底、系统字体、小型金色品牌线、Jason 签名、公司地址和文字退订链接。输入仅为主题和短段落，服务器转义内容；不接受自由 HTML、追踪像素、图片或附件。旧邮件和已经批准的旧草稿不改写。初版不加入自动跟进、多邮箱轮换或群发。
+查询一个已有且人工审核过的联系人 → 保存 Gmail 草稿 → 显示原文审核 → 本人批准 → 网关发送。退订、回复暂停、单收件人、每日 50 封额度和发送结果不明时禁止重发的检查继续由服务器执行。普通邮件回复使用其他邮箱插件；回复不会恢复营销许可。
 
-第一版五个工具：
-- lookup_cold_email_contact：查询一个已有联系人的来源及营销状态。
-- create_cold_email_draft：为已有人工审核记录、未退订且未暂停的联系人保存一封 HTML/纯文本草稿；不发送。
-- review_outreach_draft：读取已保存原文，检查资格、来信及退订页脚，返回 fingerprint。
-- send_approved_outreach：针对确切草稿取得本人批准后，沿用已有即时抑制、额度和发送对账机制。
-- reconcile_outreach_send：只对账结果不明的发送，不能自动重发。
+草稿同时包含纯文本与简洁 HTML：白底、系统字体、560px 最大宽度、小型金色品牌线、Jason 签名、地址及文字退订链接。服务器转义段落；无追踪像素、外部图片或自由 HTML。
 
-MCP 层只接受 cold_marketing 消息，requested_reply 不在此插件内。普通 Gmail 插件继续用于其他邮件。服务器不开放全邮箱搜索、任意 Gmail API、直接恢复订阅、绕过回复暂停、批量导入或自动准入工具。
+## 最小接入方式
 
-## 操作流程
+ChatGPT 网页 Chat → Supabase 托管 OAuth → `/api/mcp` → 已连接的 Jason Gmail。
 
-先确认联系人存在并已有人工准入记录 → 起草短邮件 → 保存真实 Gmail 草稿 → 读取原草稿审核 → 本人批准 → 网关发送。联系人不符合条件时停止，来源或准入审核继续由现有管理员流程处理。
+网页 Chat 不能携带自定义 API key。私人插件的可见性也不能保护公网发送接口，因此保留一套托管 OAuth。服务器只验证签名、有效期、固定 Jason 身份及专用客户端；没有注册、角色、团队、租户或自建 token 服务。Gmail OAuth 继续保存于服务器，日常使用无需重新授权邮箱。
 
-先用此版本验证一个合法联系人；只有成功连接、真实草稿读取/发送验收后，才考虑第二版：按明确定义的字段导入待审核联系人、专用待审列表、多语言文案。多邮箱需要分别的凭据、额度和抑制一致性设计，不在首版实施。
+`/oauth/consent` 是唯一授权页面，直接对应 Supabase 的现有配置。首次登录共用 `/api/outreach/google` 和已有 `login-callback`；批准与取消使用 Next.js Server Actions。旧 `/outreach/authorize` 链接只跳转到此页。已删除重复的 `/api/outreach/authorize` 和 `/api/outreach/auth/callback`，不再维护插件专用登录回调。
 
-## 连接与权限
+已有 Supabase consent 会复用。新的权限、首次登录和 OAuth 同意由本人完成。一次连接授权不等于批准任何邮件发送。
 
-### Chat 模式的云端连接
+## 私有插件
 
-ChatGPT 将直接声明 MCP 服务器的导入插件标为 Desktop only，远程 HTTPS 服务器也一样。0.1.0 包可安装，但不满足网页 Chat 使用要求。应在 ChatGPT Plugins 的 Add → Create MCP App 中，为现有 HTTPS 网关创建私有云端 App；不迁移服务器或数据库。
+同一插件 `plugins_6abec11be1ac81918fce6d2d8b1d56eb` 更新为 0.2.0，保留名称、图标、三个默认提示和私人范围。通过 `.app.json` 依赖已创建的云端 App `asdk_app_6abec56015f48191a27e8c54701c4a8e`，工具服务器仍为 https://www.realismthrift.com/api/mcp。直接 MCP 配置显式清空，避免只支持 Desktop 的导入方式；没有在插件包中存储凭据。
 
-取得平台真实 App ID 后，把同一插件更新为 `.app.json` 依赖，保留原有技能、图标和插件身份。Agent Plugins 根清单用 `extensions.com.openai.apps` 引用该文件；兼容清单同步引用。直接 MCP 声明清空，避免继续被标为 Desktop only。Plugin Creator 更新只能覆盖文件，因此现有 mcp.json/.mcp.json 要显式覆盖为空服务器清单，不能仅从 ZIP 中省略。实际 App ID 未取得前，不填占位 ID，也不把安装成功称为 Chat 模式可用。
+专用 Supabase PKCE public client：`62369d93-d1ed-423c-9604-f3928e40f465`，无 client secret；精确平台回调：`https://chatgpt.com/connector/oauth/V3RGmY4ygzgA`。Production `OUTREACH_OAUTH_CLIENT_ID` 固定为该客户端。旧客户端不变。
 
-验收须在网页 Chat 中完成：插件详情不再要求桌面端 → 本人完成 OAuth → 能发现五个工具 → 只读查询返回真实状态。邮件发送仍另需确切草稿批准。
+## 验收
 
-真实 MCP 地址为 https://www.realismthrift.com/api/mcp，streamable-http。公开资源元数据能返回 Supabase 授权服务器，未认证 MCP 返回 401。Gmail 网站授权与 ChatGPT 插件 OAuth 是两层独立授权；已有 Gmail connected 不等于插件 connected。
+37 项单元回归通过：OAuth 固定账户及客户端、过期/错误请求、批准/拒绝、已授权连接复用、邮件 MIME 和退订/暂停拦截。8 项桌面与手机浏览器回归通过：共用登录表单、同源 Origin、保留授权请求和旧链接兼容。类型检查与相关 ESLint 通过。
 
-已确认并处理的接入配置：
-1. 原 Supabase 静态客户端 0634381c-0081-451c-a9a9-714d3356f297 使用网站自己的回调，保留。经本人明确批准，已独立创建 ChatGPT PKCE public 客户端 62369d93-d1ed-423c-9604-f3928e40f465，token endpoint auth method 为 none，不使用 client secret。实际创建表单显示的精确回调为 https://chatgpt.com/connector/oauth/V3RGmY4ygzgA，已核对保存值。
-2. Vercel Production OUTREACH_OAUTH_CLIENT_ID 已固定为新客户端。网关继续强制客户端和管理员身份校验，不能临时接受所有 OAuth 客户端。
-3. Supabase 当前 OAuth access token 使用 aud=authenticated；代码已按其官方文档修正并保留 issuer、签名算法、过期时间、管理员 sub、client_id 的强校验。普通网站登录 token 缺少 client_id，仍被拒绝。
-
-实际云端 OAuth 跳转还发现 Supabase 配置的 consent path 为 /oauth/consent，而网站实际授权页在 /outreach/authorize。新增兼容 GET 入口校验并保留 authorization_id，仅跳转到本站授权页；GET 不批准权限、不接受外部 redirect_uri。明确批准仍由管理员在授权页 POST 完成。
-
-ChatGPT 已建立云端连接流程，等待本人登录及确认，再取得实际 App ID 更新原插件。DCR/CIMD 未启用；不为方便连接开放任意客户端。不把 OAuth secret 放入插件 ZIP、Git 或聊天。
-
-新的插件访问授权须由本人在 ChatGPT 的连接流程确认。第一项测试只调用只读 lookup，不发送或恢复任何订阅。连接通过后才能称为插件端到端可用。
-
-## 验收与上线边界
-
-34 项相关单元测试、类型检查和相关 ESLint 已通过；包含内容 HTML 转义、真实 MIME 双版本、退订联系人/暂停会话拒绝起草、无发送调用、普通 Supabase token 和其他客户端/用户被拒绝，以及 OAuth 元数据发现和实际 consent path 兼容入口。
-
-私有插件包与部署结果随后记录于本地验收文件。发送开关保持关闭，测试地址保持退订。本轮没有实际发送邮件或修改联系人营销许可。新 HTML 样式尚需正式插件连接后的受控收件验收；不能把本地截图视为 Gmail 实际显示验收。
+发布记录和网页 Chat 实际连接验收另记于本地 `archive/`。代码测试、插件发布、实际云端连接分别记录，不把安装成功当作可用验收。发送开关保持关闭，本轮不发送邮件、不修改联系人营销许可。Gmail 顶部退订按钮是否显示由 Gmail 决定。
 
 参考：
+- https://developers.openai.com/plugins/build/auth
 - https://learn.chatgpt.com/docs/enterprise/plugin-management
 - https://supabase.com/docs/guides/auth/oauth-server/oauth-flows
-- https://supabase.com/docs/guides/auth/oauth-server/mcp-authentication
-

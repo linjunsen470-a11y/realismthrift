@@ -35,29 +35,12 @@ Remove-Item Env:OUTREACH_DATABASE_TEST_ALLOWED
 
 ## 私有 MCP 的 OAuth 设置
 
-1. 在已有 Supabase 启用 OAuth 2.1 Server，授权页面设为 `https://www.realismthrift.com/outreach/authorize`。预注册一个私有 ChatGPT OAuth 客户端，关闭动态客户端注册。使用客户端实际提供的回调 URL，配置 `OUTREACH_OAUTH_CLIENT_ID`。
-2. Supabase 启用 Google 登录，用实际管理员用户 UUID 配置 `OUTREACH_OPERATOR_USER_ID`；配置 publishable key 与非对称 JWT 签名密钥。服务验证 JWKS 签名、issuer、过期时间、管理员 UUID、client_id 及专用 audience。
-3. 添加登录回调白名单：`/api/outreach/auth/callback` 与 `/api/outreach/google/login-callback` 的完整站点 URL。Google 登录提供商自己的回调地址仍为 Supabase 控制台提供的地址。
-4. 配置 Custom Access Token Hook：仅当 `claims.client_id` 为上述私有客户端时，将 `aud` 改为 `https://www.realismthrift.com/api/mcp`。保留所有其他 claims 和普通网站登录的 audience。若已有 Hook，应合并此条件。下面示例仅为配置说明，不会由 Neon 迁移执行。
+1. 复用已有 Supabase OAuth Server，授权页面使用 `https://www.realismthrift.com/oauth/consent`。使用专用 ChatGPT PKCE public 客户端的实际回调 URL，并固定 `OUTREACH_OAUTH_CLIENT_ID`；无需自建 OAuth 服务或多用户系统。
+2. 用固定 Jason 用户 UUID 配置 `OUTREACH_OPERATOR_USER_ID`，沿用 Supabase Google 登录、publishable key 与非对称 JWT 签名。服务验证 JWKS 签名、issuer、过期时间、`aud=authenticated`、固定用户和专用 `client_id`；普通网站登录 token 没有客户端声明，因此不能调用 MCP。
+3. 网站与插件共用 `/api/outreach/google/login-callback` 登录回调；插件登录携带经过校验的 `authorization_id` 查询参数。Supabase 登录重定向白名单需允许该回调及其查询参数。Google 登录提供商自己的回调仍使用 Supabase 控制台提供的地址。
+4. 不需要自定义 Access Token Hook 或额外 audience 改写。MCP 地址为 `https://www.realismthrift.com/api/mcp`，资源发现地址为 `/.well-known/oauth-protected-resource`；请求 `openid email` 等必要连接 scopes。首次同意由本人完成，后续复用托管 consent。
 
-```sql
-create or replace function public.outreach_access_token_hook(event jsonb)
-returns jsonb language plpgsql stable set search_path = '' as $$
-declare claims jsonb := event->'claims';
-begin
-  if claims->>'client_id' = 'REPLACE_WITH_PRIVATE_OAUTH_CLIENT_ID' then
-    claims := jsonb_set(claims, '{aud}', to_jsonb('https://www.realismthrift.com/api/mcp'::text));
-  end if;
-  return jsonb_build_object('claims', claims);
-end $$;
-grant usage on schema public to supabase_auth_admin;
-grant execute on function public.outreach_access_token_hook(jsonb) to supabase_auth_admin;
-revoke execute on function public.outreach_access_token_hook(jsonb) from public, anon, authenticated;
-```
-
-在 Supabase Auth Hooks 中选中该函数。MCP 地址为 `https://www.realismthrift.com/api/mcp`，资源发现地址为 `/.well-known/oauth-protected-resource`；只请求所需的 OIDC scopes（如 `openid email`）。同意页再次校验管理员和客户端。OAuth、实际 ChatGPT 连接尚需部署后联调，不能用 Supabase 普通 `authenticated` token 代替。
-
-参考：[Supabase MCP OAuth](https://supabase.com/docs/guides/auth/oauth-server/mcp-authentication)、[OAuth token audience](https://supabase.com/docs/guides/auth/oauth-server/token-security)、[Access Token Hook](https://supabase.com/docs/guides/auth/auth-hooks/custom-access-token-hook)。
+参考：[Supabase MCP OAuth](https://supabase.com/docs/guides/auth/oauth-server/mcp-authentication)、[OAuth token audience](https://supabase.com/docs/guides/auth/oauth-server/token-security)。
 
 ## Google 邮箱授权与 RFC8058 验收
 

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 export function isUtilityPath(path: string) {
-  return path === "/email-preferences" || path.startsWith("/email-preferences/") || path.startsWith("/outreach/");
+  return path === "/email-preferences" || path.startsWith("/email-preferences/") || path.startsWith("/outreach/") || path === "/oauth/consent";
 }
 
 export default function SiteChrome({ children, header, footer, editing }: {

@@ -1,13 +1,14 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "realismthrift-cold-email",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Private RealismThrift cold email workflow: check registered contacts, create styled Gmail drafts, review exact content, send approved drafts through the suppression gateway, and reconcile uncertain sends.",
   "author": {
     "name": "RealismThrift"
   },
   "extensions": {
     "com.openai": {
+      "apps": "./.app.json",
       "interface": {
         "displayName": "RealismThrift Cold Email",
         "shortDescription": "专用开发信起草、审核与发送",

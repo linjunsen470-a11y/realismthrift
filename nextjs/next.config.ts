@@ -109,7 +109,7 @@ const nextConfig: NextConfig = {
         source: '/(.*)',
         headers: securityHeaders,
       },
-      ...['/email-preferences/:path*', '/api/email-preferences/:path*', '/outreach/:path*', '/api/outreach/:path*', '/api/mcp'].map(source => ({
+      ...['/email-preferences/:path*', '/api/email-preferences/:path*', '/outreach/:path*', '/api/outreach/:path*', '/oauth/consent', '/api/mcp'].map(source => ({
         source,
         headers: [
           { key: 'Referrer-Policy', value: 'no-referrer' },
@@ -117,8 +117,8 @@ const nextConfig: NextConfig = {
           { key: 'Cache-Control', value: 'private, no-store' },
         ],
       })),
-      {
-        source: '/outreach/:path*',
+      ...['/outreach/:path*', '/oauth/consent'].map(source => ({
+        source,
         headers: [
           // Native same-origin form POSTs need an Origin header for CSRF checks.
           { key: 'Referrer-Policy', value: 'same-origin' },
@@ -126,6 +126,16 @@ const nextConfig: NextConfig = {
           { key: 'Content-Security-Policy', value: contentSecurityPolicy.replace(
             "form-action 'self'",
             `form-action 'self' https://accounts.google.com ${new URL(process.env.SUPABASE_URL || 'https://tjbeeackrjpojejxhnzq.supabase.co').origin}`,
+          ) },
+        ],
+      })),
+      {
+        source: '/oauth/consent',
+        headers: [
+          // Also supports the standard server-action fallback when JavaScript is unavailable.
+          { key: 'Content-Security-Policy', value: contentSecurityPolicy.replace(
+            "form-action 'self'",
+            `form-action 'self' https://accounts.google.com ${new URL(process.env.SUPABASE_URL || 'https://tjbeeackrjpojejxhnzq.supabase.co').origin} https://chatgpt.com`,
           ) },
         ],
       },
