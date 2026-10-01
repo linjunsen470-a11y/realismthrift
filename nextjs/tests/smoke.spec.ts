@@ -27,7 +27,7 @@ test.describe("RealismThrift smoke tests", () => {
     ];
 
     for (const path of paths) {
-      const response = await page.goto(path);
+      const response = await page.goto(path, { waitUntil: "domcontentloaded" });
 
       expect(response?.ok(), `${path} should return a successful response`).toBe(true);
       await expect(page.locator("body")).not.toContainText("Application error");
@@ -54,7 +54,7 @@ test.describe("RealismThrift smoke tests", () => {
       });
     });
 
-    await page.goto("/contact-us");
+    await page.goto("/contact-us", { waitUntil: "domcontentloaded" });
 
     const form = page.locator("form.rt-inquiry-form").first();
     await form.getByLabel("Your Name *").fill("Smoke Test Buyer");

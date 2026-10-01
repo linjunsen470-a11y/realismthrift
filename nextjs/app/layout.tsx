@@ -7,6 +7,7 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SanityLive } from '@/lib/sanity/live';
 import Analytics from '@/components/Analytics';
+import SiteChrome from '@/components/SiteChrome';
 import { siteHeader, siteFooter } from '@/data/siteData';
 import { siteUrl } from '@/lib/metadata';
 
@@ -74,12 +75,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="antialiased font-sans bg-white text-[#333]">
         <a className="rt-skip-link" href="#main-content">Skip to main content</a>
         <Analytics />
-        <div className="flex min-h-screen flex-col">
-          <SiteHeader data={siteHeader} />
-          <main id="main-content" className="flex-grow">{children}</main>
-          <SiteFooter data={siteFooter} />
-        </div>
-        {isDraftModeEnabled ? (
+        <SiteChrome header={<SiteHeader data={siteHeader} />} footer={<SiteFooter data={siteFooter} />} editing={isDraftModeEnabled ? (
           <>
             <VisualEditing />
             <SanityLive
@@ -88,7 +84,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               refreshOnReconnect={false}
             />
           </>
-        ) : null}
+        ) : null}>{children}</SiteChrome>
       </body>
     </html>
   );

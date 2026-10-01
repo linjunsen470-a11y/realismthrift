@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
             <div className="rt-legal-tag">PRIVACY</div>
             <h1 className="rt-page-hero-title text-white mb-4">Privacy <span className="text-brand-gold">Policy</span></h1>
             <p className="text-white/60 text-lg leading-relaxed">
-              Last updated: July 10, 2026. This policy explains how we protect your personal data in our global wholesale operations.
+              Last updated: October 1, 2026. This policy explains how we protect your personal data in our global wholesale operations.
             </p>
           </div>
         </div>
@@ -51,7 +51,8 @@ export default function PrivacyPolicyPage() {
                 <ul>
                   <li><strong>Contact Information:</strong> Name, email address, phone number, and WhatsApp ID when you fill out an inquiry form.</li>
                   <li><strong>Business Information:</strong> Company name, country, and specific product interests for wholesale purposes.</li>
-                  <li><strong>Technical Data:</strong> IP address, browser type, and usage patterns collected via cookies and similar technologies.</li>
+                  <li><strong>Business Outreach:</strong> Relevant business contact details and their source, including company websites, business cards, and trade fair contacts, together with records of communication and email preferences.</li>
+                  <li><strong>Technical Data:</strong> IP address and request information used for security and rate limits, and limited website analytics. Our private operator connection uses authentication cookies.</li>
                 </ul>
 
                 <h2>2. How We Use Information</h2>
@@ -61,6 +62,7 @@ export default function PrivacyPolicyPage() {
                 <ul>
                   <li>To process and respond to your wholesale inquiries.</li>
                   <li>To provide customer support and send order updates.</li>
+                  <li>To contact relevant wholesale businesses where permitted and honor their marketing preferences.</li>
                   <li>To improve our website functionality and user experience.</li>
                   <li>To comply with legal obligations and export regulations.</li>
                 </ul>
@@ -72,6 +74,9 @@ export default function PrivacyPolicyPage() {
                 <p>
                   Website inquiry records and their delivery history are normally retained for 24 months from submission and are then deleted automatically, unless a longer period is required for an active business relationship or by law.
                 </p>
+                <p>
+                  Business outreach information and email metadata are normally retained for 24 months, subject to an active business relationship or legal requirements. We retain current permission evidence and the minimum information needed to honor unsubscribe and safety restrictions while operating our marketing program.
+                </p>
 
                 <h2>4. Disclosure to Third Parties</h2>
                 <p>
@@ -79,6 +84,9 @@ export default function PrivacyPolicyPage() {
                 </p>
                 <p>
                   We use Vercel to host and operate the website, Resend to deliver inquiry notifications and automated confirmations, and Supabase to securely store inquiry records. These providers process only the information needed to perform those services on our behalf.
+                </p>
+                <p>
+                  We use Google Workspace Gmail for business correspondence and Neon to store outreach records and email preferences. Supabase also authenticates our private operator tools. Resend delivers confirmation emails that you request when updating your email preferences.
                 </p>
 
                 <h2>5. Analytics</h2>
@@ -92,6 +100,9 @@ export default function PrivacyPolicyPage() {
                 <h2>6. Your Rights</h2>
                 <p>
                   You have the right to access, correct, or delete your personal data, including information submitted through our inquiry form. If you wish to exercise these rights, please contact us at <a href="mailto:privacy@realismthrift.com">privacy@realismthrift.com</a>.
+                </p>
+                <p>
+                  You can stop marketing emails through the unsubscribe link in an email or by contacting us. Replying or submitting an inquiry does not restore marketing permission. Receiving marketing again requires a separate request and email confirmation. Email preference pages do not load analytics scripts.
                 </p>
 
                 <h2>7. Contact Us</h2>
@@ -112,7 +123,7 @@ export default function PrivacyPolicyPage() {
                 <ShieldCheck className="text-brand-gold mb-4" size={32} />
                 <h3 className="text-lg font-bold mb-3 font-montserrat">Data Trust</h3>
                 <p className="text-gray-500 text-sm leading-relaxed mb-6">
-                  We are committed to international data protection standards (GDPR/CCPA) for our global wholesale partners.
+                  We restrict access to contact information and keep a record of email preference changes.
                 </p>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-xs font-bold text-gray-700 uppercase tracking-wider">
@@ -125,7 +136,7 @@ export default function PrivacyPolicyPage() {
                   </div>
                   <div className="flex items-center gap-3 text-xs font-bold text-gray-700 uppercase tracking-wider">
                     <Globe size={14} className="text-brand-gold" />
-                    <span>Global Compliance</span>
+                    <span>Email Preferences</span>
                   </div>
                 </div>
               </div>
