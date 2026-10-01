@@ -23,6 +23,14 @@ MCP 层只接受 cold_marketing 消息，requested_reply 不在此插件内。�
 
 ## 连接与权限
 
+### Chat 模式的云端连接
+
+ChatGPT 将直接声明 MCP 服务器的导入插件标为 Desktop only，远程 HTTPS 服务器也一样。0.1.0 包可安装，但不满足网页 Chat 使用要求。应在 ChatGPT Plugins 的 Add → Create MCP App 中，为现有 HTTPS 网关创建私有云端 App；不迁移服务器或数据库。
+
+取得平台真实 App ID 后，把同一插件更新为 `.app.json` 依赖，保留原有技能、图标和插件身份。Agent Plugins 根清单用 `extensions.com.openai.apps` 引用该文件；兼容清单同步引用。直接 MCP 声明清空，避免继续被标为 Desktop only。Plugin Creator 更新只能覆盖文件，因此现有 mcp.json/.mcp.json 要显式覆盖为空服务器清单，不能仅从 ZIP 中省略。实际 App ID 未取得前，不填占位 ID，也不把安装成功称为 Chat 模式可用。
+
+验收须在网页 Chat 中完成：插件详情不再要求桌面端 → 本人完成 OAuth → 能发现五个工具 → 只读查询返回真实状态。邮件发送仍另需确切草稿批准。
+
 真实 MCP 地址为 https://www.realismthrift.com/api/mcp，streamable-http。公开资源元数据能返回 Supabase 授权服务器，未认证 MCP 返回 401。Gmail 网站授权与 ChatGPT 插件 OAuth 是两层独立授权；已有 Gmail connected 不等于插件 connected。
 
 发现的接入缺口：
@@ -36,11 +44,12 @@ MCP 层只接受 cold_marketing 消息，requested_reply 不在此插件内。�
 
 ## 验收与上线边界
 
-31 项相关单元测试、类型检查和相关 ESLint 已通过；包含内容 HTML 转义、真实 MIME 双版本、退订联系人/暂停会话拒绝起草、无发送调用、普通 Supabase token 和其他客户端/用户被拒绝。
+32 项相关单元测试、类型检查和相关 ESLint 已通过；包含内容 HTML 转义、真实 MIME 双版本、退订联系人/暂停会话拒绝起草、无发送调用、普通 Supabase token 和其他客户端/用户被拒绝，以及代理环境下 OAuth challenge 指向实际资源元数据路由。
 
 私有插件包与部署结果随后记录于本地验收文件。发送开关保持关闭，测试地址保持退订。本轮没有实际发送邮件或修改联系人营销许可。新 HTML 样式尚需正式插件连接后的受控收件验收；不能把本地截图视为 Gmail 实际显示验收。
 
 参考：
+- https://learn.chatgpt.com/docs/enterprise/plugin-management
 - https://supabase.com/docs/guides/auth/oauth-server/oauth-flows
 - https://supabase.com/docs/guides/auth/oauth-server/mcp-authentication
 

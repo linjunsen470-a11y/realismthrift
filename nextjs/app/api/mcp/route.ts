@@ -1,6 +1,6 @@
 import { createMcpHandler, withMcpAuth } from "mcp-handler";
 import { z } from "zod";
-import { verifyMcpToken, mcpResource } from "@/lib/outreach/auth";
+import { verifyMcpToken, mcpAuthOptions } from "@/lib/outreach/auth";
 import { reconcileOutreachSend, reviewOutreachDraft, sendApprovedOutreach } from "@/lib/outreach/sending";
 import { logOutreachError, OutreachError } from "@/lib/outreach/config";
 import { createColdEmailDraft, lookupColdEmailContact, requireColdEmailMessage } from "@/lib/outreach/drafts";
@@ -43,6 +43,6 @@ const handler = createMcpHandler(server => {
 }, { verboseLogs: false, maxSubscriptions: 0, serverInfo: { name: "realismthrift-cold-email", version: "1.1.0" } });
 
 async function authenticatedHandler(request: Request) {
-  return withMcpAuth(handler, verifyMcpToken, { required: true, resourceUrl: mcpResource(), resourceMetadataPath: "/.well-known/oauth-protected-resource" })(request);
+  return withMcpAuth(handler, verifyMcpToken, mcpAuthOptions())(request);
 }
 export { authenticatedHandler as GET, authenticatedHandler as POST, authenticatedHandler as DELETE };

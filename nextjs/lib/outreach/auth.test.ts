@@ -1,6 +1,8 @@
 import { beforeAll, afterAll, describe, expect, it, vi } from "vitest";
 import { exportJWK, generateKeyPair, SignJWT } from "jose";
-import { verifyMcpToken } from "./auth";
+import { verifyMcpToken, mcpAuthOptions, mcpResource } from "./auth";
+import { withMcpAuth } from "mcp-handler";
+import { GET as resourceMetadata } from "@/app/.well-known/oauth-protected-resource/route";
 
 let key: CryptoKey;
 beforeAll(async () => {
@@ -20,6 +22,17 @@ async function token(overrides: Record<string, unknown> = {}) {
     .setIssuedAt().setExpirationTime("1h").sign(key);
 }
 describe("private MCP authentication", () => {
+  it("advertises the real metadata route behind a proxy without exposing tools", async () => {
+    const tools = vi.fn(() => new Response("tools"));
+    const response = await withMcpAuth(tools, verifyMcpToken, mcpAuthOptions())(
+      new Request("https://internal-proxy.invalid/api/mcp", { headers: { "X-Forwarded-Host": "untrusted.invalid" } }),
+    );
+    expect(response.status).toBe(401);
+    expect(tools).not.toHaveBeenCalled();
+    const metadataUrl = response.headers.get("WWW-Authenticate")?.match(/resource_metadata="([^"]+)"/)?.[1];
+    expect(metadataUrl).toBe("https://www.realismthrift.com/.well-known/oauth-protected-resource");
+    expect((await resourceMetadata().json()).resource).toBe(mcpResource());
+  });
   it("accepts a signed Supabase OAuth token for the pinned operator and client", async () => {
     expect(await verifyMcpToken(new Request("https://www.realismthrift.com/api/mcp"), await token())).toMatchObject({ clientId: "approved-client", extra: { userId: "operator-id" } });
   });

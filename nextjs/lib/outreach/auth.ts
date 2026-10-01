@@ -5,6 +5,12 @@ import type { AuthInfo } from "@modelcontextprotocol/server";
 import { OutreachError, outreachOrigin, requiredSetting } from "./config";
 
 export const mcpResource = () => `${outreachOrigin()}/api/mcp`;
+export const mcpAuthOptions = () => ({
+  required: true,
+  // mcp-handler concatenates this URL with resourceMetadataPath, so pass the origin.
+  resourceUrl: outreachOrigin(),
+  resourceMetadataPath: "/.well-known/oauth-protected-resource",
+});
 export const authIssuer = () => `${requiredSetting("SUPABASE_URL").replace(/\/$/, "")}/auth/v1`;
 let jwks: ReturnType<typeof createRemoteJWKSet> | undefined;
 
