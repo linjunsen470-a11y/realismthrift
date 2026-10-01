@@ -46,9 +46,11 @@ export function unsubscribeFooter(token: string) {
 
 export async function addOutreachHeaders(raw: Buffer, messageId: string, token: string | null) {
   const { fields, body } = splitMime(raw);
-  const clean = fields.filter(field => !/^(list-unsubscribe(?:-post)?|dkim-signature|x-realismthrift-outreach-id):/i.test(field));
+  const clean = fields.filter(field => !/^(list-id|list-unsubscribe(?:-post)?|dkim-signature|x-realismthrift-outreach-id):/i.test(field));
   clean.push(`X-RealismThrift-Outreach-ID: ${messageId}`);
   if (token) {
+    // The same mailbox also sends requested replies; identify its marketing list explicitly.
+    clean.push("List-ID: RealismThrift wholesale updates <wholesale.realismthriftglobal.com>");
     clean.push(`List-Unsubscribe: <${outreachOrigin()}/api/email-preferences/one-click?token=${token}&m=${messageId}>`);
     clean.push("List-Unsubscribe-Post: List-Unsubscribe=One-Click");
   }
@@ -61,7 +63,7 @@ export async function addOutreachHeaders(raw: Buffer, messageId: string, token: 
       domainName: "realismthriftglobal.com",
       keySelector: process.env.OUTREACH_DKIM_SELECTOR || "outreach",
       privateKey: requiredSetting("OUTREACH_DKIM_PRIVATE_KEY").replace(/\\n/g, "\n"),
-      headerFieldNames: "from:to:subject:reply-to:mime-version:content-type:content-transfer-encoding:list-unsubscribe:list-unsubscribe-post:x-realismthrift-outreach-id",
+      headerFieldNames: "from:to:subject:reply-to:mime-version:content-type:content-transfer-encoding:list-id:list-unsubscribe:list-unsubscribe-post:x-realismthrift-outreach-id",
     },
   });
   const result = await transporter.sendMail({ raw: modified });

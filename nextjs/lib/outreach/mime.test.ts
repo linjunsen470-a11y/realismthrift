@@ -21,12 +21,20 @@ describe("approved MIME", () => {
   });
   it("replaces list headers without changing approved body bytes", async () => {
     vi.stubEnv("OUTREACH_DKIM_MODE", "google");
-    const raw = message("Hello\r\nUTF-8: 衣服\r\n", "List-Unsubscribe: <https://wrong.example/>\r\nList-Unsubscribe-Post: wrong\r\n");
+    const raw = message("Hello\r\nUTF-8: 衣服\r\n", "List-ID: Wrong <wrong.example>\r\nList-Unsubscribe: <https://wrong.example/>\r\nList-Unsubscribe-Post: wrong\r\n");
     const signed = await addOutreachHeaders(raw, "outreach-test", newPreferenceToken());
     expect(splitMime(signed).body.equals(splitMime(raw).body)).toBe(true);
     expect(signed.toString().match(/List-Unsubscribe:/g)).toHaveLength(1);
+    expect(signed.toString().match(/List-ID:/g)).toHaveLength(1);
+    expect(signed.toString()).toContain("List-ID: RealismThrift wholesale updates <wholesale.realismthriftglobal.com>");
     expect(signed.toString()).toContain("List-Unsubscribe-Post: List-Unsubscribe=One-Click");
     expect(mimeFingerprint(signed)).not.toBe(mimeFingerprint(raw));
+  });
+  it("does not label requested replies as marketing subscriptions", async () => {
+    const raw = message("Reply requested by the recipient\r\n", "List-ID: Wrong <wrong.example>\r\nList-Unsubscribe: <https://wrong.example/>\r\nList-Unsubscribe-Post: wrong\r\n");
+    const result = await addOutreachHeaders(raw, "reply-id", null);
+    expect(splitMime(result).body.equals(splitMime(raw).body)).toBe(true);
+    expect(result.toString()).not.toMatch(/^List-(ID|Unsubscribe(?:-Post)?):/mi);
   });
   it("creates a verifiable DKIM signature covering both unsubscribe headers", async () => {
     const keys = generateKeyPairSync("rsa", { modulusLength: 2048 });
@@ -39,6 +47,7 @@ describe("approved MIME", () => {
     const headers = tags.h.replace(/\s/g, "").split(":");
     expect(headers).toContain("list-unsubscribe");
     expect(headers).toContain("list-unsubscribe-post");
+    expect(headers).toContain("list-id");
     function relaxedHeader(value: string) { const colon = value.indexOf(":"); return `${value.slice(0, colon).toLowerCase()}:${value.slice(colon + 1).replace(/\r\n[ \t]+/g, " ").replace(/[ \t]+/g, " ").trim()}`; }
     const canonical = headers.map((name: string) => relaxedHeader(fields.filter(field => field.slice(0, field.indexOf(":")).toLowerCase() === name).at(-1)!)).join("\r\n") + "\r\n" + relaxedHeader(signature.replace(/\bb=[\s\S]*$/, "b="));
     expect(verify("RSA-SHA256", Buffer.from(canonical), keys.publicKey, Buffer.from(tags.b.replace(/\s/g, ""), "base64"))).toBe(true);

@@ -71,6 +71,12 @@ revoke execute on function public.outreach_access_token_hook(jsonb) from public,
 
 RFC8058 头由网关在审批后加入；已有草稿的正文、附件必须与审批 fingerprint 完全相同。普通 Gmail 插件/界面直接发送会绕过这些校验，因此营销邮件统一经网关发送。客户端是否展示顶部“退订”按钮还取决于收件服务判断，符合协议不等于保证展示。
 
+营销邮件同时添加稳定的 `List-ID: RealismThrift wholesale updates <wholesale.realismthriftglobal.com>`，用于区分同邮箱发出的营销列表和普通回复。普通回复不包含这些列表头；网关替换草稿中已有的列表标识，避免重复或错误列表。List-ID 是列表标识，不是退订按钮的强制开关，也不要求该标识存在 DNS 主机记录。
+
+2026-10-02 实际收件证据确认：Google DKIM pass，签名覆盖两条退订头，匿名 POST 返回 204 并立即退订。用户提供的 Gmail 截图则确认顶部按钮未显示，这两项验收应分别记录。缺失 DMARC 是可修复的域名认证缺口，但不能据此断言它是按钮未显示的唯一原因。DNS 从 `p=none` 开始补齐；新邮件再检查 DMARC 结果。历史邮件不会因部署新的邮件头而改变。Google 未公开可通过自定义邮件头强制显示按钮的设置，不要为制造按钮重复发送或绕过退订。
+
+参考：[Google 订阅邮件指南（列表标识）](https://support.google.com/mail/answer/15263077)、[Google 发信认证指南](https://support.google.com/mail/answer/81126)。
+
 参考：[RFC8058](https://www.rfc-editor.org/rfc/rfc8058)、[Gmail 草稿发送](https://developers.google.com/workspace/gmail/api/guides/drafts)、[Gmail 发件人说明](https://support.google.com/mail/answer/14229414)。
 
 ## 起草、审批、发送
