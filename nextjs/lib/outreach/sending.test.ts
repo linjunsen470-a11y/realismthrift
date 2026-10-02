@@ -101,7 +101,7 @@ describe("approved sending gate", () => {
   });
   it("pauses when a new inbound message has not been reviewed", async () => {
     mocks.listGmailMessages.mockResolvedValue([{ id: "new-reply", threadId: "thread" }]);
-    await expect(sendApprovedOutreach(id, mimeFingerprint(raw))).rejects.toMatchObject({ code: "inbound_review_required" });
+    await expect(sendApprovedOutreach(id, mimeFingerprint(raw))).rejects.toMatchObject({ code: "inbound_review_required", details: { contact_id: id, outreach_id: id, pending_count: 1 } });
     expect(mocks.gmailRequest.mock.calls.some(call => call[0] === "drafts/send")).toBe(false);
   });
   it("refuses the 51st marketing reservation", async () => {

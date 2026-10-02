@@ -1,6 +1,6 @@
 # RealismThrift Cold Email：个人使用
 
-复用现有 Vercel 网关、Neon 联系人状态和 Jason 的 Gmail 授权。插件只提供查询联系人、录入联系人、查询历史、起草、读取草稿指纹、按指令发送和发送对账七个工具；不另建 CRM、用户体系、批量发送或多邮箱调度。
+复用现有 Vercel 网关、Neon 联系人状态和 Jason 的 Gmail 授权。插件提供九个工具：查询联系人、录入联系人、查询历史、查看待处理来信、登记来信分类、起草、读取草稿指纹、按指令发送和发送对账；不另建 CRM、用户体系、批量发送或多邮箱调度。
 
 ## 日常流程
 
@@ -20,7 +20,7 @@ ChatGPT 网页 Chat → Supabase 托管 OAuth → `/api/mcp` → 已连接的 Ja
 
 ## 私有插件
 
-同一插件 `plugins_6abec11be1ac81918fce6d2d8b1d56eb` 更新为 0.3.0，保留名称、图标、三个默认提示入口和私人范围。通过 `.app.json` 依赖已创建的云端 App `asdk_app_6abec56015f48191a27e8c54701c4a8e`，工具服务器仍为 https://www.realismthrift.com/api/mcp。直接 MCP 配置显式清空，避免只支持 Desktop 的导入方式；没有在插件包中存储凭据。
+同一插件 `plugins_6abec11be1ac81918fce6d2d8b1d56eb` 更新为 0.4.0，保留名称、图标、三个默认提示入口和私人范围。通过 `.app.json` 依赖已创建的云端 App `asdk_app_6abec56015f48191a27e8c54701c4a8e`，工具服务器仍为 https://www.realismthrift.com/api/mcp。直接 MCP 配置显式清空，避免只支持 Desktop 的导入方式；没有在插件包中存储凭据。
 
 专用 Supabase PKCE public client：`62369d93-d1ed-423c-9604-f3928e40f465`，无 client secret；精确平台回调：`https://chatgpt.com/connector/oauth/V3RGmY4ygzgA`。Production `OUTREACH_OAUTH_CLIENT_ID` 固定为该客户端。旧客户端不变。
 
@@ -44,3 +44,13 @@ ChatGPT 网页 Chat → Supabase 托管 OAuth → `/api/mcp` → 已连接的 Ja
 - 发送开关保持当前状态；此改动不发送测试邮件。
 
 2026-10-02 验证记录：68 项单元测试全部通过，类型检查通过，Vercel 预览及 GitHub 生产构建通过。隔离 Neon 分支验证无需审核可创建草稿/占用发送额度，重复占用、退订、投诉及暂停拦截正确。生产 0003 迁移已按同一 SQL 哈希应用并记录版本；后端部署和插件发布结果以对应发布状态为准。测试未发送真实邮件。
+
+## 0.4.0：工具目录与来信处理
+
+`get_pending_cold_email_inbound(contact_id, limit?, outreach_id?)` 使用与发送前检查相同的 Gmail 查询，返回尚未登记的邮件 ID、正文、附件元数据和自动回复/永久退信证据。只读，不标记 Gmail 已读。发送被待处理来信阻止时，错误附带联系人、草稿 ID 和处理入口。
+
+`record_cold_email_inbound(contact_id, gmail_message_id, classification, note)` 重读原邮件，核对发件人或退信报告中的确切收件人，再调用现有 `outreach_record_inbound` 事务。普通回复暂停营销，退订、投诉和永久退信立即拦截后续营销；自动回复登记后不新增暂停。登记幂等，不覆盖之前分类，不解除退订、封锁或真实回复暂停。处理后重新查询，普通业务回复使用其他邮箱工具。没有新增表、迁移、Gmail scope、后台任务或收件人重复发送规则。
+
+发布后需要刷新已有云端 App 的工具目录。服务器的 `tools/list` 应包含上述九个工具；插件包更新和服务端部署不会证明 ChatGPT 已加载新目录。在连接管理中刷新连接；已发布 MCP 如仍保留旧定义，在开发者后台对同一 MCP 执行 Rescan，处理实际显示的问题，再开新对话验收九个工具。无需创建第二个 App 或重连 Gmail。
+
+参考：[连接与刷新](https://developers.openai.com/plugins/deploy/connect-chatgpt)、[MCP 重新扫描](https://developers.openai.com/plugins/deploy/submission)。

@@ -1,8 +1,8 @@
 {
   "interface": {
     "displayName": "RealismThrift Cold Email",
-    "shortDescription": "开发信、历史往来查询与发送",
-    "longDescription": "查询 Jason 邮箱与网关数据库的历史往来，保存联系人并起草开发信。无需联系人资格人工审核；明确发送请求无需重复确认。保留退订、回复暂停、每日额度、草稿指纹及不明发送对账。",
+    "shortDescription": "开发信、历史查询与来信处理",
+    "longDescription": "查询 Jason 邮箱与网关历史往来，保存联系人并起草开发信。查看待处理来信并登记回复、自动回复、退订、退信或投诉。无需联系人资格人工审核；明确发送请求无需重复确认。复用现有退订、回复暂停、每日额度、草稿指纹及不明发送对账。",
     "developerName": "RealismThrift",
     "category": "Productivity",
     "capabilities": [
@@ -18,8 +18,8 @@
     "brandColor": "#B38B45"
   },
   "name": "realismthrift-cold-email",
-  "version": "0.3.0",
-  "description": "Private RealismThrift cold outreach: query prior Gmail/gateway interaction, save contacts without manual eligibility review, draft and send user-requested messages with unsubscribe and duplicate-send protection.",
+  "version": "0.4.0",
+  "description": "Private RealismThrift cold outreach: query Gmail/gateway history, save contacts, process incoming replies and delivery notices, and draft or send user-requested emails with unsubscribe support.",
   "author": {
     "name": "RealismThrift"
   },
