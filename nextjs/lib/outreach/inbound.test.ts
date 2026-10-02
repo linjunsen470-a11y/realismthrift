@@ -82,6 +82,12 @@ describe("contact incoming-message processing", () => {
     await expect(recordColdEmailInbound(contactId, "incoming", "hard_bounce", "Mailbox temporarily full")).rejects.toMatchObject({ code: "inbound_classification_mismatch" });
     expect(await recordColdEmailInbound(contactId, "incoming", "auto_reply", "Temporary delivery notice, not a permanent failure")).toMatchObject({ cold_email_allowed: true });
   });
+  it("does not block this contact for another recipient's failure mentioned in the same notice", async () => {
+    source = bounce("5.1.1", "other@example.com");
+    source.raw = Buffer.from(Buffer.from(source.raw, "base64url").toString().replace("Status: 5.1.1", "Status: 5.1.1\r\nDiagnostic-Code: smtp; message copied to buyer@example.com")).toString("base64url");
+    expect((await getPendingColdEmailInbound(contactId)).messages[0].permanent_failure).toBe(false);
+    await expect(recordColdEmailInbound(contactId, "incoming", "hard_bounce", "Other recipient failed")).rejects.toMatchObject({ code: "inbound_classification_mismatch" });
+  });
   it("cannot dismiss a human reply as automatic or bind another sender to this contact", async () => {
     await expect(recordColdEmailInbound(contactId, "incoming", "auto_reply", "Try to ignore a human reply")).rejects.toMatchObject({ code: "inbound_classification_mismatch" });
     source = mail("other@example.com");

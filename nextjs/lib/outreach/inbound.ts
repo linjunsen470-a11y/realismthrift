@@ -40,10 +40,12 @@ async function readInbound(contact: Contact, id: string) {
   const text = parsed.text || "";
   const report = parsed.attachments.filter(a => a.contentType === "message/delivery-status").map(a => a.content.toString()).join("\n");
   // A delivery notice must name this exact recipient, not just appear in a search result.
-  const recipientPattern = new RegExp(`(^|[^a-z0-9.!#$%&'*+/=?^_\x60{|}~-])${contact.email.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?=$|[^a-z0-9.!#$%&'*+/=?^_\x60{|}~-])`, "i");
+  const escapedEmail = contact.email.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const recipientPattern = new RegExp("(^|[^a-z0-9.!#$%&'*+/=?^_`{|}~@-])" + escapedEmail + "(?=$|[^a-z0-9.!#$%&'*+/=?^_`{|}~@-])", "i");
+  const failedRecipient = new RegExp("^(?:Final|Original)-Recipient:\\s*[^;\\r\\n]+;\\s*" + escapedEmail + "\\s*$", "im");
   if (sender !== contact.email && !(notice && recipientPattern.test(`${text}\n${report}`))) throw new OutreachError("inbound_contact_mismatch", 409);
   const automatic = notice || /^(auto-replied|auto-generated)(?:;|$)/i.test(String(parsed.headers.get("auto-submitted") || "")) || parsed.headers.has("x-autoreply") || parsed.headers.has("x-autorespond");
-  const permanentFailure = notice && report.split(/\r?\n\s*\r?\n/).some(block => recipientPattern.test(block) && /^Action:\s*failed\s*$/im.test(block) && /^Status:\s*5\./im.test(block));
+  const permanentFailure = notice && report.split(/\r?\n\s*\r?\n/).some(block => failedRecipient.test(block) && /^Action:\s*failed\s*$/im.test(block) && /^Status:\s*5\./im.test(block));
   return { message, parsed, automatic, notice, permanentFailure, text };
 }
 
