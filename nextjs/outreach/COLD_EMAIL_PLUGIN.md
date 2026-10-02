@@ -20,7 +20,7 @@ ChatGPT 网页 Chat → Supabase 托管 OAuth → `/api/mcp` → 已连接的 Ja
 
 ## 私有插件
 
-同一插件 `plugins_6abec11be1ac81918fce6d2d8b1d56eb` 本次候选更新为 0.3.0，保留名称、图标、三个默认提示入口和私人范围。通过 `.app.json` 依赖已创建的云端 App `asdk_app_6abec56015f48191a27e8c54701c4a8e`，工具服务器仍为 https://www.realismthrift.com/api/mcp。直接 MCP 配置显式清空，避免只支持 Desktop 的导入方式；没有在插件包中存储凭据。
+同一插件 `plugins_6abec11be1ac81918fce6d2d8b1d56eb` 更新为 0.3.0，保留名称、图标、三个默认提示入口和私人范围。通过 `.app.json` 依赖已创建的云端 App `asdk_app_6abec56015f48191a27e8c54701c4a8e`，工具服务器仍为 https://www.realismthrift.com/api/mcp。直接 MCP 配置显式清空，避免只支持 Desktop 的导入方式；没有在插件包中存储凭据。
 
 专用 Supabase PKCE public client：`62369d93-d1ed-423c-9604-f3928e40f465`，无 client secret；精确平台回调：`https://chatgpt.com/connector/oauth/V3RGmY4ygzgA`。Production `OUTREACH_OAUTH_CLIENT_ID` 固定为该客户端。旧客户端不变。
 
@@ -43,4 +43,4 @@ ChatGPT 网页 Chat → Supabase 托管 OAuth → `/api/mcp` → 已连接的 Ja
 - 草稿请求只保存；明确发送请求可直接按已授权收件人/内容执行，不再要求额外人工确认。fingerprint 仍用于检查内容一致性。
 - 发送开关保持当前状态；此改动不发送测试邮件。
 
-验证记录：隔离 Neon 分支验证无需审核可创建草稿/占用发送额度，重复占用、退订、投诉及暂停拦截正确；源码语法和 diff 检查通过。新增 Vitest 用例已写入。完整单元测试、类型检查和部署验收仍待完成：当前依赖安装受发布时间检查及自动审批限制，不能把本次候选改动描述为已上线。
+2026-10-02 验证记录：68 项单元测试全部通过，类型检查通过，Vercel 预览及 GitHub 生产构建通过。隔离 Neon 分支验证无需审核可创建草稿/占用发送额度，重复占用、退订、投诉及暂停拦截正确。生产 0003 迁移已按同一 SQL 哈希应用并记录版本；后端部署和插件发布结果以对应发布状态为准。测试未发送真实邮件。

@@ -19,7 +19,7 @@
 
 从 `.env.example` 配置服务端变量。密钥不使用 `NEXT_PUBLIC_`，不放入 Git、ChatGPT 提示或工具输出。`.env.outreach.local` 是本地隔离测试配置，迁移工具会读取它；Vercel 必须按 Production/Preview 分别设置变量，Preview 连接独立 Neon 分支。
 
-当前已验证的隔离 Neon 分支：`codex-email-preferences-rfc8058` / `br-lingering-poetry-b50nso1n`，项目 `rough-dust-51721769`。生产分支未迁移。测试分支保留无法投递的 `example.invalid` 并发验证记录。
+2026-10-01 初次隔离验证分支：`codex-email-preferences-rfc8058` / `br-lingering-poetry-b50nso1n`，项目 `rough-dust-51721769`。2026-10-02 已核对生产迁移历史并应用 0003。测试分支保留无法投递的 `example.invalid` 并发验证记录。
 
 ```powershell
 pnpm outreach:migrate
@@ -126,6 +126,6 @@ group by kind;
 
 2026-10-01 分支验证记录：49 项单元测试、16 项桌面/手机浏览器测试通过；真实 HTTP + 隔离 Neon 事务通过；55 个并发发送申请恰好只有 50 个占用额度，重复申请不额外占用。没有真实发送邮件、没有应用生产数据库迁移、没有部署。上线前仍须完成上述 OAuth 配置、收件端 DKIM/RFC8058 验收和发送域名 DNS 检查。
 
-### 历史查询和审核门槛变更（0.3.0 候选）
+### 历史查询和审核门槛变更（0.3.0）
 
-见 [COLD_EMAIL_PLUGIN.md](./COLD_EMAIL_PLUGIN.md)。插件新增历史查询和联系人录入；历史查询区分 Gmail 旧邮件、网关草稿与发送状态，不会自动把 Gmail 旧邮件补写成新的发送记录。每次经网关发信依旧保存消息记录、发送状态和 Gmail 消息/线程 ID。Gmail 界面或其他插件直接发送不会自动写入网关，可通过 Gmail 历史查询找到。必须先应用 0003 迁移再发布新的 MCP 代码；未部署前旧审核门槛仍会生效。
+见 [COLD_EMAIL_PLUGIN.md](./COLD_EMAIL_PLUGIN.md)。插件新增历史查询和联系人录入；历史查询区分 Gmail 旧邮件、网关草稿与发送状态，不会自动把 Gmail 旧邮件补写成新的发送记录。每次经网关发信依旧保存消息记录、发送状态和 Gmail 消息/线程 ID。Gmail 界面或其他插件直接发送不会自动写入网关，可通过 Gmail 历史查询找到。必须先应用 0003 迁移再发布新的 MCP 代码；未部署前旧审核门槛仍会生效。68 项单元测试和类型检查通过，生产 0003 迁移已应用。
