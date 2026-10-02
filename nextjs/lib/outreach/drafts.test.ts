@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { simpleParser } from "mailparser";
 import { renderColdEmail } from "./template";
-import { createColdEmailDraft } from "./drafts";
+import { createColdEmailDraft, registerColdEmailContact } from "./drafts";
 
 const mocks = vi.hoisted(() => ({ execute: vi.fn(), gmailRequest: vi.fn(), verifyGmailAccount: vi.fn() }));
 vi.mock("./database", () => ({ outreachDatabase: () => ({ execute: mocks.execute }) }));
@@ -33,7 +33,7 @@ describe("cold email composition", () => {
   });
   it("saves a multipart draft with one recipient and no send call", async () => {
     mocks.execute
-      .mockResolvedValueOnce({ rows: [{ email: "buyer@example.com", marketing_status: "eligible", safety_block: null, conversation_paused: false, eligibility_note: "reviewed" }] })
+      .mockResolvedValueOnce({ rows: [{ email: "buyer@example.com", marketing_status: "held", safety_block: null, conversation_paused: false, eligibility_note: null }] })
       .mockResolvedValueOnce({ rows: [{ result: { outreach_id: "message-id", email: "buyer@example.com", unsubscribe_token: token } }] })
       .mockResolvedValueOnce({ rows: [{ ok: true }] });
     mocks.gmailRequest.mockResolvedValueOnce({ id: "saved-draft", message: { id: "gmail-message" } });
@@ -48,5 +48,10 @@ describe("cold email composition", () => {
     expect(parsed.text).toContain(`?token=${token}`);
     expect(parsed.html).toContain(`?token=${token}`);
   });
+  it("registering an existing unsubscribed contact does not make it sendable", async () => {
+    mocks.execute.mockResolvedValueOnce({ rows: [{ id: "contact-id" }] })
+      .mockResolvedValueOnce({ rows: [{ id: "contact-id", marketing_status: "unsubscribed", safety_block: null, conversation_paused: false }] });
+    expect(await registerColdEmailContact("buyer@example.com")).toMatchObject({ cold_email_allowed: false, manual_eligibility_review_required: false });
+    expect(mocks.gmailRequest).not.toHaveBeenCalled();
+  });
 });
-
