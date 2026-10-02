@@ -38,7 +38,7 @@ beforeEach(() => {
     const text = dialect.sqlToQuery(query).sql;
     if (text.startsWith("select m.*")) {
       accountReads++;
-      return { rows: [{ id, contact_id: id, email: "buyer@example.com", sender: "jason@realismthriftglobal.com", draft_id: "fixture", purpose: "cold_marketing", status, unsubscribe_token: token, preference_version: changeAfterClaim && accountReads > 1 ? 2 : version, marketing_status: "eligible", safety_block: null, conversation_paused: false, eligibility_note: "Reviewed by operator", gmail_message_id: "already-sent", gmail_thread_id: "thread" }] };
+      return { rows: [{ id, contact_id: id, email: "buyer@example.com", sender: "jason@realismthriftglobal.com", draft_id: "fixture", purpose: "cold_marketing", status, unsubscribe_token: token, preference_version: changeAfterClaim && accountReads > 1 ? 2 : version, marketing_status: "held", safety_block: null, conversation_paused: false, eligibility_note: null, gmail_message_id: "already-sent", gmail_thread_id: "thread" }] };
     }
     if (text.includes("outreach_claim_send")) { if (claim === "claimed") status = "sending"; return { rows: [{ result: { status: claim } }] }; }
     if (text.startsWith("select provider_key")) return { rows: [] };

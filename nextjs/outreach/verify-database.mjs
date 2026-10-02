@@ -14,7 +14,7 @@ DECLARE c uuid; d uuid; token text; v integer; state jsonb; hash1 text:=repeat('
 BEGIN
   c:=outreach_import_contact('verify-${tag}@example.invalid','database_test');
   IF (SELECT marketing_status FROM outreach_contacts WHERE id=c)<>'held' THEN RAISE EXCEPTION 'import_must_be_held'; END IF;
-  PERFORM outreach_review_contact(c,'Isolated test fixture');
+  IF (SELECT eligibility_note FROM outreach_contacts WHERE id=c) IS NOT NULL THEN RAISE EXCEPTION 'review_should_not_be_required'; END IF;
   state:=outreach_prepare_message(c); d:=(state->>'outreach_id')::uuid;
   PERFORM outreach_attach_draft(d,'fixture_draft');
   SELECT unsubscribe_token INTO token FROM outreach_contacts WHERE id=c;
@@ -66,7 +66,7 @@ try {
   const sender = `quota-${tag}@example.invalid`;
   const imported = await database`select outreach_import_contact(${recipient},'database_concurrency_test') as id`;
   const contact = imported[0].id;
-  await database`select outreach_review_contact(${contact}::uuid,'Isolated quota test; never send')`;
+  // Unreviewed imports can occupy quota; no review note is required.
   const prepared = await database`insert into outreach_messages(contact_id,purpose,sender,draft_id) select ${contact}::uuid,'cold_marketing',${sender},'fixture_'||n from generate_series(1,55) n returning id`;
   const version = (await database`select preference_version from outreach_contacts where id=${contact}::uuid`)[0].preference_version;
   const claims = await Promise.all(prepared.map(message => database`select outreach_claim_send(${message.id}::uuid,${"f".repeat(64)},${version}) as result`));

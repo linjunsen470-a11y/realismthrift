@@ -1,10 +1,10 @@
 # RealismThrift Cold Email：个人使用
 
-复用现有 Vercel 网关、Neon 联系人状态和 Jason 的 Gmail 授权。插件只提供查询联系人、起草、审核、批准发送和发送对账五个工具；不另建 CRM、用户体系、批量发送或多邮箱调度。
+复用现有 Vercel 网关、Neon 联系人状态和 Jason 的 Gmail 授权。插件只提供查询联系人、录入联系人、查询历史、起草、读取草稿指纹、按指令发送和发送对账七个工具；不另建 CRM、用户体系、批量发送或多邮箱调度。
 
 ## 日常流程
 
-查询一个已有且人工审核过的联系人 → 保存 Gmail 草稿 → 显示原文审核 → 本人批准 → 网关发送。退订、回复暂停、单收件人、每日 50 封额度和发送结果不明时禁止重发的检查继续由服务器执行。普通邮件回复使用其他邮箱插件；回复不会恢复营销许可。
+查询或录入联系人 → 查看历史往来 → 保存 Gmail 草稿。明确发送请求可继续读取草稿指纹并发送，无需另做联系人资格审核或重复确认。退订、回复暂停、单收件人、每日 50 封额度和发送结果不明时禁止重发的检查继续由服务器执行。普通邮件回复使用其他邮箱插件；回复不会恢复营销许可。
 
 草稿同时包含纯文本与简洁 HTML：白底、系统字体、560px 最大宽度、小型金色品牌线、Jason 签名、地址及文字退订链接。服务器转义段落；无追踪像素、外部图片或自由 HTML。
 
@@ -20,7 +20,7 @@ ChatGPT 网页 Chat → Supabase 托管 OAuth → `/api/mcp` → 已连接的 Ja
 
 ## 私有插件
 
-同一插件 `plugins_6abec11be1ac81918fce6d2d8b1d56eb` 更新为 0.2.0，保留名称、图标、三个默认提示和私人范围。通过 `.app.json` 依赖已创建的云端 App `asdk_app_6abec56015f48191a27e8c54701c4a8e`，工具服务器仍为 https://www.realismthrift.com/api/mcp。直接 MCP 配置显式清空，避免只支持 Desktop 的导入方式；没有在插件包中存储凭据。
+同一插件 `plugins_6abec11be1ac81918fce6d2d8b1d56eb` 本次候选更新为 0.3.0，保留名称、图标、三个默认提示入口和私人范围。通过 `.app.json` 依赖已创建的云端 App `asdk_app_6abec56015f48191a27e8c54701c4a8e`，工具服务器仍为 https://www.realismthrift.com/api/mcp。直接 MCP 配置显式清空，避免只支持 Desktop 的导入方式；没有在插件包中存储凭据。
 
 专用 Supabase PKCE public client：`62369d93-d1ed-423c-9604-f3928e40f465`，无 client secret；精确平台回调：`https://chatgpt.com/connector/oauth/V3RGmY4ygzgA`。Production `OUTREACH_OAUTH_CLIENT_ID` 固定为该客户端。旧客户端不变。
 
@@ -34,3 +34,13 @@ ChatGPT 网页 Chat → Supabase 托管 OAuth → `/api/mcp` → 已连接的 Ja
 - https://developers.openai.com/plugins/build/auth
 - https://learn.chatgpt.com/docs/enterprise/plugin-management
 - https://supabase.com/docs/guides/auth/oauth-server/oauth-flows
+
+## 0.3.0：历史查询与取消人工资格审核
+
+- `get_cold_email_history` 查询网关记录与 Jason Gmail 的确切 From/To 往来，包括插件创建前的邮件。两份证据不能相加；draft、sending、send_unknown 不能记为成功发送；Gmail 不可用或有未读分页时不下“没有互动”的结论。只返回日期、主题、方向和 ID，不读取正文或附件。
+- `register_cold_email_contact` 保存联系人与可选来源，不需要 eligibility_note 或人工资格审核。重复导入不解除退订、投诉/硬退信封锁或回复暂停。历史 `held` 联系人同样不需要先转为 eligible。
+- TypeScript 与 PostgreSQL 两层一起移除审核门槛，迁移为 `0003_cold_email_no_manual_review.sql`。保留原始 eligibility_note 作为历史资料，保留既有审核函数兼容旧客户端，但日常流程不再调用。
+- 草稿请求只保存；明确发送请求可直接按已授权收件人/内容执行，不再要求额外人工确认。fingerprint 仍用于检查内容一致性。
+- 发送开关保持当前状态；此改动不发送测试邮件。
+
+验证记录：隔离 Neon 分支验证无需审核可创建草稿/占用发送额度，重复占用、退订、投诉及暂停拦截正确；源码语法和 diff 检查通过。新增 Vitest 用例已写入。完整单元测试、类型检查和部署验收仍待完成：当前依赖安装受发布时间检查及自动审批限制，不能把本次候选改动描述为已上线。

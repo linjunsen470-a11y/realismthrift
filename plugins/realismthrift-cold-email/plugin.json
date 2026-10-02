@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "realismthrift-cold-email",
-  "version": "0.2.0",
-  "description": "Private RealismThrift cold email workflow: check registered contacts, create styled Gmail drafts, review exact content, send approved drafts through the suppression gateway, and reconcile uncertain sends.",
+  "version": "0.3.0",
+  "description": "Private RealismThrift cold outreach: query prior Gmail/gateway interaction, save contacts without manual eligibility review, draft and send user-requested messages with unsubscribe and duplicate-send protection.",
   "author": {
     "name": "RealismThrift"
   },
@@ -11,16 +11,16 @@
       "apps": "./.app.json",
       "interface": {
         "displayName": "RealismThrift Cold Email",
-        "shortDescription": "专用开发信起草、审核与发送",
-        "longDescription": "仅处理 RealismThrift 开发信。使用 Jason 邮箱和网站发送网关，保留 Neon 退订、回复暂停、单收件人和每日额度检查。支持纯文本与简洁 HTML 草稿，每封明确批准后发送。普通 Gmail 插件授权不能替代本插件 OAuth 连接。",
+        "shortDescription": "开发信、历史往来查询与发送",
+        "longDescription": "查询 Jason 邮箱与网关数据库的历史往来，保存联系人并起草开发信。无需联系人资格人工审核；明确发送请求无需重复确认。保留退订、回复暂停、每日额度、草稿指纹及不明发送对账。",
         "developerName": "RealismThrift",
         "category": "Productivity",
         "capabilities": [
           "Interactive"
         ],
         "defaultPrompt": [
-          "为一个已审核的联系人起草简洁的英文开发信，保存草稿后展示给我审核。",
-          "查询这个联系人的营销资格和草稿状态。",
+          "为这个联系人起草简洁的英文开发信并保存草稿。",
+          "查询这个联系人以前是否与 Jason 有过邮件往来，以及网关发送记录。",
           "对账一封结果不明的开发信，不要重发。"
         ],
         "logo": "./assets/icon.svg",

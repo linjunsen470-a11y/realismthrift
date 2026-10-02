@@ -63,7 +63,7 @@ export async function verifyGmailAccount() {
   if (profile.emailAddress.toLowerCase() !== OUTREACH_SENDER) throw new OutreachError("wrong_gmail_account", 403);
 }
 
-export type GmailMessage = { id: string; threadId: string; raw?: string; labelIds?: string[]; payload?: { headers?: { name: string; value: string }[] } };
+export type GmailMessage = { id: string; threadId: string; raw?: string; internalDate?: string; labelIds?: string[]; payload?: { headers?: { name: string; value: string }[] } };
 export function gmailHeader(message: GmailMessage, name: string) {
   return message.payload?.headers?.find(header => header.name.toLowerCase() === name.toLowerCase())?.value || "";
 }

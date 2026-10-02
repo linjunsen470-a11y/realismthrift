@@ -5,12 +5,22 @@ import { OutreachError, OUTREACH_SENDER } from "./config";
 import { gmailRequest, verifyGmailAccount, type GmailMessage } from "./gmail";
 import { renderColdEmail } from "./template";
 import { normalizeEmail } from "./tokens";
+import { coldEmailAllowed } from "./eligibility";
 
 export async function lookupColdEmailContact(email: string) {
   const normalized = normalizeEmail(email);
   if (!normalized) throw new OutreachError("invalid_request", 400);
   const rows = await outreachDatabase().execute(sql`select id,email,company,country,source,marketing_status,safety_block,conversation_paused,eligibility_note from outreach_contacts where email=${normalized}`);
-  return { contact: rows.rows[0] || null, sending_enabled: process.env.OUTREACH_SENDING_ENABLED === "true" };
+  const contact = rows.rows[0] as { marketing_status: string; safety_block: string | null; conversation_paused: boolean } | undefined;
+  return { contact: contact || null, cold_email_allowed: !!contact && coldEmailAllowed(contact), manual_eligibility_review_required: false, sending_enabled: process.env.OUTREACH_SENDING_ENABLED === "true" };
+}
+
+export async function registerColdEmailContact(email: string, source?: string, company?: string, country?: string) {
+  const normalized = normalizeEmail(email);
+  if (!normalized) throw new OutreachError("invalid_request", 400);
+  // Import never clears an existing unsubscribe, block or reply pause.
+  await outreachDatabase().execute(sql`select outreach_import_contact(${normalized},${source?.trim() || "Operator-provided cold outreach recipient"},${company || null},${country || null})`);
+  return lookupColdEmailContact(normalized);
 }
 
 export async function requireColdEmailMessage(id: string) {
@@ -25,7 +35,7 @@ export async function createColdEmailDraft(contactId: string, subject: string, p
   const database = outreachDatabase();
   const contact = await database.execute<{ email: string; marketing_status: string; safety_block: string | null; conversation_paused: boolean; eligibility_note: string | null }>(sql`select email,marketing_status,safety_block,conversation_paused,eligibility_note from outreach_contacts where id=${contactId}::uuid`);
   const c = contact.rows[0];
-  if (!c || c.safety_block || c.marketing_status !== "eligible" || c.conversation_paused || !c.eligibility_note?.trim()) throw new OutreachError("marketing_not_eligible", 409);
+  if (!c || !coldEmailAllowed(c)) throw new OutreachError("marketing_not_eligible", 409);
   await verifyGmailAccount();
   const prepared = await database.execute<{ result: { outreach_id: string; email: string; unsubscribe_token: string } }>(sql`select outreach_prepare_message(${contactId}::uuid,'cold_marketing') as result`);
   const record = prepared.rows[0].result;
@@ -37,4 +47,3 @@ export async function createColdEmailDraft(contactId: string, subject: string, p
   if (!attached.rows[0]?.ok) throw new OutreachError("draft_registration_failed", 409);
   return { outreach_id: record.outreach_id, draft_id: draft.id, status: "draft", to: record.email, subject: subject.trim(), ...content, next_step: "Review this saved draft with review_outreach_draft before requesting approval to send. No email has been sent." };
 }
-

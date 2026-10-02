@@ -2,7 +2,7 @@
 
 首期使用 `jason@realismthriftglobal.com` 发送，每个邮箱按上海自然日最多占用 50 个营销发送额度。网站仍是 `www.realismthrift.com`；用户主动请求的确认邮件由现有 Resend 通道发送。Neon 保存营销状态，原询盘的 Supabase + Resend 流程继续使用。
 
-只新增四张表：`outreach_contacts`、`outreach_messages`、`outreach_events`、`outreach_preference_tokens`。联系人导入默认 `held`，必须记录发送资格依据后才可发营销邮件。公开网站或名片来源本身不代表订阅同意。普通回复暂停营销；退订、投诉和硬退信共同作用于品牌内联系人。恢复订阅不会解除投诉/硬退信封锁、暂停的对话，也不会恢复已取消草稿。
+只新增四张表：`outreach_contacts`、`outreach_messages`、`outreach_events`、`outreach_preference_tokens`。联系人导入保留历史默认 `held`；`held` 和 `eligible` 均无需人工资格审核或 eligibility_note 即可按用户指令发送。来源记录与订阅状态分别保存，公开来源不被自动记成 opt-in。普通回复暂停营销；退订、投诉和硬退信共同作用于品牌内联系人。恢复订阅不会解除投诉/硬退信封锁、暂停的对话，也不会恢复已取消草稿。
 
 ## 客户页面
 
@@ -46,7 +46,7 @@ Remove-Item Env:OUTREACH_DATABASE_TEST_ALLOWED
 
 1. 创建 Workspace 内部 Google OAuth 应用，配置 Gmail `gmail.compose` 与 `gmail.readonly` 权限。回调地址为 `https://www.realismthrift.com/api/outreach/google/callback`，设置 Google client ID/secret。
 2. 管理员打开 `/outreach/connect`，登录并连接 Jason 邮箱。服务核对真实邮箱为 `jason@realismthriftglobal.com`，加密保存 refresh token；现有 Gmail 插件凭据不会自动共享给网关。也可由管理员在服务端设置可选 `OUTREACH_GOOGLE_REFRESH_TOKEN`。
-3. 保持 `OUTREACH_RFC8058_VERIFIED=false`；设置 `OUTREACH_TEST_RECIPIENTS` 为自己控制的测试邮箱。先用 `OUTREACH_DKIM_MODE=google`。临时启用发送后仍只允许该测试名单，且每封需要人工批准。
+3. 保持 `OUTREACH_RFC8058_VERIFIED=false`；设置 `OUTREACH_TEST_RECIPIENTS` 为自己控制的测试邮箱。先用 `OUTREACH_DKIM_MODE=google`。临时启用发送后仍只允许该测试名单，且每封需要明确发送指令。
 4. 查看**实际收到邮件的原始文件**：两条 List 头必须存在，至少一条有效、与 From 对齐的 DKIM 签名的 `h=` 必须包含 `list-unsubscribe`、`list-unsubscribe-post`。原始草稿、本地签名成功和 Sent 副本都不能替代收件端验收。
 5. 如果 Google 管理的 DKIM 未覆盖两条头，使用 `OUTREACH_DKIM_MODE=own`，发布 `outreach._domainkey.realismthriftglobal.com` 的独立 2048 位公钥，并配置匹配的私钥。再次检验实际收到的签名，包括 Gmail 是否改写已签名的正文。
 6. 验证公共 HTTPS 端点可接受无 Cookie、无 Origin 的 POST，不能被 Vercel 登录保护、跳转、验证码或 WAF challenge 拦截。确认 SPF、DKIM、DMARC 配置；此前检查 `realismthriftglobal.com` 尚缺 DMARC，需在上线阶段补齐并验证。
@@ -64,13 +64,12 @@ RFC8058 头由网关在审批后加入；已有草稿的正文、附件必须与
 
 ## 起草、审批、发送
 
-专用 ChatGPT 插件及简洁 HTML 起草实现见 [COLD_EMAIL_PLUGIN.md](./COLD_EMAIL_PLUGIN.md)。新增起草工具只处理已审核联系人，保存纯文本/HTML 双版本 Gmail 草稿。MCP 工具限定 cold_marketing，不提供普通回复或通用收件箱操作。OAuth 连接完成前不得把插件包创建当作可发送验收。
+专用 ChatGPT 插件及简洁 HTML 起草实现见 [COLD_EMAIL_PLUGIN.md](./COLD_EMAIL_PLUGIN.md)。起草工具处理未退订、未封锁、未暂停的联系人，无需人工资格审核，保存纯文本/HTML 双版本 Gmail 草稿。MCP 工具限定 cold_marketing，不提供普通回复或通用收件箱操作。OAuth 连接完成前不得把插件包创建当作可发送验收。
 
 以下 SQL 经授权的 Neon 连接使用。占位符替换为实际值，禁止直接批量修改营销状态。
 
 ```sql
 select outreach_import_contact('buyer@example.invalid', 'trade fair business card', 'Buyer Co', 'Malaysia');
-select outreach_review_contact('CONTACT_UUID', '人工核对的业务相关性、来源时间、当地准入依据与审核人');
 select outreach_prepare_message('CONTACT_UUID', 'cold_marketing');
 -- 返回 outreach_id、邮箱、unsubscribe_token；用 Gmail 插件起草，正文所有可读版本包含：
 -- https://www.realismthrift.com/email-preferences?token=UNSUBSCRIBE_TOKEN
@@ -78,7 +77,7 @@ select outreach_prepare_message('CONTACT_UUID', 'cold_marketing');
 select outreach_attach_draft('OUTREACH_UUID', 'GMAIL_DRAFT_ID');
 ```
 
-调用 `review_outreach_draft`，向人展示已保存草稿、收件人和附件；拿到针对这份内容的明确批准，再调用 `send_approved_outreach` 并传入 review 返回的 fingerprint。草稿改变必须重新 review/批准。网关会检查未处理来信、当前营销状态、封锁、偏好版本和当日额度，发送前再次检查，使用 Gmail draft ID 提交一次。
+调用 `review_outreach_draft`，向人展示已保存草稿、收件人和附件；有针对该收件人和内容的明确发送指令，即可调用 `send_approved_outreach` 并传入 review 返回的 fingerprint。草稿改变必须重新 review/批准。网关会检查未处理来信、当前营销状态、封锁、偏好版本和当日额度，发送前再次检查，使用 Gmail draft ID 提交一次。
 
 发送额度包含 `sending`、`sent`、`send_unknown`；结果不明不会自动重试。调用 `reconcile_outreach_send` 检查 Sent 中实际匹配的专用标识与发件人/收件人；仍找不到则继续保留额度，人工调查。明确被 Google 拒绝的 `failed` 邮件也不自动重试，应排查后创建新消息记录与新草稿。偏好变化取消的旧草稿永不恢复。
 
@@ -126,3 +125,7 @@ group by kind;
 本次生产构建通过 `pnpm build --webpack` 验证，Google 字体网络连接不可用时，仅在本地验证中复用了已缓存的原有 WOFF2 字节；未更改生产字体配置。正式部署仍需构建环境正常访问 Google Fonts。
 
 2026-10-01 分支验证记录：49 项单元测试、16 项桌面/手机浏览器测试通过；真实 HTTP + 隔离 Neon 事务通过；55 个并发发送申请恰好只有 50 个占用额度，重复申请不额外占用。没有真实发送邮件、没有应用生产数据库迁移、没有部署。上线前仍须完成上述 OAuth 配置、收件端 DKIM/RFC8058 验收和发送域名 DNS 检查。
+
+### 历史查询和审核门槛变更（0.3.0 候选）
+
+见 [COLD_EMAIL_PLUGIN.md](./COLD_EMAIL_PLUGIN.md)。插件新增历史查询和联系人录入；历史查询区分 Gmail 旧邮件、网关草稿与发送状态，不会自动把 Gmail 旧邮件补写成新的发送记录。每次经网关发信依旧保存消息记录、发送状态和 Gmail 消息/线程 ID。Gmail 界面或其他插件直接发送不会自动写入网关，可通过 Gmail 历史查询找到。必须先应用 0003 迁移再发布新的 MCP 代码；未部署前旧审核门槛仍会生效。

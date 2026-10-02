@@ -4,6 +4,7 @@ import { GmailError, gmailHeader, gmailRequest, listGmailMessages, verifyGmailAc
 import { addOutreachHeaders, reviewMime, unsubscribeFooter } from "./mime";
 import { logOutreachError, OutreachError, OUTREACH_SENDER, sendingEnabled } from "./config";
 import { simpleParser } from "mailparser";
+import { coldEmailAllowed } from "./eligibility";
 
 type SendRecord = {
   id: string; contact_id: string; email: string; sender: string; draft_id: string;
@@ -20,7 +21,7 @@ async function getSendRecord(id: string) {
 }
 function checkEligibility(record: SendRecord) {
   if (record.safety_block) throw new OutreachError("contact_blocked", 409);
-  if (record.purpose === "cold_marketing" && (record.marketing_status !== "eligible" || record.conversation_paused || !record.eligibility_note?.trim())) throw new OutreachError("marketing_not_eligible", 409);
+  if (record.purpose === "cold_marketing" && !coldEmailAllowed(record)) throw new OutreachError("marketing_not_eligible", 409);
 }
 
 async function checkInbound(record: SendRecord, threadId: string) {
@@ -57,7 +58,7 @@ export async function reviewOutreachDraft(id: string) {
   await verifyGmailAccount();
   const record = await getSendRecord(id);
   const draft = await loadReviewedDraft(record);
-  return { outreach_id: id, draft_id: record.draft_id, purpose: record.purpose, ...draft.review, instructions: "Show this saved draft to the human. Send only after their explicit approval of this exact content and attachments." };
+  return { outreach_id: id, draft_id: record.draft_id, purpose: record.purpose, ...draft.review, instructions: "Use this fingerprint to send the saved content only when the user requested sending to this recipient. A draft-only request does not authorize sending. Do not repeat confirmation when the exact send is already authorized." };
 }
 
 export async function sendApprovedOutreach(id: string, fingerprint: string) {
@@ -95,7 +96,7 @@ export async function sendApprovedOutreach(id: string, fingerprint: string) {
   } catch (error) {
     const rejected = error instanceof GmailError && error.httpStatus >= 400 && error.httpStatus < 500;
     const status = submitted && !rejected ? "send_unknown" : submitted ? "failed" : "draft";
-    try { await outreachDatabase().execute(sql`update outreach_messages m set status=case when ${status}='draft' and exists(select 1 from outreach_contacts c where c.id=m.contact_id and (c.preference_version<>${record.preference_version} or c.safety_block is not null or (m.purpose='cold_marketing' and c.marketing_status<>'eligible'))) then 'cancelled' else ${status} end,updated_at=now() where m.id=${id}::uuid and m.status='sending'`); }
+    try { await outreachDatabase().execute(sql`update outreach_messages m set status=case when ${status}='draft' and exists(select 1 from outreach_contacts c where c.id=m.contact_id and (c.preference_version<>${record.preference_version} or c.safety_block is not null or (m.purpose='cold_marketing' and c.marketing_status not in ('held','eligible')))) then 'cancelled' else ${status} end,updated_at=now() where m.id=${id}::uuid and m.status='sending'`); }
     catch (recordError) { logOutreachError("send_result_record", recordError); }
     if (status === "send_unknown") throw new OutreachError("send_unknown_reconcile_before_retry", 409);
     throw error;
