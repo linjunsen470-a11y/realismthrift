@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
             <div className="rt-legal-tag">PRIVACY</div>
             <h1 className="rt-page-hero-title text-white mb-4">Privacy <span className="text-brand-gold">Policy</span></h1>
             <p className="text-white/60 text-lg leading-relaxed">
-              Last updated: October 1, 2026. This policy explains how we protect your personal data in our global wholesale operations.
+              Last updated: October 4, 2026. This policy explains how we protect your personal data in our global wholesale operations.
             </p>
           </div>
         </div>
@@ -94,7 +94,7 @@ export default function PrivacyPolicyPage() {
                   We use Google Analytics 4 to understand basic website traffic, such as page views and general visitor location. We do not use Google Ads, Meta Pixel, advertising personalization, or remarketing technologies.
                 </p>
                 <p>
-                  Google Analytics operates in a limited measurement mode and does not use Analytics cookies to create persistent user profiles on this website. Google may process analytics information in accordance with its own privacy policy.
+                  Google Analytics uses first-party analytics cookies to distinguish visitors and measure sessions, page views, and inquiry completion. Advertising storage, advertising user data, advertising personalization, and Google Signals are disabled. We do not send inquiry names, email addresses, phone numbers, or message contents to Google Analytics. You can block or delete analytics cookies through your browser settings. Google may process analytics information in accordance with its own privacy policy.
                 </p>
 
                 <h2>6. Your Rights</h2>

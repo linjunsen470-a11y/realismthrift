@@ -41,6 +41,10 @@ jobs:
         run: pnpm test:unit
 
       - name: Build application
+        env:
+          NEXT_PUBLIC_ANALYTICS_ENABLED: "true"
+          # Browser tests intercept this tag; no CI events reach the live property.
+          NEXT_PUBLIC_GA_ID: G-TEST000001
         run: pnpm build
 
       - name: Run smoke tests
