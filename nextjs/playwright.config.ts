@@ -34,9 +34,16 @@ export default defineConfig({
   webServer: process.env.PLAYWRIGHT_BASE_URL
     ? undefined
     : {
-        command: "pnpm dev",
+        // CI already built the app; exercise production cache headers and routing.
+        command: process.env.CI ? "pnpm start" : "pnpm dev",
         url: baseURL,
         reuseExistingServer: !process.env.CI,
         timeout: 180_000,
+        env: {
+          // Render signed-out login forms without production credentials or a session.
+          // Login POSTs are intercepted by the tests; no Supabase login is performed.
+          SUPABASE_URL: process.env.SUPABASE_URL || "https://tjbeeackrjpojejxhnzq.supabase.co",
+          SUPABASE_PUBLISHABLE_KEY: process.env.SUPABASE_PUBLISHABLE_KEY || "sb_publishable_smoke_test_placeholder",
+        },
       },
 });
