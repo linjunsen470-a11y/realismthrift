@@ -13,7 +13,8 @@ test("unsubscribe requires a click and offers a quiet preference link", async ({
   expect(actions).toEqual([]);
   expect(response?.headers()["referrer-policy"]).toBe("no-referrer");
   expect(response?.headers()["x-robots-tag"]).toContain("noindex");
-  expect(response?.headers()["cache-control"]).toContain("no-store");
+  // CI runs the production build; Next dev overrides this header with no-cache.
+  expect(response?.headers()["cache-control"]).toMatch(process.env.CI ? /no-store/ : /no-store|no-cache/);
   expect(await page.locator("script[src*='googletagmanager'],script[src*='facebook.net']").count()).toBe(0);
   await page.getByRole("button", { name: "Unsubscribe", exact: true }).click();
   await expect(page.getByRole("heading", { name: "You're unsubscribed" })).toBeVisible();

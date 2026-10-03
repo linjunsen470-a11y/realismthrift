@@ -5,6 +5,7 @@ import { addOutreachHeaders, reviewMime, unsubscribeFooter } from "./mime";
 import { logOutreachError, OutreachError, OUTREACH_SENDER, sendingEnabled } from "./config";
 import { simpleParser } from "mailparser";
 import { coldEmailAllowed } from "./eligibility";
+import { pendingInboundIds } from "./inbound";
 
 type SendRecord = {
   id: string; contact_id: string; email: string; sender: string; draft_id: string;
@@ -25,14 +26,11 @@ function checkEligibility(record: SendRecord) {
 }
 
 async function checkInbound(record: SendRecord, threadId: string) {
-  const inbox = await listGmailMessages(`from:"${record.email.replace(/"/g, "")}" -in:sent -in:drafts`);
-  const deliveryNotices = await listGmailMessages(`(from:mailer-daemon OR from:postmaster) "${record.email.replace(/"/g, "")}" -in:sent -in:drafts`);
-  const thread = await gmailRequest<{ messages: GmailMessage[] }>(`threads/${encodeURIComponent(threadId)}?format=metadata&metadataHeaders=From`);
-  const relevant = new Set([...inbox.map(message => message.id), ...deliveryNotices.map(message => message.id), ...thread.messages.filter(message => !message.labelIds?.includes("SENT") && !message.labelIds?.includes("DRAFT")).map(message => message.id)]);
-  const rows = await outreachDatabase().execute<{ provider_key: string }>(sql`select provider_key from outreach_events where contact_id=${record.contact_id}::uuid and source='gmail' and provider_key is not null`);
-  const processed = new Set(rows.rows.map(row => row.provider_key));
-  const pending = [...relevant].filter(id => !processed.has(`${OUTREACH_SENDER}:${id}`));
-  if (pending.length) throw new OutreachError("inbound_review_required", 409);
+  const pending = await pendingInboundIds({ id: record.contact_id, email: record.email }, threadId);
+  if (pending.length) throw new OutreachError("inbound_review_required", 409, {
+    contact_id: record.contact_id, outreach_id: record.id, pending_count: pending.length,
+    next_step: "Call get_pending_cold_email_inbound with this contact_id and outreach_id, then record the reviewed messages with record_cold_email_inbound.",
+  });
 }
 
 async function loadReviewedDraft(record: SendRecord) {

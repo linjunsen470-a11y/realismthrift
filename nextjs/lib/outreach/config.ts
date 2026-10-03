@@ -5,7 +5,7 @@ export const CONFIRMATION_TTL_HOURS = 24;
 export const DAILY_MARKETING_LIMIT = 50;
 
 export class OutreachError extends Error {
-  constructor(public code: string, public status = 503) {
+  constructor(public code: string, public status = 503, public details?: Record<string, unknown>) {
     super(code);
     this.name = "OutreachError";
   }
