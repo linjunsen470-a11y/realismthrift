@@ -1,0 +1,42 @@
+name: GA4 verification
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live-ga4:
+    name: Verify production GA4 transport
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: nextjs
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: nextjs/pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install browser
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Verify live Google collection and cookie permissions
+        env:
+          PLAYWRIGHT_BASE_URL: https://www.realismthrift.com
+          GA4_LIVE_CHECK: "true"
+        run: pnpm exec playwright test tests/analytics.live.spec.ts --project=chromium --workers=1 --retries=0
+      - name: Upload verification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ga4-verification
+          path: nextjs/playwright-report
+          retention-days: 7
