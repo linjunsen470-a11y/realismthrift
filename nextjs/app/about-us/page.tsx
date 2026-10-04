@@ -193,20 +193,24 @@ export default function AboutUsPage() {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { img: "bella.webp", name: "Bella", desc: "Dedicated sales specialist focused on customer success and order planning." },
-              { img: "levi.webp", name: "Levi", desc: "Customer service professional assisting with category selection and pricing." },
-              { img: "luna.webp", name: "Luna", desc: "Sales coordinator managing inquiries and international trade logistics support." },
-              { img: "ahmad-akbar.webp", name: "Ahmad Akbar", desc: "Expert sales consultant providing professional export guidance for global buyers." }
+              { img: "levi.webp", name: "Levi", role: "Sales Consultant", desc: "Customer service professional assisting with category selection and pricing." },
+              { img: "luna.webp", name: "Luna", role: "Sales Consultant", desc: "Sales coordinator managing inquiries and international trade logistics support." },
+              { img: "ahmad-akbar.webp", name: "Ahmad Akbar", role: "Sales Consultant", desc: "Expert sales consultant providing professional export guidance for global buyers." },
+              { img: "lily.jpg", name: "Lily", role: "Sales Consultant", desc: "Supports wholesale inquiries, product selection, and order planning." },
+              { img: "daniel.jpg", name: "Daniel", role: "Bag Sorting Expert", desc: "Sorts used bags and checks straps, lining, and hardware." },
+              { img: "vincent.jpg", name: "Vincent", role: "Bag Sorting Expert", desc: "Grades used bags by condition, including corners and zippers." },
+              { img: "adrian.jpg", name: "Adrian", role: "Shoe Sorting Expert", desc: "Sorts used shoes and checks soles, lining, and wear." },
+              { img: "marcus.jpg", name: "Marcus", role: "Clothing Sorting Expert", desc: "Sorts used clothes and checks fabrics, buttons, and zippers." }
             ].map(staff => (
               <div key={staff.name} className="group bg-white/5 border border-white/10 rounded-[12px] p-5 text-center hover:bg-white/[0.08] transition-all duration-300">
                 <div className="relative w-24 h-24 mx-auto mb-4">
                   <div className="absolute inset-0 bg-brand-gold/20 rounded-full scale-110 group-hover:scale-125 transition-transform duration-500 blur-md"></div>
                   <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-brand-gold/30">
-                    <Image src={`/images/staff/${staff.img}`} alt={`RealismThrift Sales Consultant - ${staff.name}`} fill sizes="96px" className="object-cover" />
+                    <Image src={`/images/staff/${staff.img}`} alt={`RealismThrift ${staff.role} - ${staff.name}`} fill sizes="96px" className="object-cover" />
                   </div>
                 </div>
                 <div className="font-montserrat text-[0.9375rem] font-bold text-white mb-1 group-hover:text-brand-gold transition-colors">{staff.name}</div>
-                <div className="text-[0.65rem] font-montserrat font-bold text-brand-gold uppercase tracking-wider mb-3 px-2 py-0.5 bg-brand-gold/10 inline-block rounded-[2px]">Sales Consultant</div>
+                <div className="text-[0.65rem] font-montserrat font-bold text-brand-gold uppercase tracking-wider mb-3 px-2 py-0.5 bg-brand-gold/10 inline-block rounded-[2px]">{staff.role}</div>
                 <div className="text-[0.75rem] text-white/60 leading-[1.6] px-2 line-clamp-2">{staff.desc}</div>
               </div>
             ))}
