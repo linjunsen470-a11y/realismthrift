@@ -3,7 +3,7 @@ import "../internal-pages.css";
 import Image from "next/image";
 import Link from "next/link";
 import { InquiryForm } from "@/components/InquiryForm";
-import { companyStats, companyAddress, companyPostalAddress, siteFooter } from "@/data/siteData";
+import { companyStats, companyAddress, companyLocation, siteFooter } from "@/data/siteData";
 import { Mail, Phone, MapPin, Building2, Clock, MessageCircle, Send, Globe } from "lucide-react";
 
 export const metadata = createPageMetadata({
@@ -67,7 +67,7 @@ export default function ContactUsPage() {
               { i: <Mail className="w-6 h-6 text-brand-red" />, t: "Email", s: "Send us an email", v: "sales@realismthrift.com", l: "mailto:sales@realismthrift.com", color: "bg-red-50" },
               { i: <MessageCircle className="w-6 h-6 text-[#25D366]" />, t: "WhatsApp", s: "Chat with us now", v: "+86 133 6748 1710", l: "https://wa.me/8613367481710", color: "bg-green-50" },
               { i: <Phone className="w-6 h-6 text-brand-gold" />, t: "Phone", s: "Call our sales team", v: "+86 133 6748 1710", l: "tel:+8613367481710", color: "bg-yellow-50" },
-              { i: <MapPin className="w-6 h-6 text-brand-dark" />, t: "Address", s: "Visit our factory", v: "Huizhou, China", l: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(companyPostalAddress.mapsQuery)}`, color: "bg-gray-100" },
+              { i: <MapPin className="w-6 h-6 text-brand-dark" />, t: "Address", s: "Visit our factory", v: "County Road 193, Yuanzhou", l: companyLocation.mapsUrl, color: "bg-gray-100" },
             ].map((item) => (
               <div key={item.t} className="bg-white border border-[#eee] rounded-[12px] p-8 text-center shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all transform hover:-translate-y-1.5 group">
                 <div className={`w-14 h-14 ${item.color} rounded-full flex items-center justify-center mx-auto mb-5 transition-transform group-hover:scale-110 group-hover:rotate-3`}>
@@ -175,10 +175,10 @@ export default function ContactUsPage() {
             </div>
             <div className="w-full h-[450px] rounded-[16px] overflow-hidden border border-[#eee] shadow-2xl relative">
                 <iframe 
-                  src="https://www.google.com/maps/d/embed?mid=1tQMcpDr1wCiqu03ci3gFUnP7RlUudME&ehbc=2E312F" 
+                  src={companyLocation.mapsEmbedUrl}
                   width="100%" 
                   height="100%" 
-                  title="Google Maps location of RealismThrift in Huizhou, China"
+                  title="Google Maps location of RealismThrift on County Road 193, Yuanzhou, Huizhou, China"
                   allowFullScreen={true} 
                   loading="lazy" 
                   referrerPolicy="no-referrer-when-downgrade"
@@ -194,8 +194,21 @@ export default function ContactUsPage() {
                 <p className="text-[0.9375rem] text-[#444] font-open-sans leading-relaxed">
                   {companyAddress}
                 </p>
-                <p className="text-[0.875rem] text-[#666] font-open-sans mt-1">
-                  (中文地址：广东惠州博罗县园洲镇丰宜路 RealismThrift，创深U家公寓旁)
+                <p lang="zh-CN" className="text-[0.875rem] text-[#666] font-open-sans mt-1">
+                  中文地址：{companyLocation.addressChinese}
+                </p>
+                <a href={companyLocation.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-3 text-brand-red font-montserrat font-bold text-[0.875rem] hover:text-brand-red-dark transition-colors">
+                  <MapPin className="w-4 h-4" />
+                  Open in Google Maps
+                </a>
+              </div>
+              <div className="pt-4 border-t border-black/5">
+                <h4 className="font-montserrat font-bold text-brand-dark text-[1rem] mb-2">DiDi Taxi Address</h4>
+                <p className="text-[0.875rem] text-[#555] font-open-sans leading-relaxed">
+                  {companyLocation.didiAddress}
+                </p>
+                <p lang="zh-CN" className="text-[0.875rem] text-[#666] font-open-sans mt-1">
+                  滴滴打车导航地址：{companyLocation.didiAddressChinese}
                 </p>
               </div>
               <div className="pt-4 border-t border-black/5">

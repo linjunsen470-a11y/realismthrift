@@ -1,5 +1,6 @@
 import { sql } from "drizzle-orm";
 import { Resend } from "resend";
+import { companyAddress } from "@/data/siteData";
 import { outreachDatabase } from "./database";
 import { maskEmail, newPreferenceToken, rateKey, tokenHash, validPreferenceToken } from "./tokens";
 import { logOutreachError, OutreachError, outreachOrigin, requiredSetting } from "./config";
@@ -46,7 +47,7 @@ export async function requestResubscribe(email: string, ip: string) {
         to: result.email,
         replyTo: "jason@realismthriftglobal.com",
         subject: "Confirm your RealismThrift email preference",
-        text: `You requested wholesale updates from RealismThrift.\n\nOpen this link and choose Confirm subscription:\n${link}\n\nThis link expires in 24 hours. If you didn't request it, you can ignore this email; your preferences will stay unchanged.\n\nRealismThrift\nFengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China`,
+        text: `You requested wholesale updates from RealismThrift.\n\nOpen this link and choose Confirm subscription:\n${link}\n\nThis link expires in 24 hours. If you didn't request it, you can ignore this email; your preferences will stay unchanged.\n\nRealismThrift\n${companyAddress}`,
       }, { idempotencyKey: `outreach-confirm-${result.message_id}` });
       if (response.error) { status = "failed"; logOutreachError("confirmation_delivery", response.error); }
       else { status = "sent"; providerId = response.data?.id || null; }

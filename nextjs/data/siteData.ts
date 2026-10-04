@@ -12,15 +12,24 @@ export const companyStats = {
 
 /** Canonical factory address — single source of truth for site + structured data. */
 export const companyAddress =
-  "RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China";
+  "RealismThrift (Baisha Alley Weilitang), County Road 193, Yuanzhou Town, Boluo County, Huizhou City, Guangdong Province, China";
+
+/** Visitor-facing addresses and the shared factory map. */
+export const companyLocation = {
+  addressChinese: "广东惠州博罗县园洲镇193县道RealismThrift（白沙巷尾礼堂）",
+  didiAddress: "Baisha Elementary School, County Road 193, Yuanzhou Town, Boluo County, Huizhou City, Guangdong Province, China",
+  didiAddressChinese: "广东省惠州市博罗县园洲镇193县道白沙小学",
+  mapsUrl: "https://www.google.com/maps/d/viewer?mid=1tQMcpDr1wCiqu03ci3gFUnP7RlUudME",
+  mapsEmbedUrl: "https://www.google.com/maps/d/embed?mid=1tQMcpDr1wCiqu03ci3gFUnP7RlUudME&ehbc=2E312F",
+} as const;
 
 /** Structured postal fields for schema.org / maps query strings. */
 export const companyPostalAddress = {
-  streetAddress: "RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou",
-  addressLocality: "Boluo, Huizhou",
+  streetAddress: "RealismThrift (Baisha Alley Weilitang), County Road 193, Yuanzhou Town",
+  addressLocality: "Boluo County, Huizhou City",
   addressRegion: "Guangdong",
   addressCountry: "CN",
-  mapsQuery: "Fengyi Road Yuanzhou Boluo Huizhou Guangdong China",
+  mapsQuery: companyAddress,
 } as const;
 
 export const siteHeader: SiteHeader = {

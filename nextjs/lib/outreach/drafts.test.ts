@@ -16,7 +16,7 @@ describe("cold email composition", () => {
     expect(content.html).not.toMatch(/<img|<script|<form|<iframe/i);
     expect(content.text).toContain(`https://www.realismthrift.com/email-preferences?token=${token}`);
     expect(content.html).toContain(`https://www.realismthrift.com/email-preferences?token=${token}`);
-    expect(content.text).toContain("Fengyi Road");
+    expect(content.text).toContain("County Road 193");
   });
   it("refuses an unsubscribed contact without creating a message or a Gmail draft", async () => {
     mocks.execute.mockResolvedValueOnce({ rows: [{ email: "buyer@example.com", marketing_status: "unsubscribed", safety_block: null, conversation_paused: false, eligibility_note: "old review" }] });

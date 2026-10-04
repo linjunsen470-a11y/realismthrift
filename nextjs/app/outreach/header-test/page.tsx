@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { companyAddress } from "@/data/siteData";
 import { sql } from "drizzle-orm";
 import nodemailer from "nodemailer";
 import { requireOperator } from "@/lib/outreach/auth";
@@ -39,7 +40,7 @@ async function prepareTest() {
     const mail = await transport.sendMail({
       from: OUTREACH_SENDER, to: testRecipient(), replyTo: OUTREACH_SENDER,
       subject: `RealismThrift RFC8058 verification ${id.slice(0, 8)}`,
-      text: `This is the email-header verification test you requested. No purchase or action is required.\n\nRealismThrift\nFengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China\n\nUnsubscribe: ${unsubscribeFooter(prepared.rows[0].result.unsubscribe_token)}`,
+      text: `This is the email-header verification test you requested. No purchase or action is required.\n\nRealismThrift\n${companyAddress}\n\nUnsubscribe: ${unsubscribeFooter(prepared.rows[0].result.unsubscribe_token)}`,
     });
     const draft = await gmailRequest<{ id: string; message: GmailMessage }>("drafts", { message: { raw: (mail.message as Buffer).toString("base64url") } });
     await database.execute(sql`select outreach_attach_draft(${id}::uuid,${draft.id})`);
