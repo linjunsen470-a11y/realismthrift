@@ -1,4 +1,5 @@
 {
+  "apps": "./.app.json",
   "interface": {
     "displayName": "RealismThrift Cold Email",
     "shortDescription": "开发信、历史查询与来信处理",
@@ -18,12 +19,11 @@
     "brandColor": "#B38B45"
   },
   "name": "realismthrift-cold-email",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Private RealismThrift cold outreach: query Gmail/gateway history, save contacts, process incoming replies and delivery notices, and draft or send user-requested emails with unsubscribe support.",
   "author": {
     "name": "RealismThrift"
   },
   "keywords": [],
-  "skills": "./skills",
-  "apps": "./.app.json"
+  "skills": "./skills"
 }

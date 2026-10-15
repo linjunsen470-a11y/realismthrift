@@ -15,7 +15,7 @@ async function rpc(method: string, params: unknown, authorized = true) {
 }
 
 describe("cold email MCP discovery", () => {
-  it("advertises all nine tools through the actual HTTP handler with their input contracts", async () => {
+  it("advertises all twelve tools through the actual HTTP handler with their input contracts", async () => {
     const response = await rpc("tools/list", {});
     expect(response.status).toBe(200);
     const body = await response.text();
@@ -25,11 +25,15 @@ describe("cold email MCP discovery", () => {
       "lookup_cold_email_contact", "register_cold_email_contact", "get_cold_email_history",
       "get_pending_cold_email_inbound", "record_cold_email_inbound", "create_cold_email_draft",
       "review_outreach_draft", "send_approved_outreach", "reconcile_outreach_send",
+      "get_cold_email_service_status", "list_existing_cold_email_drafts", "import_existing_gmail_draft",
     ].sort());
     expect(tools.find(tool => tool.name === "record_cold_email_inbound")).toMatchObject({
       inputSchema: { required: ["contact_id", "gmail_message_id", "classification", "note"] }, annotations: { readOnlyHint: false },
     });
     expect(tools.find(tool => tool.name === "lookup_cold_email_contact")?.description).toContain("No manual eligibility");
+    expect(tools.find(tool => tool.name === "import_existing_gmail_draft")).toMatchObject({
+      inputSchema: { required: ["contact_id", "draft_id", "fingerprint"] }, annotations: { readOnlyHint: false },
+    });
   });
   it("keeps anonymous tool discovery protected by OAuth", async () => {
     expect((await rpc("tools/list", {}, false)).status).toBe(401);

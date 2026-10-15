@@ -6,13 +6,14 @@ import { gmailRequest, verifyGmailAccount, type GmailMessage } from "./gmail";
 import { renderColdEmail } from "./template";
 import { normalizeEmail } from "./tokens";
 import { coldEmailAllowed } from "./eligibility";
+import { sendingConfiguration } from "./readiness";
 
 export async function lookupColdEmailContact(email: string) {
   const normalized = normalizeEmail(email);
   if (!normalized) throw new OutreachError("invalid_request", 400);
   const rows = await outreachDatabase().execute(sql`select id,email,company,country,source,marketing_status,safety_block,conversation_paused,eligibility_note from outreach_contacts where email=${normalized}`);
   const contact = rows.rows[0] as { marketing_status: string; safety_block: string | null; conversation_paused: boolean } | undefined;
-  return { contact: contact || null, cold_email_allowed: !!contact && coldEmailAllowed(contact), manual_eligibility_review_required: false, sending_enabled: process.env.OUTREACH_SENDING_ENABLED === "true" };
+  return { contact: contact || null, cold_email_allowed: !!contact && coldEmailAllowed(contact), manual_eligibility_review_required: false, ...sendingConfiguration(), server_version: "1.4.0" };
 }
 
 export async function registerColdEmailContact(email: string, source?: string, company?: string, country?: string) {

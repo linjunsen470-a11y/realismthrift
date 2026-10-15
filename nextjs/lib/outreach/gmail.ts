@@ -48,9 +48,9 @@ async function currentAccessToken() {
 }
 export function clearGmailTokenCache() { accessToken = undefined; }
 
-export async function gmailRequest<T>(path: string, body?: unknown): Promise<T> {
+export async function gmailRequest<T>(path: string, body?: unknown, method?: "PUT"): Promise<T> {
   const response = await fetch(`https://gmail.googleapis.com/gmail/v1/users/me/${path}`, {
-    method: body ? "POST" : "GET",
+    method: method || (body ? "POST" : "GET"),
     headers: { Authorization: `Bearer ${await currentAccessToken()}`, ...(body ? { "Content-Type": "application/json" } : {}) },
     ...(body ? { body: JSON.stringify(body) } : {}),
     signal: AbortSignal.timeout(20_000), cache: "no-store",
