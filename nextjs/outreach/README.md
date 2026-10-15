@@ -131,3 +131,33 @@ group by kind;
 ### 历史查询和审核门槛变更（0.3.0）
 
 见 [COLD_EMAIL_PLUGIN.md](./COLD_EMAIL_PLUGIN.md)。插件新增历史查询和联系人录入；历史查询区分 Gmail 旧邮件、网关草稿与发送状态，不会自动把 Gmail 旧邮件补写成新的发送记录。每次经网关发信依旧保存消息记录、发送状态和 Gmail 消息/线程 ID。Gmail 界面或其他插件直接发送不会自动写入网关，可通过 Gmail 历史查询找到。必须先应用 0003 迁移再发布新的 MCP 代码；未部署前旧审核门槛仍会生效。68 项单元测试和类型检查通过，生产 0003 迁移已应用。
+
+### Existing Gmail drafts and mailbox quota (1.4.0 / plugin 0.5.0)
+
+Apply migration `0004_existing_drafts_and_mailbox_quota.sql` before deploying the
+1.4.0 MCP server. It adds an idempotent existing-draft registration function and
+a five-argument quota claim. The three-argument claim remains available during
+the rolling update; the new server always uses the mailbox-aware claim.
+
+`get_cold_email_service_status` exposes non-secret readiness flags and actual
+Shanghai-day usage. `list_existing_cold_email_drafts` reads saved Gmail drafts
+with fingerprints. `import_existing_gmail_draft` links a selected draft to its
+registered exact recipient, never creates a duplicate and never sends. Existing
+mailto-only footers require explicitly authorized `add_unsubscribe_footer=true`;
+this appends the contact preference link to the same draft, preserving original
+text, HTML product bolding and attachment bytes. MIME encoding may change.
+Review the saved draft afterward. An uncertain update must be inspected rather
+than blindly repeated. Importing a cancelled/sent/unknown registered draft does
+not restore its sendability.
+
+Quota uses all Gmail Sent conservatively, plus gateway marketing reservations
+not matched to those IDs, under the existing per-sender SQL lock. It does not
+backfill old external mail as invented gateway submissions. Gmail failure blocks
+new reservations; a Shanghai midnight rollover invalidates an old snapshot.
+Mail sent concurrently outside the gateway cannot participate in its database
+lock, so marketing sends should use this gateway.
+
+Both private plugin wrappers retain their identities and the same cloud App.
+Refresh/rescan that existing App after deployment so all twelve tools load;
+there is no need to create another App or Gmail connection. Maintenance alone
+never authorizes a real test email or a batch send.

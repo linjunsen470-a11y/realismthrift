@@ -6,6 +6,7 @@ import { logOutreachError, OutreachError, OUTREACH_SENDER, sendingEnabled } from
 import { simpleParser } from "mailparser";
 import { coldEmailAllowed } from "./eligibility";
 import { pendingInboundIds } from "./inbound";
+import { readSendQuota } from "./readiness";
 
 type SendRecord = {
   id: string; contact_id: string; email: string; sender: string; draft_id: string;
@@ -71,7 +72,8 @@ export async function sendApprovedOutreach(id: string, fingerprint: string) {
   const draft = await loadReviewedDraft(record);
   if (draft.review.fingerprint !== fingerprint) throw new OutreachError("draft_changed_review_again", 409);
   const raw = await addOutreachHeaders(draft.raw, record.id, record.purpose === "cold_marketing" ? record.unsubscribe_token : null);
-  const claim = await outreachDatabase().execute<{ result: { status: string; message_id?: string } }>(sql`select outreach_claim_send(${id}::uuid,${fingerprint},${record.preference_version}) as result`);
+  const quota = await readSendQuota();
+  const claim = await outreachDatabase().execute<{ result: { status: string; message_id?: string } }>(sql`select outreach_claim_send(${id}::uuid,${fingerprint},${record.preference_version},${JSON.stringify(quota.gmailIds)}::jsonb,${quota.day}::date) as result`);
   if (claim.rows[0].result.status !== "claimed") {
     if (claim.rows[0].result.status === "sent") return claim.rows[0].result;
     throw new OutreachError(claim.rows[0].result.status, 409);

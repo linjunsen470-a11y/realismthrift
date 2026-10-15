@@ -1,0 +1,19 @@
+{
+  "apps": "./.app.json",
+  "author": {
+    "name": "App developer"
+  },
+  "description": "专用开发信起草、审核与发送；保留退订和逐封批准。",
+  "interface": {
+    "capabilities": [],
+    "category": "Other",
+    "defaultPrompt": null,
+    "developerName": "App developer",
+    "displayName": "RealismThrift Cold Email",
+    "longDescription": "专用开发信起草、审核与发送；保留退订和逐封批准。",
+    "shortDescription": "专用开发信起草、审核与发送；保留退订和逐封批准。"
+  },
+  "name": "dev-6abec56015f48191a27e8c54701c4a8e",
+  "version": "1.1.0",
+  "skills": "./skills"
+}
