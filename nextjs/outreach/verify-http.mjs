@@ -8,7 +8,6 @@ const base = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3101';
 const origin = process.env.OUTREACH_SITE_ORIGIN || 'https://www.realismthrift.com';
 const email = `http-${randomUUID()}@example.invalid`;
 const [{ id }] = await db`select outreach_import_contact(${email}, 'isolated HTTP verification') as id`;
-await db`select outreach_review_contact(${id}::uuid, 'unreachable isolated verification fixture')`;
 const [{ message }] = await db`select outreach_prepare_message(${id}::uuid) as message`;
 await db`select outreach_attach_draft(${message.outreach_id}::uuid, ${`fixture_${randomUUID()}`})`;
 const token = message.unsubscribe_token;

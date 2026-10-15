@@ -19,21 +19,21 @@ describe("cold email composition", () => {
     expect(content.text).toContain("County Road 193");
   });
   it("refuses an unsubscribed contact without creating a message or a Gmail draft", async () => {
-    mocks.execute.mockResolvedValueOnce({ rows: [{ email: "buyer@example.com", marketing_status: "unsubscribed", safety_block: null, conversation_paused: false, eligibility_note: "old review" }] });
+    mocks.execute.mockResolvedValueOnce({ rows: [{ email: "buyer@example.com", marketing_status: "unsubscribed", safety_block: null, conversation_paused: false }] });
     await expect(createColdEmailDraft("contact-id", "Wholesale options", ["Hi"])).rejects.toMatchObject({ code: "marketing_not_eligible" });
     expect(mocks.execute).toHaveBeenCalledTimes(1);
     expect(mocks.verifyGmailAccount).not.toHaveBeenCalled();
     expect(mocks.gmailRequest).not.toHaveBeenCalled();
   });
   it("refuses a paused conversation and header injection before creating drafts", async () => {
-    mocks.execute.mockResolvedValueOnce({ rows: [{ email: "buyer@example.com", marketing_status: "eligible", safety_block: null, conversation_paused: true, eligibility_note: "reviewed" }] });
+    mocks.execute.mockResolvedValueOnce({ rows: [{ email: "buyer@example.com", marketing_status: "eligible", safety_block: null, conversation_paused: true }] });
     await expect(createColdEmailDraft("contact-id", "Wholesale", ["Hi"])).rejects.toMatchObject({ code: "marketing_not_eligible" });
     await expect(createColdEmailDraft("contact-id", "Wholesale\r\nBcc: victim@example.com", ["Hi"])).rejects.toMatchObject({ code: "invalid_email_content" });
     expect(mocks.gmailRequest).not.toHaveBeenCalled();
   });
   it("saves a multipart draft with one recipient and no send call", async () => {
     mocks.execute
-      .mockResolvedValueOnce({ rows: [{ email: "buyer@example.com", marketing_status: "held", safety_block: null, conversation_paused: false, eligibility_note: null }] })
+      .mockResolvedValueOnce({ rows: [{ email: "buyer@example.com", marketing_status: "held", safety_block: null, conversation_paused: false }] })
       .mockResolvedValueOnce({ rows: [{ result: { outreach_id: "message-id", email: "buyer@example.com", unsubscribe_token: token } }] })
       .mockResolvedValueOnce({ rows: [{ ok: true }] });
     mocks.gmailRequest.mockResolvedValueOnce({ id: "saved-draft", message: { id: "gmail-message" } });
@@ -51,7 +51,7 @@ describe("cold email composition", () => {
   it("registering an existing unsubscribed contact does not make it sendable", async () => {
     mocks.execute.mockResolvedValueOnce({ rows: [{ id: "contact-id" }] })
       .mockResolvedValueOnce({ rows: [{ id: "contact-id", marketing_status: "unsubscribed", safety_block: null, conversation_paused: false }] });
-    expect(await registerColdEmailContact("buyer@example.com")).toMatchObject({ cold_email_allowed: false, manual_eligibility_review_required: false });
+    expect(await registerColdEmailContact("buyer@example.com")).toMatchObject({ cold_email_allowed: false });
     expect(mocks.gmailRequest).not.toHaveBeenCalled();
   });
 });

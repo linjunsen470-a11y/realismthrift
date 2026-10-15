@@ -19,7 +19,7 @@
     "brandColor": "#B38B45"
   },
   "name": "realismthrift-cold-email",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Private RealismThrift cold outreach: query Gmail/gateway history, save contacts, process incoming replies and delivery notices, and draft or send user-requested emails with unsubscribe support.",
   "author": {
     "name": "RealismThrift"

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { PgDialect } from "drizzle-orm/pg-core";
-import { reconcileOutreachSend, sendApprovedOutreach } from "./sending";
+import { reconcileOutreachSend, reviewOutreachDraft, sendApprovedOutreach } from "./sending";
 import { mimeFingerprint, unsubscribeFooter } from "./mime";
 import { newPreferenceToken } from "./tokens";
 
@@ -16,6 +16,7 @@ let version: number;
 let claim: string;
 let accountReads: number;
 let changeAfterClaim: boolean;
+let purpose: string;
 const dialect = new PgDialect();
 afterEach(() => vi.unstubAllEnvs());
 
@@ -25,7 +26,7 @@ beforeEach(() => {
   vi.stubEnv("OUTREACH_RFC8058_VERIFIED", "true");
   vi.stubEnv("OUTREACH_DKIM_MODE", "google");
   vi.stubEnv("OUTREACH_TEST_RECIPIENTS", "");
-  status = "draft"; version = 1; claim = "claimed"; accountReads = 0; changeAfterClaim = false;
+  status = "draft"; version = 1; claim = "claimed"; accountReads = 0; changeAfterClaim = false; purpose = "cold_marketing";
   mocks.verifyGmailAccount.mockResolvedValue(undefined);
   mocks.listGmailMessages.mockResolvedValue([]);
   mocks.gmailRequest.mockImplementation(async (path: string) => {
@@ -38,7 +39,7 @@ beforeEach(() => {
     const text = dialect.sqlToQuery(query).sql;
     if (text.startsWith("select m.*")) {
       accountReads++;
-      return { rows: [{ id, contact_id: id, email: "buyer@example.com", sender: "jason@realismthriftglobal.com", draft_id: "fixture", purpose: "cold_marketing", status, unsubscribe_token: token, preference_version: changeAfterClaim && accountReads > 1 ? 2 : version, marketing_status: "held", safety_block: null, conversation_paused: false, eligibility_note: null, gmail_message_id: "already-sent", gmail_thread_id: "thread" }] };
+      return { rows: [{ id, contact_id: id, email: "buyer@example.com", sender: "jason@realismthriftglobal.com", draft_id: "fixture", purpose, status, unsubscribe_token: token, preference_version: changeAfterClaim && accountReads > 1 ? 2 : version, marketing_status: "held", safety_block: null, conversation_paused: false, gmail_message_id: "already-sent", gmail_thread_id: "thread" }] };
     }
     if (text.includes("outreach_claim_send")) { if (claim === "claimed") status = "sending"; return { rows: [{ result: { status: claim } }] }; }
     if (text.startsWith("select provider_key")) return { rows: [] };
@@ -74,6 +75,13 @@ describe("uncertain send reconciliation", () => {
 });
 
 describe("approved sending gate", () => {
+  it.each(["requested_reply", "resubscribe_confirmation"])("rejects %s at every cold-email entry point", async value => {
+    purpose = value;
+    for (const action of [reviewOutreachDraft, reconcileOutreachSend, (messageId: string) => sendApprovedOutreach(messageId, mimeFingerprint(raw))]) {
+      await expect(action(id)).rejects.toMatchObject({ code: "unknown_cold_email_draft" });
+    }
+    expect(mocks.gmailRequest).not.toHaveBeenCalled();
+  });
   it("is closed by default and never calls Gmail when disabled", async () => {
     vi.stubEnv("OUTREACH_SENDING_ENABLED", "false");
     await expect(sendApprovedOutreach(id, mimeFingerprint(raw))).rejects.toMatchObject({ code: "sending_disabled" });

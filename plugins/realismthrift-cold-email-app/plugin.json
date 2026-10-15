@@ -5,7 +5,7 @@
   },
   "description": "专用开发信起草、审核与发送；保留退订和逐封批准。",
   "name": "dev-6abec56015f48191a27e8c54701c4a8e",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "extensions": {
     "com.openai": {
       "apps": "./.app.json",

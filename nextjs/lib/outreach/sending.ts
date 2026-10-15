@@ -3,27 +3,26 @@ import { outreachDatabase } from "./database";
 import { GmailError, gmailHeader, gmailRequest, listGmailMessages, verifyGmailAccount, type GmailMessage } from "./gmail";
 import { addOutreachHeaders, reviewMime, unsubscribeFooter } from "./mime";
 import { logOutreachError, OutreachError, OUTREACH_SENDER, sendingEnabled } from "./config";
-import { simpleParser } from "mailparser";
 import { coldEmailAllowed } from "./eligibility";
 import { pendingInboundIds } from "./inbound";
 import { readSendQuota } from "./readiness";
 
 type SendRecord = {
   id: string; contact_id: string; email: string; sender: string; draft_id: string;
-  purpose: "cold_marketing" | "requested_reply"; status: string; unsubscribe_token: string;
+  purpose: "cold_marketing"; status: string; unsubscribe_token: string;
   preference_version: number; marketing_status: string; safety_block: string | null;
-  conversation_paused: boolean; eligibility_note: string | null; reply_to_message_id: string | null;
+  conversation_paused: boolean;
   gmail_message_id: string | null; gmail_thread_id: string | null;
 };
 async function getSendRecord(id: string) {
-  const result = await outreachDatabase().execute<SendRecord>(sql`select m.*,c.email,c.unsubscribe_token,c.preference_version,c.marketing_status,c.safety_block,c.conversation_paused,c.eligibility_note from outreach_messages m join outreach_contacts c on c.id=m.contact_id where m.id=${id}::uuid`);
+  const result = await outreachDatabase().execute<SendRecord>(sql`select m.*,c.email,c.unsubscribe_token,c.preference_version,c.marketing_status,c.safety_block,c.conversation_paused from outreach_messages m join outreach_contacts c on c.id=m.contact_id where m.id=${id}::uuid and m.sender=${OUTREACH_SENDER} and m.purpose='cold_marketing'`);
   const record = result.rows[0];
-  if (!record || record.sender !== OUTREACH_SENDER || !["cold_marketing", "requested_reply"].includes(record.purpose)) throw new OutreachError("unknown_outreach_draft", 404);
+  if (!record || record.sender !== OUTREACH_SENDER || record.purpose !== "cold_marketing") throw new OutreachError("unknown_cold_email_draft", 404);
   return record;
 }
 function checkEligibility(record: SendRecord) {
   if (record.safety_block) throw new OutreachError("contact_blocked", 409);
-  if (record.purpose === "cold_marketing" && !coldEmailAllowed(record)) throw new OutreachError("marketing_not_eligible", 409);
+  if (!coldEmailAllowed(record)) throw new OutreachError("marketing_not_eligible", 409);
 }
 
 async function checkInbound(record: SendRecord, threadId: string) {
@@ -40,16 +39,8 @@ async function loadReviewedDraft(record: SendRecord) {
   const draft = await gmailRequest<{ id: string; message: GmailMessage }>(`drafts/${encodeURIComponent(record.draft_id)}?format=raw`);
   if (!draft.message.raw) throw new OutreachError("invalid_mime", 400);
   const raw = Buffer.from(draft.message.raw, "base64url");
-  const review = await reviewMime(raw, record.email, record.purpose === "cold_marketing" ? unsubscribeFooter(record.unsubscribe_token) : null);
+  const review = await reviewMime(raw, record.email, unsubscribeFooter(record.unsubscribe_token));
   await checkInbound(record, draft.message.threadId);
-  if (record.purpose === "requested_reply") {
-    if (!record.reply_to_message_id) throw new OutreachError("reply_request_missing", 409);
-    const event = await outreachDatabase().execute<{ id: string }>(sql`select id from outreach_events where contact_id=${record.contact_id}::uuid and provider_key=${`${OUTREACH_SENDER}:${record.reply_to_message_id}`} and kind='reply' limit 1`);
-    if (!event.rows.length) throw new OutreachError("reply_request_missing", 409);
-    const inbound = await gmailRequest<GmailMessage>(`messages/${encodeURIComponent(record.reply_to_message_id)}?format=raw`);
-    const source = await simpleParser(Buffer.from(inbound.raw || "", "base64url"));
-    if (source.from?.value[0]?.address?.toLowerCase() !== record.email || inbound.threadId !== draft.message.threadId || !source.messageId || review.inReplyTo !== source.messageId) throw new OutreachError("reply_request_mismatch", 409);
-  }
   return { raw, review, threadId: draft.message.threadId };
 }
 
@@ -68,10 +59,10 @@ export async function sendApprovedOutreach(id: string, fingerprint: string) {
   const allowed = process.env.OUTREACH_TEST_RECIPIENTS?.split(",").map(value => value.trim().toLowerCase()).filter(Boolean);
   if (allowed?.length && !allowed.includes(record.email)) throw new OutreachError("test_recipient_required", 409);
   // Explicitly allow self-owned test inboxes before received-message DKIM verification.
-  if (record.purpose === "cold_marketing" && process.env.OUTREACH_RFC8058_VERIFIED !== "true" && !allowed?.includes(record.email)) throw new OutreachError("rfc8058_not_verified", 409);
+  if (process.env.OUTREACH_RFC8058_VERIFIED !== "true" && !allowed?.includes(record.email)) throw new OutreachError("rfc8058_not_verified", 409);
   const draft = await loadReviewedDraft(record);
   if (draft.review.fingerprint !== fingerprint) throw new OutreachError("draft_changed_review_again", 409);
-  const raw = await addOutreachHeaders(draft.raw, record.id, record.purpose === "cold_marketing" ? record.unsubscribe_token : null);
+  const raw = await addOutreachHeaders(draft.raw, record.id, record.unsubscribe_token);
   const quota = await readSendQuota();
   const claim = await outreachDatabase().execute<{ result: { status: string; message_id?: string } }>(sql`select outreach_claim_send(${id}::uuid,${fingerprint},${record.preference_version},${JSON.stringify(quota.gmailIds)}::jsonb,${quota.day}::date) as result`);
   if (claim.rows[0].result.status !== "claimed") {
@@ -87,7 +78,7 @@ export async function sendApprovedOutreach(id: string, fingerprint: string) {
     if (latest.preference_version !== record.preference_version) throw new OutreachError("preferences_changed", 409);
     await checkInbound(latest, draft.threadId);
     const finalDraft = await gmailRequest<{ message: GmailMessage }>(`drafts/${encodeURIComponent(record.draft_id)}?format=raw`);
-    const finalReview = await reviewMime(Buffer.from(finalDraft.message.raw || "", "base64url"), record.email, record.purpose === "cold_marketing" ? unsubscribeFooter(record.unsubscribe_token) : null);
+    const finalReview = await reviewMime(Buffer.from(finalDraft.message.raw || "", "base64url"), record.email, unsubscribeFooter(record.unsubscribe_token));
     if (finalReview.fingerprint !== fingerprint) throw new OutreachError("draft_changed_review_again", 409);
     submitted = true;
     const result = await gmailRequest<GmailMessage>("drafts/send", { id: record.draft_id, message: { raw: raw.toString("base64url"), threadId: draft.threadId } });

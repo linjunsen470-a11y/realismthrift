@@ -14,7 +14,6 @@ DECLARE c uuid; d uuid; token text; v integer; state jsonb; hash1 text:=repeat('
 BEGIN
   c:=outreach_import_contact('verify-${tag}@example.invalid','database_test');
   IF (SELECT marketing_status FROM outreach_contacts WHERE id=c)<>'held' THEN RAISE EXCEPTION 'import_must_be_held'; END IF;
-  IF (SELECT eligibility_note FROM outreach_contacts WHERE id=c) IS NOT NULL THEN RAISE EXCEPTION 'review_should_not_be_required'; END IF;
   state:=outreach_prepare_message(c); d:=(state->>'outreach_id')::uuid;
   PERFORM outreach_attach_draft(d,'fixture_draft');
   SELECT unsubscribe_token INTO token FROM outreach_contacts WHERE id=c;
@@ -24,7 +23,7 @@ BEGIN
   PERFORM outreach_unsubscribe(token,'test');
   IF (SELECT preference_version FROM outreach_contacts WHERE id=c)<>v THEN RAISE EXCEPTION 'unsubscribe_not_idempotent'; END IF;
   PERFORM outreach_import_contact('verify-${tag}@example.invalid','second_import');
-  IF outreach_review_contact(c,'Cannot override unsubscribe') THEN RAISE EXCEPTION 'import_or_review_overrode_unsubscribe'; END IF;
+  IF (SELECT marketing_status FROM outreach_contacts WHERE id=c)<>'unsubscribed' THEN RAISE EXCEPTION 'import_overrode_unsubscribe'; END IF;
   state:=outreach_request_resubscribe('verify-${tag}@example.invalid','${tag}-email','${tag}-ip',hash1);
   IF state->>'email' IS NULL THEN RAISE EXCEPTION 'confirmation_not_requested'; END IF;
   IF outreach_preview_confirmation(hash1)->>'status'<>'ready' THEN RAISE EXCEPTION 'preview_failed'; END IF;
@@ -69,10 +68,10 @@ try {
   // Unreviewed imports can occupy quota; no review note is required.
   const prepared = await database`insert into outreach_messages(contact_id,purpose,sender,draft_id) select ${contact}::uuid,'cold_marketing',${sender},'fixture_'||n from generate_series(1,55) n returning id`;
   const version = (await database`select preference_version from outreach_contacts where id=${contact}::uuid`)[0].preference_version;
-  const claims = await Promise.all(prepared.map(message => database`select outreach_claim_send(${message.id}::uuid,${"f".repeat(64)},${version}) as result`));
+  const claims = await Promise.all(prepared.map(message => database`select outreach_claim_send(${message.id}::uuid,${"f".repeat(64)},${version},${"[]"}::jsonb,timezone('Asia/Shanghai',now())::date) as result`));
   assert.equal(claims.filter(rows => rows[0].result.status === "claimed").length, 50);
   assert.equal(claims.filter(rows => rows[0].result.status === "daily_limit").length, 5);
-  const duplicate = await database`select outreach_claim_send(${prepared[0].id}::uuid,${"f".repeat(64)},${version}) as result`;
+  const duplicate = await database`select outreach_claim_send(${prepared[0].id}::uuid,${"f".repeat(64)},${version},${"[]"}::jsonb,timezone('Asia/Shanghai',now())::date) as result`;
   assert.notEqual(duplicate[0].result.status, "claimed");
   console.log("55 concurrent claims: exactly 50 reserved; duplicate claim refused. Concurrency fixtures remain only in the test branch under example.invalid.");
 } catch (error) {

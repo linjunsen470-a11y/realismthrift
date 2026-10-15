@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { DAILY_MARKETING_LIMIT, OutreachError, OUTREACH_SENDER, sendingEnabled } from "./config";
+import { DAILY_MARKETING_LIMIT, OutreachError, OUTREACH_SENDER, OUTREACH_SERVER_VERSION, sendingEnabled } from "./config";
 import { outreachDatabase } from "./database";
 import { listGmailMessages, verifyGmailAccount } from "./gmail";
 
@@ -43,10 +43,10 @@ export async function getColdEmailServiceStatus() {
     const snapshot = await readSendQuota();
     const { gmailIds, ...quota } = snapshot;
     void gmailIds;
-    return { sender: OUTREACH_SENDER, server_version: "1.4.0", gmail_connected: true, ...configuration, quota,
+    return { sender: OUTREACH_SENDER, server_version: OUTREACH_SERVER_VERSION, gmail_connected: true, ...configuration, quota,
       can_send: configuration.blockers.length === 0 && quota.remaining > 0, existing_draft_import: true, sends_performed: 0 };
   } catch (error) {
-    return { sender: OUTREACH_SENDER, server_version: "1.4.0", ...configuration, gmail_or_quota_error: error instanceof OutreachError ? error.code : "service_unavailable",
+    return { sender: OUTREACH_SENDER, server_version: OUTREACH_SERVER_VERSION, ...configuration, gmail_or_quota_error: error instanceof OutreachError ? error.code : "service_unavailable",
       quota: null, can_send: false, existing_draft_import: true, sends_performed: 0 };
   }
 }
