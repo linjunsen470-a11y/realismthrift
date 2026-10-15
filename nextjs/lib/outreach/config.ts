@@ -3,6 +3,7 @@ export const OUTREACH_SENDER = "jason@realismthriftglobal.com";
 export const CONSENT_TEXT = "I'd like to receive wholesale product updates from RealismThrift. I can unsubscribe at any time.";
 export const CONFIRMATION_TTL_HOURS = 24;
 export const DAILY_MARKETING_LIMIT = 50;
+export const OUTREACH_SERVER_VERSION = "1.5.0";
 
 export class OutreachError extends Error {
   constructor(public code: string, public status = 503, public details?: Record<string, unknown>) {

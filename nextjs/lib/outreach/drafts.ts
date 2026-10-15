@@ -1,7 +1,7 @@
 import { sql } from "drizzle-orm";
 import nodemailer from "nodemailer";
 import { outreachDatabase } from "./database";
-import { OutreachError, OUTREACH_SENDER } from "./config";
+import { OutreachError, OUTREACH_SENDER, OUTREACH_SERVER_VERSION } from "./config";
 import { gmailRequest, verifyGmailAccount, type GmailMessage } from "./gmail";
 import { renderColdEmail } from "./template";
 import { normalizeEmail } from "./tokens";
@@ -11,9 +11,9 @@ import { sendingConfiguration } from "./readiness";
 export async function lookupColdEmailContact(email: string) {
   const normalized = normalizeEmail(email);
   if (!normalized) throw new OutreachError("invalid_request", 400);
-  const rows = await outreachDatabase().execute(sql`select id,email,company,country,source,marketing_status,safety_block,conversation_paused,eligibility_note from outreach_contacts where email=${normalized}`);
+  const rows = await outreachDatabase().execute(sql`select id,email,company,country,source,marketing_status,safety_block,conversation_paused from outreach_contacts where email=${normalized}`);
   const contact = rows.rows[0] as { marketing_status: string; safety_block: string | null; conversation_paused: boolean } | undefined;
-  return { contact: contact || null, cold_email_allowed: !!contact && coldEmailAllowed(contact), manual_eligibility_review_required: false, ...sendingConfiguration(), server_version: "1.4.0" };
+  return { contact: contact || null, cold_email_allowed: !!contact && coldEmailAllowed(contact), ...sendingConfiguration(), server_version: OUTREACH_SERVER_VERSION };
 }
 
 export async function registerColdEmailContact(email: string, source?: string, company?: string, country?: string) {
@@ -24,17 +24,12 @@ export async function registerColdEmailContact(email: string, source?: string, c
   return lookupColdEmailContact(normalized);
 }
 
-export async function requireColdEmailMessage(id: string) {
-  const rows = await outreachDatabase().execute(sql`select id from outreach_messages where id=${id}::uuid and purpose='cold_marketing' and sender=${OUTREACH_SENDER}`);
-  if (!rows.rows.length) throw new OutreachError("unknown_cold_email_draft", 404);
-}
-
 export async function createColdEmailDraft(contactId: string, subject: string, paragraphs: string[]) {
   if (!subject.trim() || subject.length > 160 || /[\r\n]/.test(subject)) throw new OutreachError("invalid_email_content", 400);
   // Validate content before creating a DB record or contacting Gmail.
   renderColdEmail(paragraphs, "A".repeat(43));
   const database = outreachDatabase();
-  const contact = await database.execute<{ email: string; marketing_status: string; safety_block: string | null; conversation_paused: boolean; eligibility_note: string | null }>(sql`select email,marketing_status,safety_block,conversation_paused,eligibility_note from outreach_contacts where id=${contactId}::uuid`);
+  const contact = await database.execute<{ email: string; marketing_status: string; safety_block: string | null; conversation_paused: boolean }>(sql`select email,marketing_status,safety_block,conversation_paused from outreach_contacts where id=${contactId}::uuid`);
   const c = contact.rows[0];
   if (!c || !coldEmailAllowed(c)) throw new OutreachError("marketing_not_eligible", 409);
   await verifyGmailAccount();

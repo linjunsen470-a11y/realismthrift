@@ -30,7 +30,6 @@ describe("cold email MCP discovery", () => {
     expect(tools.find(tool => tool.name === "record_cold_email_inbound")).toMatchObject({
       inputSchema: { required: ["contact_id", "gmail_message_id", "classification", "note"] }, annotations: { readOnlyHint: false },
     });
-    expect(tools.find(tool => tool.name === "lookup_cold_email_contact")?.description).toContain("No manual eligibility");
     expect(tools.find(tool => tool.name === "import_existing_gmail_draft")).toMatchObject({
       inputSchema: { required: ["contact_id", "draft_id", "fingerprint"] }, annotations: { readOnlyHint: false },
     });
