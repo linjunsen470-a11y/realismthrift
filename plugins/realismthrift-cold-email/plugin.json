@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "realismthrift-cold-email",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Private RealismThrift cold outreach: query Gmail/gateway history, save contacts, process incoming replies and delivery notices, and draft or send user-requested emails with unsubscribe support.",
   "author": {
     "name": "RealismThrift"
