@@ -11,8 +11,15 @@ private plugin wrappers use the same workflow and cloud App.
 ## Current behavior
 
 - Draft-only and maintenance requests do not authorize mail. An explicit request
-  can authorize a defined batch; saved-content fingerprints still apply to each
-  recipient. The service supports cold marketing only. Use ordinary email tools
+  can authorize a defined batch or standing automatic sends. Call
+  `send_approved_outreach({outreach_id})` directly; the historical tool name is
+  retained for compatibility. It validates and fingerprints the saved content
+  internally. `review_outreach_draft` is an optional preview, and supplying a
+  fingerprint is optional for callers that want to pin exact content. Edits
+  during a send abort it. No separate READY/APPROVED transition is required;
+  queue DRAFTED/PENDING are unsent bookkeeping states, not review gates. Explicit
+  human HOLD/REJECTED, suppression and unknown-send reservations still apply.
+  The service supports cold marketing only. Use ordinary email tools
   for conversational replies.
 - Lookup checks suppression; history reads exact Gmail From/To correspondence
   and gateway records. Do not add their counts or assume incomplete history

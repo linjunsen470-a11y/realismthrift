@@ -74,7 +74,31 @@ describe("uncertain send reconciliation", () => {
   });
 });
 
-describe("approved sending gate", () => {
+describe("authorized draft sending", () => {
+  it("sends without a review call or supplied fingerprint and records the actual content fingerprint", async () => {
+    expect(await sendApprovedOutreach(id)).toMatchObject({ status: "sent", message_id: "sent-message" });
+    const query = mocks.execute.mock.calls.map(call => dialect.sqlToQuery(call[0])).find(query => query.sql.includes("outreach_claim_send"));
+    expect(query?.params).toContain(mimeFingerprint(raw));
+    expect(mocks.gmailRequest.mock.calls.filter(call => call[0] === "drafts/send")).toHaveLength(1);
+  });
+  it("stops a direct send if the saved content changes during the operation", async () => {
+    let draftReads = 0;
+    const implementation = mocks.gmailRequest.getMockImplementation()!;
+    mocks.gmailRequest.mockImplementation(async (...args) => {
+      if (args[0].startsWith("drafts/fixture") && ++draftReads > 1) {
+        return { message: { threadId: "thread", raw: Buffer.from(raw.toString().replace("Hello", "Changed")).toString("base64url") } };
+      }
+      return implementation(...args);
+    });
+    await expect(sendApprovedOutreach(id)).rejects.toMatchObject({ code: "draft_changed_during_send" });
+    expect(mocks.gmailRequest.mock.calls.some(call => call[0] === "drafts/send")).toBe(false);
+    expect(mocks.execute.mock.calls.map(call => dialect.sqlToQuery(call[0]).params).some(params => params.includes("draft"))).toBe(true);
+  });
+  it.each(["sending", "send_unknown", "cancelled", "failed"])("never submits a %s record as a direct send", async value => {
+    status = value;
+    await expect(sendApprovedOutreach(id)).rejects.toMatchObject({ code: "draft_not_sendable" });
+    expect(mocks.gmailRequest).not.toHaveBeenCalled();
+  });
   it.each(["requested_reply", "resubscribe_confirmation"])("rejects %s at every cold-email entry point", async value => {
     purpose = value;
     for (const action of [reviewOutreachDraft, reconcileOutreachSend, (messageId: string) => sendApprovedOutreach(messageId, mimeFingerprint(raw))]) {
@@ -109,7 +133,7 @@ describe("approved sending gate", () => {
   });
   it("pauses when a new inbound message has not been reviewed", async () => {
     mocks.listGmailMessages.mockResolvedValue([{ id: "new-reply", threadId: "thread" }]);
-    await expect(sendApprovedOutreach(id, mimeFingerprint(raw))).rejects.toMatchObject({ code: "inbound_review_required", details: { contact_id: id, outreach_id: id, pending_count: 1 } });
+    await expect(sendApprovedOutreach(id)).rejects.toMatchObject({ code: "inbound_review_required", details: { contact_id: id, outreach_id: id, pending_count: 1 } });
     expect(mocks.gmailRequest.mock.calls.some(call => call[0] === "drafts/send")).toBe(false);
   });
   it("refuses the 51st marketing reservation", async () => {

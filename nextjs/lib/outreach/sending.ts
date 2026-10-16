@@ -33,7 +33,7 @@ async function checkInbound(record: SendRecord, threadId: string) {
   });
 }
 
-async function loadReviewedDraft(record: SendRecord) {
+async function loadSendableDraft(record: SendRecord) {
   if (!record.draft_id || record.status !== "draft") throw new OutreachError("draft_not_sendable", 409);
   checkEligibility(record);
   const draft = await gmailRequest<{ id: string; message: GmailMessage }>(`drafts/${encodeURIComponent(record.draft_id)}?format=raw`);
@@ -47,11 +47,14 @@ async function loadReviewedDraft(record: SendRecord) {
 export async function reviewOutreachDraft(id: string) {
   await verifyGmailAccount();
   const record = await getSendRecord(id);
-  const draft = await loadReviewedDraft(record);
-  return { outreach_id: id, draft_id: record.draft_id, purpose: record.purpose, ...draft.review, instructions: "Use this fingerprint to send the saved content only when the user requested sending to this recipient. A draft-only request does not authorize sending. Do not repeat confirmation when the exact send is already authorized." };
+  const draft = await loadSendableDraft(record);
+  return { outreach_id: id, draft_id: record.draft_id, purpose: record.purpose, ...draft.review, instructions: "Optional saved-draft preview. Sending performs its own integrity checks; no separate review or approval state is required. Send only within the user's current or standing authorization." };
 }
 
-export async function sendApprovedOutreach(id: string, fingerprint: string) {
+// Keep the existing tool/function name and optional fingerprint for older clients.
+// A user-authorized send checks the saved draft inside this operation, without a
+// separate review call or an APPROVED/READY queue transition.
+export async function sendApprovedOutreach(id: string, fingerprint?: string) {
   if (!sendingEnabled()) throw new OutreachError("sending_disabled", 409);
   await verifyGmailAccount();
   const record = await getSendRecord(id);
@@ -60,11 +63,12 @@ export async function sendApprovedOutreach(id: string, fingerprint: string) {
   if (allowed?.length && !allowed.includes(record.email)) throw new OutreachError("test_recipient_required", 409);
   // Explicitly allow self-owned test inboxes before received-message DKIM verification.
   if (process.env.OUTREACH_RFC8058_VERIFIED !== "true" && !allowed?.includes(record.email)) throw new OutreachError("rfc8058_not_verified", 409);
-  const draft = await loadReviewedDraft(record);
-  if (draft.review.fingerprint !== fingerprint) throw new OutreachError("draft_changed_review_again", 409);
+  const draft = await loadSendableDraft(record);
+  if (fingerprint !== undefined && draft.review.fingerprint !== fingerprint) throw new OutreachError("draft_changed_review_again", 409);
+  const sendFingerprint = draft.review.fingerprint;
   const raw = await addOutreachHeaders(draft.raw, record.id, record.unsubscribe_token);
   const quota = await readSendQuota();
-  const claim = await outreachDatabase().execute<{ result: { status: string; message_id?: string } }>(sql`select outreach_claim_send(${id}::uuid,${fingerprint},${record.preference_version},${JSON.stringify(quota.gmailIds)}::jsonb,${quota.day}::date) as result`);
+  const claim = await outreachDatabase().execute<{ result: { status: string; message_id?: string } }>(sql`select outreach_claim_send(${id}::uuid,${sendFingerprint},${record.preference_version},${JSON.stringify(quota.gmailIds)}::jsonb,${quota.day}::date) as result`);
   if (claim.rows[0].result.status !== "claimed") {
     if (claim.rows[0].result.status === "sent") return claim.rows[0].result;
     throw new OutreachError(claim.rows[0].result.status, 409);
@@ -78,8 +82,10 @@ export async function sendApprovedOutreach(id: string, fingerprint: string) {
     if (latest.preference_version !== record.preference_version) throw new OutreachError("preferences_changed", 409);
     await checkInbound(latest, draft.threadId);
     const finalDraft = await gmailRequest<{ message: GmailMessage }>(`drafts/${encodeURIComponent(record.draft_id)}?format=raw`);
-    const finalReview = await reviewMime(Buffer.from(finalDraft.message.raw || "", "base64url"), record.email, unsubscribeFooter(record.unsubscribe_token));
-    if (finalReview.fingerprint !== fingerprint) throw new OutreachError("draft_changed_review_again", 409);
+    // The first read already checked the MIME. Compare bytes instead of parsing
+    // the same MIME again, retaining protection against edits during this call.
+    const finalRaw = Buffer.from(finalDraft.message.raw || "", "base64url");
+    if (!finalRaw.equals(draft.raw)) throw new OutreachError("draft_changed_during_send", 409);
     submitted = true;
     const result = await gmailRequest<GmailMessage>("drafts/send", { id: record.draft_id, message: { raw: raw.toString("base64url"), threadId: draft.threadId } });
     await outreachDatabase().execute(sql`update outreach_messages set status='sent',gmail_message_id=${result.id},gmail_thread_id=${result.threadId},updated_at=now() where id=${id}::uuid and status='sending'`);

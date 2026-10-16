@@ -9,6 +9,7 @@ export function sendingConfiguration() {
   const dkim = process.env.OUTREACH_DKIM_MODE;
   return {
     sending_enabled: sendingEnabled(), rfc8058_verified: verified, test_recipients_restricted: restricted,
+    separate_review_required: false, queue_approval_required: false, send_fingerprint_required: false,
     dkim_configured: dkim === "google" || (dkim === "own" && !!process.env.OUTREACH_DKIM_PRIVATE_KEY?.trim()),
     blockers: [!sendingEnabled() && "sending_disabled", !verified && "rfc8058_not_verified", restricted && "test_recipient_restriction",
       !(dkim === "google" || (dkim === "own" && process.env.OUTREACH_DKIM_PRIVATE_KEY?.trim())) && "dkim_not_configured"].filter(Boolean),

@@ -84,5 +84,5 @@ export async function importExistingGmailDraft(contactId: string, draftId: strin
   }
   const result = await db.execute<{ result: { outreach_id: string; status: string } }>(sql`select outreach_import_existing_draft(${contactId}::uuid,${draftId},${mimeFingerprint(raw)},${draft.message.threadId}) as result`);
   return { ...result.rows[0].result, draft_id: draftId, fingerprint: mimeFingerprint(raw), footer_added: footerAdded,
-    sends_performed: 0, next_step: "Review this existing draft through review_outreach_draft. Import is not authorization to send." };
+    sends_performed: 0, next_step: "Draft linked. When sending is authorized, call send_approved_outreach with this outreach_id; separate review is optional. Import does not send." };
 }

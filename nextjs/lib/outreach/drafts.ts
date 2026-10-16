@@ -41,5 +41,5 @@ export async function createColdEmailDraft(contactId: string, subject: string, p
   const draft = await gmailRequest<{ id: string; message: GmailMessage }>("drafts", { message: { raw: (mail.message as Buffer).toString("base64url") } });
   const attached = await database.execute<{ ok: boolean }>(sql`select outreach_attach_draft(${record.outreach_id}::uuid,${draft.id}) as ok`);
   if (!attached.rows[0]?.ok) throw new OutreachError("draft_registration_failed", 409);
-  return { outreach_id: record.outreach_id, draft_id: draft.id, status: "draft", to: record.email, subject: subject.trim(), ...content, next_step: "Review this saved draft with review_outreach_draft before requesting approval to send. No email has been sent." };
+  return { outreach_id: record.outreach_id, draft_id: draft.id, status: "draft", to: record.email, subject: subject.trim(), ...content, next_step: "Draft saved; no email has been sent. When sending is authorized, call send_approved_outreach with this outreach_id. No separate review or queue approval is required." };
 }
