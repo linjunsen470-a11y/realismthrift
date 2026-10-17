@@ -57,9 +57,9 @@ export const siteFooter: SiteFooter = {
     description:
       "Dongguan Huihe Realismthrift Trading Co., Ltd. supplies sorted second-hand clothes, shoes and bags from China for wholesale buyers and importers.",
     address: companyAddress,
-    phone: "+86 133 6748 1710",
+    phone: "+86 17279444062",
     email: "sales@realismthrift.com",
-    whatsapp: "+86 133 6748 1710",
+    whatsapp: "+86 17279444062",
     socials: {
       facebook: "https://facebook.com/realismthrift",
       instagram: "https://instagram.com/realismthrift",
@@ -89,7 +89,7 @@ export const siteFooter: SiteFooter = {
     },
   ],
   contact: {
-    whatsapp: "+86 133 6748 1710",
+    whatsapp: "+86 17279444062",
     email: "sales@realismthrift.com",
     inquiryTime: "We aim to reply within 12 hours. Urgent? Contact via WhatsApp.",
   },

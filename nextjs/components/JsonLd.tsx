@@ -31,7 +31,7 @@ export function getOrganizationSchema() {
     "image": "https://www.realismthrift.com/images/hero-main.webp",
     "description": "Dongguan Huihe Realismthrift Trading Co., Ltd. supplies sorted used clothes, shoes, and bags from China for wholesale importers and resale markets.",
     "foundingDate": "2012",
-    "telephone": "+86-133-6748-1710",
+    "telephone": "+86-172-7944-4062",
     "email": "sales@realismthrift.com",
     "address": {
       "@type": "PostalAddress",
@@ -59,7 +59,7 @@ export function getOrganizationSchema() {
     "contactPoint": [
       {
         "@type": "ContactPoint",
-        "telephone": "+86-133-6748-1710",
+        "telephone": "+86-172-7944-4062",
         "contactType": "sales",
         "email": "sales@realismthrift.com",
         "availableLanguage": ["English", "French", "Spanish", "Swahili"],
@@ -67,7 +67,7 @@ export function getOrganizationSchema() {
       },
       {
         "@type": "ContactPoint",
-        "url": "https://wa.me/8613367481710",
+        "url": "https://wa.me/8617279444062",
         "contactType": "customer support",
         "availableLanguage": ["English", "French", "Spanish", "Swahili"],
         "areaServed": "Worldwide"
@@ -100,7 +100,7 @@ export function getOrganizationSchema() {
       }
     ],
     "sameAs": [
-      "https://wa.me/8613367481710"
+      "https://wa.me/8617279444062"
     ]
   };
 }

@@ -96,7 +96,7 @@ export default function UsedBrandClothesPage() {
             </p>
             <div className="flex gap-[0.875rem] flex-wrap">
                <a href="#inquiry" className="bg-[#F0B429] text-[#1A1A1A] font-montserrat font-extrabold text-[0.875rem] px-6 md:px-8 py-3 md:py-[0.875rem] rounded-[3px] no-underline tracking-[0.03em] hover:bg-[#d4a017] transition-colors whitespace-nowrap">GET PRICE NOW →</a>
-               <a href="https://wa.me/8613367481710?text=Hi%2C+I+want+to+wholesale+used+brand+clothes" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white font-montserrat font-bold text-[0.875rem] px-6 md:px-8 py-3 md:py-[0.875rem] rounded-[3px] no-underline hover:bg-[#1da851] transition-colors whitespace-nowrap">WhatsApp Now</a>
+               <a href="https://wa.me/8617279444062?text=Hi%2C+I+want+to+wholesale+used+brand+clothes" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white font-montserrat font-bold text-[0.875rem] px-6 md:px-8 py-3 md:py-[0.875rem] rounded-[3px] no-underline hover:bg-[#1da851] transition-colors whitespace-nowrap">WhatsApp Now</a>
             </div>
           </div>
         </div>
@@ -475,7 +475,7 @@ export default function UsedBrandClothesPage() {
               </div>
               <div className="p-[1.5rem]">
                  <InquiryForm variant="sidebar" />
-                 <a href="https://wa.me/8613367481710?text=Hi%2C+I+want+used+brand+clothes+wholesale+price" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-[0.5rem] bg-[#25D366] text-white p-[0.625rem] rounded-[3px] no-underline font-montserrat font-bold text-[0.8125rem] mt-[0.75rem] hover:bg-[#1da851] transition-colors">
+                 <a href="https://wa.me/8617279444062?text=Hi%2C+I+want+used+brand+clothes+wholesale+price" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-[0.5rem] bg-[#25D366] text-white p-[0.625rem] rounded-[3px] no-underline font-montserrat font-bold text-[0.8125rem] mt-[0.75rem] hover:bg-[#1da851] transition-colors">
                    Chat on WhatsApp
                  </a>
                </div>

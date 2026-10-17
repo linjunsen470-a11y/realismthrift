@@ -61,7 +61,7 @@ export function CustomerAcknowledgementEmail({
             </Text>
 
             <Section style={buttonRowStyle}>
-              <Button href="https://wa.me/8613367481710?text=Hi%2C%20I%20submitted%20a%20wholesale%20inquiry" style={primaryButtonStyle}>
+              <Button href="https://wa.me/8617279444062?text=Hi%2C%20I%20submitted%20a%20wholesale%20inquiry" style={primaryButtonStyle}>
                 Contact us on WhatsApp
               </Button>
             </Section>
@@ -69,7 +69,7 @@ export function CustomerAcknowledgementEmail({
             <Text style={contactStyle}>
               Email: <Link href="mailto:sales@realismthrift.com" style={linkStyle}>sales@realismthrift.com</Link>
               <br />
-              WhatsApp: <Link href="https://wa.me/8613367481710" style={linkStyle}>+86 133 6748 1710</Link>
+              WhatsApp: <Link href="https://wa.me/8617279444062" style={linkStyle}>+86 17279444062</Link>
             </Text>
 
             <Hr style={dividerStyle} />
@@ -108,7 +108,7 @@ export function customerAcknowledgementText({
     `Country: ${display(country)}`,
     "",
     "You may reply directly to this email, email sales@realismthrift.com, or contact us on WhatsApp:",
-    "https://wa.me/8613367481710",
+    "https://wa.me/8617279444062",
     "",
     "RealismThrift Co., Ltd. · Huizhou, Guangdong, China",
   ].join("\n");

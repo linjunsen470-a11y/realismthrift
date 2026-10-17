@@ -56,7 +56,7 @@ test("footer WhatsApp links use international digits only", async ({ page }) => 
   await page.goto("/faq");
   const links = await page.locator('footer a[href*="wa.me"]').evaluateAll(elements => elements.map(element => element.getAttribute("href")));
   expect(links.length).toBeGreaterThan(0);
-  for (const link of links) expect(link).toBe("https://wa.me/8613367481710");
+  for (const link of links) expect(link).toBe("https://wa.me/8617279444062");
 });
 
 test("inquiry retry preserves buyer input and the submission identifier", async ({ page }) => {

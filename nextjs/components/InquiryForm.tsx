@@ -3,7 +3,7 @@
 import { FormEvent, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, LoaderCircle, MessageCircle, TriangleAlert } from "lucide-react";
-import { trackEvent } from "./Analytics";
+import { trackEvent, trackMetaLead } from "./Analytics";
 
 interface InquiryFormProps {
   variant?: "default" | "sidebar";
@@ -71,7 +71,7 @@ export function InquiryForm({
           message: result.message ?? "Inquiry received. Our sales team aims to reply within 12 hours.",
         });
 
-        // Track only non-identifying lead metadata. Never send contact details or free text to GA4.
+        // Track only non-identifying lead metadata. Never send contact details or free text.
         try {
           trackEvent("generate_lead", {
             form_name: "wholesale_inquiry",
@@ -82,6 +82,11 @@ export function InquiryForm({
           });
         } catch {
           // Analytics must not turn an accepted inquiry into a displayed error.
+        }
+        try {
+          trackMetaLead(formValues.product);
+        } catch {
+          // A pixel failure must not turn an accepted inquiry into a displayed error.
         }
 
         return;
@@ -229,7 +234,7 @@ export function InquiryForm({
 
         {showWhatsApp && !isSidebar ? (
           <a
-            href="https://wa.me/8613367481710?text=Hi%2C+I+want+to+place+a+wholesale+order"
+            href="https://wa.me/8617279444062?text=Hi%2C+I+want+to+place+a+wholesale+order"
             target="_blank"
             rel="noopener noreferrer"
             className="rt-form-whatsapp"
@@ -252,7 +257,7 @@ export function InquiryForm({
         <div className="rt-form-state rt-form-state-error" role="alert" aria-live="polite">
           <TriangleAlert size={18} strokeWidth={2.2} />
           <p>{submission.message}</p>
-          <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="underline">Contact us on WhatsApp</a>
+          <a href="https://wa.me/8617279444062" target="_blank" rel="noopener noreferrer" className="underline">Contact us on WhatsApp</a>
         </div>
       ) : null}
     </form>

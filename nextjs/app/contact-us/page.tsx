@@ -51,7 +51,7 @@ export default function ContactUsPage() {
               <Mail className="w-4 h-4 transition-transform group-hover:scale-110" />
               Email Us
             </a>
-            <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="group bg-[#25D366] text-white px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-[#1da851] hover:-translate-y-0.5 shadow-lg active:scale-95 flex items-center gap-2">
+            <a href="https://wa.me/8617279444062" target="_blank" rel="noopener noreferrer" className="group bg-[#25D366] text-white px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-[#1da851] hover:-translate-y-0.5 shadow-lg active:scale-95 flex items-center gap-2">
               <MessageCircle className="w-4 h-4 transition-transform group-hover:scale-110" />
               WhatsApp
             </a>
@@ -65,8 +65,8 @@ export default function ContactUsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
             {[
               { i: <Mail className="w-6 h-6 text-brand-red" />, t: "Email", s: "Send us an email", v: "sales@realismthrift.com", l: "mailto:sales@realismthrift.com", color: "bg-red-50" },
-              { i: <MessageCircle className="w-6 h-6 text-[#25D366]" />, t: "WhatsApp", s: "Chat with us now", v: "+86 133 6748 1710", l: "https://wa.me/8613367481710", color: "bg-green-50" },
-              { i: <Phone className="w-6 h-6 text-brand-gold" />, t: "Phone", s: "Call our sales team", v: "+86 133 6748 1710", l: "tel:+8613367481710", color: "bg-yellow-50" },
+              { i: <MessageCircle className="w-6 h-6 text-[#25D366]" />, t: "WhatsApp", s: "Chat with us now", v: "+86 17279444062", l: "https://wa.me/8617279444062", color: "bg-green-50" },
+              { i: <Phone className="w-6 h-6 text-brand-gold" />, t: "Phone", s: "Call our sales team", v: "+86 17279444062", l: "tel:+8617279444062", color: "bg-yellow-50" },
               { i: <MapPin className="w-6 h-6 text-brand-dark" />, t: "Address", s: "Visit our factory", v: "County Road 193, Yuanzhou", l: companyLocation.mapsUrl, color: "bg-gray-100" },
             ].map((item) => (
               <div key={item.t} className="bg-white border border-[#eee] rounded-[12px] p-8 text-center shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all transform hover:-translate-y-1.5 group">
@@ -111,7 +111,7 @@ export default function ContactUsPage() {
                     { i: <Building2 className="w-5 h-5 text-brand-gold" />, l: "Full Name", v: "Dongguan Huihe Realismthrift Trading Co., Ltd." },
                     { i: <MapPin className="w-5 h-5 text-brand-gold" />, l: "Location", v: siteFooter.brand.address },
                     { i: <Mail className="w-5 h-5 text-brand-gold" />, l: "Official Email", v: "sales@realismthrift.com" },
-                    { i: <Phone className="w-5 h-5 text-brand-gold" />, l: "Sales Hotline", v: "+86 133 6748 1710" },
+                    { i: <Phone className="w-5 h-5 text-brand-gold" />, l: "Sales Hotline", v: "+86 17279444062" },
                     { i: <Clock className="w-5 h-5 text-brand-gold" />, l: "Business Hours", v: "Mon–Sat 8:00–20:00 (GMT+8)" },
                   ].map((item) => (
                     <div key={item.l} className="flex gap-4 text-[0.8125rem] border-b border-white/5 pb-4 last:border-0 last:pb-0">

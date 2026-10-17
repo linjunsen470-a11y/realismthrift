@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
             <div className="rt-legal-tag">PRIVACY</div>
             <h1 className="rt-page-hero-title text-white mb-4">Privacy <span className="text-brand-gold">Policy</span></h1>
             <p className="text-white/60 text-lg leading-relaxed">
-              Last updated: October 4, 2026. This policy explains how we protect your personal data in our global wholesale operations.
+              Last updated: October 17, 2026. This policy explains how we protect your personal data in our global wholesale operations.
             </p>
           </div>
         </div>
@@ -52,7 +52,7 @@ export default function PrivacyPolicyPage() {
                   <li><strong>Contact Information:</strong> Name, email address, phone number, and WhatsApp ID when you fill out an inquiry form.</li>
                   <li><strong>Business Information:</strong> Company name, country, and specific product interests for wholesale purposes.</li>
                   <li><strong>Business Outreach:</strong> Relevant business contact details and their source, including company websites, business cards, and trade fair contacts, together with records of communication and email preferences.</li>
-                  <li><strong>Technical Data:</strong> IP address and request information used for security and rate limits, and limited website analytics. Our private operator connection uses authentication cookies.</li>
+                  <li><strong>Technical Data:</strong> IP address and request information used for security and rate limits, limited website analytics, and advertising measurement events for page views and successful inquiries. Our private operator connection uses authentication cookies.</li>
                 </ul>
 
                 <h2>2. How We Use Information</h2>
@@ -64,6 +64,7 @@ export default function PrivacyPolicyPage() {
                   <li>To provide customer support and send order updates.</li>
                   <li>To contact relevant wholesale businesses where permitted and honor their marketing preferences.</li>
                   <li>To improve our website functionality and user experience.</li>
+                  <li>To measure page views and successful inquiry submissions for site analytics and advertising.</li>
                   <li>To comply with legal obligations and export regulations.</li>
                 </ul>
 
@@ -83,18 +84,21 @@ export default function PrivacyPolicyPage() {
                   We do not sell, trade, or otherwise transfer to outside parties your personally identifiable information. This does not include website hosting partners and other parties who assist us in operating our website, conducting our business, or serving our users, so long as those parties agree to keep this information confidential.
                 </p>
                 <p>
-                  We use Vercel to host and operate the website, Resend to deliver inquiry notifications and automated confirmations, and Supabase to securely store inquiry records. These providers process only the information needed to perform those services on our behalf.
+                  We use Vercel to host and operate the website, Resend to deliver inquiry notifications and automated confirmations, and Supabase to securely store inquiry records. These providers process only the information needed to perform those services on our behalf. Meta receives the Pixel events described below. Those events do not include inquiry contact details.
                 </p>
                 <p>
                   We use Google Workspace Gmail for business correspondence and Neon to store outreach records and email preferences. Supabase also authenticates our private operator tools. Resend delivers confirmation emails that you request when updating your email preferences.
                 </p>
 
-                <h2>5. Analytics</h2>
+                <h2>5. Analytics and Advertising Measurement</h2>
                 <p>
-                  We use Google Analytics 4 to understand basic website traffic, such as page views and general visitor location. We do not use Google Ads, Meta Pixel, advertising personalization, or remarketing technologies.
+                  We use Google Analytics 4 to understand basic website traffic, such as page views and general visitor location. We do not use Google Ads. Advertising storage, advertising user data, advertising personalization, and Google Signals are disabled for Google Analytics.
                 </p>
                 <p>
-                  Google Analytics uses first-party analytics cookies to distinguish visitors and measure sessions, page views, and inquiry completion. Advertising storage, advertising user data, advertising personalization, and Google Signals are disabled. We do not send inquiry names, email addresses, phone numbers, or message contents to Google Analytics. You can block or delete analytics cookies through your browser settings. Google may process analytics information in accordance with its own privacy policy.
+                  Google Analytics uses first-party analytics cookies to distinguish visitors and measure sessions, page views, and inquiry completion. We do not send inquiry names, email addresses, phone numbers, WhatsApp numbers, or message contents to Google Analytics. You can block or delete analytics cookies through your browser settings. Google may process analytics information in accordance with its own privacy policy.
+                </p>
+                <p>
+                  We use the Meta Pixel to measure advertising and conversions. On public pages it records a PageView. When an inquiry form is submitted successfully, it records a Lead event with the product category you selected, or &quot;not specified&quot; if you left that field blank. We do not send your name, email address, phone number, WhatsApp number, company, country, or message to the Meta Pixel. Meta may receive technical information such as the <code>_fbp</code> cookie, IP address, and page address, and may use that information to measure and optimize ads under <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener noreferrer">Meta&apos;s privacy policy</a>. Email preference pages and private operator pages do not load Google Analytics or the Meta Pixel.
                 </p>
 
                 <h2>6. Your Rights</h2>
@@ -102,7 +106,7 @@ export default function PrivacyPolicyPage() {
                   You have the right to access, correct, or delete your personal data, including information submitted through our inquiry form. If you wish to exercise these rights, please contact us at <a href="mailto:privacy@realismthrift.com">privacy@realismthrift.com</a>.
                 </p>
                 <p>
-                  You can stop marketing emails through the unsubscribe link in an email or by contacting us. Replying or submitting an inquiry does not restore marketing permission. Receiving marketing again requires a separate request and email confirmation. Email preference pages do not load analytics scripts.
+                  You can stop marketing emails through the unsubscribe link in an email or by contacting us. Replying or submitting an inquiry does not restore marketing permission. Receiving marketing again requires a separate request and email confirmation. Email preference pages do not load analytics or Meta Pixel scripts.
                 </p>
 
                 <h2>7. Contact Us</h2>

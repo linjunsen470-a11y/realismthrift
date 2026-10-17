@@ -20,7 +20,7 @@ This directory stores the human-reviewable gold-standard QA corpus for RealismTh
 
 ## Contact Facts
 
-- WhatsApp: `+86 133 6748 1710`
+- WhatsApp: `+86 17279444062`
 - Email: `sales@realismthrift.com`
 - Facility: RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China
 - Expected response: within 12 hours where possible

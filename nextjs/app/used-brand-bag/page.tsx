@@ -94,7 +94,7 @@ export default function UsedBrandBagPage() {
               <a href="#inquiry" className="bg-brand-gold text-brand-dark px-6 md:px-10 py-3 md:py-4 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-all shadow-[0_10px_20px_rgba(240,180,41,0.2)] whitespace-nowrap">
                 Get Price Now →
               </a>
-              <a href="https://wa.me/8613367481710" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-6 md:px-10 py-3 md:py-4 rounded-[3px] font-semibold font-montserrat text-[0.9rem] hover:bg-white/20 transition-all whitespace-nowrap">
+              <a href="https://wa.me/8617279444062" target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/30 text-white px-6 md:px-10 py-3 md:py-4 rounded-[3px] font-semibold font-montserrat text-[0.9rem] hover:bg-white/20 transition-all whitespace-nowrap">
                 WhatsApp
               </a>
             </div>
@@ -322,7 +322,7 @@ export default function UsedBrandBagPage() {
 
             <div className="mt-[1.25rem]">
               <a
-                href="https://wa.me/8613367481710?text=Hi%2C+I+want+used+brand+bags+wholesale+price"
+                href="https://wa.me/8617279444062?text=Hi%2C+I+want+used+brand+bags+wholesale+price"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-[3px] no-underline font-montserrat font-bold text-[0.875rem] hover:bg-[#1da851] transition-colors"

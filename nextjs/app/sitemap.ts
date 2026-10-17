@@ -23,7 +23,7 @@ const staticPages: StaticPageConfig[] = [
   { path: '/about-us', lastModified: '2026-09-05', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/faq', lastModified: '2026-09-05', changeFrequency: 'monthly', priority: 0.75 },
   { path: '/blog', lastModified: '2026-09-05', changeFrequency: 'weekly', priority: 0.75 },
-  { path: '/privacy-policy', lastModified: '2026-09-05', changeFrequency: 'yearly', priority: 0.3 },
+  { path: '/privacy-policy', lastModified: '2026-10-17', changeFrequency: 'yearly', priority: 0.3 },
   { path: '/terms-of-service', lastModified: '2026-09-05', changeFrequency: 'yearly', priority: 0.3 },
 ];
 

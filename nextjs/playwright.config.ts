@@ -20,6 +20,10 @@ export default defineConfig({
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
+    // Smoke browsers must not deliver PageView or Lead hits to the production pixel.
+    launchOptions: {
+      args: ["--host-resolver-rules=MAP connect.facebook.net 127.0.0.1, MAP www.facebook.com 127.0.0.1"],
+    },
   },
   projects: [
     {
@@ -44,6 +48,9 @@ export default defineConfig({
           // Login POSTs are intercepted by the tests; no Supabase login is performed.
           SUPABASE_URL: process.env.SUPABASE_URL || "https://tjbeeackrjpojejxhnzq.supabase.co",
           SUPABASE_PUBLISHABLE_KEY: process.env.SUPABASE_PUBLISHABLE_KEY || "sb_publishable_smoke_test_placeholder",
+          NEXT_PUBLIC_ANALYTICS_ENABLED: process.env.NEXT_PUBLIC_ANALYTICS_ENABLED || "true",
+          NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID || "G-TEST000001",
+          NEXT_PUBLIC_FB_PIXEL_ID: process.env.NEXT_PUBLIC_FB_PIXEL_ID || "1640627937418258",
         },
       },
 });

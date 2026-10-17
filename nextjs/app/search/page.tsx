@@ -249,7 +249,7 @@ export default async function SearchPage({
                     <ArrowRight size={16} strokeWidth={2.5} />
                   </Link>
                   <a
-                    href="https://wa.me/8613367481710"
+                    href="https://wa.me/8617279444062"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 rounded-[3px] bg-[#25D366] px-5 py-3 text-[0.82rem] font-montserrat font-bold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#1da851]"
@@ -304,7 +304,7 @@ export default async function SearchPage({
                       Get Price List
                     </Link>
                     <a
-                      href="https://wa.me/8613367481710"
+                      href="https://wa.me/8617279444062"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 rounded-[3px] bg-[#25D366] px-4 py-3 text-[0.78rem] font-montserrat font-bold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#1da851]"
@@ -342,7 +342,7 @@ export default async function SearchPage({
                     <ArrowRight size={16} strokeWidth={2.5} />
                   </Link>
                   <a
-                    href="https://wa.me/8613367481710"
+                    href="https://wa.me/8617279444062"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-[3px] bg-[#25D366] px-7 py-3.5 text-[0.82rem] font-black uppercase tracking-[0.1em] text-white transition-all hover:bg-[#1da851] hover:shadow-lg active:scale-[0.98]"

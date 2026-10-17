@@ -154,14 +154,14 @@ const contactMethods = [
   },
   {
     label: "WHATSAPP",
-    value: "+86 133 6748 1710",
-    href: "https://wa.me/8613367481710",
+    value: "+86 17279444062",
+    href: "https://wa.me/8617279444062",
     icon: MessageCircle,
   },
   {
     label: "PHONE",
-    value: "+86 133 6748 1710",
-    href: "tel:+8613367481710",
+    value: "+86 17279444062",
+    href: "tel:+8617279444062",
     icon: Phone,
   },
   {

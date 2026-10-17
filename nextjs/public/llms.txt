@@ -38,8 +38,8 @@ Quality control follows sellable used-goods standards. Export batches are checke
 ## Inquiry And Contact
 
 - Inquiry form endpoint: website contact form, handled by the Next.js API route at /api/send
-- WhatsApp: +86 133 6748 1710
-- WhatsApp link: https://wa.me/8613367481710
+- WhatsApp: +86 17279444062
+- WhatsApp link: https://wa.me/8617279444062
 - Email: sales@realismthrift.com
 - Expected response: within 12 hours where possible
 

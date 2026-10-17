@@ -50,7 +50,7 @@ export function SiteFooter({ data }: SiteFooterProps) {
             )}
             <div className="rt-footer-contact-item">
               <Phone size={18} strokeWidth={2.2} />
-              <a href="tel:+8613367481710">{data.brand.phone}</a>
+              <a href="tel:+8617279444062">{data.brand.phone}</a>
             </div>
             <div className="rt-footer-contact-item">
               <MapPin size={18} strokeWidth={2.2} />
