@@ -1,5 +1,5 @@
 /** Production Meta Pixel. Public by design; override with NEXT_PUBLIC_FB_PIXEL_ID. */
-export const PRODUCTION_FB_PIXEL_ID = "1640627937418258";
+export const PRODUCTION_FB_PIXEL_ID = "1661409812003549";
 
 const PIXEL_ID_PATTERN = /^\d{10,20}$/;
 
@@ -56,4 +56,22 @@ export function metaLeadParams(productInterest: string | undefined): {
     ? productInterest
     : "not_specified";
   return { content_name: "wholesale_inquiry", content_category };
+}
+
+/** UUID shape shared by the server Conversions API event_id and the browser eventID. */
+const EVENT_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+export function isMetaEventId(value: string | undefined | null): boolean {
+  return EVENT_ID_PATTERN.test((value ?? "").trim());
+}
+
+/**
+ * Meta's browser pixel expects eventID (camelCase) in the fourth fbq argument.
+ * The same value is sent to the Conversions API as event_id so the two Leads deduplicate.
+ * Anything that is not a UUID is omitted; the caller can still record Lead without it.
+ */
+export function metaLeadEventOptions(eventId: string | undefined | null): { eventID: string } | undefined {
+  const value = (eventId ?? "").trim();
+  if (!EVENT_ID_PATTERN.test(value)) return undefined;
+  return { eventID: value };
 }

@@ -50,7 +50,7 @@ export default defineConfig({
           SUPABASE_PUBLISHABLE_KEY: process.env.SUPABASE_PUBLISHABLE_KEY || "sb_publishable_smoke_test_placeholder",
           NEXT_PUBLIC_ANALYTICS_ENABLED: process.env.NEXT_PUBLIC_ANALYTICS_ENABLED || "true",
           NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID || "G-TEST000001",
-          NEXT_PUBLIC_FB_PIXEL_ID: process.env.NEXT_PUBLIC_FB_PIXEL_ID || "1640627937418258",
+          NEXT_PUBLIC_FB_PIXEL_ID: process.env.NEXT_PUBLIC_FB_PIXEL_ID || "1661409812003549",
         },
       },
 });

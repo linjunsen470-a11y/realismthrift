@@ -60,7 +60,7 @@ export function InquiryForm({
       });
 
       const result = (await response.json().catch(() => null)) as
-        | { ok?: boolean; message?: string }
+        | { ok?: boolean; message?: string; event_id?: string }
         | null;
 
       if (response.ok && result?.ok) {
@@ -84,7 +84,8 @@ export function InquiryForm({
           // Analytics must not turn an accepted inquiry into a displayed error.
         }
         try {
-          trackMetaLead(formValues.product);
+          const eventId = typeof result.event_id === "string" ? result.event_id : undefined;
+          trackMetaLead(formValues.product, eventId);
         } catch {
           // A pixel failure must not turn an accepted inquiry into a displayed error.
         }

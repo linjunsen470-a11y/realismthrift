@@ -4,6 +4,7 @@ import { getInquiryEmailSettings } from "@/lib/inquiries/config";
 import { processPendingEmailJobs } from "@/lib/inquiries/email-jobs";
 import { createInquiry, InquiryStorageError } from "@/lib/inquiries/repository";
 import { validateInquiryPayload } from "@/lib/inquiries/validation";
+import { sendMetaCapiLead, type MetaCapiLeadResult } from "@/lib/meta-capi";
 
 export const preferredRegion = "sin1";
 
@@ -96,6 +97,32 @@ function isAllowedRequestOrigin(request: Request) {
   return allowedOrigins.has(sourceOrigin);
 }
 
+function measurementPageUrl(sourcePath: string): string | undefined {
+  const origin = getConfiguredAppOrigin() ?? PRODUCTION_SITE_ORIGIN;
+  if (!sourcePath.startsWith("/") || sourcePath.startsWith("//")) return undefined;
+  try {
+    const url = new URL(sourcePath, origin);
+    url.search = "";
+    url.hash = "";
+    if (url.origin !== origin) return undefined;
+    return url.toString();
+  } catch {
+    return undefined;
+  }
+}
+
+function reportMetaCapiResult(result: MetaCapiLeadResult) {
+  if (result.status === "sent") return;
+  if (result.status === "skipped") {
+    console.error("Meta CAPI Lead skipped", { errorName: result.reason });
+    return;
+  }
+  console.error("Meta CAPI Lead failed", {
+    errorName: result.errorName,
+    ...(result.httpStatus !== undefined ? { status: result.httpStatus } : {}),
+  });
+}
+
 function isRateLimited(clientIp: string) {
   const now = Date.now();
   const attempts = rateLimitStore.get(clientIp) ?? [];
@@ -116,7 +143,8 @@ export async function POST(request: Request) {
     return jsonError("validation_error", "Invalid request origin.", 403);
   }
 
-  if (isRateLimited(getClientIp(request))) {
+  const clientIp = getClientIp(request);
+  if (isRateLimited(clientIp)) {
     return jsonError(
       "rate_limited",
       "Too many inquiries were submitted from this connection. Please wait a few minutes and try again.",
@@ -174,8 +202,26 @@ export async function POST(request: Request) {
     });
   }
 
+  // Server-generated so the browser can still deduplicate when connect.facebook.net is blocked.
+  const eventId = crypto.randomUUID();
+  try {
+    const capiResult = await sendMetaCapiLead({
+      eventId,
+      productInterest: parsed.data.product,
+      eventSourceUrl: measurementPageUrl(parsed.data.sourcePath),
+      clientIpAddress: clientIp === "unknown" ? undefined : clientIp,
+      clientUserAgent: request.headers.get("user-agent") ?? undefined,
+    });
+    reportMetaCapiResult(capiResult);
+  } catch (error) {
+    console.error("Meta CAPI Lead failed", {
+      errorName: error instanceof Error ? error.name : "UnknownError",
+    });
+  }
+
   return NextResponse.json({
     ok: true,
     message: "Inquiry received. Our sales team aims to reply within 12 hours.",
+    event_id: eventId,
   });
 }

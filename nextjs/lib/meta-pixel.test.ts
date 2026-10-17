@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, PRODUCTION_FB_PIXEL_ID, resolveFacebookPixelId } from "./meta-pixel";
+import { isMetaEventId, metaLeadEventOptions, metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, PRODUCTION_FB_PIXEL_ID, resolveFacebookPixelId } from "./meta-pixel";
 
 describe("resolveFacebookPixelId", () => {
-  it("uses the production pixel when the environment value is missing", () => {
+  it("uses the current production pixel when the environment value is missing", () => {
+    expect(PRODUCTION_FB_PIXEL_ID).toBe("1661409812003549");
     expect(resolveFacebookPixelId(undefined)).toBe(PRODUCTION_FB_PIXEL_ID);
     expect(resolveFacebookPixelId(null)).toBe(PRODUCTION_FB_PIXEL_ID);
     expect(resolveFacebookPixelId("  ")).toBe(PRODUCTION_FB_PIXEL_ID);
@@ -65,5 +66,21 @@ describe("metaLeadParams", () => {
       content_name: "wholesale_inquiry",
       content_category: "not_specified",
     });
+  });
+});
+
+describe("metaLeadEventOptions", () => {
+  it("uses Meta's browser eventID key for a UUID", () => {
+    expect(isMetaEventId(crypto.randomUUID())).toBe(true);
+    expect(metaLeadEventOptions("6f1e2c3a-4b5d-4e6f-8a7b-9c0d1e2f3a4b")).toEqual({
+      eventID: "6f1e2c3a-4b5d-4e6f-8a7b-9c0d1e2f3a4b",
+    });
+  });
+
+  it("omits options when the server did not return an event id", () => {
+    expect(metaLeadEventOptions(undefined)).toBeUndefined();
+    expect(metaLeadEventOptions(null)).toBeUndefined();
+    expect(metaLeadEventOptions("")).toBeUndefined();
+    expect(metaLeadEventOptions("6f1e2c3a-4b5d-4e6f-8a7b-9c0d1e2f3a4b;alert(1)")).toBeUndefined();
   });
 });

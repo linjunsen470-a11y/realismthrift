@@ -1,5 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 
+const META_LEAD_EVENT_ID = "6f1e2c3a-4b5d-4e6f-8a7b-9c0d1e2f3a4b";
+
 async function analyticsCommands(page: Page) {
   return page.evaluate(() => (window.dataLayer ?? []).map(command => Array.from(command as ArrayLike<unknown>)));
 }
@@ -32,7 +34,9 @@ test.beforeEach(async ({ page }) => {
     body: "/* Meta Pixel transport intercepted by the regression test. */",
   }));
   await page.route(/https:\/\/www\.facebook\.com\/tr\/?/, route => route.fulfill({ status: 204, body: "" }));
-  await page.route("**/api/send", route => route.fulfill({ json: { ok: true, message: "Inquiry received." } }));
+  await page.route("**/api/send", route => route.fulfill({
+    json: { ok: true, message: "Inquiry received.", event_id: META_LEAD_EVENT_ID },
+  }));
 });
 
 function cspDirective(csp: string, name: string) {
@@ -51,9 +55,9 @@ test("first visit and client navigation record page views with basic analytics e
   const head = documentHead(html);
   expect(head).toContain('id="meta-pixel"');
   expect(head).toContain("https://connect.facebook.net/en_US/fbevents.js");
-  expect(head).toContain("fbq('init', '1640627937418258')");
+  expect(head).toContain("fbq('init', '1661409812003549')");
   expect(head).toContain("fbq('track', 'PageView')");
-  expect(head).toContain("https://www.facebook.com/tr?id=1640627937418258");
+  expect(head).toContain("https://www.facebook.com/tr?id=1661409812003549");
   expect(head).not.toContain("__next_s");
   await pixelScript;
   const csp = response?.headers()["content-security-policy"] ?? "";
@@ -86,12 +90,12 @@ test("first visit and client navigation record page views with basic analytics e
   expect(firstView.send_to).toBe(configuration?.[1]);
 
   const pixel = await metaCommands(page);
-  expect(pixel.find(command => command[0] === "set")).toEqual(["set", "autoConfig", false, "1640627937418258"]);
-  expect(pixel.find(command => command[0] === "init")).toEqual(["init", "1640627937418258"]);
+  expect(pixel.find(command => command[0] === "set")).toEqual(["set", "autoConfig", false, "1661409812003549"]);
+  expect(pixel.find(command => command[0] === "init")).toEqual(["init", "1661409812003549"]);
   expect(JSON.stringify(pixel)).not.toContain("private");
   expect(JSON.stringify(pixel)).not.toContain("example.invalid");
   await expect(page.locator("#meta-pixel, #meta-pixel-lib")).toHaveCount(2);
-  expect(await page.content()).toContain("https://www.facebook.com/tr?id=1640627937418258");
+  expect(await page.content()).toContain("https://www.facebook.com/tr?id=1661409812003549");
 
   // A retained marker proves this is Next.js client navigation, not a fresh document.
   await page.evaluate(() => { document.documentElement.dataset.analyticsTest = "retained"; });
@@ -134,6 +138,7 @@ test("a delayed Google script does not lose the first page view or a successful 
     const pixelLeads = await metaLeads(page);
     expect(pixelLeads).toHaveLength(1);
     expect(pixelLeads[0][2]).toEqual({ content_name: "wholesale_inquiry", content_category: "not_specified" });
+    expect(pixelLeads[0][3]).toEqual({ eventID: META_LEAD_EVENT_ID });
     const serialized = JSON.stringify({ ga: commands, meta: await metaCommands(page) });
     for (const privateValue of ["Private Analytics Test", "private@example.invalid", "+1 555 0199", "private-token"]) {
       expect(serialized).not.toContain(privateValue);
@@ -194,12 +199,15 @@ test("only a successful inquiry records one Meta Lead", async ({ page }) => {
   expect(await metaLeads(page)).toHaveLength(0);
 
   await page.unroute("**/api/send");
-  await page.route("**/api/send", route => route.fulfill({ json: { ok: true, message: "Inquiry received." } }));
+  await page.route("**/api/send", route => route.fulfill({
+    json: { ok: true, message: "Inquiry received.", event_id: META_LEAD_EVENT_ID },
+  }));
   await form.getByRole("button", { name: "SEND INQUIRY NOW" }).click();
   await expect(page.getByRole("heading", { name: "Inquiry Received" })).toBeVisible();
   const leads = await metaLeads(page);
   expect(leads).toHaveLength(1);
   expect(leads[0][2]).toEqual({ content_name: "wholesale_inquiry", content_category: "Used Brand Bags" });
+  expect(leads[0][3]).toEqual({ eventID: META_LEAD_EVENT_ID });
   const serialized = JSON.stringify(await metaCommands(page));
   for (const privateValue of ["Private Analytics Test", "private@example.invalid", "+1 555 0199", "Call me about a private order"]) {
     expect(serialized).not.toContain(privateValue);

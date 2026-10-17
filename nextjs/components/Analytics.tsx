@@ -3,7 +3,7 @@
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, resolveFacebookPixelId } from "@/lib/meta-pixel";
+import { metaLeadEventOptions, metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, resolveFacebookPixelId } from "@/lib/meta-pixel";
 import { isUtilityPath } from "./SiteChrome";
 
 const isAnalyticsEnabled = process.env.NEXT_PUBLIC_ANALYTICS_ENABLED !== "false";
@@ -134,9 +134,16 @@ export function trackEvent(eventName: string, params?: Record<string, string>) {
  * Meta standard Lead for one successful inquiry.
  * Automatic configuration stays off so the pixel cannot read form fields.
  * Never pass names, email addresses, phone numbers, WhatsApp numbers, or free text.
+ * eventId matches the Conversions API event_id. The browser API name is eventID.
  */
-export function trackMetaLead(productInterest?: string) {
+export function trackMetaLead(productInterest?: string, eventId?: string) {
   if (typeof window === "undefined" || !isAnalyticsEnabled || !FB_PIXEL_ID || typeof window.fbq !== "function") return;
   if (isUtilityPath(window.location.pathname)) return;
-  window.fbq("track", "Lead", metaLeadParams(productInterest));
+  const params = metaLeadParams(productInterest);
+  const options = metaLeadEventOptions(eventId);
+  if (options) {
+    window.fbq("track", "Lead", params, options);
+    return;
+  }
+  window.fbq("track", "Lead", params);
 }
