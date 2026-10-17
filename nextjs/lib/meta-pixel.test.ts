@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { metaLeadParams, PRODUCTION_FB_PIXEL_ID, resolveFacebookPixelId } from "./meta-pixel";
+import { metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, PRODUCTION_FB_PIXEL_ID, resolveFacebookPixelId } from "./meta-pixel";
 
 describe("resolveFacebookPixelId", () => {
   it("uses the production pixel when the environment value is missing", () => {
@@ -16,6 +16,31 @@ describe("resolveFacebookPixelId", () => {
     expect(resolveFacebookPixelId(`${PRODUCTION_FB_PIXEL_ID};alert(1)`)).toBe("");
     expect(resolveFacebookPixelId("G-TEST000001")).toBe("");
     expect(resolveFacebookPixelId("12345")).toBe("");
+  });
+});
+
+describe("metaPixelBaseCode", () => {
+  it("emits the official base code for the production pixel", () => {
+    const code = metaPixelBaseCode(PRODUCTION_FB_PIXEL_ID);
+    expect(code).toContain("https://connect.facebook.net/en_US/fbevents.js");
+    expect(code).toContain(`fbq('init', '${PRODUCTION_FB_PIXEL_ID}')`);
+    expect(code).toContain("fbq('track', 'PageView')");
+    expect(code).toContain(`fbq('set', 'autoConfig', false, '${PRODUCTION_FB_PIXEL_ID}')`);
+    expect(code.indexOf("fbq('init'")).toBeLessThan(code.indexOf("fbq('track', 'PageView')"));
+    expect(code).toContain("n.disablePushState=!0");
+  });
+
+  it("refuses to build a snippet for an id that is not only digits", () => {
+    expect(metaPixelBaseCode("")).toBe("");
+    expect(metaPixelBaseCode(`${PRODUCTION_FB_PIXEL_ID};alert(1)`)).toBe("");
+  });
+});
+
+describe("metaPixelNoscriptSrc", () => {
+  it("points the image fallback at the same pixel and PageView", () => {
+    expect(metaPixelNoscriptSrc(PRODUCTION_FB_PIXEL_ID)).toBe(
+      `https://www.facebook.com/tr?id=${PRODUCTION_FB_PIXEL_ID}&ev=PageView&noscript=1`,
+    );
   });
 });
 

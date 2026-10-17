@@ -20,6 +20,33 @@ export function resolveFacebookPixelId(configured: string | undefined | null): s
   return PIXEL_ID_PATTERN.test(value) ? value : "";
 }
 
+/**
+ * Meta's manual installer looks for this base code in the initial HTML head.
+ * autoConfig stays off so the pixel cannot read inquiry fields.
+ * disablePushState stops fbevents.js from adding a second PageView on client navigations.
+ * An invalid id returns an empty string so nothing unsafe is interpolated into the snippet.
+ */
+export function metaPixelBaseCode(pixelId: string): string {
+  if (!PIXEL_ID_PATTERN.test(pixelId)) return "";
+  return `!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];n.disablePushState=!0;t=b.createElement(e);t.async=!0;
+t.id='meta-pixel-lib';t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+if(!window.__rtMetaPixelInit){window.__rtMetaPixelInit=true;
+window.__rtMetaPixelDocumentPath=location.pathname;
+fbq('set', 'autoConfig', false, '${pixelId}');
+fbq('init', '${pixelId}');
+fbq('track', 'PageView');}`;
+}
+
+export function metaPixelNoscriptSrc(pixelId: string): string {
+  return `https://www.facebook.com/tr?id=${encodeURIComponent(pixelId)}&ev=PageView&noscript=1`;
+}
+
 /** Standard Lead parameters. Contact fields and free text are never accepted. */
 export function metaLeadParams(productInterest: string | undefined): {
   content_name: "wholesale_inquiry";

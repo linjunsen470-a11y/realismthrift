@@ -6,7 +6,7 @@ import './globals.css';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SanityLive } from '@/lib/sanity/live';
-import Analytics from '@/components/Analytics';
+import Analytics, { MetaPixelHead } from '@/components/Analytics';
 import SiteChrome from '@/components/SiteChrome';
 import { siteHeader, siteFooter } from '@/data/siteData';
 import { siteUrl } from '@/lib/metadata';
@@ -72,6 +72,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" className={`${montserrat.variable} ${openSans.variable}`} data-scroll-behavior="smooth">
+      <head>
+        <MetaPixelHead />
+      </head>
       <body className="antialiased font-sans bg-white text-[#333]">
         <a className="rt-skip-link" href="#main-content">Skip to main content</a>
         <Analytics />

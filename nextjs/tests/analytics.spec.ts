@@ -39,9 +39,22 @@ function cspDirective(csp: string, name: string) {
   return csp.split(";").map(part => part.trim()).find(part => part === name || part.startsWith(`${name} `)) ?? "";
 }
 
+function documentHead(html: string) {
+  const end = html.toLowerCase().indexOf("</head>");
+  return end === -1 ? html : html.slice(0, end);
+}
+
 test("first visit and client navigation record page views with basic analytics enabled", async ({ page, isMobile }) => {
   const pixelScript = page.waitForRequest("https://connect.facebook.net/**");
   const response = await page.goto("/?email=private%40example.invalid");
+  const html = await response?.text() ?? "";
+  const head = documentHead(html);
+  expect(head).toContain('id="meta-pixel"');
+  expect(head).toContain("https://connect.facebook.net/en_US/fbevents.js");
+  expect(head).toContain("fbq('init', '1640627937418258')");
+  expect(head).toContain("fbq('track', 'PageView')");
+  expect(head).toContain("https://www.facebook.com/tr?id=1640627937418258");
+  expect(head).not.toContain("__next_s");
   await pixelScript;
   const csp = response?.headers()["content-security-policy"] ?? "";
   expect(cspDirective(csp, "script-src")).toContain("https://connect.facebook.net");
@@ -131,7 +144,12 @@ test("a delayed Google script does not lose the first page view or a successful 
 });
 
 test("email preference pages do not initialize analytics", async ({ page }) => {
-  await page.goto("/email-preferences/resubscribe?token=private-token");
+  const response = await page.goto("/email-preferences/resubscribe?token=private-token");
+  const html = await response?.text() ?? "";
+  expect(html).not.toContain("fbq(");
+  expect(html).not.toContain("connect.facebook.net");
+  expect(html).not.toContain("fbevents");
+  expect(html).not.toContain("facebook.com/tr");
   await expect(page.getByLabel("Email address")).toBeVisible();
   await expect(page.locator('script[src*="googletagmanager"], #google-analytics, #meta-pixel, #meta-pixel-lib, script[src*="facebook.net"]')).toHaveCount(0);
   expect(await page.content()).not.toContain("facebook.com/tr");

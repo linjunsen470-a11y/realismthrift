@@ -3,12 +3,45 @@
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { metaLeadParams, resolveFacebookPixelId } from "@/lib/meta-pixel";
+import { metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, resolveFacebookPixelId } from "@/lib/meta-pixel";
 import { isUtilityPath } from "./SiteChrome";
 
 const isAnalyticsEnabled = process.env.NEXT_PUBLIC_ANALYTICS_ENABLED !== "false";
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID?.trim();
 const FB_PIXEL_ID = resolveFacebookPixelId(process.env.NEXT_PUBLIC_FB_PIXEL_ID);
+
+function metaPixelActive(pathname: string) {
+  return isAnalyticsEnabled && Boolean(FB_PIXEL_ID) && !isUtilityPath(pathname);
+}
+
+/**
+ * Official Meta base code in the document head.
+ * Rendered during SSR for each URL, so Events Manager can see fbq without waiting for hydration.
+ * next/script beforeInteractive only queues the snippet inside __next_s, which the installer misses.
+ */
+export function MetaPixelHead() {
+  const pathname = usePathname();
+  if (!metaPixelActive(pathname) || !FB_PIXEL_ID) return null;
+  const code = metaPixelBaseCode(FB_PIXEL_ID);
+  if (!code) return null;
+
+  return (
+    <>
+      <script id="meta-pixel" dangerouslySetInnerHTML={{ __html: code }} />
+      <noscript>
+        {/* 1x1 Meta fallback for browsers with JavaScript disabled. next/image cannot sit inside noscript. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt=""
+          height={1}
+          width={1}
+          style={{ display: "none" }}
+          src={metaPixelNoscriptSrc(FB_PIXEL_ID)}
+        />
+      </noscript>
+    </>
+  );
+}
 
 export default function Analytics() {
   const pathname = usePathname();
@@ -17,7 +50,7 @@ export default function Analytics() {
   return (
     <>
       {GA_ID ? <GoogleAnalytics pathname={pathname} /> : null}
-      {FB_PIXEL_ID ? <MetaPixel pathname={pathname} pixelId={FB_PIXEL_ID} /> : null}
+      {FB_PIXEL_ID ? <MetaPixelPageViews pathname={pathname} /> : null}
     </>
   );
 }
@@ -72,57 +105,19 @@ function GoogleAnalytics({ pathname }: { pathname: string }) {
   );
 }
 
-function MetaPixel({ pathname, pixelId }: { pathname: string; pixelId: string }) {
-  const [ready, setReady] = useState(false);
-  const lastPagePath = useRef<string | null>(null);
+function MetaPixelPageViews({ pathname }: { pathname: string }) {
+  const trackedPath = useRef<string | null>(null);
 
   useEffect(() => {
-    if (!ready || typeof window.fbq !== "function") return;
-    if (lastPagePath.current === pathname) return;
+    if (trackedPath.current === pathname) return;
+    // The head snippet already queued PageView for the document that was loaded.
+    const skipInitial = trackedPath.current === null && pathname === window.__rtMetaPixelDocumentPath;
+    trackedPath.current = pathname;
+    if (skipInitial || typeof window.fbq !== "function") return;
     window.fbq("track", "PageView");
-    lastPagePath.current = pathname;
-  }, [pathname, ready]);
+  }, [pathname]);
 
-  return (
-    <>
-      <Script id="meta-pixel" strategy="afterInteractive" onReady={() => setReady(true)}>
-        {`
-          !function(f,b,e,v,n,t,s){
-            if(f.fbq)return;
-            n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;
-            n.push=n;
-            n.loaded=!0;
-            n.version='2.0';
-            n.queue=[];
-            n.disablePushState=!0;
-            t=b.createElement(e);
-            t.async=!0;
-            t.id='meta-pixel-lib';
-            t.src=v;
-            s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s);
-          }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-          if (!window.__rtMetaPixelInit) {
-            window.__rtMetaPixelInit = true;
-            window.fbq('set', 'autoConfig', false, ${JSON.stringify(pixelId)});
-            window.fbq('init', ${JSON.stringify(pixelId)});
-          }
-        `}
-      </Script>
-      <noscript>
-        {/* 1x1 Meta fallback for browsers with JavaScript disabled. next/image cannot sit inside noscript. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          alt=""
-          height={1}
-          width={1}
-          style={{ display: "none" }}
-          src={`https://www.facebook.com/tr?id=${encodeURIComponent(pixelId)}&ev=PageView&noscript=1`}
-        />
-      </noscript>
-    </>
-  );
+  return null;
 }
 
 /**

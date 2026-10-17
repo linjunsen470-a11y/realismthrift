@@ -17,5 +17,7 @@ declare global {
     fbq?: FacebookPixel;
     _fbq?: FacebookPixel;
     __rtMetaPixelInit?: boolean;
+    /** Pathname already counted by the head snippet on this document. */
+    __rtMetaPixelDocumentPath?: string;
   }
 }
