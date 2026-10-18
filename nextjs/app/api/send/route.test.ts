@@ -3,9 +3,15 @@ import { InquiryConfigurationError } from "@/lib/inquiries/clients";
 import { POST } from "./route";
 
 const mocks = vi.hoisted(() => ({
+  after: vi.fn<(callback: () => Promise<void>) => void>(),
   createInquiry: vi.fn(),
   processPendingEmailJobs: vi.fn(),
   sendMetaCapiLead: vi.fn(),
+}));
+
+vi.mock("next/server", async (importOriginal) => ({
+  ...await importOriginal<typeof import("next/server")>(),
+  after: mocks.after,
 }));
 
 vi.mock("@/lib/inquiries/repository", () => ({
@@ -67,9 +73,16 @@ function inquiryRequest(body: unknown, ip = nextIp()) {
   });
 }
 
+async function runAfterTasks() {
+  for (const [callback] of mocks.after.mock.calls) {
+    await callback();
+  }
+}
+
 describe("POST /api/send Meta Lead", () => {
   beforeEach(() => {
     errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    mocks.after.mockReset();
     mocks.createInquiry.mockReset();
     mocks.createInquiry.mockResolvedValue({ id: "inquiry-db-id-should-not-leak", created: true });
     mocks.processPendingEmailJobs.mockReset();
@@ -82,7 +95,7 @@ describe("POST /api/send Meta Lead", () => {
     errorSpy.mockRestore();
   });
 
-  it("returns the server event id and sends a non-PII Conversions API Lead", async () => {
+  it("returns the stable event id before the scheduled Conversions API Lead runs", async () => {
     const order: string[] = [];
     mocks.processPendingEmailJobs.mockImplementation(async () => {
       order.push("email");
@@ -99,7 +112,13 @@ describe("POST /api/send Meta Lead", () => {
 
     expect(body.ok).toBe(true);
     expect(body.message).toBe("Inquiry received. Our sales team aims to reply within 12 hours.");
-    expect(body.event_id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+    expect(body.event_id).toBe(inquiryBody.submissionId);
+    expect(order).toEqual(["email"]);
+    expect(mocks.after).toHaveBeenCalledTimes(1);
+    expect(mocks.sendMetaCapiLead).not.toHaveBeenCalled();
+
+    await runAfterTasks();
+
     expect(order).toEqual(["email", "capi"]);
     expect(mocks.sendMetaCapiLead).toHaveBeenCalledTimes(1);
 
@@ -125,6 +144,26 @@ describe("POST /api/send Meta Lead", () => {
     expect(errorSpy).not.toHaveBeenCalled();
   });
 
+  it("returns the same event id on an idempotent retry without scheduling another Lead", async () => {
+    const firstResponse = await POST(inquiryRequest(inquiryBody));
+    const firstBody = await firstResponse.json();
+    await runAfterTasks();
+    expect(mocks.sendMetaCapiLead).toHaveBeenCalledTimes(1);
+    mocks.after.mockClear();
+    mocks.sendMetaCapiLead.mockClear();
+    mocks.createInquiry.mockResolvedValue({ id: "inquiry-db-id-should-not-leak", created: false });
+
+    const response = await POST(inquiryRequest(inquiryBody));
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body.ok).toBe(true);
+    expect(body.event_id).toBe(inquiryBody.submissionId);
+    expect(body.event_id).toBe(firstBody.event_id);
+    expect(mocks.after).not.toHaveBeenCalled();
+    expect(mocks.sendMetaCapiLead).not.toHaveBeenCalled();
+  });
+
   it("still accepts the inquiry when the Conversions API call fails", async () => {
     mocks.sendMetaCapiLead.mockResolvedValue({ status: "failed", errorName: "HttpError", httpStatus: 502 });
 
@@ -134,6 +173,7 @@ describe("POST /api/send Meta Lead", () => {
     expect(response.status).toBe(200);
     expect(body.ok).toBe(true);
     expect(body.event_id).toMatch(/^[0-9a-f-]{36}$/);
+    await runAfterTasks();
     expect(errorSpy).toHaveBeenCalledWith("Meta CAPI Lead failed", { errorName: "HttpError", status: 502 });
   });
 
@@ -146,6 +186,7 @@ describe("POST /api/send Meta Lead", () => {
     expect(response.status).toBe(200);
     expect(body.ok).toBe(true);
     expect(body.event_id).toBeTruthy();
+    await runAfterTasks();
     expect(errorSpy).toHaveBeenCalledWith("Meta CAPI Lead skipped", { errorName: "missing_token" });
   });
 
@@ -158,6 +199,7 @@ describe("POST /api/send Meta Lead", () => {
     expect(response.status).toBe(200);
     expect(body.ok).toBe(true);
     expect(body.event_id).toBeTruthy();
+    await runAfterTasks();
     expect(errorSpy).toHaveBeenCalledWith("Meta CAPI Lead failed", { errorName: "Error" });
     const logged = JSON.stringify(errorSpy.mock.calls);
     expect(logged).not.toContain("boom");
@@ -172,6 +214,7 @@ describe("POST /api/send Meta Lead", () => {
     expect(response.status).toBe(503);
     expect(body.ok).toBe(false);
     expect(body.event_id).toBeUndefined();
+    expect(mocks.after).not.toHaveBeenCalled();
     expect(mocks.sendMetaCapiLead).not.toHaveBeenCalled();
   });
 
@@ -180,12 +223,14 @@ describe("POST /api/send Meta Lead", () => {
 
     const response = await POST(inquiryRequest(inquiryBody));
     expect(response.status).toBe(500);
+    expect(mocks.after).not.toHaveBeenCalled();
     expect(mocks.sendMetaCapiLead).not.toHaveBeenCalled();
   });
 
   it("does not send a Lead when validation fails", async () => {
     const response = await POST(inquiryRequest({ ...inquiryBody, email: "not-an-email" }));
     expect(response.status).toBe(400);
+    expect(mocks.after).not.toHaveBeenCalled();
     expect(mocks.sendMetaCapiLead).not.toHaveBeenCalled();
     expect(mocks.createInquiry).not.toHaveBeenCalled();
   });
