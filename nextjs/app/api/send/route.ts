@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { InquiryConfigurationError } from "@/lib/inquiries/clients";
 import { getInquiryEmailSettings } from "@/lib/inquiries/config";
 import { processPendingEmailJobs } from "@/lib/inquiries/email-jobs";
@@ -198,15 +198,19 @@ export async function POST(request: Request) {
     );
   }
 
-  try {
-    await processPendingEmailJobs({ inquiryId, limit: 2 });
-  } catch (error) {
-    // The inquiry and its outbox jobs already exist. The scheduled retry worker will recover them.
-    console.error("Immediate inquiry email processing failed", {
-      inquiryId,
-      errorName: error instanceof Error ? error.name : "UnknownError",
-    });
-  }
+  // The inquiry and email jobs are already durable. Slow email delivery must not
+  // delay the success response that lets the browser record generate_lead.
+  after(async () => {
+    try {
+      await processPendingEmailJobs({ inquiryId, limit: 2 });
+    } catch (error) {
+      // The scheduled retry worker will recover the persisted outbox jobs.
+      console.error("Immediate inquiry email processing failed", {
+        inquiryId,
+        errorName: error instanceof Error ? error.name : "UnknownError",
+      });
+    }
+  });
 
   // The submission key already persists across request retries and is validated as a UUID.
   const eventId = parsed.data.submissionId;

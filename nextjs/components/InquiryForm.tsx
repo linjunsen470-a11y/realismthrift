@@ -77,7 +77,6 @@ export function InquiryForm({
             form_name: "wholesale_inquiry",
             product_interest: formValues.product || "not_specified",
             quantity: formValues.quantity || "not_specified",
-            country: formValues.country || "not_specified",
             page_path: window.location.pathname,
           });
         } catch {

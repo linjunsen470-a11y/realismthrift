@@ -59,7 +59,7 @@ The digital platform supports the public storefront, inquiry pipeline, Sanity bl
 - Content data: Sanity documents and `nextjs/data/siteData.ts`
 - Package management: `pnpm` is mandatory. Do not use `npm` or `yarn`.
 - Archive policy: `archive/` is ignored by Git and reserved for local historical audit or planning notes.
-- Meta tracking: `nextjs/docs/meta-tracking.md` documents production-only Pixel/CAPI, stable submission event IDs, real fbclid capture, and server-side email/valid international phone hashing. Phone matching is optional and must not block an inquiry or infer a country code.
+- Measurement: `nextjs/docs/meta-tracking.md` documents GA4 `generate_lead` key-event settings, production-only Meta Pixel/CAPI `Lead`, stable submission event IDs, real fbclid capture, and server-side email/valid international phone hashing. Do not send contact fields or country free text to GA4. Email outbox processing runs after the success response; its scheduled retries remain active. Phone matching is optional and must not block an inquiry or infer a country code.
 
 ## Contact
 

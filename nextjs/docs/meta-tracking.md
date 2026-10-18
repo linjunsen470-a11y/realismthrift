@@ -1,9 +1,23 @@
-# Meta Pixel 与 Conversions API
+# GA4、Meta Pixel 与 Conversions API
 
-本说明对应 2026-10-18 的归因修复批次，适用于网站询盘；不涉及 Meta 原生潜在客户广告、目录或 WhatsApp 站外对话事件。
+本说明维护网站询盘的当前测量配置，更新于 2026-10-19。适用于网站表单，不涉及 Meta 原生潜在客户广告、目录或 WhatsApp 站外对话事件。
+
+## GA4 询盘关键事件
+
+- 生产属性：`realismthrift`，Property ID `534735463`；Web 测量 ID：`G-854G1RXBJM`。
+- 浏览器只在 `/api/send` 返回 HTTP 成功且 `ok: true` 后发送 `generate_lead`。校验失败、入库失败或网络错误不发送成功事件。
+- 在 GA4 Admin → Data display → Events 中，将 `generate_lead` 标记为关键事件，计数采用 **Once per event**。事件被接收不等于已标记为关键事件。
+- GA4 的询盘事件名为 `generate_lead`；Meta 的标准事件名为 `Lead`。不要在 GA4 中另建同义的 `Lead` 关键事件，也不要在没有业务触发逻辑时标记 `qualify_lead`、`close_convert_lead`。系统内置 `purchase` 保留默认行为。
+- GA4 参数仅包含表单名称、产品选项、数量选项和页面路径，不传姓名、邮箱、电话、WhatsApp、国家自由文本或留言。国家字段仍保存在业务询盘中。
+- 属性报表时区为 `America/Los_Angeles`。与 Supabase 对账时须用相同时区和日期，并留出报表处理时间。
+- 关键事件标记只影响之后的数据，不追溯修改历史计数。历史询盘测量可查看 `generate_lead` 的 Event count。
+- 当前仅使用浏览器 GA4 上报，没有 Measurement Protocol 或持久测量队列。拦截、网络中断和报表延迟都可能造成与数据库记录数不同；Supabase 是业务询盘记录的依据。
+
+官方说明：[标记关键事件](https://support.google.com/analytics/answer/13128484)。
 
 ## 事件链路
 
+- `/api/send` 先持久化询盘与邮件 outbox，再进行现有的限时 Meta CAPI 上报并返回成功。邮件任务通过 Next.js `after()` 在响应结束后处理，邮件变慢或失败不会阻塞浏览器成功响应；失败邮件继续由定时任务恢复。
 - 生产公共页面发送浏览器 `PageView`，客户端站内导航继续记录页面访问。
 - 询盘成功入库后，服务端发送标准 `Lead`，接口返回 `event_id`；浏览器收到成功响应后使用同值 `eventID` 发送 `Lead`。
 - 两端均使用这次询盘的 `submissionId`。相同提交在响应丢失后重试，数据库复用询盘，测量继续复用同一个 ID。
@@ -25,7 +39,7 @@
 
 浏览器 Pixel 的手动 Lead 参数仅包含固定的询盘名称和白名单产品类别；自动配置关闭，不把表单联系字段加入 Pixel 或 GA4 参数。CAPI 不接收明文邮箱、电话、姓名、公司、国家或留言内容。散列值也不返回浏览器。
 
-表单告知与 `/privacy-policy` 已说明向 Meta 分享邮箱和有效国际 WhatsApp 号码的散列值。现有 Supabase 询盘和邮件处理保持原有数据用途；此次修复不修改数据库结构，也不回传历史询盘。
+表单告知与 `/privacy-policy` 已说明向 Meta 分享邮箱和有效国际 WhatsApp 号码的散列值。Supabase 询盘与邮件处理保持原有数据用途，不回传历史询盘。
 
 ## 真实广告点击保存
 
@@ -57,12 +71,13 @@ Pixel 的内联初始化代码先检查当前落地 URL 的 `fbclid`，再加载
 | 变量 | 行为 |
 | --- | --- |
 | `NEXT_PUBLIC_ANALYTICS_ENABLED` | `false` 同时关闭 GA4、Meta Pixel 和 CAPI。 |
+| `NEXT_PUBLIC_GA_ID` | GA4 Web 测量 ID；`generate_lead` 的关键事件标记与计数方式在 GA4 后台维护。 |
 | `VERCEL_ENV` | 仅 `production` 启用 Meta，Vercel 自动设置；本地和 Preview 默认关闭。 |
 | `NEXT_PUBLIC_META_ENVIRONMENT` | 由 `next.config.ts` 从构建时的 `VERCEL_ENV` 派生，确保浏览器环境隔离；无需单独配置。 |
 | `NEXT_PUBLIC_FB_PIXEL_ID` | 数字格式的 Pixel ID；空值回退到生产 ID，无效值禁用 Pixel。环境隔离仍然适用。 |
 | `META_CAPI_ACCESS_TOKEN` | 仅服务端读取的生产密钥。缺失时跳过 CAPI，询盘仍成功。 |
 
-完整示例见 `../.env.example`。真实密钥只保存在本地环境或部署平台。修改公开变量或构建时环境后，需要重新构建部署。
+完整变量模板见 [环境示例](../.env.example)。真实密钥只保存在本地环境或部署平台。修改公开变量或构建时环境后，需要重新构建部署。
 
 ## 投递与失败处理
 
@@ -70,7 +85,7 @@ Pixel 的内联初始化代码先检查当前落地 URL 的 `fbclid`，再加载
 - 重试复用完全相同的请求体，包括事件 ID 与发生时间；遇到较长的 `Retry-After`，预算不足则停止。
 - 参数和 Token 的常见 4xx 错误不重试。HTTP 成功仍须确认 `events_received === 1`，不能仅凭 HTTP 200 标记投递成功。
 - 日志仅保留成功状态、错误类型、HTTP 状态及安全错误代码/追踪标识，不记录 Token、完整请求体、联系信息或匹配散列值。
-- 测量失败不改变已接受的询盘结果。本批次采用有限重试，没有新增持久测量队列；进程中断或持续故障仍可能导致漏报。
+- 测量失败不改变已接受的询盘结果。CAPI 采用有限重试，没有持久测量队列；进程中断或持续故障仍可能导致漏报。邮件有独立的持久 outbox 与定时重试，参见[询盘部署说明](../supabase/README.md)。
 
 ## 验证与上线检查
 
@@ -84,7 +99,7 @@ pnpm exec playwright test tests/analytics.spec.ts --project=chromium --project=m
 
 Playwright 的本地服务器显式模拟生产 Meta 环境，测试拦截 GA/Meta 传输及询盘 API。不要去掉这些拦截后向生产数据集发送合成转化。
 
-本批次已通过 155 项单元测试、12 项桌面/手机浏览器回归、TypeScript、变更文件 ESLint 与生产构建。浏览器验证涵盖真实落地参数跨页面保留、Cookie 随询盘请求携带、失败后重试复用 ID、缺区号仍可提交及私有页面排除；服务端单元测试覆盖邮箱/电话规范化和请求体仅包含散列值。
+浏览器验证涵盖成功/失败询盘、延迟 Google 脚本时保留事件、国家自由文本排除、真实落地参数跨页面保留、失败后重试复用 ID、缺区号仍可提交及私有页面排除。服务端单元测试覆盖慢邮件不阻塞成功响应、后台邮件异常隔离、入库失败不安排邮件任务，以及邮箱/电话散列规则。每次改动应重新运行相关检查，不沿用历史批次的测试数量或构建结论。
 
 这些测试使用模拟依赖，不证明 Meta 后台已接收生产 Lead。部署后需确认：
 
@@ -92,3 +107,4 @@ Playwright 的本地服务器显式模拟生产 Meta 环境，测试拦截 GA/Me
 2. Meta 测试事件中的浏览器 `eventID` 与服务端 `event_id` 一致。
 3. 使用真实广告点击产生的询盘核对 `fbc`，并核对邮箱与有效电话匹配字段；普通访问没有 `fbc` 是预期行为。
 4. 按修复部署后的独立日期窗口查看去重率、参数覆盖率和事件匹配质量，不用修复前的混合历史窗口判断效果。
+5. 在 GA4 中确认 `generate_lead` 的星标与 Once per event 计数；用修复后的真实询盘核对事件报告，不能只看首页关键事件卡片。

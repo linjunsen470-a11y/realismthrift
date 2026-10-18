@@ -6,6 +6,12 @@ const mocks = vi.hoisted(() => ({
   createInquiry: vi.fn(),
   processPendingEmailJobs: vi.fn(),
   sendMetaCapiLead: vi.fn(),
+  after: vi.fn(),
+}));
+
+vi.mock("next/server", async (importOriginal) => ({
+  ...await importOriginal<typeof import("next/server")>(),
+  after: mocks.after,
 }));
 
 vi.mock("@/lib/inquiries/repository", () => ({
@@ -78,6 +84,7 @@ describe("POST /api/send Meta Lead", () => {
     mocks.processPendingEmailJobs.mockResolvedValue(undefined);
     mocks.sendMetaCapiLead.mockReset();
     mocks.sendMetaCapiLead.mockResolvedValue({ status: "sent" });
+    mocks.after.mockReset();
   });
 
   afterEach(() => {
@@ -102,7 +109,10 @@ describe("POST /api/send Meta Lead", () => {
     expect(body.ok).toBe(true);
     expect(body.message).toBe("Inquiry received. Our sales team aims to reply within 12 hours.");
     expect(body.event_id).toBe(inquiryBody.submissionId);
-    expect(order).toEqual(["email", "capi"]);
+    expect(order).toEqual(["capi"]);
+    expect(mocks.after).toHaveBeenCalledTimes(1);
+    await mocks.after.mock.calls[0][0]();
+    expect(order).toEqual(["capi", "email"]);
     expect(mocks.sendMetaCapiLead).toHaveBeenCalledTimes(1);
 
     const capiInput = mocks.sendMetaCapiLead.mock.calls[0][0] as Record<string, unknown>;
@@ -128,6 +138,36 @@ describe("POST /api/send Meta Lead", () => {
       expect(serialized).not.toContain(secret);
     }
     expect(errorSpy).not.toHaveBeenCalled();
+  });
+
+  it("returns success before slow email processing finishes", async () => {
+    let finishEmail!: () => void;
+    mocks.processPendingEmailJobs.mockImplementation(() => new Promise<void>(resolve => {
+      finishEmail = resolve;
+    }));
+
+    const response = await POST(inquiryRequest(inquiryBody));
+    expect(response.status).toBe(200);
+    expect((await response.json()).ok).toBe(true);
+    expect(mocks.processPendingEmailJobs).not.toHaveBeenCalled();
+
+    const backgroundWork = mocks.after.mock.calls[0][0]();
+    expect(mocks.processPendingEmailJobs).toHaveBeenCalledWith({
+      inquiryId: "inquiry-db-id-should-not-leak", limit: 2,
+    });
+    finishEmail();
+    await backgroundWork;
+  });
+
+  it("logs background email failure without changing an accepted inquiry", async () => {
+    mocks.processPendingEmailJobs.mockRejectedValue(new Error("mail unavailable"));
+    const response = await POST(inquiryRequest(inquiryBody));
+    await mocks.after.mock.calls[0][0]();
+    expect(response.status).toBe(200);
+    expect((await response.json()).ok).toBe(true);
+    expect(errorSpy).toHaveBeenCalledWith("Immediate inquiry email processing failed", {
+      inquiryId: "inquiry-db-id-should-not-leak", errorName: "Error",
+    });
   });
 
   it("hashes a valid international WhatsApp number after storage while preserving the inquiry", async () => {
@@ -201,6 +241,7 @@ describe("POST /api/send Meta Lead", () => {
     expect(body.ok).toBe(false);
     expect(body.event_id).toBeUndefined();
     expect(mocks.sendMetaCapiLead).not.toHaveBeenCalled();
+    expect(mocks.after).not.toHaveBeenCalled();
   });
 
   it("does not send a Lead when inquiry configuration is missing", async () => {

@@ -12,8 +12,8 @@
 2. **内容后台（Sanity Studio）**  
    供团队维护博客文章、作者、分类、封面图、正文图片、SEO 标题、SEO 描述和 Open Graph 图片。后台支持 Visual Editing（可视化编辑）和实时预览。
 
-3. **询盘系统（Resend + API Route）**  
-   客户提交表单后，系统会把询盘内容发送到指定销售邮箱，方便销售团队跟进海外买家。
+3. **询盘系统（Supabase + Resend + API Route）**
+   客户提交后，系统先保存询盘和邮件任务，再由后台发送销售通知与客户确认邮件，失败任务按既有机制重试。
 
 ---
 
@@ -24,7 +24,7 @@
 - **博客内容管理**：博客内容由 Sanity 管理，支持英文文章、分类、作者、图文排版、表格、封面图和 SEO 字段。
 - **全站搜索**：支持产品、FAQ 和博客内容的站内检索，帮助访客快速找到相关信息。
 - **询盘收集**：客户可通过网站表单、WhatsApp 和邮箱联系销售团队。
-- **Meta 广告归因**：生产环境通过 Pixel 与 Conversions API 记录询盘 Lead，复用提交 ID 去重，保留真实广告点击标识，并发送邮箱及有效国际号码的 SHA-256 匹配值。配置、数据边界和验证方法见 [Meta 跟踪说明](nextjs/docs/meta-tracking.md)。
+- **询盘统计与广告归因**：GA4 在浏览器收到提交成功响应后记录 `generate_lead`，后台将其标记为关键事件；生产 Meta Pixel/CAPI 使用 `Lead` 与相同提交 ID 去重。配置与数据边界见 [GA4 与 Meta 跟踪说明](nextjs/docs/meta-tracking.md)。
 - **SEO 基础设施**：已配置页面 Metadata、OpenGraph、Canonical、sitemap.xml、robots.txt、结构化数据和图片 Alt Text。
 - **可视化预览**：博客内容可在 Sanity Studio 中预览实际前台效果，减少发布错误。
 
@@ -55,7 +55,7 @@
    - 具体、可理解的图片 Alt Text。
 
 6. **询盘链路实装**  
-   表单系统已连接邮件发送服务。只要环境变量配置正确，客户询盘即可发送到销售邮箱。
+   表单系统已连接 Supabase 与邮件发送服务。询盘与邮件任务持久化后，邮件在响应结束后处理，避免邮件慢响应阻塞询盘成功提示。
 
 ---
 
@@ -74,7 +74,7 @@
 
 ### 2. 处理客户询盘
 
-客户提交表单后，系统会自动把询盘发送到配置的销售邮箱。当前业务联系邮箱为：
+客户提交后，询盘先保存到 Supabase；销售通知和客户确认邮件通过持久化任务发送。页面成功提示表示询盘已保存，邮件投递状态应在 `inquiry_delivery_overview` 中核实。当前业务联系邮箱为：
 
 - `sales@realismthrift.com`
 
@@ -84,6 +84,7 @@
 - `CONTACT_EMAIL` 是否设置为正确接收邮箱。
 - 发件域名是否完成 Resend 验证。
 - 邮件是否进入垃圾邮件箱。
+- Supabase 的邮件任务状态与定时重试是否正常，部署步骤见 [询盘链路说明](nextjs/supabase/README.md)。
 
 ### 3. 修改网站联系信息
 
@@ -120,7 +121,6 @@
 - `AGENTS.MD`：业务背景、团队角色和项目维护规则。
 - `Company_Introduction.md`：公司介绍文档。
 - `Company_Introduction_Professional.md`：更克制、专业版本的公司介绍。
-- `background-audit.md`：内容审计和可信度优化记录。
 - `archive/`：历史审计、临时方案和过期技术文档。本目录已加入 `.gitignore`，后续默认不纳入 Git 版本管理。
 
 ### 2. 包管理要求
@@ -153,7 +153,9 @@ pnpm build
 - `RESEND_API_KEY`：邮件发送服务密钥。
 - `CONTACT_EMAIL`：接收询盘的邮箱。
 - `CONTACT_FROM_EMAIL`：系统发件邮箱。
+- `SUPABASE_URL`、`SUPABASE_SECRET_KEY`：询盘数据库与仅服务端使用的凭据。
 - `NEXT_PUBLIC_ANALYTICS_ENABLED`：设为 `false` 时关闭 GA4、Meta Pixel 和服务端 CAPI；修改公开变量后须重新构建部署。
+- `NEXT_PUBLIC_GA_ID`：GA4 数据流测量 ID。关键事件标记与计数方式在 GA4 后台维护，见 [跟踪说明](nextjs/docs/meta-tracking.md)。
 - `NEXT_PUBLIC_FB_PIXEL_ID`：Meta Pixel ID，当前为 `1661409812003549`。
 - `META_CAPI_ACCESS_TOKEN`：仅供服务端使用的 Meta Conversions API 密钥，保存在 Vercel Production 环境。
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`：Sanity 项目 ID。

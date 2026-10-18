@@ -129,18 +129,20 @@ test("a delayed Google script does not lose the first page view or a successful 
     await form.getByLabel("Your Name *").fill("Private Analytics Test");
     await form.getByLabel("Your Email *").fill("private@example.invalid");
     await form.getByLabel("Your WhatsApp *").fill("+1 555 0199");
+    await form.getByLabel("Your Country").fill("private-country-free-text");
     await form.getByRole("button", { name: "SEND INQUIRY NOW" }).click();
     await expect(page.getByRole("heading", { name: "Inquiry Received" })).toBeVisible();
     const commands = await analyticsCommands(page);
     const leads = commands.filter(command => command[0] === "event" && command[1] === "generate_lead");
     expect(leads).toHaveLength(1);
     expect(leads[0][2]).toMatchObject({ form_name: "wholesale_inquiry", page_path: "/contact-us" });
+    expect(leads[0][2]).not.toHaveProperty("country");
     const pixelLeads = await metaLeads(page);
     expect(pixelLeads).toHaveLength(1);
     expect(pixelLeads[0][2]).toEqual({ content_name: "wholesale_inquiry", content_category: "not_specified" });
     expect(pixelLeads[0][3]).toEqual({ eventID: META_LEAD_EVENT_ID });
     const serialized = JSON.stringify({ ga: commands, meta: await metaCommands(page) });
-    for (const privateValue of ["Private Analytics Test", "private@example.invalid", "+1 555 0199", "private-token"]) {
+    for (const privateValue of ["Private Analytics Test", "private@example.invalid", "+1 555 0199", "private-token", "private-country-free-text"]) {
       expect(serialized).not.toContain(privateValue);
     }
   } finally {

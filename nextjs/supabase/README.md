@@ -111,6 +111,7 @@ If a table or function is missing, apply `migrations/202607100001_inquiry_pipeli
 ## Built-in abuse and retry boundaries
 
 - Every valid submission is stored and creates a sales notification job.
+- Email outbox processing runs with Next.js `after()` after the success response; slow delivery does not block the browser's inquiry confirmation or GA4 `generate_lead`. The scheduled retry worker recovers pending or failed jobs. A successful form response confirms persistence, not email delivery.
 - A customer address receives at most one automated acknowledgement in a 24-hour window. Later inquiries are still stored and still notify sales.
 - Email jobs stop being retried after 23 hours so a long worker outage cannot cross Resend's 24-hour idempotency window and unexpectedly send a duplicate message.
 - The in-process IP limiter is only a best-effort burst control. If automated abuse is observed, add a managed CAPTCHA such as Turnstile rather than storing raw IP addresses or adding another database solely for rate limiting.
