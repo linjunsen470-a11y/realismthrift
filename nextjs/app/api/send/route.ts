@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { InquiryConfigurationError } from "@/lib/inquiries/clients";
 import { getInquiryEmailSettings } from "@/lib/inquiries/config";
 import { processPendingEmailJobs } from "@/lib/inquiries/email-jobs";
@@ -165,10 +165,12 @@ export async function POST(request: Request) {
   }
 
   let inquiryId: string;
+  let inquiryCreated: boolean;
   try {
     const settings = getInquiryEmailSettings();
     const inquiry = await createInquiry(parsed.data, settings);
     inquiryId = inquiry.id;
+    inquiryCreated = inquiry.created;
   } catch (error) {
     if (error instanceof InquiryConfigurationError) {
       console.error("Inquiry service configuration error", { errorName: error.name });
@@ -202,20 +204,24 @@ export async function POST(request: Request) {
     });
   }
 
-  // Server-generated so the browser can still deduplicate when connect.facebook.net is blocked.
-  const eventId = crypto.randomUUID();
-  try {
-    const capiResult = await sendMetaCapiLead({
+  // Reuse the submission UUID so browser/server Leads also deduplicate across retries.
+  const eventId = parsed.data.submissionId;
+  if (inquiryCreated) {
+    const capiInput = {
       eventId,
       productInterest: parsed.data.product,
       eventSourceUrl: measurementPageUrl(parsed.data.sourcePath),
       clientIpAddress: clientIp === "unknown" ? undefined : clientIp,
       clientUserAgent: request.headers.get("user-agent") ?? undefined,
-    });
-    reportMetaCapiResult(capiResult);
-  } catch (error) {
-    console.error("Meta CAPI Lead failed", {
-      errorName: error instanceof Error ? error.name : "UnknownError",
+    };
+    after(async () => {
+      try {
+        reportMetaCapiResult(await sendMetaCapiLead(capiInput));
+      } catch (error) {
+        console.error("Meta CAPI Lead failed", {
+          errorName: error instanceof Error ? error.name : "UnknownError",
+        });
+      }
     });
   }
 
