@@ -24,6 +24,7 @@
 - **博客内容管理**：博客内容由 Sanity 管理，支持英文文章、分类、作者、图文排版、表格、封面图和 SEO 字段。
 - **全站搜索**：支持产品、FAQ 和博客内容的站内检索，帮助访客快速找到相关信息。
 - **询盘收集**：客户可通过网站表单、WhatsApp 和邮箱联系销售团队。
+- **Meta 广告归因**：生产环境通过 Pixel 与 Conversions API 记录询盘 Lead，复用提交 ID 去重，保留真实广告点击标识，并发送邮箱及有效国际号码的 SHA-256 匹配值。配置、数据边界和验证方法见 [Meta 跟踪说明](nextjs/docs/meta-tracking.md)。
 - **SEO 基础设施**：已配置页面 Metadata、OpenGraph、Canonical、sitemap.xml、robots.txt、结构化数据和图片 Alt Text。
 - **可视化预览**：博客内容可在 Sanity Studio 中预览实际前台效果，减少发布错误。
 
@@ -152,6 +153,9 @@ pnpm build
 - `RESEND_API_KEY`：邮件发送服务密钥。
 - `CONTACT_EMAIL`：接收询盘的邮箱。
 - `CONTACT_FROM_EMAIL`：系统发件邮箱。
+- `NEXT_PUBLIC_ANALYTICS_ENABLED`：设为 `false` 时关闭 GA4、Meta Pixel 和服务端 CAPI；修改公开变量后须重新构建部署。
+- `NEXT_PUBLIC_FB_PIXEL_ID`：Meta Pixel ID，当前为 `1661409812003549`。
+- `META_CAPI_ACCESS_TOKEN`：仅供服务端使用的 Meta Conversions API 密钥，保存在 Vercel Production 环境。
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`：Sanity 项目 ID。
 - `NEXT_PUBLIC_SANITY_DATASET`：Sanity 数据集。
 - `NEXT_PUBLIC_SANITY_API_VERSION`：Sanity API 版本。

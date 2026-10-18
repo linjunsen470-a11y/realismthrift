@@ -19,7 +19,8 @@ vi.mock("@/lib/inquiries/email-jobs", () => ({
   processPendingEmailJobs: mocks.processPendingEmailJobs,
 }));
 
-vi.mock("@/lib/meta-capi", () => ({
+vi.mock("@/lib/meta-capi", async (importOriginal) => ({
+  ...await importOriginal<typeof import("@/lib/meta-capi")>(),
   sendMetaCapiLead: mocks.sendMetaCapiLead,
 }));
 
@@ -69,6 +70,7 @@ function inquiryRequest(body: unknown, ip = nextIp()) {
 
 describe("POST /api/send Meta Lead", () => {
   beforeEach(() => {
+    vi.spyOn(console, "info").mockImplementation(() => {});
     errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     mocks.createInquiry.mockReset();
     mocks.createInquiry.mockResolvedValue({ id: "inquiry-db-id-should-not-leak", created: true });
@@ -79,10 +81,10 @@ describe("POST /api/send Meta Lead", () => {
   });
 
   afterEach(() => {
-    errorSpy.mockRestore();
+    vi.restoreAllMocks();
   });
 
-  it("returns the server event id and sends a non-PII Conversions API Lead", async () => {
+  it("returns the stable event id and sends no plaintext contact details", async () => {
     const order: string[] = [];
     mocks.processPendingEmailJobs.mockImplementation(async () => {
       order.push("email");
@@ -99,7 +101,7 @@ describe("POST /api/send Meta Lead", () => {
 
     expect(body.ok).toBe(true);
     expect(body.message).toBe("Inquiry received. Our sales team aims to reply within 12 hours.");
-    expect(body.event_id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+    expect(body.event_id).toBe(inquiryBody.submissionId);
     expect(order).toEqual(["email", "capi"]);
     expect(mocks.sendMetaCapiLead).toHaveBeenCalledTimes(1);
 
@@ -107,6 +109,9 @@ describe("POST /api/send Meta Lead", () => {
     expect(capiInput.eventId).toBe(body.event_id);
     expect(capiInput.productInterest).toBe("Used Brand Clothes");
     expect(capiInput.clientIpAddress).toBe(ip);
+    expect(capiInput.emailHash).toMatch(/^[a-f0-9]{64}$/);
+    expect(body).not.toHaveProperty("emailHash");
+    expect(body).not.toHaveProperty("phoneHash");
     expect(capiInput.clientUserAgent).toBe("Mozilla/5.0 (compatible; RealismthriftTest/1.0)");
     expect(capiInput).not.toHaveProperty("email");
     expect(capiInput).not.toHaveProperty("name");
@@ -122,6 +127,29 @@ describe("POST /api/send Meta Lead", () => {
     for (const secret of CONTACT_TEXT) {
       expect(serialized).not.toContain(secret);
     }
+    expect(errorSpy).not.toHaveBeenCalled();
+  });
+
+  it("hashes a valid international WhatsApp number after storage while preserving the inquiry", async () => {
+    const whatsapp = "+1 (650) 555-1212";
+    const response = await POST(inquiryRequest({ ...inquiryBody, whatsapp }));
+    expect(response.status).toBe(200);
+    expect(mocks.createInquiry.mock.calls[0][0].whatsapp).toBe(whatsapp);
+    const input = mocks.sendMetaCapiLead.mock.calls[0][0];
+    expect(input.phoneHash).toBe("e323ec626319ca94ee8bff2e4c87cf613be6ea19919ed1364124e16807ab3176");
+    expect(input).not.toHaveProperty("whatsapp");
+    expect(JSON.stringify(input)).not.toContain("16505551212");
+    expect(JSON.stringify(await response.json())).not.toContain(input.phoneHash);
+  });
+
+  it("keeps the inquiry and email matching when the WhatsApp number lacks a country code", async () => {
+    const response = await POST(inquiryRequest({ ...inquiryBody, whatsapp: "08031234567", country: "Nigeria" }));
+    expect(response.status).toBe(200);
+    expect(mocks.createInquiry.mock.calls[0][0].whatsapp).toBe("08031234567");
+    const input = mocks.sendMetaCapiLead.mock.calls[0][0];
+    expect(input.phoneHash).toBeUndefined();
+    expect(input.emailHash).toMatch(/^[a-f0-9]{64}$/);
+    expect(mocks.sendMetaCapiLead).toHaveBeenCalledTimes(1);
     expect(errorSpy).not.toHaveBeenCalled();
   });
 
@@ -188,5 +216,27 @@ describe("POST /api/send Meta Lead", () => {
     expect(response.status).toBe(400);
     expect(mocks.sendMetaCapiLead).not.toHaveBeenCalled();
     expect(mocks.createInquiry).not.toHaveBeenCalled();
+  });
+
+  it("reuses the persisted submission key when an accepted inquiry is retried", async () => {
+    const first = await (await POST(inquiryRequest(inquiryBody))).json();
+    mocks.createInquiry.mockResolvedValue({ id: "inquiry-db-id-should-not-leak", created: false });
+    const retry = await (await POST(inquiryRequest(inquiryBody))).json();
+    expect(retry.event_id).toBe(first.event_id);
+    expect(retry.event_id).toBe(inquiryBody.submissionId);
+    expect(mocks.sendMetaCapiLead.mock.calls.map(call => call[0].eventId)).toEqual([first.event_id, first.event_id]);
+  });
+
+  it("passes matching cookies from the request without including contact fields", async () => {
+    const request = inquiryRequest(inquiryBody);
+    request.headers.set("Cookie", "_fbp=fb.1.1700000000000.123456");
+    await POST(request);
+    expect(mocks.sendMetaCapiLead.mock.calls[0][0]).toMatchObject({ fbp: "fb.1.1700000000000.123456" });
+  });
+
+  it("treats an intentional measurement disable as a normal skip", async () => {
+    mocks.sendMetaCapiLead.mockResolvedValue({ status: "skipped", reason: "disabled" });
+    expect((await POST(inquiryRequest(inquiryBody))).status).toBe(200);
+    expect(errorSpy).not.toHaveBeenCalled();
   });
 });

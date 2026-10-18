@@ -169,12 +169,43 @@ test("privacy policy discloses the Meta Pixel and does not deny using it", async
   expect(text).toContain("Meta Pixel");
   expect(text).toContain("PageView");
   expect(text).toContain("Lead");
+  expect(text).toContain("SHA-256 hash");
+  expect(text).toContain("international WhatsApp number");
   expect(text).not.toContain("do not use Google Ads, Meta Pixel");
   expect(text.toLowerCase()).not.toContain("cookie settings");
   expect(text.toLowerCase()).not.toContain("consent banner");
 });
 
+test("a real landing fbclid survives page navigation and reaches the inquiry request with the SDK blocked", async ({ page, context }) => {
+  await page.goto("/?fbclid=Audit_Real-Click");
+  const cookie = (await context.cookies()).find(cookie => cookie.name === "_fbc");
+  expect(cookie?.value).toMatch(/^fb\.1\.\d{13}\.Audit_Real-Click$/);
+  expect(cookie?.path).toBe("/");
+  expect(cookie?.sameSite).toBe("Lax");
+
+  await page.goto("/contact-us");
+  expect((await context.cookies()).find(cookie => cookie.name === "_fbc")?.value).toBe(cookie?.value);
+  const form = page.locator("form.rt-inquiry-form");
+  await expect(form).toContainText("when valid, your international WhatsApp number in hashed form with Meta");
+  await expect(form.getByLabel("Your WhatsApp *")).toHaveAccessibleDescription(/include your country code/);
+  await form.getByLabel("Your Name *").fill("Private Analytics Test");
+  await form.getByLabel("Your Email *").fill("private@example.invalid");
+  await form.getByLabel("Your WhatsApp *").fill("+1 555 0199");
+  const requestPromise = page.waitForRequest(request => new URL(request.url()).pathname === "/api/send");
+  await form.getByRole("button", { name: "SEND INQUIRY NOW" }).click();
+  const request = await requestPromise;
+  expect((await request.allHeaders()).cookie).toContain(`_fbc=${cookie?.value}`);
+  await expect(page.getByRole("heading", { name: "Inquiry Received" })).toBeVisible();
+  expect(JSON.stringify(await metaCommands(page))).not.toContain("private@example.invalid");
+});
+
 test("only a successful inquiry records one Meta Lead", async ({ page }) => {
+  const submissionIds: string[] = [];
+  page.on("request", request => {
+    if (new URL(request.url()).pathname === "/api/send" && request.method() === "POST") {
+      submissionIds.push(request.postDataJSON().submissionId);
+    }
+  });
   await page.goto("/contact-us");
   const form = page.locator("form.rt-inquiry-form");
   await form.getByRole("button", { name: "SEND INQUIRY NOW" }).click();
@@ -184,7 +215,8 @@ test("only a successful inquiry records one Meta Lead", async ({ page }) => {
   await page.route("**/api/send", route => route.fulfill({ status: 503, json: { ok: false, message: "Please try again." } }));
   await form.getByLabel("Your Name *").fill("Private Analytics Test");
   await form.getByLabel("Your Email *").fill("private@example.invalid");
-  await form.getByLabel("Your WhatsApp *").fill("+1 555 0199");
+  // Missing country codes still submit; the server independently omits phone matching.
+  await form.getByLabel("Your WhatsApp *").fill("08031234567");
   await form.getByLabel("Your Message").fill("Call me about a private order");
   await form.getByLabel("Product Interest").selectOption("Used Brand Bags");
   await form.getByRole("button", { name: "SEND INQUIRY NOW" }).click();
@@ -200,16 +232,18 @@ test("only a successful inquiry records one Meta Lead", async ({ page }) => {
 
   await page.unroute("**/api/send");
   await page.route("**/api/send", route => route.fulfill({
-    json: { ok: true, message: "Inquiry received.", event_id: META_LEAD_EVENT_ID },
+    json: { ok: true, message: "Inquiry received.", event_id: route.request().postDataJSON().submissionId },
   }));
   await form.getByRole("button", { name: "SEND INQUIRY NOW" }).click();
   await expect(page.getByRole("heading", { name: "Inquiry Received" })).toBeVisible();
   const leads = await metaLeads(page);
   expect(leads).toHaveLength(1);
   expect(leads[0][2]).toEqual({ content_name: "wholesale_inquiry", content_category: "Used Brand Bags" });
-  expect(leads[0][3]).toEqual({ eventID: META_LEAD_EVENT_ID });
+  expect(submissionIds).toHaveLength(3);
+  expect(new Set(submissionIds).size).toBe(1);
+  expect(leads[0][3]).toEqual({ eventID: submissionIds[0] });
   const serialized = JSON.stringify(await metaCommands(page));
-  for (const privateValue of ["Private Analytics Test", "private@example.invalid", "+1 555 0199", "Call me about a private order"]) {
+  for (const privateValue of ["Private Analytics Test", "private@example.invalid", "08031234567", "Call me about a private order"]) {
     expect(serialized).not.toContain(privateValue);
   }
 });

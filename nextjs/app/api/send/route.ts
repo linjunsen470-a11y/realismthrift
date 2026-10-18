@@ -4,7 +4,7 @@ import { getInquiryEmailSettings } from "@/lib/inquiries/config";
 import { processPendingEmailJobs } from "@/lib/inquiries/email-jobs";
 import { createInquiry, InquiryStorageError } from "@/lib/inquiries/repository";
 import { validateInquiryPayload } from "@/lib/inquiries/validation";
-import { sendMetaCapiLead, type MetaCapiLeadResult } from "@/lib/meta-capi";
+import { hashMetaEmail, hashMetaPhone, metaCapiCookies, sendMetaCapiLead, type MetaCapiLeadResult } from "@/lib/meta-capi";
 
 export const preferredRegion = "sin1";
 
@@ -112,14 +112,20 @@ function measurementPageUrl(sourcePath: string): string | undefined {
 }
 
 function reportMetaCapiResult(result: MetaCapiLeadResult) {
-  if (result.status === "sent") return;
+  if (result.status === "sent") {
+    console.info("Meta CAPI Lead sent");
+    return;
+  }
   if (result.status === "skipped") {
+    if (result.reason === "disabled") return;
     console.error("Meta CAPI Lead skipped", { errorName: result.reason });
     return;
   }
   console.error("Meta CAPI Lead failed", {
     errorName: result.errorName,
     ...(result.httpStatus !== undefined ? { status: result.httpStatus } : {}),
+    ...(result.errorCode !== undefined ? { code: result.errorCode } : {}),
+    ...(result.traceId !== undefined ? { traceId: result.traceId } : {}),
   });
 }
 
@@ -202,15 +208,18 @@ export async function POST(request: Request) {
     });
   }
 
-  // Server-generated so the browser can still deduplicate when connect.facebook.net is blocked.
-  const eventId = crypto.randomUUID();
+  // The submission key already persists across request retries and is validated as a UUID.
+  const eventId = parsed.data.submissionId;
   try {
     const capiResult = await sendMetaCapiLead({
       eventId,
+      emailHash: hashMetaEmail(parsed.data.email),
+      phoneHash: hashMetaPhone(parsed.data.whatsapp),
       productInterest: parsed.data.product,
       eventSourceUrl: measurementPageUrl(parsed.data.sourcePath),
       clientIpAddress: clientIp === "unknown" ? undefined : clientIp,
       clientUserAgent: request.headers.get("user-agent") ?? undefined,
+      ...metaCapiCookies(request.headers.get("cookie")),
     });
     reportMetaCapiResult(capiResult);
   } catch (error) {

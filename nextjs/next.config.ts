@@ -83,6 +83,10 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  env: {
+    // Inline the same deployment environment into the browser bundle; no extra Vercel setting.
+    NEXT_PUBLIC_META_ENVIRONMENT: process.env.VERCEL_ENV ?? 'development',
+  },
   reactStrictMode: true,
   turbopack: {}, // Satisfies Next.js 16 requirements when webpack config is present
   typescript: {

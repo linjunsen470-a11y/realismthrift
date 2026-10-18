@@ -3,15 +3,16 @@
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { metaLeadEventOptions, metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, resolveFacebookPixelId } from "@/lib/meta-pixel";
+import { isMetaMeasurementEnabled, metaLeadEventOptions, metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, resolveFacebookPixelId } from "@/lib/meta-pixel";
 import { isUtilityPath } from "./SiteChrome";
 
 const isAnalyticsEnabled = process.env.NEXT_PUBLIC_ANALYTICS_ENABLED !== "false";
+const isMetaEnabled = isMetaMeasurementEnabled(process.env.NEXT_PUBLIC_ANALYTICS_ENABLED, process.env.NEXT_PUBLIC_META_ENVIRONMENT);
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID?.trim();
 const FB_PIXEL_ID = resolveFacebookPixelId(process.env.NEXT_PUBLIC_FB_PIXEL_ID);
 
 function metaPixelActive(pathname: string) {
-  return isAnalyticsEnabled && Boolean(FB_PIXEL_ID) && !isUtilityPath(pathname);
+  return isMetaEnabled && Boolean(FB_PIXEL_ID) && !isUtilityPath(pathname);
 }
 
 /**
@@ -50,7 +51,7 @@ export default function Analytics() {
   return (
     <>
       {GA_ID ? <GoogleAnalytics pathname={pathname} /> : null}
-      {FB_PIXEL_ID ? <MetaPixelPageViews pathname={pathname} /> : null}
+      {isMetaEnabled && FB_PIXEL_ID ? <MetaPixelPageViews pathname={pathname} /> : null}
     </>
   );
 }
@@ -137,7 +138,7 @@ export function trackEvent(eventName: string, params?: Record<string, string>) {
  * eventId matches the Conversions API event_id. The browser API name is eventID.
  */
 export function trackMetaLead(productInterest?: string, eventId?: string) {
-  if (typeof window === "undefined" || !isAnalyticsEnabled || !FB_PIXEL_ID || typeof window.fbq !== "function") return;
+  if (typeof window === "undefined" || !isMetaEnabled || !FB_PIXEL_ID || typeof window.fbq !== "function") return;
   if (isUtilityPath(window.location.pathname)) return;
   const params = metaLeadParams(productInterest);
   const options = metaLeadEventOptions(eventId);

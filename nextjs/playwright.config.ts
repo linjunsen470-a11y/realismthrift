@@ -44,6 +44,8 @@ export default defineConfig({
         reuseExistingServer: !process.env.CI,
         timeout: 180_000,
         env: {
+          // Exercise production Meta behavior with all event transports intercepted.
+          VERCEL_ENV: "production",
           // Render signed-out login forms without production credentials or a session.
           // Login POSTs are intercepted by the tests; no Supabase login is performed.
           SUPABASE_URL: process.env.SUPABASE_URL || "https://tjbeeackrjpojejxhnzq.supabase.co",

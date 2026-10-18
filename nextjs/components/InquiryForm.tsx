@@ -169,9 +169,11 @@ export function InquiryForm({
             type="tel"
             autoComplete="tel" maxLength={32}
             inputMode="tel"
+            aria-describedby={`${formId}-whatsapp-hint`}
             required
             placeholder="+1 234 567 8900"
           />
+          <p id={`${formId}-whatsapp-hint`} className="rt-form-note">Please include your country code, starting with + or 00.</p>
         </div>
 
         <div className="rt-form-group">
@@ -251,7 +253,7 @@ export function InquiryForm({
       ) : null}
 
       <p className="rt-form-note">
-        We use your details to respond to your inquiry. <Link href="/privacy-policy" className="underline">Privacy Policy</Link>
+        We use your details to respond to your inquiry. After a successful inquiry, we share your email and, when valid, your international WhatsApp number in hashed form with Meta for advertising measurement. <Link href="/privacy-policy" className="underline">Privacy Policy</Link>
       </p>
 
       {submission.status === "error" ? (

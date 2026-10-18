@@ -1,5 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { isMetaEventId, metaLeadEventOptions, metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, PRODUCTION_FB_PIXEL_ID, resolveFacebookPixelId } from "./meta-pixel";
+import { runInNewContext } from "node:vm";
+import { isMetaEventId, isMetaMeasurementEnabled, metaLeadEventOptions, metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, PRODUCTION_FB_PIXEL_ID, resolveFacebookPixelId } from "./meta-pixel";
+
+describe("Meta environment isolation", () => {
+  it("requires production and obeys the existing analytics switch", () => {
+    expect(isMetaMeasurementEnabled(undefined, "production")).toBe(true);
+    expect(isMetaMeasurementEnabled("true", "production")).toBe(true);
+    expect(isMetaMeasurementEnabled("false", "production")).toBe(false);
+    for (const env of [undefined, "preview", "development"]) {
+      expect(isMetaMeasurementEnabled("true", env)).toBe(false);
+    }
+  });
+});
 
 describe("resolveFacebookPixelId", () => {
   it("uses the current production pixel when the environment value is missing", () => {
@@ -34,6 +46,46 @@ describe("metaPixelBaseCode", () => {
   it("refuses to build a snippet for an id that is not only digits", () => {
     expect(metaPixelBaseCode("")).toBe("");
     expect(metaPixelBaseCode(`${PRODUCTION_FB_PIXEL_ID};alert(1)`)).toBe("");
+  });
+});
+
+describe("landing fbclid capture", () => {
+  function capture(search: string, cookie = "", now = 1_700_000_000_000, blocked = false) {
+    const writes: string[] = [];
+    const document = {
+      get cookie() { if (blocked) throw new Error("cookies blocked"); return cookie; },
+      set cookie(value: string) { writes.push(value); },
+    };
+    const calls: unknown[][] = [];
+    const fbq = (...args: unknown[]) => calls.push(args);
+    // fbq is present but no external SDK is loaded; execute the actual rendered head script.
+    runInNewContext(metaPixelBaseCode(PRODUCTION_FB_PIXEL_ID), {
+      document, window: { fbq }, fbq, URLSearchParams, Date: { now: () => now },
+      location: { search, protocol: "https:", pathname: "/" },
+    });
+    return { writes, calls };
+  }
+  it("saves a real landing click for cross-page use before the SDK loads", () => {
+    expect(capture("?fbclid=Real_Ad-Click").writes).toEqual([
+      "_fbc=fb.1.1700000000000.Real_Ad-Click; Path=/; Max-Age=7776000; SameSite=Lax; Secure",
+    ]);
+  });
+  it("keeps the original capture time for the same click, including an SDK appendix", () => {
+    expect(capture("?fbclid=Real_Ad-Click", "_fbc=fb.1.1690000000000.Real_Ad-Click").writes).toEqual([]);
+    expect(capture("?fbclid=Real_Ad-Click", "_fbc=fb.1.1690000000000.Real_Ad-Click.SDK").writes).toEqual([]);
+  });
+  it("updates the identifier and time only on a new advertising click", () => {
+    expect(capture("?fbclid=NewClick", "_fbc=fb.1.1690000000000.OldClick").writes[0]).toContain("fb.1.1700000000000.NewClick;");
+  });
+  it("does not invent identifiers for ordinary visits or accept cookie injection", () => {
+    for (const query of ["", "?utm_source=facebook", "?fbclid=", "?fbclid=bad%3BPath%3D%2F", "?fbclid=" + "x".repeat(1001)]) {
+      expect(capture(query, "_fbc=fb.1.1690000000000.Previous").writes).toEqual([]);
+    }
+  });
+  it("cookie restrictions do not prevent Pixel initialization", () => {
+    const result = capture("?fbclid=RealClick", "", undefined, true);
+    expect(result.writes).toEqual([]);
+    expect(result.calls).toContainEqual(["track", "PageView"]);
   });
 });
 

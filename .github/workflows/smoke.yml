@@ -42,6 +42,8 @@ jobs:
 
       - name: Build application
         env:
+          # Exercise production Meta gating; Playwright blocks live Meta transports.
+          VERCEL_ENV: production
           NEXT_PUBLIC_ANALYTICS_ENABLED: "true"
           # Browser tests intercept this tag; no CI events reach the live property.
           NEXT_PUBLIC_GA_ID: G-TEST000001

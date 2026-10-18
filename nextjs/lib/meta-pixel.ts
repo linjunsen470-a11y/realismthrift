@@ -3,6 +3,11 @@ export const PRODUCTION_FB_PIXEL_ID = "1661409812003549";
 
 const PIXEL_ID_PATTERN = /^\d{10,20}$/;
 
+/** Meta measures production only. GA4 keeps its separate existing behavior. */
+export function isMetaMeasurementEnabled(analyticsEnabled: string | undefined, environment: string | undefined): boolean {
+  return analyticsEnabled !== "false" && environment === "production";
+}
+
 const LEAD_CATEGORIES = new Set([
   "Used Brand Clothes",
   "Used Brand Shoes",
@@ -28,7 +33,18 @@ export function resolveFacebookPixelId(configured: string | undefined | null): s
  */
 export function metaPixelBaseCode(pixelId: string): string {
   if (!PIXEL_ID_PATTERN.test(pixelId)) return "";
-  return `!function(f,b,e,v,n,t,s)
+  // Capture the real click before loading the external SDK, including when that SDK is blocked.
+  return `!function(){try {
+var rtClickId=new URLSearchParams(location.search).get('fbclid');
+if(rtClickId&&/^[A-Za-z0-9_-]{1,1000}$/.test(rtClickId)){
+var rtFbc=document.cookie.split(';').map(function(c){return c.trim()}).find(function(c){return c.indexOf('_fbc=')===0});
+var rtPrevious=rtFbc&&/^fb\\.\\d+\\.\\d{13}\\.([A-Za-z0-9_-]+)(?:\\.[A-Za-z0-9_-]+)?$/.exec(rtFbc.slice(5));
+if(!rtPrevious||rtPrevious[1]!==rtClickId){
+document.cookie='_fbc=fb.1.'+Date.now()+'.'+rtClickId+'; Path=/; Max-Age=7776000; SameSite=Lax'+(location.protocol==='https:'?'; Secure':'');
+}
+}
+}catch(e){}}();
+!function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
 if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
