@@ -7,6 +7,9 @@ const mocks = vi.hoisted(() => ({
   processPendingEmailJobs: vi.fn(),
   sendMetaCapiLead: vi.fn(),
   after: vi.fn(),
+  startMetaCapiLog: vi.fn(),
+  finishMetaCapiLog: vi.fn(),
+  recordMetaCapiSkip: vi.fn(),
 }));
 
 vi.mock("next/server", async (importOriginal) => ({
@@ -28,6 +31,12 @@ vi.mock("@/lib/inquiries/email-jobs", () => ({
 vi.mock("@/lib/meta-capi", async (importOriginal) => ({
   ...await importOriginal<typeof import("@/lib/meta-capi")>(),
   sendMetaCapiLead: mocks.sendMetaCapiLead,
+}));
+
+vi.mock("@/lib/meta-capi-log", () => ({
+  startMetaCapiLog: mocks.startMetaCapiLog,
+  finishMetaCapiLog: mocks.finishMetaCapiLog,
+  recordMetaCapiSkip: mocks.recordMetaCapiSkip,
 }));
 
 const inquiryBody = {
@@ -85,6 +94,9 @@ describe("POST /api/send Meta Lead", () => {
     mocks.sendMetaCapiLead.mockReset();
     mocks.sendMetaCapiLead.mockResolvedValue({ status: "sent" });
     mocks.after.mockReset();
+    for (const mock of [mocks.startMetaCapiLog, mocks.finishMetaCapiLog, mocks.recordMetaCapiSkip]) {
+      mock.mockReset().mockResolvedValue(true);
+    }
   });
 
   afterEach(() => {
@@ -226,7 +238,7 @@ describe("POST /api/send Meta Lead", () => {
     expect(response.status).toBe(200);
     expect(body.ok).toBe(true);
     expect(body.event_id).toBeTruthy();
-    expect(errorSpy).toHaveBeenCalledWith("Meta CAPI Lead failed", { errorName: "Error" });
+    expect(errorSpy).toHaveBeenCalledWith("Meta CAPI Lead failed", { errorName: "UnknownError" });
     const logged = JSON.stringify(errorSpy.mock.calls);
     expect(logged).not.toContain("boom");
   });
@@ -265,7 +277,13 @@ describe("POST /api/send Meta Lead", () => {
     const retry = await (await POST(inquiryRequest(inquiryBody))).json();
     expect(retry.event_id).toBe(first.event_id);
     expect(retry.event_id).toBe(inquiryBody.submissionId);
-    expect(mocks.sendMetaCapiLead.mock.calls.map(call => call[0].eventId)).toEqual([first.event_id, first.event_id]);
+    expect(mocks.sendMetaCapiLead.mock.calls.map(call => call[0].eventId)).toEqual([first.event_id]);
+    expect(mocks.startMetaCapiLog).toHaveBeenCalledTimes(1);
+    expect(mocks.finishMetaCapiLog).toHaveBeenCalledTimes(1);
+    expect(mocks.recordMetaCapiSkip).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({
+      eventId: first.event_id, inquiryId: "inquiry-db-id-should-not-leak",
+    }), "duplicate_submission");
+    expect(mocks.recordMetaCapiSkip.mock.calls[0][0].id).not.toBe(mocks.startMetaCapiLog.mock.calls[0][0].id);
   });
 
   it("passes matching cookies from the request without including contact fields", async () => {
@@ -280,4 +298,100 @@ describe("POST /api/send Meta Lead", () => {
     expect((await POST(inquiryRequest(inquiryBody))).status).toBe(200);
     expect(errorSpy).not.toHaveBeenCalled();
   });
+  it("awaits start and terminal logging before independent email work", async () => {
+    const order: string[] = [];
+    mocks.startMetaCapiLog.mockImplementation(async () => { order.push("start"); return true; });
+    mocks.sendMetaCapiLead.mockImplementation(async () => { order.push("capi"); return { status: "sent" }; });
+    mocks.finishMetaCapiLog.mockImplementation(async () => { order.push("finish"); return true; });
+    mocks.processPendingEmailJobs.mockImplementation(async () => { order.push("email"); throw new Error("mail unavailable"); });
+    const response = await POST(inquiryRequest(inquiryBody));
+    expect(order).toEqual(["start", "capi", "finish"]);
+    expect(mocks.finishMetaCapiLog.mock.calls[0][0]).toEqual(mocks.startMetaCapiLog.mock.calls[0][0]);
+    await mocks.after.mock.calls[0][0]();
+    expect(order).toEqual(["start", "capi", "finish", "email"]);
+    expect(mocks.finishMetaCapiLog).toHaveBeenCalledTimes(1);
+    expect(mocks.sendMetaCapiLead).toHaveBeenCalledTimes(1);
+    expect(await response.json()).toEqual({ ok: true,
+      message: "Inquiry received. Our sales team aims to reply within 12 hours.", event_id: inquiryBody.submissionId });
+  });
+
+  it.each([[false, true], [true, false], [false, false]])("accepts inquiries when start=%s and finish=%s", async (start, finish) => {
+    mocks.startMetaCapiLog.mockResolvedValue(start);
+    mocks.finishMetaCapiLog.mockResolvedValue(finish);
+    const response = await POST(inquiryRequest(inquiryBody));
+    expect(response.status).toBe(200);
+    expect((await response.json()).event_id).toBe(inquiryBody.submissionId);
+    expect(mocks.sendMetaCapiLead).toHaveBeenCalledTimes(1);
+    expect(mocks.finishMetaCapiLog).toHaveBeenCalledTimes(1);
+    expect(mocks.after).toHaveBeenCalledTimes(1);
+  });
+
+  it("isolates unexpected logger throws without leaking error messages or resending", async () => {
+    const error = new Error("buyer@example.com fake-token-sentinel");
+    mocks.startMetaCapiLog.mockRejectedValue(error);
+    mocks.finishMetaCapiLog.mockRejectedValue(error);
+    expect((await POST(inquiryRequest(inquiryBody))).status).toBe(200);
+    expect(mocks.sendMetaCapiLead).toHaveBeenCalledTimes(1);
+    mocks.createInquiry.mockResolvedValue({ id: "inquiry-db-id-should-not-leak", created: false });
+    mocks.recordMetaCapiSkip.mockRejectedValue(error);
+    expect((await POST(inquiryRequest(inquiryBody))).status).toBe(200);
+    expect(mocks.sendMetaCapiLead).toHaveBeenCalledTimes(1);
+    expect(JSON.stringify(errorSpy.mock.calls)).not.toContain("buyer@example.com");
+    expect(JSON.stringify(errorSpy.mock.calls)).not.toContain("fake-token-sentinel");
+  });
+
+  it("finishes unexpected CAPI throws with unknown diagnostics while retaining the event id", async () => {
+    const error = Object.assign(new Error("buyer@example.com fake-token-sentinel"), { name: "buyer@example.com" });
+    mocks.sendMetaCapiLead.mockRejectedValue(error);
+    const response = await POST(inquiryRequest(inquiryBody));
+    expect(mocks.finishMetaCapiLog).toHaveBeenCalledWith(mocks.startMetaCapiLog.mock.calls[0][0], null, expect.any(Number));
+    expect((await response.json()).event_id).toBe(inquiryBody.submissionId);
+    expect(JSON.stringify(errorSpy.mock.calls)).not.toContain("buyer@example.com");
+    expect(JSON.stringify(errorSpy.mock.calls)).not.toContain("fake-token-sentinel");
+  });
+
+  it.each(["disabled", "missing_token", "missing_pixel", "invalid_event_id"])("persists sender skip reason %s", async reason => {
+    const result = { status: "skipped", reason };
+    mocks.sendMetaCapiLead.mockResolvedValue(result);
+    expect((await POST(inquiryRequest(inquiryBody))).status).toBe(200);
+    expect(mocks.finishMetaCapiLog.mock.calls[0][1]).toBe(result);
+    expect(mocks.recordMetaCapiSkip).not.toHaveBeenCalled();
+  });
+
+  it("persists a returned failure without changing the accepted response", async () => {
+    const failure = { status: "failed", errorName: "HttpError", httpStatus: 503 };
+    mocks.sendMetaCapiLead.mockResolvedValue(failure);
+    expect((await POST(inquiryRequest(inquiryBody))).status).toBe(200);
+    expect(mocks.finishMetaCapiLog.mock.calls[0][1]).toBe(failure);
+  });
+
+  it("uses created for concurrent duplicates even if the first CAPI fails", async () => {
+    mocks.createInquiry.mockResolvedValueOnce({ id: "inquiry-db-id-should-not-leak", created: true })
+      .mockResolvedValue({ id: "inquiry-db-id-should-not-leak", created: false });
+    mocks.sendMetaCapiLead.mockResolvedValue({ status: "failed", errorName: "HttpError", httpStatus: 503 });
+    const responses = await Promise.all(Array.from({ length: 3 }, () => POST(inquiryRequest(inquiryBody))));
+    for (const response of responses) expect((await response.json()).event_id).toBe(inquiryBody.submissionId);
+    expect(mocks.sendMetaCapiLead).toHaveBeenCalledTimes(1);
+    expect(mocks.recordMetaCapiSkip).toHaveBeenCalledTimes(2);
+    expect(new Set(mocks.recordMetaCapiSkip.mock.calls.map(call => call[0].id)).size).toBe(2);
+    expect(mocks.after).toHaveBeenCalledTimes(3);
+  });
+
+  it.each(["storage", "validation", "origin", "rate_limit"])("does not write CAPI logs on %s rejection", async reason => {
+    let request = inquiryRequest(inquiryBody);
+    if (reason === "storage") mocks.createInquiry.mockRejectedValue(new Error("db down"));
+    if (reason === "validation") request = inquiryRequest({ ...inquiryBody, email: "invalid" });
+    if (reason === "origin") request.headers.set("Origin", "https://unrelated.example");
+    if (reason === "rate_limit") {
+      const ip = nextIp();
+      for (let i = 0; i < 5; i++) await POST(inquiryRequest({ ...inquiryBody, email: "invalid" }, ip));
+      request = inquiryRequest(inquiryBody, ip);
+    }
+    expect((await POST(request)).status).toBeGreaterThanOrEqual(400);
+    expect(mocks.startMetaCapiLog).not.toHaveBeenCalled();
+    expect(mocks.finishMetaCapiLog).not.toHaveBeenCalled();
+    expect(mocks.recordMetaCapiSkip).not.toHaveBeenCalled();
+    expect(mocks.sendMetaCapiLead).not.toHaveBeenCalled();
+  });
+
 });

@@ -44,10 +44,50 @@ export type MetaCapiLeadEvent = {
   custom_data: ReturnType<typeof metaLeadParams>;
 };
 
-export type MetaCapiLeadResult =
+export type MetaCapiErrorName = "HttpError" | "InvalidResponse" | "TypeError" | "AbortError" | "TimeoutError" | "UnknownError";
+export type MetaCapiSkipReason = "disabled" | "missing_token" | "missing_pixel" | "invalid_event_id";
+
+export type MetaCapiAttempt = {
+  attempt_no: number;
+  started_at: string;
+  duration_ms: number;
+  status: "sent" | "failed";
+  http_status: number | null;
+  events_received: number | null;
+  error_name: MetaCapiErrorName | null;
+  meta_error_code: number | null;
+  trace_id: string | null;
+  response_parse_status: "json" | "invalid_json" | "body_error" | "no_response";
+  retryable: boolean;
+};
+
+export type MetaCapiDiagnostics = {
+  pixel_id: string | null;
+  graph_api_version: typeof META_GRAPH_API_VERSION;
+  event_time_seconds: number | null;
+  has_email_hash: boolean | null;
+  has_phone_hash: boolean | null;
+  has_fbp: boolean | null;
+  has_fbc: boolean | null;
+  duration_ms: number;
+  attempts: MetaCapiAttempt[];
+};
+
+type MetaCapiOutcome =
   | { status: "sent" }
-  | { status: "skipped"; reason: "disabled" | "missing_token" | "missing_pixel" | "invalid_event_id" }
-  | { status: "failed"; errorName: string; httpStatus?: number; errorCode?: number; traceId?: string };
+  | { status: "skipped"; reason: MetaCapiSkipReason }
+  | { status: "failed"; errorName: MetaCapiErrorName; httpStatus?: number; errorCode?: number; traceId?: string };
+
+export type MetaCapiLeadResult = MetaCapiOutcome & { diagnostics: MetaCapiDiagnostics };
+
+/** Only bounded numeric codes/counts and opaque trace identifiers may leave the transport. */
+export function metaCapiInteger(value: unknown, minimum = 0, maximum = 2_147_483_647): number | null {
+  return typeof value === "number" && Number.isSafeInteger(value) && value >= minimum && value <= maximum ? value : null;
+}
+
+export function metaCapiTraceId(value: unknown): string | null {
+  return typeof value === "string" && value.length >= 1 && value.length <= 100 && !/[^A-Za-z0-9_-]/.test(value) ? value : null;
+}
 
 export type MetaCapiLeadOptions = {
   /** Pass "" to skip. Omit to read the server env var. Never log this value. */
@@ -186,35 +226,59 @@ export async function sendMetaCapiLead(
   input: MetaCapiLeadInput,
   options: MetaCapiLeadOptions = {},
 ): Promise<MetaCapiLeadResult> {
+  const started = performance.now();
+  const diagnostics: MetaCapiDiagnostics = {
+    pixel_id: null, graph_api_version: META_GRAPH_API_VERSION, event_time_seconds: null,
+    has_email_hash: null, has_phone_hash: null, has_fbp: null, has_fbc: null,
+    duration_ms: 0, attempts: [],
+  };
+  const complete = (outcome: MetaCapiOutcome): MetaCapiLeadResult => ({
+    ...outcome,
+    diagnostics: { ...diagnostics, duration_ms: Math.max(0, Math.round(performance.now() - started)) },
+  });
   if (!isMetaMeasurementEnabled(process.env.NEXT_PUBLIC_ANALYTICS_ENABLED, process.env.VERCEL_ENV)) {
-    return { status: "skipped", reason: "disabled" };
+    return complete({ status: "skipped", reason: "disabled" });
   }
   const pixelId = resolveFacebookPixelId(
     options.pixelId !== undefined ? options.pixelId : process.env.NEXT_PUBLIC_FB_PIXEL_ID,
   );
-  if (!pixelId) return { status: "skipped", reason: "missing_pixel" };
+  if (!pixelId) return complete({ status: "skipped", reason: "missing_pixel" });
+  diagnostics.pixel_id = pixelId;
 
   const accessToken = (
     options.accessToken !== undefined ? options.accessToken : process.env.META_CAPI_ACCESS_TOKEN ?? ""
   ).trim();
-  if (!accessToken) return { status: "skipped", reason: "missing_token" };
+  if (!accessToken) return complete({ status: "skipped", reason: "missing_token" });
 
   const eventId = input.eventId.trim();
-  if (!isMetaEventId(eventId)) return { status: "skipped", reason: "invalid_event_id" };
+  if (!isMetaEventId(eventId)) return complete({ status: "skipped", reason: "invalid_event_id" });
 
   const event = buildMetaCapiLeadEvent({ ...input, eventId }, options.now ?? (() => new Date()));
+  diagnostics.event_time_seconds = event.event_time;
+  diagnostics.has_email_hash = Boolean(event.user_data.em);
+  diagnostics.has_phone_hash = Boolean(event.user_data.ph);
+  diagnostics.has_fbp = Boolean(event.user_data.fbp);
+  diagnostics.has_fbc = Boolean(event.user_data.fbc);
   const fetchImpl = options.fetchImpl ?? fetch;
   const timeoutMs = Math.max(1, options.timeoutMs ?? DEFAULT_CAPI_TIMEOUT_MS);
   const deadline = performance.now() + timeoutMs;
   // Reuse the exact payload (including event id and time) across the two attempts.
   const body = JSON.stringify({ data: [event], access_token: accessToken });
-  let result: MetaCapiLeadResult = { status: "failed", errorName: "TimeoutError" };
+  let result: MetaCapiOutcome = { status: "failed", errorName: "TimeoutError" };
 
   for (let attempt = 0; attempt < 2; attempt++) {
     let retryable = false;
     let retryDelayMs = 150;
     const remainingMs = Math.floor(deadline - performance.now());
     if (remainingMs <= 0) break;
+    const attemptStarted = performance.now();
+    const summary: MetaCapiAttempt = {
+      attempt_no: attempt + 1, started_at: new Date().toISOString(), duration_ms: 0,
+      status: "failed", http_status: null, events_received: null, error_name: null,
+      meta_error_code: null, trace_id: null, response_parse_status: "no_response", retryable: false,
+    };
+    // Count only actual fetch calls, never a retry stopped by the shared deadline.
+    diagnostics.attempts.push(summary);
     try {
       const response = await fetchImpl(metaCapiEventsUrl(pixelId), {
         method: "POST",
@@ -227,24 +291,31 @@ export async function sendMetaCapiLead(
         redirect: "error",
         signal: AbortSignal.timeout(attempt === 0 ? Math.max(1, Math.floor(remainingMs / 2)) : remainingMs),
       });
-      let payload: { events_received?: unknown; error?: { code?: unknown; fbtrace_id?: unknown } } | null = null;
+      summary.http_status = metaCapiInteger(response.status, 100, 599);
+      let payload: { events_received?: unknown; fbtrace_id?: unknown; error?: { code?: unknown; fbtrace_id?: unknown } } | null = null;
       try {
         payload = await response.json();
+        summary.response_parse_status = "json";
       } catch (error) {
         // Malformed JSON is an invalid response; interrupted body reads are transport failures.
+        summary.response_parse_status = error instanceof SyntaxError ? "invalid_json" : "body_error";
         if (!(error instanceof SyntaxError)) throw error;
       }
+      summary.events_received = metaCapiInteger(payload?.events_received);
+      summary.meta_error_code = metaCapiInteger(payload?.error?.code, -2_147_483_648);
+      summary.trace_id = metaCapiTraceId(response.ok ? payload?.fbtrace_id : payload?.error?.fbtrace_id);
       if (response.ok) {
-        return payload?.events_received === 1
+        summary.status = payload?.events_received === 1 ? "sent" : "failed";
+        summary.error_name = summary.status === "sent" ? null : "InvalidResponse";
+        return complete(summary.status === "sent"
           ? { status: "sent" }
-          : { status: "failed", errorName: "InvalidResponse", httpStatus: response.status };
+          : { status: "failed", errorName: "InvalidResponse", httpStatus: response.status });
       }
-      const code = payload?.error?.code;
-      const traceId = payload?.error?.fbtrace_id;
+      summary.error_name = "HttpError";
       result = {
         status: "failed", errorName: "HttpError", httpStatus: response.status,
-        ...(typeof code === "number" && Number.isSafeInteger(code) ? { errorCode: code } : {}),
-        ...(typeof traceId === "string" && /^[A-Za-z0-9_-]{1,100}$/.test(traceId) ? { traceId } : {}),
+        ...(summary.meta_error_code !== null ? { errorCode: summary.meta_error_code } : {}),
+        ...(summary.trace_id !== null ? { traceId: summary.trace_id } : {}),
       };
       retryable = response.status === 429 || response.status >= 500;
       const retryAfter = response.headers.get("retry-after");
@@ -256,10 +327,14 @@ export async function sendMetaCapiLead(
     } catch (error) {
       const name = error instanceof Error ? error.name : "UnknownError";
       retryable = name === "TypeError" || name === "AbortError" || name === "TimeoutError";
-      result = { status: "failed", errorName: retryable ? name : "UnknownError" };
+      summary.error_name = name === "TypeError" || name === "AbortError" || name === "TimeoutError" ? name : "UnknownError";
+      result = { status: "failed", errorName: summary.error_name };
+    } finally {
+      summary.retryable = retryable;
+      summary.duration_ms = Math.max(0, Math.round(performance.now() - attemptStarted));
     }
     if (attempt === 1 || !retryable || deadline - performance.now() <= retryDelayMs) break;
     await new Promise(resolve => setTimeout(resolve, retryDelayMs));
   }
-  return result;
+  return complete(result);
 }

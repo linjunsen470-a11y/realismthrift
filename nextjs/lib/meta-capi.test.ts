@@ -186,13 +186,13 @@ describe("sendMetaCapiLead", () => {
       accessToken: "",
       pixelId: PRODUCTION_FB_PIXEL_ID,
       fetchImpl,
-    })).resolves.toEqual({ status: "skipped", reason: "missing_token" });
+    })).resolves.toMatchObject({ status: "skipped", reason: "missing_token" });
 
     await expect(sendMetaCapiLead(baseInput(), {
       accessToken: "   ",
       pixelId: PRODUCTION_FB_PIXEL_ID,
       fetchImpl,
-    })).resolves.toEqual({ status: "skipped", reason: "missing_token" });
+    })).resolves.toMatchObject({ status: "skipped", reason: "missing_token" });
 
     expect(fetchImpl).not.toHaveBeenCalled();
   });
@@ -206,7 +206,7 @@ describe("sendMetaCapiLead", () => {
       accessToken: FAKE_TOKEN,
       pixelId: "not-a-pixel",
       fetchImpl,
-    })).resolves.toEqual({ status: "skipped", reason: "missing_pixel" });
+    })).resolves.toMatchObject({ status: "skipped", reason: "missing_pixel" });
 
     expect(fetchImpl).not.toHaveBeenCalled();
   });
@@ -220,7 +220,7 @@ describe("sendMetaCapiLead", () => {
       accessToken: FAKE_TOKEN,
       pixelId: PRODUCTION_FB_PIXEL_ID,
       fetchImpl,
-    })).resolves.toEqual({ status: "skipped", reason: "invalid_event_id" });
+    })).resolves.toMatchObject({ status: "skipped", reason: "invalid_event_id" });
 
     expect(fetchImpl).not.toHaveBeenCalled();
   });
@@ -250,7 +250,7 @@ describe("sendMetaCapiLead", () => {
     });
 
     expect(liveTokenSeen).toBe(false);
-    expect(result).toEqual({ status: "sent" });
+    expect(result).toMatchObject({ status: "sent" });
     expect(captured).toHaveLength(1);
     expect(captured[0].url).toBe(metaCapiEventsUrl(PRODUCTION_FB_PIXEL_ID));
     expect(captured[0].url).not.toContain("access_token");
@@ -276,7 +276,7 @@ describe("sendMetaCapiLead", () => {
       accessToken: FAKE_TOKEN,
       pixelId: PRODUCTION_FB_PIXEL_ID,
       fetchImpl,
-    })).resolves.toEqual({ status: "failed", errorName: "HttpError", httpStatus: 400, errorCode: 100 });
+    })).resolves.toMatchObject({ status: "failed", errorName: "HttpError", httpStatus: 400, errorCode: 100 });
   });
 
   it("returns a soft failure when the network call throws", async () => {
@@ -288,7 +288,7 @@ describe("sendMetaCapiLead", () => {
       accessToken: FAKE_TOKEN,
       pixelId: PRODUCTION_FB_PIXEL_ID,
       fetchImpl,
-    })).resolves.toEqual({ status: "failed", errorName: "TypeError" });
+    })).resolves.toMatchObject({ status: "failed", errorName: "TypeError" });
   });
 
   it("returns a soft failure when the Graph call times out", async () => {
@@ -305,12 +305,16 @@ describe("sendMetaCapiLead", () => {
       });
     });
 
-    await expect(sendMetaCapiLead(baseInput(), {
+    const result = await sendMetaCapiLead(baseInput(), {
       accessToken: FAKE_TOKEN,
       pixelId: PRODUCTION_FB_PIXEL_ID,
       fetchImpl,
       timeoutMs: 20,
-    })).resolves.toEqual({ status: "failed", errorName: "TimeoutError" });
+    });
+    expect(result).toMatchObject({ status: "failed", errorName: "TimeoutError" });
+    expect(result.diagnostics.attempts).toMatchObject([
+      { attempt_no: 1, http_status: null, error_name: "TimeoutError", response_parse_status: "no_response", retryable: true },
+    ]);
   });
 });
 
@@ -344,18 +348,18 @@ describe("CAPI delivery safeguards", () => {
     const fetchImpl = vi.fn<typeof fetch>();
     for (const env of ["preview", "development", ""]) {
       vi.stubEnv("VERCEL_ENV", env);
-      expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toEqual({ status: "skipped", reason: "disabled" });
+      expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toMatchObject({ status: "skipped", reason: "disabled" });
     }
     vi.stubEnv("VERCEL_ENV", "production");
     vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "false");
-    expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toEqual({ status: "skipped", reason: "disabled" });
+    expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toMatchObject({ status: "skipped", reason: "disabled" });
     expect(fetchImpl).not.toHaveBeenCalled();
   });
   it("retries a temporary failure once with an identical event id, time, and payload", async () => {
     const fetchImpl = vi.fn<typeof fetch>()
       .mockResolvedValueOnce(new Response("{}", { status: 503 }))
       .mockResolvedValueOnce(new Response('{"events_received":1}'));
-    expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toEqual({ status: "sent" });
+    expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toMatchObject({ status: "sent" });
     expect(fetchImpl).toHaveBeenCalledTimes(2);
     expect(fetchImpl.mock.calls[0][1]?.body).toBe(fetchImpl.mock.calls[1][1]?.body);
   });
@@ -363,12 +367,17 @@ describe("CAPI delivery safeguards", () => {
     const fetchImpl = vi.fn<typeof fetch>()
       .mockRejectedValueOnce(new DOMException("timeout", "TimeoutError"))
       .mockResolvedValueOnce(new Response('{"events_received":1}'));
-    expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toEqual({ status: "sent" });
+    expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toMatchObject({ status: "sent" });
     expect(fetchImpl).toHaveBeenCalledTimes(2);
   });
   it("caps temporary failures at two attempts", async () => {
     const fetchImpl = vi.fn<typeof fetch>().mockImplementation(async () => new Response("{}", { status: 502 }));
-    expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toMatchObject({ status: "failed", httpStatus: 502 });
+    const result = await sendMetaCapiLead(baseInput(), options(fetchImpl));
+    expect(result).toMatchObject({ status: "failed", httpStatus: 502 });
+    expect(result.diagnostics.attempts).toMatchObject([
+      { attempt_no: 1, http_status: 502, retryable: true },
+      { attempt_no: 2, http_status: 502, retryable: true },
+    ]);
     expect(fetchImpl).toHaveBeenCalledTimes(2);
   });
   it("retries an interrupted response body", async () => {
@@ -377,14 +386,14 @@ describe("CAPI delivery safeguards", () => {
     const fetchImpl = vi.fn<typeof fetch>()
       .mockResolvedValueOnce(interrupted)
       .mockResolvedValueOnce(new Response('{"events_received":1}'));
-    expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toEqual({ status: "sent" });
+    expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toMatchObject({ status: "sent" });
     expect(fetchImpl).toHaveBeenCalledTimes(2);
   });
   it("retries a short 429 once", async () => {
     const fetchImpl = vi.fn<typeof fetch>()
       .mockResolvedValueOnce(new Response("{}", { status: 429, headers: { "Retry-After": "0" } }))
       .mockResolvedValueOnce(new Response('{"events_received":1}'));
-    expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toEqual({ status: "sent" });
+    expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toMatchObject({ status: "sent" });
     expect(fetchImpl).toHaveBeenCalledTimes(2);
   });
   it("honors throttling backoff without exceeding the request budget", async () => {
@@ -396,7 +405,7 @@ describe("CAPI delivery safeguards", () => {
     const fetchImpl = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify({
       error: { code: 190, fbtrace_id: "Safe_trace-123", message: "secret payload" },
     }), { status: 400 }));
-    expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toEqual({
+    expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toMatchObject({
       status: "failed", errorName: "HttpError", httpStatus: 400, errorCode: 190, traceId: "Safe_trace-123",
     });
     expect(fetchImpl).toHaveBeenCalledTimes(1);
@@ -404,8 +413,114 @@ describe("CAPI delivery safeguards", () => {
   it("rejects zero accepted events and malformed successful responses", async () => {
     for (const body of ['{"events_received":0}', "{}", "null", "not json"]) {
       const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(new Response(body));
-      expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toEqual({ status: "failed", errorName: "InvalidResponse", httpStatus: 200 });
+      expect(await sendMetaCapiLead(baseInput(), options(fetchImpl))).toMatchObject({ status: "failed", errorName: "InvalidResponse", httpStatus: 200 });
       expect(fetchImpl).toHaveBeenCalledTimes(1);
     }
+  });
+});
+
+describe("CAPI safe attempt diagnostics", () => {
+  beforeEach(() => {
+    vi.stubEnv("VERCEL_ENV", "production");
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+  });
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllEnvs();
+  });
+  const options = (fetchImpl: typeof fetch) => ({ accessToken: FAKE_TOKEN, fetchImpl });
+
+  it("returns actual event metadata and matching presence without copying values", async () => {
+    const emailHash = hashMetaEmail("ada@example.com");
+    const fbp = "fb.1.1700000000000.123456";
+    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify({ events_received: 1, fbtrace_id: "Success_trace-1" })));
+    const result = await sendMetaCapiLead({ ...baseInput(), emailHash, phoneHash: "bad", fbp, fbc: "bad" }, options(fetchImpl));
+    expect(result).toMatchObject({ status: "sent", diagnostics: {
+      pixel_id: PRODUCTION_FB_PIXEL_ID, graph_api_version: "v21.0", event_time_seconds: 1_700_000_000,
+      has_email_hash: true, has_phone_hash: false, has_fbp: true, has_fbc: false,
+      duration_ms: expect.any(Number),
+      attempts: [{ attempt_no: 1, status: "sent", http_status: 200, events_received: 1,
+        trace_id: "Success_trace-1", error_name: null, response_parse_status: "json", retryable: false }],
+    } });
+    for (const forbidden of [emailHash, fbp, FAKE_TOKEN, baseInput().clientIpAddress, baseInput().clientUserAgent]) {
+      expect(JSON.stringify(result)).not.toContain(forbidden);
+    }
+  });
+
+  it.each([503, 429])("preserves the first %i failure when the retry succeeds", async status => {
+    const fetchImpl = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(JSON.stringify({ events_received: 0, error: { code: 2, fbtrace_id: "First_trace" } }), { status }))
+      .mockResolvedValueOnce(new Response('{"events_received":1}'));
+    const result = await sendMetaCapiLead(baseInput(), options(fetchImpl));
+    expect(result.status).toBe("sent");
+    expect(result.diagnostics.attempts).toMatchObject([
+      { attempt_no: 1, status: "failed", http_status: status, events_received: 0, meta_error_code: 2, trace_id: "First_trace", retryable: true },
+      { attempt_no: 2, status: "sent", http_status: 200, events_received: 1, retryable: false },
+    ]);
+    expect(fetchImpl.mock.calls[0][1]?.body).toBe(fetchImpl.mock.calls[1][1]?.body);
+  });
+
+  it.each([0, "1", -1, 1.5, 2_147_483_648, null, {}, Number.MAX_SAFE_INTEGER + 1])("rejects invalid accepted counts (%j) and safely retains only integers", async events_received => {
+    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify({ events_received })));
+    const result = await sendMetaCapiLead(baseInput(), options(fetchImpl));
+    expect(result.status).toBe("failed");
+    expect(result.diagnostics.attempts).toHaveLength(1);
+    expect(result.diagnostics.attempts[0]).toMatchObject({
+      events_received: events_received === 0 ? 0 : null, error_name: "InvalidResponse", response_parse_status: "json",
+    });
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+  });
+
+  it.each(["ada@example.com", "x".repeat(101), "bad trace", "trace\n"])("drops invalid trace IDs without truncating (%s)", async trace => {
+    for (const status of [200, 400]) {
+      const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify({ events_received: 1, fbtrace_id: trace,
+        error: { fbtrace_id: trace, code: 2_147_483_648, message: "ada@example.com +16505551212 test-capi-token" },
+      }), { status }));
+      const result = await sendMetaCapiLead(baseInput(), options(fetchImpl));
+      expect(result.diagnostics.attempts[0]).toMatchObject({ trace_id: null, meta_error_code: null });
+      for (const forbidden of [trace, "ada@example.com", "+16505551212", FAKE_TOKEN]) expect(JSON.stringify(result)).not.toContain(forbidden);
+    }
+  });
+
+  it("distinguishes invalid JSON, interrupted bodies, and absent responses", async () => {
+    const malformed = await sendMetaCapiLead(baseInput(), options(vi.fn<typeof fetch>().mockResolvedValue(new Response("not json"))));
+    expect(malformed.diagnostics.attempts[0]).toMatchObject({ response_parse_status: "invalid_json", http_status: 200 });
+    const interrupted = new Response("{}");
+    vi.spyOn(interrupted, "json").mockRejectedValue(new TypeError("private body"));
+    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValueOnce(interrupted).mockRejectedValueOnce(new TypeError("private network"));
+    const result = await sendMetaCapiLead(baseInput(), options(fetchImpl));
+    expect(result.diagnostics.attempts).toMatchObject([
+      { response_parse_status: "body_error", http_status: 200, error_name: "TypeError", retryable: true },
+      { response_parse_status: "no_response", http_status: null, error_name: "TypeError", retryable: true },
+    ]);
+    expect(JSON.stringify(result)).not.toContain("private");
+  });
+
+  it("returns zero attempts and unknown matching presence on every skip", async () => {
+    const fetchImpl = vi.fn<typeof fetch>();
+    for (const config of [{ accessToken: "" }, { pixelId: "invalid" }]) {
+      const result = await sendMetaCapiLead(baseInput(), { ...options(fetchImpl), ...config });
+      expect(result.status).toBe("skipped");
+      expect(result.diagnostics).toMatchObject({ attempts: [], event_time_seconds: null, has_email_hash: null, has_phone_hash: null, has_fbp: null, has_fbc: null });
+    }
+    expect((await sendMetaCapiLead({ ...baseInput(), eventId: "bad" }, options(fetchImpl))).diagnostics.attempts).toEqual([]);
+    vi.stubEnv("VERCEL_ENV", "preview");
+    expect((await sendMetaCapiLead(baseInput(), options(fetchImpl))).diagnostics.pixel_id).toBeNull();
+    expect(fetchImpl).not.toHaveBeenCalled();
+  });
+
+  it("does not invent a second attempt if the shared budget expires before fetch", async () => {
+    vi.spyOn(performance, "now")
+      .mockReturnValueOnce(0) // function start
+      .mockReturnValueOnce(0) // deadline
+      .mockReturnValueOnce(0) // first remaining budget
+      .mockReturnValueOnce(0) // first attempt start
+      .mockReturnValueOnce(100) // first duration
+      .mockReturnValueOnce(100) // enough budget to wait
+      .mockReturnValue(500); // delayed scheduler resumes after the deadline
+    const fetchImpl = vi.fn<typeof fetch>().mockImplementation(async () => new Response("{}", { status: 503 }));
+    const result = await sendMetaCapiLead(baseInput(), { ...options(fetchImpl), timeoutMs: 400 });
+    expect(result.diagnostics.attempts).toHaveLength(1);
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
   });
 });
