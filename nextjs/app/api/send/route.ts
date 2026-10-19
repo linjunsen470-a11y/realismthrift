@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { after, NextResponse } from "next/server";
 import { InquiryConfigurationError } from "@/lib/inquiries/clients";
 import { getInquiryEmailSettings } from "@/lib/inquiries/config";
@@ -5,6 +6,7 @@ import { processPendingEmailJobs } from "@/lib/inquiries/email-jobs";
 import { createInquiry, InquiryStorageError } from "@/lib/inquiries/repository";
 import { validateInquiryPayload } from "@/lib/inquiries/validation";
 import { hashMetaEmail, hashMetaPhone, metaCapiCookies, sendMetaCapiLead, type MetaCapiLeadResult } from "@/lib/meta-capi";
+import { finishMetaCapiLog, recordMetaCapiSkip, startMetaCapiLog } from "@/lib/meta-capi-log";
 
 export const preferredRegion = "sin1";
 
@@ -129,6 +131,15 @@ function reportMetaCapiResult(result: MetaCapiLeadResult) {
   });
 }
 
+async function persistMetaCapiLog(write: () => Promise<boolean>) {
+  try {
+    await write();
+  } catch {
+    // Defense in depth: an unexpected logger exception must not affect an accepted inquiry.
+    console.error("Meta CAPI log storage failed", { errorName: "UnknownError" });
+  }
+}
+
 function isRateLimited(clientIp: string) {
   const now = Date.now();
   const attempts = rateLimitStore.get(clientIp) ?? [];
@@ -171,10 +182,12 @@ export async function POST(request: Request) {
   }
 
   let inquiryId: string;
+  let created: boolean;
   try {
     const settings = getInquiryEmailSettings();
     const inquiry = await createInquiry(parsed.data, settings);
     inquiryId = inquiry.id;
+    created = inquiry.created;
   } catch (error) {
     if (error instanceof InquiryConfigurationError) {
       console.error("Inquiry service configuration error", { errorName: error.name });
@@ -214,22 +227,31 @@ export async function POST(request: Request) {
 
   // The submission key already persists across request retries and is validated as a UUID.
   const eventId = parsed.data.submissionId;
-  try {
-    const capiResult = await sendMetaCapiLead({
-      eventId,
-      emailHash: hashMetaEmail(parsed.data.email),
-      phoneHash: hashMetaPhone(parsed.data.whatsapp),
-      productInterest: parsed.data.product,
-      eventSourceUrl: measurementPageUrl(parsed.data.sourcePath),
-      clientIpAddress: clientIp === "unknown" ? undefined : clientIp,
-      clientUserAgent: request.headers.get("user-agent") ?? undefined,
-      ...metaCapiCookies(request.headers.get("cookie")),
-    });
-    reportMetaCapiResult(capiResult);
-  } catch (error) {
-    console.error("Meta CAPI Lead failed", {
-      errorName: error instanceof Error ? error.name : "UnknownError",
-    });
+  const logContext = { id: randomUUID(), inquiryId, eventId, startedAt: new Date().toISOString() };
+  if (!created) {
+    await persistMetaCapiLog(() => recordMetaCapiSkip(logContext, "duplicate_submission"));
+  } else {
+    await persistMetaCapiLog(() => startMetaCapiLog(logContext));
+    const capiStarted = performance.now();
+    let capiResult: MetaCapiLeadResult | null = null;
+    try {
+      capiResult = await sendMetaCapiLead({
+        eventId,
+        emailHash: hashMetaEmail(parsed.data.email),
+        phoneHash: hashMetaPhone(parsed.data.whatsapp),
+        productInterest: parsed.data.product,
+        eventSourceUrl: measurementPageUrl(parsed.data.sourcePath),
+        clientIpAddress: clientIp === "unknown" ? undefined : clientIp,
+        clientUserAgent: request.headers.get("user-agent") ?? undefined,
+        ...metaCapiCookies(request.headers.get("cookie")),
+      });
+      reportMetaCapiResult(capiResult);
+    } catch {
+      console.error("Meta CAPI Lead failed", { errorName: "UnknownError" });
+    } finally {
+      const durationMs = Math.max(0, Math.round(performance.now() - capiStarted));
+      await persistMetaCapiLog(() => finishMetaCapiLog(logContext, capiResult, durationMs));
+    }
   }
 
   return NextResponse.json({

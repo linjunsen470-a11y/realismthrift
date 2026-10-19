@@ -19,12 +19,12 @@
 
 - `/api/send` 先持久化询盘与邮件 outbox，再进行现有的限时 Meta CAPI 上报并返回成功。邮件任务通过 Next.js `after()` 在响应结束后处理，邮件变慢或失败不会阻塞浏览器成功响应；失败邮件继续由定时任务恢复。
 - 生产公共页面发送浏览器 `PageView`，客户端站内导航继续记录页面访问。
-- 询盘成功入库后，服务端发送标准 `Lead`，接口返回 `event_id`；浏览器收到成功响应后使用同值 `eventID` 发送 `Lead`。
+- 询盘首次成功入库（`created:true`）后，服务端发送标准 `Lead`，接口返回 `event_id`；浏览器收到成功响应后使用同值 `eventID` 发送 `Lead`。
 - 两端均使用这次询盘的 `submissionId`。相同提交在响应丢失后重试，数据库复用询盘，测量继续复用同一个 ID。
-- 重复请求可能再次投递相同 ID 的事件。不能只根据投递次数判断转化计数，Meta 接收端的实际去重率须在事件管理工具确认。
-- 不按数据库 `created: false` 一律跳过：首次保存后可能发生测量失败或响应丢失，重试仍需要恢复投递；浏览器也可能直到重试响应成功才有机会发送 Pixel Lead。
+- `createInquiry()` 返回 `created:false` 的幂等重放不再调用 CAPI，仅新增一行 `skipped / duplicate_submission` 日志。接口仍返回相同事件 ID，邮件 `after()` 和浏览器 Pixel 行为保持原样；并发相同提交也由数据库的 created 结果决定谁发送。
+- 首次入库后若 CAPI 失败、缺配置或进程中断，之后重提同一 submissionId 不会补发；修复配置或部署前已有的询盘也不例外。当前没有自动补发机制。不能只根据投递次数判断转化计数，Meta 实际去重率须在事件管理工具确认。
 
-关键文件：`app/api/send/route.ts`、`components/InquiryForm.tsx`、`components/Analytics.tsx`、`lib/meta-pixel.ts` 和 `lib/meta-capi.ts`。
+关键文件：`app/api/send/route.ts`、`components/InquiryForm.tsx`、`components/Analytics.tsx`、`lib/meta-pixel.ts`、`lib/meta-capi.ts` 和 `lib/meta-capi-log.ts`。
 
 ## 匹配参数与数据边界
 
@@ -84,8 +84,22 @@ Pixel 的内联初始化代码先检查当前落地 URL 的 `fbclid`，再加载
 - 同一次 CAPI 调用最多两次尝试，共享约 4 秒等待预算；超时、网络错误、HTTP 429 和 5xx 可有限重试。
 - 重试复用完全相同的请求体，包括事件 ID 与发生时间；遇到较长的 `Retry-After`，预算不足则停止。
 - 参数和 Token 的常见 4xx 错误不重试。HTTP 成功仍须确认 `events_received === 1`，不能仅凭 HTTP 200 标记投递成功。
-- 日志仅保留成功状态、错误类型、HTTP 状态及安全错误代码/追踪标识，不记录 Token、完整请求体、联系信息或匹配散列值。
+- `public.meta_capi_delivery_logs` 每次已入库请求对应独立日志 UUID，先尽力写入 started，再用同一 UUID upsert 完整终态；重复提交直接记录 skipped，不覆盖首次日志。`event_id` 不唯一。
+- 日志保留实际 Pixel、Graph 版本、事件时间、匹配字段存在性布尔值、总耗时及最多两次 HTTP 尝试摘要。第一次 503 后第二次成功时，顶层为 sent，attempts 仍保留第一次失败。
+- 日志不存 Token、Supabase 密钥、原始请求/响应体、联系信息、匹配散列、IP、UA、来源地址或 Cookie 值。追踪 ID 只接受限定字符和长度，错误名与字段均采用白名单。
+- 开始和终态写入各有 500ms 预算并中止超时 I/O，正常最多额外等待约 1 秒，重复提交最多约 500ms；数据库等待不占发送器 4 秒预算。日志失败仅输出安全控制台错误，不阻断询盘响应，也不会重发 CAPI。
 - 测量失败不改变已接受的询盘结果。CAPI 采用有限重试，没有持久测量队列；进程中断或持续故障仍可能导致漏报。邮件有独立的持久 outbox 与定时重试，参见[询盘部署说明](../supabase/README.md)。
+
+| 日志状态 | 含义 |
+| --- | --- |
+| `started` | 终态尚未保存；可能执行中、进程中断或终态存储失败，发送结果未知。 |
+| `sent` | HTTP 2xx 且 `events_received === 1`，表示 Meta 已接收批次，不保证归因、转化或去重。 |
+| `skipped` | 无 HTTP 尝试，原因包括 disabled、missing_token、missing_pixel、invalid_event_id、duplicate_submission。 |
+| `failed` | 发送失败、预算耗尽、无效成功响应或意外异常；网络超时下 Meta 是否接收仍可能未知。 |
+
+`attempt_count` 为正常终态的实际 HTTP 次数（0–2），与 attempts 数组长度相同；started 或发送器意外抛出时为 null，不能当作 0。日志与 Meta 投递无法原子提交，可能只有 started 或完全缺日志。尝试明细在内存收集，进程硬中断时可能丢失。日志跟随关联询盘级联删除，沿用现有保留期；日志行数与 HTTP 尝试数均不代表转化数。
+
+新日志表须先 apply migration，再部署应用代码。Dashboard 查看和 RLS/权限验证见[部署说明](../supabase/README.md#meta-capi-delivery-logs)。
 
 ## 验证与上线检查
 
