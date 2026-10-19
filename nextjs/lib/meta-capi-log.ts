@@ -5,7 +5,7 @@ import {
   type MetaCapiAttempt, type MetaCapiErrorName, type MetaCapiLeadResult, type MetaCapiSkipReason,
 } from "@/lib/meta-capi";
 
-export const META_CAPI_LOG_BUDGET_MS = 500;
+export const META_CAPI_LOG_BUDGET_MS = 1500;
 const TABLE = "meta_capi_delivery_logs";
 type SkipReason = MetaCapiSkipReason | "duplicate_submission";
 type LogResult = MetaCapiLeadResult | { status: "skipped"; reason: SkipReason };
