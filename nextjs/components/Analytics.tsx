@@ -1,9 +1,9 @@
 "use client";
 
 import Script from "next/script";
-import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { isMetaMeasurementEnabled, metaLeadEventOptions, metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, resolveFacebookPixelId } from "@/lib/meta-pixel";
+import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { captureMetaFbc, isMetaMeasurementEnabled, metaLeadEventOptions, metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, resolveFacebookPixelId } from "@/lib/meta-pixel";
 import { isUtilityPath } from "./SiteChrome";
 
 const isAnalyticsEnabled = process.env.NEXT_PUBLIC_ANALYTICS_ENABLED !== "false";
@@ -51,7 +51,9 @@ export default function Analytics() {
   return (
     <>
       {GA_ID ? <GoogleAnalytics pathname={pathname} /> : null}
-      {isMetaEnabled && FB_PIXEL_ID ? <MetaPixelPageViews pathname={pathname} /> : null}
+      {isMetaEnabled && FB_PIXEL_ID ? (
+        <Suspense fallback={null}><MetaPixelPageViews pathname={pathname} /></Suspense>
+      ) : null}
     </>
   );
 }
@@ -107,7 +109,12 @@ function GoogleAnalytics({ pathname }: { pathname: string }) {
 }
 
 function MetaPixelPageViews({ pathname }: { pathname: string }) {
+  const searchParams = useSearchParams();
   const trackedPath = useRef<string | null>(null);
+
+  useEffect(() => {
+    captureMetaFbc();
+  }, [pathname, searchParams]);
 
   useEffect(() => {
     if (trackedPath.current === pathname) return;

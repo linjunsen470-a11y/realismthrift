@@ -34,16 +34,26 @@ export function resolveFacebookPixelId(configured: string | undefined | null): s
 export function metaPixelBaseCode(pixelId: string): string {
   if (!PIXEL_ID_PATTERN.test(pixelId)) return "";
   // Capture the real click before loading the external SDK, including when that SDK is blocked.
-  return `!function(){try {
+  return `window.__rtCaptureMetaClick=function(){
+var rtNow=Date.now(),rtCookies=[];
+var rtPattern=/^fb\\.\\d+\\.(\\d{13})\\.([A-Za-z0-9_-]+)(?:\\.[A-Za-z0-9_-]+)?$/;
+function rtValid(v){var m=typeof v==='string'&&v.length<=1200&&rtPattern.exec(v);return m&&+m[1]<=rtNow+300000&&+m[1]>0?m:null}
+var rtFbc=rtValid(window.__rtMetaFbc)?window.__rtMetaFbc:undefined;
+try{rtCookies=document.cookie.split(';').map(function(c){return c.trim()}).filter(function(c){return c.indexOf('_fbc=')===0}).map(function(c){return c.slice(5)})}catch(e){}
+rtCookies.forEach(function(v){var m=rtValid(v);if(m&&(!rtFbc||+m[1]>=+rtValid(rtFbc)[1]))rtFbc=v});
 var rtClickId=new URLSearchParams(location.search).get('fbclid');
-if(rtClickId&&/^[A-Za-z0-9_-]{1,1000}$/.test(rtClickId)){
-var rtFbc=document.cookie.split(';').map(function(c){return c.trim()}).find(function(c){return c.indexOf('_fbc=')===0});
-var rtPrevious=rtFbc&&/^fb\\.\\d+\\.\\d{13}\\.([A-Za-z0-9_-]+)(?:\\.[A-Za-z0-9_-]+)?$/.exec(rtFbc.slice(5));
-if(!rtPrevious||rtPrevious[1]!==rtClickId){
-document.cookie='_fbc=fb.1.'+Date.now()+'.'+rtClickId+'; Path=/; Max-Age=7776000; SameSite=Lax'+(location.protocol==='https:'?'; Secure':'');
+if(rtClickId&&/^[A-Za-z0-9_-]{1,1000}$/.test(rtClickId)&&rtClickId!==window.__rtMetaClickId){
+var rtPrevious=rtValid(rtFbc);
+if(!rtPrevious||rtPrevious[2]!==rtClickId)rtFbc='fb.1.'+rtNow+'.'+rtClickId;
+window.__rtMetaClickId=rtClickId;
 }
-}
-}catch(e){}}();
+window.__rtMetaFbc=rtFbc;
+if(rtFbc&&rtCookies.indexOf(rtFbc)===-1){try{
+document.cookie='_fbc='+rtFbc+'; Path=/; Max-Age=7776000; SameSite=Lax'+(location.protocol==='https:'?'; Secure':'');
+}catch(e){}}
+return rtFbc;
+};
+window.__rtCaptureMetaClick();
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -57,6 +67,17 @@ window.__rtMetaPixelDocumentPath=location.pathname;
 fbq('set', 'autoConfig', false, '${pixelId}');
 fbq('init', '${pixelId}');
 fbq('track', 'PageView');}`;
+}
+
+/** Recheck SPA URLs and keep a request-only fallback if the cookie could not be saved. */
+export function captureMetaFbc(): string | undefined {
+  if (typeof window === "undefined") return undefined;
+  try {
+    return window.__rtCaptureMetaClick?.();
+  } catch {
+    // Measurement must never prevent navigation or an inquiry.
+    return undefined;
+  }
 }
 
 export function metaPixelNoscriptSrc(pixelId: string): string {
