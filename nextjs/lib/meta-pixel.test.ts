@@ -54,16 +54,22 @@ describe("landing fbclid capture", () => {
     const writes: string[] = [];
     const document = {
       get cookie() { if (blocked) throw new Error("cookies blocked"); return cookie; },
-      set cookie(value: string) { writes.push(value); },
+      set cookie(value: string) { if (blocked) throw new Error("cookies blocked"); writes.push(value); cookie = value.split(";")[0]; },
     };
     const calls: unknown[][] = [];
     const fbq = (...args: unknown[]) => calls.push(args);
+    const window: { fbq: typeof fbq; __rtMetaFbc?: string; __rtCaptureMetaClick?: () => string | undefined } = { fbq };
+    const location = { search, protocol: "https:", pathname: "/" };
     // fbq is present but no external SDK is loaded; execute the actual rendered head script.
     runInNewContext(metaPixelBaseCode(PRODUCTION_FB_PIXEL_ID), {
-      document, window: { fbq }, fbq, URLSearchParams, Date: { now: () => now },
-      location: { search, protocol: "https:", pathname: "/" },
+      document, window, fbq, URLSearchParams, Date: { now: () => now }, location,
     });
-    return { writes, calls };
+    return { writes, calls, window, recapture(nextSearch: string, nextCookie = cookie) {
+      location.search = nextSearch;
+      cookie = nextCookie;
+      now += 1_000;
+      return window.__rtCaptureMetaClick?.();
+    } };
   }
   it("saves a real landing click for cross-page use before the SDK loads", () => {
     expect(capture("?fbclid=Real_Ad-Click").writes).toEqual([
@@ -86,6 +92,32 @@ describe("landing fbclid capture", () => {
     const result = capture("?fbclid=RealClick", "", undefined, true);
     expect(result.writes).toEqual([]);
     expect(result.calls).toContainEqual(["track", "PageView"]);
+    expect(result.window.__rtMetaFbc).toBe("fb.1.1700000000000.RealClick");
+    expect(result.recapture("/contact-us")).toBe("fb.1.1700000000000.RealClick");
+  });
+  it("captures a new SPA query and retains the first timestamp on repeated reads", () => {
+    const result = capture("");
+    expect(result.recapture("?fbclid=SpaClick")).toBe("fb.1.1700000001000.SpaClick");
+    expect(result.recapture("?fbclid=SpaClick")).toBe("fb.1.1700000001000.SpaClick");
+    expect(result.recapture("")).toBe("fb.1.1700000001000.SpaClick");
+  });
+  it("selects the newest duplicate cookie in either order and preserves the SDK suffix", () => {
+    const older = "_fbc=fb.1.1680000000000.OldClick";
+    const newer = "_fbc=fb.1.1690000000000.NewClick.SDK";
+    for (const cookie of [`${older}; ${newer}`, `${newer}; ${older}`]) {
+      const result = capture("?fbclid=NewClick", cookie);
+      expect(result.window.__rtMetaFbc).toBe("fb.1.1690000000000.NewClick.SDK");
+      expect(result.writes).toEqual([]);
+    }
+  });
+  it("does not turn an unchanged landing URL into a new click when another tab updates the cookie", () => {
+    const result = capture("?fbclid=FirstClick");
+    expect(result.recapture("?fbclid=FirstClick", "_fbc=fb.1.1700000000500.OtherTabClick"))
+      .toBe("fb.1.1700000000500.OtherTabClick");
+  });
+  it("ignores future cookies and never truncates an invalid click into a valid one", () => {
+    expect(capture("", "_fbc=fb.1.9999999999999.Future").window.__rtMetaFbc).toBeUndefined();
+    expect(capture("?fbclid=" + "x".repeat(1001)).window.__rtMetaFbc).toBeUndefined();
   });
 });
 

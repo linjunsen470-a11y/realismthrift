@@ -19,5 +19,9 @@ declare global {
     __rtMetaPixelInit?: boolean;
     /** Pathname already counted by the head snippet on this document. */
     __rtMetaPixelDocumentPath?: string;
+    /** Current-document click fallback; never persisted with the inquiry or sent to GA4. */
+    __rtMetaFbc?: string;
+    __rtMetaClickId?: string;
+    __rtCaptureMetaClick?: () => string | undefined;
   }
 }

@@ -197,8 +197,37 @@ test("a real landing fbclid survives page navigation and reaches the inquiry req
   await form.getByRole("button", { name: "SEND INQUIRY NOW" }).click();
   const request = await requestPromise;
   expect((await request.allHeaders()).cookie).toContain(`_fbc=${cookie?.value}`);
+  expect(request.postDataJSON().metaFbc).toBe(cookie?.value);
   await expect(page.getByRole("heading", { name: "Inquiry Received" })).toBeVisible();
   expect(JSON.stringify(await metaCommands(page))).not.toContain("private@example.invalid");
+});
+
+test("a blocked cookie retains the click across SPA query navigation and the inquiry payload", async ({ page, context }) => {
+  await page.addInitScript(() => {
+    // Model browsers silently refusing document.cookie writes, without changing production settings.
+    Object.defineProperty(Document.prototype, "cookie", { configurable: true, get: () => "", set: () => {} });
+  });
+  await page.goto("/contact-us");
+  await expect.poll(() => page.evaluate(() => window.__rtMetaPixelInit)).toBe(true);
+  expect(await page.evaluate(() => window.__rtMetaFbc)).toBeUndefined();
+
+  // Next.js observes history changes without a fresh document, including query-only changes.
+  await page.evaluate(() => window.history.pushState(null, "", "?fbclid=Spa_Real-Click"));
+  await expect.poll(() => page.evaluate(() => window.__rtMetaFbc)).toMatch(/^fb\.1\.\d{13}\.Spa_Real-Click$/);
+  const firstFbc = await page.evaluate(() => window.__rtMetaFbc);
+  await page.evaluate(() => window.history.pushState(null, "", "/contact-us"));
+  expect((await context.cookies()).find(cookie => cookie.name === "_fbc")).toBeUndefined();
+
+  const form = page.locator("form.rt-inquiry-form");
+  await form.getByLabel("Your Name *").fill("Private Analytics Test");
+  await form.getByLabel("Your Email *").fill("private@example.invalid");
+  await form.getByLabel("Your WhatsApp *").fill("+1 555 0199");
+  const requestPromise = page.waitForRequest(request => new URL(request.url()).pathname === "/api/send");
+  await form.getByRole("button", { name: "SEND INQUIRY NOW" }).click();
+  const request = await requestPromise;
+  expect(request.postDataJSON().metaFbc).toBe(firstFbc);
+  await expect(page.getByRole("heading", { name: "Inquiry Received" })).toBeVisible();
+  expect(JSON.stringify(await analyticsCommands(page))).not.toContain("Spa_Real-Click");
 });
 
 test("only a successful inquiry records one Meta Lead", async ({ page }) => {

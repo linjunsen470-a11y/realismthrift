@@ -121,14 +121,19 @@ export function hashMetaPhone(value: string): string | undefined {
   }
 }
 
-function metaCookie(value: string | undefined, kind: "fbp" | "fbc"): string | undefined {
-  if (!value || value.length > 1200) return undefined;
+function metaCookie(value: unknown, kind: "fbp" | "fbc"): string | undefined {
+  if (typeof value !== "string" || !value || value.length > 1200) return undefined;
   const pattern = kind === "fbp" ? /^fb\.\d+\.\d{13}\.\d+$/ : /^fb\.\d+\.\d{13}\.[A-Za-z0-9_.-]+$/;
-  return pattern.test(value) ? value : undefined;
+  if (!pattern.test(value)) return undefined;
+  if (kind === "fbc") {
+    const timestamp = Number(value.split(".")[2]);
+    if (timestamp <= 0 || timestamp > Date.now() + 300_000) return undefined;
+  }
+  return value;
 }
 
-/** Read existing first-party cookies only; never manufacture a click identifier. */
-export function metaCapiCookies(cookieHeader: string | null): Pick<MetaCapiLeadInput, "fbp" | "fbc"> {
+/** Validate cookie/request values without generating identifiers; newest click wins over stale duplicates. */
+export function metaCapiCookies(cookieHeader: string | null, fallbackFbc?: unknown): Pick<MetaCapiLeadInput, "fbp" | "fbc"> {
   const result: Pick<MetaCapiLeadInput, "fbp" | "fbc"> = {};
   for (const part of (cookieHeader ?? "").split(";")) {
     const separator = part.indexOf("=");
@@ -136,7 +141,13 @@ export function metaCapiCookies(cookieHeader: string | null): Pick<MetaCapiLeadI
     if (name !== "_fbp" && name !== "_fbc") continue;
     const kind = name === "_fbp" ? "fbp" : "fbc";
     const value = metaCookie(part.slice(separator + 1).trim(), kind);
-    if (value && !result[kind]) result[kind] = value;
+    if (value && (!result[kind] || (kind === "fbc" && Number(value.split(".")[2]) > Number(result.fbc?.split(".")[2])))) {
+      result[kind] = value;
+    }
+  }
+  const fallback = metaCookie(fallbackFbc, "fbc");
+  if (fallback && (!result.fbc || Number(fallback.split(".")[2]) > Number(result.fbc.split(".")[2]))) {
+    result.fbc = fallback;
   }
   return result;
 }

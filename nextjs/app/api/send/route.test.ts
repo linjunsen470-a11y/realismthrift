@@ -293,6 +293,21 @@ describe("POST /api/send Meta Lead", () => {
     expect(mocks.sendMetaCapiLead.mock.calls[0][0]).toMatchObject({ fbp: "fb.1.1700000000000.123456" });
   });
 
+  it("uses the request-only click fallback without persisting or returning it", async () => {
+    const metaFbc = "fb.1.1700000000000.RealCapturedClick";
+    const response = await POST(inquiryRequest({ ...inquiryBody, metaFbc }));
+    expect(mocks.sendMetaCapiLead.mock.calls[0][0]).toMatchObject({ fbc: metaFbc });
+    expect(mocks.createInquiry.mock.calls[0][0]).not.toHaveProperty("metaFbc");
+    expect(JSON.stringify(await response.json())).not.toContain(metaFbc);
+    expect(JSON.stringify(mocks.startMetaCapiLog.mock.calls)).not.toContain(metaFbc);
+    expect(JSON.stringify(mocks.finishMetaCapiLog.mock.calls)).not.toContain(metaFbc);
+  });
+
+  it("still accepts the inquiry when optional click metadata is malformed", async () => {
+    expect((await POST(inquiryRequest({ ...inquiryBody, metaFbc: { bad: true } }))).status).toBe(200);
+    expect(mocks.sendMetaCapiLead.mock.calls[0][0]).not.toHaveProperty("fbc");
+  });
+
   it("treats an intentional measurement disable as a normal skip", async () => {
     mocks.sendMetaCapiLead.mockResolvedValue({ status: "skipped", reason: "disabled" });
     expect((await POST(inquiryRequest(inquiryBody))).status).toBe(200);

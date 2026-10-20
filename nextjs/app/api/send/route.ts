@@ -243,7 +243,8 @@ export async function POST(request: Request) {
         eventSourceUrl: measurementPageUrl(parsed.data.sourcePath),
         clientIpAddress: clientIp === "unknown" ? undefined : clientIp,
         clientUserAgent: request.headers.get("user-agent") ?? undefined,
-        ...metaCapiCookies(request.headers.get("cookie")),
+        // Read the optional measurement fallback separately; validation/storage ignores it.
+        ...metaCapiCookies(request.headers.get("cookie"), (body as Record<string, unknown>).metaFbc),
       });
       reportMetaCapiResult(capiResult);
     } catch {

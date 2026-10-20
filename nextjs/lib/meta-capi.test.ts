@@ -319,6 +319,26 @@ describe("sendMetaCapiLead", () => {
 });
 
 describe("Meta matching cookies", () => {
+  it("chooses the newest click regardless of duplicate-cookie ordering", () => {
+    const older = "fb.1.1680000000000.OlderClick";
+    const newer = "fb.1.1690000000000.NewerClick.SDK";
+    for (const values of [[older, newer], [newer, older]]) {
+      expect(metaCapiCookies(values.map(value => `_fbc=${value}`).join("; ")).fbc).toBe(newer);
+    }
+  });
+  it("accepts a validated request fallback when cookies are absent or stale", () => {
+    const fallback = "fb.1.1700000000000.CapturedClick";
+    expect(metaCapiCookies(null, fallback)).toEqual({ fbc: fallback });
+    expect(metaCapiCookies("_fbc=fb.1.1690000000000.OldClick", fallback)).toEqual({ fbc: fallback });
+    expect(metaCapiCookies(`_fbc=${fallback}`, "fb.1.1690000000000.OldClick")).toEqual({ fbc: fallback });
+  });
+  it("omits malformed or future fallbacks without dropping a valid cookie", () => {
+    const fbc = "fb.1.1700000000000.CapturedClick";
+    for (const value of [null, {}, 123, "fb.1.9999999999999.Future", "fb.1.1700000000000.bad;Path=/", "x".repeat(1201)]) {
+      expect(metaCapiCookies(null, value)).toEqual({});
+      expect(metaCapiCookies(`_fbc=${fbc}`, value)).toEqual({ fbc });
+    }
+  });
   it("reads only existing, valid cookies and forwards their raw values", () => {
     const fbp = "fb.1.1700000000000.123456";
     const fbc = "fb.1.1700000000000.Real-Ad_Click";

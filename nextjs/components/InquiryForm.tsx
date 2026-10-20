@@ -4,6 +4,7 @@ import { FormEvent, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, LoaderCircle, MessageCircle, TriangleAlert } from "lucide-react";
 import { trackEvent, trackMetaLead } from "./Analytics";
+import { captureMetaFbc } from "@/lib/meta-pixel";
 
 interface InquiryFormProps {
   variant?: "default" | "sidebar";
@@ -48,6 +49,7 @@ export function InquiryForm({
         ...formValues,
         submissionId: submissionAttemptRef.current.id,
         sourcePath: window.location.pathname,
+        metaFbc: captureMetaFbc(),
       };
 
       const response = await fetch("/api/send", {
