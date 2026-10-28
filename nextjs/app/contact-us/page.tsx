@@ -51,7 +51,7 @@ export default function ContactUsPage() {
               <Mail className="w-4 h-4 transition-transform group-hover:scale-110" />
               Email Us
             </a>
-            <a href="https://wa.me/8617279444062" target="_blank" rel="noopener noreferrer" className="group bg-[#25D366] text-white px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-[#1da851] hover:-translate-y-0.5 shadow-lg active:scale-95 flex items-center gap-2">
+            <a href="https://wa.me/8617279444062" target="_blank" rel="noopener noreferrer" className="group bg-[#137a3c] text-white px-10 py-3 rounded-[3px] font-montserrat font-bold text-[0.875rem] transition-all hover:bg-[#106631] hover:-translate-y-0.5 shadow-lg active:scale-95 flex items-center gap-2">
               <MessageCircle className="w-4 h-4 transition-transform group-hover:scale-110" />
               WhatsApp
             </a>
@@ -105,7 +105,7 @@ export default function ContactUsPage() {
               {/* FACTORY COMPANY INFO CARD */}
               <div className="bg-brand-dark rounded-[10px] p-7 text-white shadow-xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-brand-red/10 rounded-bl-full -mr-12 -mt-12" />
-                <h4 className="font-montserrat text-[0.9375rem] font-black text-brand-gold mb-6 uppercase tracking-[0.1em]">Company Profile</h4>
+                <h3 className="font-montserrat text-[0.9375rem] font-black text-brand-gold mb-6 uppercase tracking-[0.1em]">Company Profile</h3>
                 <div className="space-y-5">
                   {[
                     { i: <Building2 className="w-5 h-5 text-brand-gold" />, l: "Full Name", v: "Dongguan Huihe Realismthrift Trading Co., Ltd." },
@@ -117,7 +117,7 @@ export default function ContactUsPage() {
                     <div key={item.l} className="flex gap-4 text-[0.8125rem] border-b border-white/5 pb-4 last:border-0 last:pb-0">
                       <span className="shrink-0 opacity-80 pt-1">{item.i}</span>
                       <div>
-                        <div className="text-white/40 text-[0.65rem] font-bold uppercase tracking-widest mb-1">{item.l}</div>
+                        <div className="text-white/70 text-[0.65rem] font-bold uppercase tracking-widest mb-1">{item.l}</div>
                         <div className="font-semibold text-white/95 leading-relaxed">{item.v}</div>
                       </div>
                     </div>
@@ -187,10 +187,10 @@ export default function ContactUsPage() {
             </div>
             <div className="mt-8 p-6 bg-brand-light rounded-[10px] border-l-4 border-brand-gold space-y-4">
               <div>
-                <h4 className="font-montserrat font-bold text-brand-dark text-[1rem] mb-2 flex items-center gap-2">
+                <h3 className="font-montserrat font-bold text-brand-dark text-[1rem] mb-2 flex items-center gap-2">
                   <MapPin className="w-5 h-5 text-brand-red" />
                   Factory Address
-                </h4>
+                </h3>
                 <p className="text-[0.9375rem] text-[#444] font-open-sans leading-relaxed">
                   {companyAddress}
                 </p>
@@ -203,7 +203,7 @@ export default function ContactUsPage() {
                 </a>
               </div>
               <div className="pt-4 border-t border-black/5">
-                <h4 className="font-montserrat font-bold text-brand-dark text-[1rem] mb-2">DiDi Taxi Address</h4>
+                <h3 className="font-montserrat font-bold text-brand-dark text-[1rem] mb-2">DiDi Taxi Address</h3>
                 <p className="text-[0.875rem] text-[#555] font-open-sans leading-relaxed">
                   {companyLocation.didiAddress}
                 </p>

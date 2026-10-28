@@ -142,6 +142,9 @@ async function persistMetaCapiLog(write: () => Promise<boolean>) {
 
 function isRateLimited(clientIp: string) {
   const now = Date.now();
+  for (const [ip, timestamps] of rateLimitStore) {
+    if (!timestamps.some(timestamp => now - timestamp < RATE_LIMIT_WINDOW_MS)) rateLimitStore.delete(ip);
+  }
   const attempts = rateLimitStore.get(clientIp) ?? [];
   const recentAttempts = attempts.filter((timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS);
 

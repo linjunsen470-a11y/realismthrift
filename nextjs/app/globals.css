@@ -389,7 +389,7 @@
 
 .rt-logo-combo-sub {
   margin-top: 2px;
-  color: #888;
+  color: #666;
   font-family: var(--font-montserrat);
   font-size: 0.62rem;
   font-weight: 600;
@@ -939,7 +939,7 @@
 
 .rt-about-subtitle {
   margin-bottom: 1rem;
-  color: #888;
+  color: #666;
   font-size: 1rem;
   font-style: italic;
   font-weight: 600;
@@ -971,7 +971,7 @@
 }
 
 .rt-stat-value {
-  color: var(--color-brand-gold);
+  color: #946600;
   font-family: var(--font-montserrat);
   font-size: 2rem;
   font-weight: 900;
@@ -979,7 +979,7 @@
 }
 
 .rt-stat-label {
-  color: #8b8b8b;
+  color: #666666;
   font-size: 0.82rem;
 }
 
@@ -1472,7 +1472,7 @@
 }
 
 .rt-form-note {
-  color: #777;
+  color: #666;
   font-size: 0.8rem;
   line-height: 1.6;
   text-align: center;
@@ -1541,6 +1541,7 @@
 }
 
 .rt-seo-copy-inner a {
+  text-decoration: underline;
   color: var(--color-brand-red);
 }
 
@@ -1719,7 +1720,7 @@
 
 .rt-news-footer p {
   margin-bottom: 1.25rem;
-  color: #888;
+  color: #666;
   font-size: 0.875rem;
 }
 

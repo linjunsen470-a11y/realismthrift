@@ -33,7 +33,7 @@ export function ProductCTA({
             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="bg-[#25D366] shadow-[0_4px_14px_rgba(37,211,102,0.3)] text-white px-10 py-4 rounded-[4px] no-underline font-black font-montserrat text-[0.875rem] uppercase tracking-wider hover:bg-[#1da851] transition-all hover:-translate-y-0.5"
+            className="bg-[#137a3c] shadow-[0_4px_14px_rgba(37,211,102,0.3)] text-white px-10 py-4 rounded-[4px] no-underline font-black font-montserrat text-[0.875rem] uppercase tracking-wider hover:bg-[#106631] transition-all hover:-translate-y-0.5"
           >
             WhatsApp Now
           </a>

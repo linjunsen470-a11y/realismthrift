@@ -78,7 +78,7 @@ const handler = createMcpHandler(server => {
     description: "Match an uncertain gateway submission to actual Gmail Sent headers. Update evidence without sending; keep the reservation when no match is visible.",
     inputSchema, annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: true, idempotentHint: true },
   }, ({ outreach_id }) => toolResult(() => reconcileOutreachSend(outreach_id)));
-}, { verboseLogs: false, maxSubscriptions: 0, serverInfo: { name: "realismthrift-cold-email", version: OUTREACH_SERVER_VERSION } });
+}, { ...{ maxToolInputElements: 100 }, verboseLogs: false, maxSubscriptions: 0, serverInfo: { name: "realismthrift-cold-email", version: OUTREACH_SERVER_VERSION } });
 
 async function authenticatedHandler(request: Request) {
   return withMcpAuth(handler, verifyMcpToken, mcpAuthOptions())(request);

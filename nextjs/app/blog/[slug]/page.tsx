@@ -85,7 +85,10 @@ export default async function BlogPostPage({
     notFound();
   }
 
-  const { prev: prevPost, next: nextPost } = await getPrevNextPosts(post.publishedAt);
+  const { prev: prevPost, next: nextPost } = await getPrevNextPosts(post.publishedAt).catch(() => {
+    console.error("Blog navigation temporarily unavailable");
+    return { prev: null, next: null };
+  });
 
   const heroImage = hasUsableImageAsset(post.coverImage)
     ? urlForImage(post.coverImage).width(1600).height(700).fit("crop").url()
@@ -178,6 +181,11 @@ export default async function BlogPostPage({
               />
             </div>
 
+            <section className="my-10 rounded-lg bg-brand-dark p-6 text-white" aria-label="Wholesale inquiry">
+              <h2 className="mb-3 text-xl font-bold text-white">Planning a wholesale order?</h2>
+              <p className="mb-5">Tell us your product needs, quantity and destination market for current packing and pricing information.</p>
+              <Link href="/contact-us" className="inline-block rounded bg-brand-gold px-5 py-3 font-bold text-brand-dark">Request a wholesale quote</Link>
+            </section>
             <ShareButtons title={post.title} url={`https://www.realismthrift.com/blog/${slug}`} />
 
             {post.author?.name ? (

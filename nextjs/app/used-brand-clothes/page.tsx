@@ -96,7 +96,7 @@ export default function UsedBrandClothesPage() {
             </p>
             <div className="flex gap-[0.875rem] flex-wrap">
                <a href="#inquiry" className="bg-[#F0B429] text-[#1A1A1A] font-montserrat font-extrabold text-[0.875rem] px-6 md:px-8 py-3 md:py-[0.875rem] rounded-[3px] no-underline tracking-[0.03em] hover:bg-[#d4a017] transition-colors whitespace-nowrap">GET PRICE NOW →</a>
-               <a href="https://wa.me/8617279444062?text=Hi%2C+I+want+to+wholesale+used+brand+clothes" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white font-montserrat font-bold text-[0.875rem] px-6 md:px-8 py-3 md:py-[0.875rem] rounded-[3px] no-underline hover:bg-[#1da851] transition-colors whitespace-nowrap">WhatsApp Now</a>
+               <a href="https://wa.me/8617279444062?text=Hi%2C+I+want+to+wholesale+used+brand+clothes" target="_blank" rel="noopener noreferrer" className="bg-[#137a3c] text-white font-montserrat font-bold text-[0.875rem] px-6 md:px-8 py-3 md:py-[0.875rem] rounded-[3px] no-underline hover:bg-[#106631] transition-colors whitespace-nowrap">WhatsApp Now</a>
             </div>
           </div>
         </div>
@@ -202,7 +202,7 @@ export default function UsedBrandClothesPage() {
             {/* STEP 2 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem] items-center mb-[3rem]">
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.14)] relative h-[280px] order-2 md:order-1">
-                <Image src="/images/clothes/assorted-designer-hats-caps-collection.webp" alt="RealismThrift Quality Control Step 2 - Brand Authentication and Identification for Professional Export Grade Wholesale Clothes" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+                <Image src="/images/clothes/assorted-designer-hats-caps-collection.webp" alt="Assorted used caps and bucket hats arranged on a table" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
               </div>
               <div className="order-1 md:order-2">
                 <div className="flex items-center gap-[0.875rem] mb-[1rem]">
@@ -211,10 +211,10 @@ export default function UsedBrandClothesPage() {
                   </div>
                   <div>
                     <div className="text-[0.7rem] text-[#C0392B] font-montserrat font-bold tracking-[0.08em] uppercase mb-[0.2rem]">Step 02</div>
-                    <h3 className="font-montserrat font-extrabold text-[1.1rem] text-[#1A1A1A] m-0">Brand Identification & Authentication</h3>
+                    <h3 className="font-montserrat font-extrabold text-[1.1rem] text-[#1A1A1A] m-0">Brand Label & Condition Checks</h3>
                   </div>
                 </div>
-                <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1rem]">Our trained sorters examine every garment&apos;s brand label, care label, and stitching quality under magnified lighting. The team has memorized the label characteristics of 200+ brands and check brand labels and separate unsuitable items from brand-focused batches. Items are grouped into brand-specific bins for downstream processing.</p>
+                <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1rem]">Our sorters check brand labels, stitching and condition, and remove obvious counterfeit or unsuitable items from brand-focused batches. Items are grouped for further sorting; label checks are not a guarantee of professional authentication.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-[0.625rem]">
                   {[
                     'Label verification (brand, origin, fabric)',
@@ -273,14 +273,14 @@ export default function UsedBrandClothesPage() {
               </div>
               <div>
                 <div className="text-[0.7rem] text-[#F0B429] font-montserrat font-bold tracking-[0.08em] uppercase mb-[0.3rem]">Step 04</div>
-                <h3 className="font-montserrat font-extrabold text-[1.1rem] text-white m-0 mb-[0.75rem]">Cleaning, Deodorizing & Steam Pressing</h3>
-                <p className="font-open-sans text-[0.9rem] text-white/70 leading-[1.8] m-0 mb-[1.25rem]">Grade A garments go through cleaning and deodorizing before packing. Steam pressing helps restore shape and improves presentation for resale.</p>
+                <h3 className="font-montserrat font-extrabold text-[1.1rem] text-white m-0 mb-[0.75rem]">Condition Review & Packing Preparation</h3>
+                <p className="font-open-sans text-[0.9rem] text-white/70 leading-[1.8] m-0 mb-[1.25rem]">Garments are reviewed for sellable used condition before packing. Light signs of use are acceptable when items remain wearable and functional.</p>
                 <div className="flex flex-wrap gap-[0.625rem]">
                   {[
-                    'Industrial steam cleaning',
-                    'Eco-friendly deodorizing spray',
-                    'UV sterilization treatment',
-                    'Steam pressing & reshaping',
+                    'Wear and stain checks',
+                    'Buttons and zipper checks',
+                    'Unsuitable items removed',
+                    'Category and grade confirmation',
                     'Final visual re-inspection'
                   ].map(feat => (
                     <span key={feat} className="bg-[#F0B429]/10 border border-[#F0B429]/25 text-[#F0B429] font-open-sans text-[0.8rem] px-[0.75rem] py-[0.3rem] rounded-[2px]">
@@ -294,7 +294,7 @@ export default function UsedBrandClothesPage() {
             {/* STEP 5 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[2rem] items-center mb-[2rem]">
               <div className="rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.14)] relative h-[280px] order-2 md:order-1">
-                <Image src="/images/clothes/athletic-track-jackets-lining-nike-stack.webp" alt="RealismThrift Export Logistics Step 5 - Hydraulic Compression Baling and Final QC for Global Wholesale Shipment" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+                <Image src="/images/clothes/athletic-track-jackets-lining-nike-stack.webp" alt="Used athletic track jackets stacked by category" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
               </div>
               <div className="order-1 md:order-2">
                 <div className="flex items-center gap-[0.875rem] mb-[1rem]">
@@ -306,7 +306,7 @@ export default function UsedBrandClothesPage() {
                     <h3 className="font-montserrat font-extrabold text-[1.1rem] text-[#1A1A1A] m-0">Weighing, Compression Packing & Export QC</h3>
                   </div>
                 </div>
-                <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1rem]">Sorted garments are hydraulically compressed and packed into PP woven bales at precise weights. Each bale is labeled with grade, weight, content, and destination. Before container loading, a senior QC inspector performs a final 5% random sampling check. Photos and videos of your specific order are sent to you for approval before shipment.</p>
+                <p className="font-open-sans text-[0.9rem] text-[#555] leading-[1.8] m-0 mb-[1rem]">Sorted garments are hydraulically compressed and packed into PP woven bales at precise weights. Each bale is labeled with grade, weight, content, and destination. Before container loading, the team checks the prepared batch and packing details. Photos and videos of your specific order are sent to you for approval before shipment.</p>
                 <div className="bg-[#F5F5F0] rounded-[4px] p-[1rem]">
                   <div className="font-montserrat font-bold text-[0.8rem] text-[#1A1A1A] mb-[0.625rem]">Standard Packing Specs</div>
                   <table className="w-full border-collapse font-open-sans text-[0.8rem]">
@@ -475,7 +475,7 @@ export default function UsedBrandClothesPage() {
               </div>
               <div className="p-[1.5rem]">
                  <InquiryForm variant="sidebar" />
-                 <a href="https://wa.me/8617279444062?text=Hi%2C+I+want+used+brand+clothes+wholesale+price" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-[0.5rem] bg-[#25D366] text-white p-[0.625rem] rounded-[3px] no-underline font-montserrat font-bold text-[0.8125rem] mt-[0.75rem] hover:bg-[#1da851] transition-colors">
+                 <a href="https://wa.me/8617279444062?text=Hi%2C+I+want+used+brand+clothes+wholesale+price" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-[0.5rem] bg-[#137a3c] text-white p-[0.625rem] rounded-[3px] no-underline font-montserrat font-bold text-[0.8125rem] mt-[0.75rem] hover:bg-[#106631] transition-colors">
                    Chat on WhatsApp
                  </a>
                </div>

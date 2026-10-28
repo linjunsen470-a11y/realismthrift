@@ -287,7 +287,7 @@ export default function UsedBrandShoesPage() {
               <InquiryForm variant="sidebar" />
 
               <div className="mt-4 pt-4">
-                <a href="https://wa.me/8617279444062" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-[3px] font-montserrat font-bold text-[0.8125rem] uppercase tracking-wider hover:bg-[#1da851] transition-all shadow-sm">
+                <a href="https://wa.me/8617279444062" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#137a3c] text-white py-3 rounded-[3px] font-montserrat font-bold text-[0.8125rem] uppercase tracking-wider hover:bg-[#106631] transition-all shadow-sm">
                   WhatsApp Us Directly
                 </a>
               </div>
