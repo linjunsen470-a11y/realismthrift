@@ -209,6 +209,8 @@ test("a blocked cookie retains the click across SPA query navigation and the inq
   });
   await page.goto("/contact-us");
   await expect.poll(() => page.evaluate(() => window.__rtMetaPixelInit)).toBe(true);
+  // The head marker is synchronous; wait for the React navigation observers too.
+  await expect.poll(() => pageViews(page)).toHaveLength(1);
   expect(await page.evaluate(() => window.__rtMetaFbc)).toBeUndefined();
 
   // Next.js observes history changes without a fresh document, including query-only changes.
@@ -268,6 +270,13 @@ test("only a successful inquiry records one Meta Lead", async ({ page }) => {
   await form.getByRole("button", { name: "SEND INQUIRY NOW" }).click();
   await expect(page.getByRole("heading", { name: "Inquiry Received" })).toBeVisible();
   const leads = await metaLeads(page);
+  await expect(page.getByRole("heading", { name: "Inquiry Received" })).toBeFocused();
+  const funnel = await analyticsCommands(page);
+  expect(funnel.filter(command => command[1] === "inquiry_start")).toHaveLength(1);
+  expect(funnel.filter(command => command[1] === "inquiry_error").map(command => command[2])).toEqual([
+    expect.objectContaining({ error_type: "server_error" }),
+    expect.objectContaining({ error_type: "network_error" }),
+  ]);
   expect(leads).toHaveLength(1);
   expect(leads[0][2]).toEqual({ content_name: "wholesale_inquiry", content_category: "Used Brand Bags" });
   expect(submissionIds).toHaveLength(3);
@@ -277,4 +286,47 @@ test("only a successful inquiry records one Meta Lead", async ({ page }) => {
   for (const privateValue of ["Private Analytics Test", "private@example.invalid", "08031234567", "Call me about a private order"]) {
     expect(serialized).not.toContain(privateValue);
   }
+});
+
+test("UTM attribution survives clean page URLs and SPA navigation", async ({ page }) => {
+  await page.goto("/contact-us?utm_source=facebook&utm_medium=paid_social&utm_campaign=october-bags&email=buyer%40example.invalid&token=secret");
+  await expect.poll(() => pageViews(page)).toHaveLength(1);
+  const config = (await analyticsCommands(page)).find(command => command[0] === "config");
+  expect((await analyticsCommands(page)).filter(command => command[0] === "set").map(command => command[1])).toContainEqual(expect.objectContaining({ campaign_source: "facebook", campaign_medium: "paid_social", campaign_name: "october-bags" }));
+  expect((config?.[2] as Record<string, string>).page_location).not.toContain("?");
+  await page.locator(".rt-logo-link").click();
+  await expect.poll(() => pageViews(page)).toHaveLength(2);
+  expect((await analyticsCommands(page)).filter(command => command[0] === "config")).toHaveLength(1);
+  const serialized = JSON.stringify(await analyticsCommands(page));
+  expect(serialized).not.toContain("example.invalid");
+  expect(serialized).not.toContain("secret");
+  await page.evaluate(() => window.history.pushState(null, "", "?utm_source=newsletter&utm_medium=email&utm_campaign=november"));
+  await expect.poll(async () => JSON.stringify(await analyticsCommands(page))).toContain('"campaign_name":"november"');
+  expect(await pageViews(page)).toHaveLength(2);
+});
+
+test("contact clicks record placement once and exclude share destinations", async ({ page }) => {
+  await page.goto("/contact-us");
+  await expect.poll(() => pageViews(page)).toHaveLength(1);
+  // Prevent external navigation after our capture listener observes native activation.
+  await page.evaluate(() => document.addEventListener("click", event => event.preventDefault()));
+  await page.locator(".rt-floating-whatsapp").click();
+  await page.locator('footer a[href="mailto:sales@realismthrift.com"]').first().focus();
+  await page.keyboard.press("Enter");
+  let commands = await analyticsCommands(page);
+  expect(commands.filter(command => command[1] === "whatsapp_click")).toEqual([
+    ["event", "whatsapp_click", expect.objectContaining({ placement: "floating", page_path: "/contact-us" })],
+  ]);
+  expect(commands.filter(command => command[1] === "email_click")).toHaveLength(1);
+  await page.evaluate(() => {
+    for (const href of ["https://wa.me/?text=private-message", "mailto:?subject=private-message"]) {
+      const link = document.createElement("a"); link.href = href; document.body.append(link); link.click(); link.remove();
+    }
+  });
+  commands = await analyticsCommands(page);
+  expect(commands.filter(command => command[1] === "whatsapp_click")).toHaveLength(1);
+  expect(commands.filter(command => command[1] === "email_click")).toHaveLength(1);
+  expect(commands.filter(command => command[1] === "generate_lead")).toHaveLength(0);
+  expect(await metaLeads(page)).toHaveLength(0);
+  expect(JSON.stringify(commands)).not.toContain("private-message");
 });

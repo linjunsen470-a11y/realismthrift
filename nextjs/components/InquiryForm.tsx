@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useId, useRef, useState } from "react";
+import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, LoaderCircle, MessageCircle, TriangleAlert } from "lucide-react";
 import { trackEvent, trackMetaLead } from "./Analytics";
@@ -25,6 +25,15 @@ export function InquiryForm({
   const isSubmittingRef = useRef(false);
   const formId = useId();
   const isSidebar = variant === "sidebar";
+  const startedRef = useRef(false);
+  const successHeadingRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    if (submission.status === "success") successHeadingRef.current?.focus();
+  }, [submission.status]);
+
+  function trackFormEvent(name: string, extra: Record<string, string> = {}) {
+    trackEvent(name, { form_name: "wholesale_inquiry", form_variant: variant, page_path: window.location.pathname, ...extra });
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -94,6 +103,7 @@ export function InquiryForm({
         return;
       }
 
+      trackFormEvent("inquiry_error", { error_type: response.status === 429 ? "rate_limited" : response.status >= 500 ? "server_error" : "request_rejected" });
       setSubmission({
         status: "error",
         message:
@@ -101,6 +111,7 @@ export function InquiryForm({
           "We could not send your inquiry right now. Please try again or contact us via WhatsApp.",
       });
     } catch {
+      trackFormEvent("inquiry_error", { error_type: "network_error" });
       setSubmission({
         status: "error",
         message: "Network error. Please try again or contact us via WhatsApp.",
@@ -114,7 +125,7 @@ export function InquiryForm({
     return (
       <div className={`rt-form-state rt-form-state-success${isSidebar ? " is-sidebar" : ""}`} role="status" aria-live="polite">
         <CheckCircle2 size={24} strokeWidth={2.2} />
-        <h3>Inquiry Received</h3>
+        <h3 ref={successHeadingRef} tabIndex={-1}>Inquiry Received</h3>
         <p>{submission.message}</p>
       </div>
     );
@@ -124,6 +135,11 @@ export function InquiryForm({
     <form
       className={`rt-inquiry-form${isSidebar ? " is-sidebar" : ""}`}
       onSubmit={handleSubmit}
+      onChange={() => {
+        if (startedRef.current) return;
+        startedRef.current = true;
+        trackFormEvent("inquiry_start");
+      }}
       aria-busy={submission.status === "loading" ? "true" : "false"}
     >
       <div className="rt-form-grid">

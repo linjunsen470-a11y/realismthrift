@@ -12,18 +12,20 @@ type StaticPageConfig = {
   priority: number;
 };
 
-// Per-page lastmod dates — update the relevant entry when page content changes.
+// Dates audited against substantive content changes on 2026-10-29.
+// Update affected entries when copy, contact details, or product information changes.
+// Do not advance dates for deployments, tracking, or visual-only changes.
 const staticPages: StaticPageConfig[] = [
-  { path: '/', lastModified: '2026-09-05', changeFrequency: 'weekly', priority: 1 },
-  { path: '/used-brand-clothes', lastModified: '2026-09-05', changeFrequency: 'weekly', priority: 0.95 },
-  { path: '/used-brand-shoes', lastModified: '2026-09-05', changeFrequency: 'weekly', priority: 0.95 },
-  { path: '/used-brand-bag', lastModified: '2026-09-05', changeFrequency: 'weekly', priority: 0.95 },
-  { path: '/how-to-order', lastModified: '2026-09-05', changeFrequency: 'monthly', priority: 0.85 },
-  { path: '/contact-us', lastModified: '2026-09-05', changeFrequency: 'monthly', priority: 0.85 },
-  { path: '/about-us', lastModified: '2026-09-05', changeFrequency: 'monthly', priority: 0.8 },
-  { path: '/faq', lastModified: '2026-09-05', changeFrequency: 'monthly', priority: 0.75 },
+  { path: '/', lastModified: '2026-10-17', changeFrequency: 'weekly', priority: 1 },
+  { path: '/used-brand-clothes', lastModified: '2026-10-28', changeFrequency: 'weekly', priority: 0.95 },
+  { path: '/used-brand-shoes', lastModified: '2026-10-17', changeFrequency: 'weekly', priority: 0.95 },
+  { path: '/used-brand-bag', lastModified: '2026-10-17', changeFrequency: 'weekly', priority: 0.95 },
+  { path: '/how-to-order', lastModified: '2026-10-17', changeFrequency: 'monthly', priority: 0.85 },
+  { path: '/contact-us', lastModified: '2026-10-17', changeFrequency: 'monthly', priority: 0.85 },
+  { path: '/about-us', lastModified: '2026-10-17', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/faq', lastModified: '2026-10-17', changeFrequency: 'monthly', priority: 0.75 },
   { path: '/blog', lastModified: '2026-09-05', changeFrequency: 'weekly', priority: 0.75 },
-  { path: '/privacy-policy', lastModified: '2026-10-17', changeFrequency: 'yearly', priority: 0.3 },
+  { path: '/privacy-policy', lastModified: '2026-10-18', changeFrequency: 'yearly', priority: 0.3 },
   { path: '/terms-of-service', lastModified: '2026-09-05', changeFrequency: 'yearly', priority: 0.3 },
 ];
 

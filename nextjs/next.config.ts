@@ -103,6 +103,8 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
+    // The Vercel apex-domain redirect must also use 308. A platform-level
+    // temporary redirect runs before this permanent application fallback.
     return [
       {
         source: '/:path*',

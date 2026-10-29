@@ -179,7 +179,7 @@ export default function AboutUsPage() {
               </div>
 
               <div className="flex gap-4 flex-wrap">
-                <a href="https://wa.me/8617279444062" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-6 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.875rem] hover:bg-[#1da851] transition-all shadow-lg hover:-translate-y-0.5 flex items-center gap-2">
+                <a href="https://wa.me/8617279444062" target="_blank" rel="noopener noreferrer" className="bg-[#137a3c] text-white px-6 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.875rem] hover:bg-[#106631] transition-all shadow-lg hover:-translate-y-0.5 flex items-center gap-2">
                   <MessageCircle className="w-4 h-4" />
                   Chat on WhatsApp
                 </a>
@@ -361,7 +361,7 @@ export default function AboutUsPage() {
             <Link href="/contact-us" className="bg-brand-gold text-brand-dark px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-brand-gold-dark transition-colors">
               Contact Us Now
             </Link>
-            <a href="https://wa.me/8617279444062" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-[#1da851] transition-colors">
+            <a href="https://wa.me/8617279444062" target="_blank" rel="noopener noreferrer" className="bg-[#137a3c] text-white px-8 py-3.5 rounded-[3px] font-bold font-montserrat text-[0.9rem] hover:bg-[#106631] transition-colors">
               WhatsApp
             </a>
           </div>

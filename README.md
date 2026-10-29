@@ -26,6 +26,8 @@
 - **询盘收集**：客户可通过网站表单、WhatsApp 和邮箱联系销售团队。
 - **询盘统计与广告归因**：GA4 在浏览器收到提交成功响应后记录 `generate_lead`，后台将其标记为关键事件；生产 Meta Pixel/CAPI 使用 `Lead` 与相同提交 ID 去重。配置与数据边界见 [GA4 与 Meta 跟踪说明](nextjs/docs/meta-tracking.md)。
 - **SEO 基础设施**：已配置页面 Metadata、OpenGraph、Canonical、sitemap.xml、robots.txt、结构化数据和图片 Alt Text。
+- **入口与表单漏斗**：记录销售 WhatsApp、邮件、电话点击和询盘开始/失败事件；UTM 使用营销参数白名单，点击不等同于有效询盘。
+- **无障碍交互**：提供表单标签、键盘导航和减少动画支持；询盘成功后焦点移至提示标题，WhatsApp 文字按钮采用符合 AA 对比度要求的配色。
 - **可视化预览**：博客内容可在 Sanity Studio 中预览实际前台效果，减少发布错误。
 
 ---
@@ -53,6 +55,8 @@
    - sitemap.xml 和 robots.txt。
    - 产品、FAQ、文章、博客列表和面包屑结构化数据。
    - 具体、可理解的图片 Alt Text。
+
+   robots 统一由 `nextjs/app/robots.ts` 生成；静态页面实质内容修改后同步维护 `nextjs/app/sitemap.ts` 的日期，不按部署时间刷新。实施记录、测试结果及 Vercel 平台跳转待办统一见 [跟踪与维护说明](nextjs/docs/meta-tracking.md)，避免重复维护审计文件。
 
 6. **询盘链路实装**  
    表单系统已连接 Supabase 与邮件发送服务。询盘与邮件任务持久化后，邮件在响应结束后处理，避免邮件慢响应阻塞询盘成功提示。

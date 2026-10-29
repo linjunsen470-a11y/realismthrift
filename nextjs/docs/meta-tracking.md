@@ -1,6 +1,30 @@
 # GA4、Meta Pixel 与 Conversions API
 
-本说明维护网站询盘的当前测量配置，更新于 2026-10-20。适用于网站表单，不涉及 Meta 原生潜在客户广告、目录或 WhatsApp 站外对话事件。
+本说明维护网站询盘的当前测量配置，更新于 2026-10-29。适用于网站表单与联系入口点击，不涉及 Meta 原生潜在客户广告、目录或 WhatsApp 站外对话事件。
+
+## 联系入口、漏斗与来源归因
+
+- `whatsapp_click`、`email_click`、`phone_click` 只匹配网站销售号码和销售邮箱，排除博客分享及隐私联系链接。原生鼠标、键盘 Enter 和中键激活由一个委托监听器记录，不阻止跳转。参数仅为 `placement`（floating、footer、header、inquiry_form、inquiry_error、page_content）及 `page_path`，不发送链接地址、预填消息或联系方式。
+- `inquiry_start` 在表单首次修改时记录一次；`inquiry_error` 记录 API 拒绝、限流、服务端错误或网络错误，仅发送固定错误类别。原生必填校验失败不计入该 API 错误事件。两者包含固定表单名、default/sidebar 变体和页面路径，不含字段内容。重试不重复记录开始事件。
+- 这些事件是微转化，不能替代 `generate_lead`，也不触发 Meta `Lead`。GA4 的增强型衡量可能另外产生通用 click/form 事件，报表请按本节明确事件名筛选，不把两套事件相加。需要按入口、表单变体和错误类别分析时，在 GA4 注册事件级自定义维度 `placement`、`form_variant`、`error_type`。
+- 初始化 GA4 前，将 UTM 白名单映射为 GA4 `campaign_source`、`campaign_medium`、`campaign_name`、`campaign_id`、`campaign_content`；站内 SPA 导航沿用全局设置，遇到新的有效 UTM 时更新。URL 和 referrer 仍去除全部查询参数；不传 gclid、fbclid、utm_term 或任意其他参数。本改动针对 UTM 手动归因，不声称实现 Google Ads 自动标记归因。
+- 广告链接使用非个人化营销 slug，例如 `?utm_source=facebook&utm_medium=paid_social&utm_campaign=october-bags&utm_content=video_1`。仅接受 1–100 位 ASCII 字母、数字、下划线、连字符，拒绝重复参数及连续 7 位以上数字；不要把姓名、客户编号或联系方式写入营销参数。过滤并不能识别所有伪装成 slug 的个人信息。没有新增 cookie/localStorage；跨整页访问的会话归因由 GA4 管理。
+- 回归测试拦截 Google/Meta 网络传输，验证命令队列、来源字段、隐私边界、入口计数与成功后焦点。它不证明 GA4 生产报表已归因；上线后以真实带 UTM 的访问确认来源/媒介/广告系列，并检查事件级维度。不要向生产属性发送合成询盘。
+
+## SEO 配置维护
+
+- robots 的唯一来源为 `app/robots.ts`；`/search` 保持可抓取并在页面输出 noindex。
+- sitemap 静态日期按实质内容变更维护，不按构建时间更新。2026-10-29 已核对现有提交历史；颜色、焦点和测量调整不刷新所有页面日期。
+- 应用层已有裸域名到 www 的永久跳转。2026-10-29 检查 Vercel 项目域名 `realismthrift.com`：目标为 `www.realismthrift.com`，`redirectStatusCode` 为 null，线上返回 307。需要在项目 Settings → Domains 将该现有跳转状态设为 308；不要删除域名或修改 DNS。完成后分别检查根路径及带路径/UTM 的地址，确认 Location 保留路径和参数。本记录不表示平台修改已经完成。
+
+## 2026-10-29 实施与验证记录
+
+- 已增加销售联系入口事件及询盘开始/失败事件，补齐 UTM 白名单归因；询盘成功后焦点移至成功标题。
+- WhatsApp 文字按钮统一使用深绿色，默认/悬停配白字对比度分别为 5.42:1、7.08:1。
+- 删除重复的 `public/robots.txt`，保留动态规则；校正 sitemap 的实质内容更新日期。没有新增独立审计报告，相关维护说明集中在本文。
+- 验证通过：相关 6 组单元测试共 107 项、生产模式桌面与手机浏览器测试共 18 项、修改文件 ESLint、TypeScript 与生产构建。浏览器测试拦截询盘 API 和广告传输，没有发送合成生产询盘。
+- 本地生产服务验证：robots 与 sitemap 返回 200；裸域名根路径及带 UTM 的联系页返回 308，目标路径和参数保留。
+- 以上是代码与本地验证记录，不代表云端部署验收。Vercel 平台域名 307 设置仍待修改；GA4 实际来源报告及新增自定义维度仍需上线后核对。
 
 ## GA4 询盘关键事件
 

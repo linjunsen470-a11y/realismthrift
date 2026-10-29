@@ -5,6 +5,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { captureMetaFbc, isMetaMeasurementEnabled, metaLeadEventOptions, metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, resolveFacebookPixelId } from "@/lib/meta-pixel";
 import { isUtilityPath } from "./SiteChrome";
+import { campaignParameters } from "@/lib/analytics-campaign";
 
 const isAnalyticsEnabled = process.env.NEXT_PUBLIC_ANALYTICS_ENABLED !== "false";
 const isMetaEnabled = isMetaMeasurementEnabled(process.env.NEXT_PUBLIC_ANALYTICS_ENABLED, process.env.NEXT_PUBLIC_META_ENVIRONMENT);
@@ -50,7 +51,7 @@ export default function Analytics() {
 
   return (
     <>
-      {GA_ID ? <GoogleAnalytics pathname={pathname} /> : null}
+      {GA_ID ? <Suspense fallback={null}><GoogleAnalytics pathname={pathname} /><ContactClickEvents /></Suspense> : null}
       {isMetaEnabled && FB_PIXEL_ID ? (
         <Suspense fallback={null}><MetaPixelPageViews pathname={pathname} /></Suspense>
       ) : null}
@@ -59,11 +60,14 @@ export default function Analytics() {
 }
 
 function GoogleAnalytics({ pathname }: { pathname: string }) {
+  const searchParams = useSearchParams();
   const [initialized, setInitialized] = useState(false);
   const lastPagePath = useRef<string | null>(null);
 
   useEffect(() => {
     if (!isAnalyticsEnabled || !GA_ID || !initialized || !window.gtag) return;
+    const campaign = campaignParameters(searchParams.toString());
+    if (Object.keys(campaign).length) window.gtag("set", campaign);
     if (lastPagePath.current === pathname) return;
 
     const pageLocation = `${window.location.origin}${window.location.pathname}`;
@@ -76,7 +80,7 @@ function GoogleAnalytics({ pathname }: { pathname: string }) {
       page_path: pathname,
     });
     lastPagePath.current = pathname;
-  }, [pathname, initialized]);
+  }, [pathname, searchParams, initialized]);
 
   return (
     <>
@@ -91,6 +95,7 @@ function GoogleAnalytics({ pathname }: { pathname: string }) {
             ad_personalization: 'denied'
           });
           gtag('js', new Date());
+          gtag('set', (${campaignParameters.toString()})(window.location.search));
           gtag('config', ${JSON.stringify(GA_ID)}, {
             send_page_view: false,
             allow_google_signals: false,
@@ -135,7 +140,44 @@ function MetaPixelPageViews({ pathname }: { pathname: string }) {
 export function trackEvent(eventName: string, params?: Record<string, string>) {
   if (typeof window === "undefined" || !isAnalyticsEnabled || !GA_ID || !window.gtag) return;
   if (isUtilityPath(window.location.pathname)) return;
-  window.gtag("event", eventName, { ...params, send_to: GA_ID });
+  try {
+    window.gtag("event", eventName, { ...params, send_to: GA_ID });
+  } catch {
+    // Measurement must never prevent navigation or form interaction.
+  }
+}
+
+/** Delegate native link activation so server-rendered contact links stay lightweight.
+ * Match business destinations only, excluding article-share links and privacy contacts.
+ */
+function ContactClickEvents() {
+  useEffect(() => {
+    function onClick(event: MouseEvent) {
+      if (event.type === "auxclick" && event.button !== 1) return;
+      const link = event.target instanceof Element ? event.target.closest("a[href]") : null;
+      if (!link) return;
+      const url = new URL(link.getAttribute("href")!, window.location.href);
+      const eventName = url.hostname === "wa.me" && url.pathname === "/8617279444062"
+        ? "whatsapp_click"
+        : url.protocol === "mailto:" && url.pathname === "sales@realismthrift.com"
+          ? "email_click"
+          : url.protocol === "tel:" && url.pathname === "+8617279444062" ? "phone_click" : null;
+      if (!eventName) return;
+      const placement = link.closest(".rt-floating-actions") ? "floating"
+        : link.closest(".rt-form-state-error") ? "inquiry_error"
+        : link.closest(".rt-inquiry-form") ? "inquiry_form"
+        : link.closest("footer") ? "footer"
+        : link.closest("header") ? "header" : "page_content";
+      trackEvent(eventName, { placement, page_path: window.location.pathname });
+    }
+    document.addEventListener("click", onClick, true);
+    document.addEventListener("auxclick", onClick, true);
+    return () => {
+      document.removeEventListener("click", onClick, true);
+      document.removeEventListener("auxclick", onClick, true);
+    };
+  }, []);
+  return null;
 }
 
 /**
