@@ -55,7 +55,7 @@ const staticPages: StaticPageConfig[] = [
   },
   {
     path: "/contact-us",
-    lastModified: "2026-10-17",
+    lastModified: "2026-11-01",
     changeFrequency: "monthly",
     priority: 0.85,
   },

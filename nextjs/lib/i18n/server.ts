@@ -22,23 +22,16 @@ export function getClientMessages(
   );
 }
 
-/** Shared source data has display strings and hrefs; never translate IDs or contact details. */
+/** Translate display copy, including the confirmed address; preserve IDs and contact identifiers. */
 export function getLocalizedData<T>(value: T, locale: Locale): T {
   const t = getTranslator(locale);
   const visit = (item: unknown, key = ""): unknown => {
     if (typeof item === "string") {
       if (key === "href") return localePath(item, locale);
       if (
-        [
-          "id",
-          "icon",
-          "email",
-          "phone",
-          "whatsapp",
-          "address",
-          "logo",
-          "image",
-        ].includes(key)
+        ["id", "icon", "email", "phone", "whatsapp", "logo", "image"].includes(
+          key,
+        )
       )
         return item;
       return t(item);

@@ -368,6 +368,7 @@
 .rt-language-switcher a { display: flex; justify-content: space-between; padding: 0.6rem 0.7rem; border-radius: 3px; color: #333; font-size: 0.875rem; }
 .rt-language-switcher a:hover, .rt-language-switcher a[aria-current] { background: #f9f3e6; color: var(--color-brand-red); }
 .rt-language-caret { font-size: 0.65rem; }
+.rt-postal-address { unicode-bidi: isolate; overflow-wrap: anywhere; }
 html:not([lang="en"]) .rt-nav-list a { white-space: normal; text-align: center; }
 html:not([lang="en"]) .rt-header-actions { min-width: 0; }
 html:not([lang="en"]) :is(.rt-news-view-all,.rt-news-footer-link,a.whitespace-nowrap) { white-space: normal; max-width: 100%; min-width: 0; }

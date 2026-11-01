@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { locales, localizedPaths, localePath } from "../lib/i18n/routing";
+import { companyAddress, companyLocation } from "../data/siteData";
+import { getTranslator } from "../lib/i18n/server";
 
 test.beforeEach(async ({ page }) => {
   await page.route("https://www.google.com/maps/**", (route) =>
@@ -226,5 +228,46 @@ test("translated navigation and content fit a 320px screen", async ({
         `${locale}${path}`,
       ).toBeLessThanOrEqual(321);
     }
+  }
+});
+
+test("confirmed factory and DiDi addresses are localized and retain copyable English and Chinese navigation text", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  for (const locale of locales) {
+    const t = getTranslator(locale);
+    await page.goto(localePath("/contact-us", locale), {
+      waitUntil: "domcontentloaded",
+    });
+    await expect(
+      page
+        .locator("p.rt-postal-address")
+        .filter({ hasText: t(companyAddress) }),
+    ).toHaveAttribute("lang", locale);
+    await expect(
+      page
+        .locator("p.rt-postal-address")
+        .filter({ hasText: t(companyLocation.didiAddress) }),
+    ).toHaveAttribute("dir", locale === "ar" ? "rtl" : "ltr");
+    await expect(
+      page
+        .locator('.rt-postal-address[lang="en"][dir="ltr"]')
+        .filter({ hasText: companyAddress })
+        .first(),
+    ).toBeVisible();
+    await expect(
+      page
+        .locator('.rt-postal-address[lang="zh-CN"][dir="ltr"]')
+        .filter({ hasText: companyLocation.addressChinese }),
+    ).toBeVisible();
+    await expect(page.locator("iframe")).toHaveAttribute(
+      "src",
+      companyLocation.mapsEmbedUrl,
+    );
+    await expect(page.locator("footer")).toContainText(t(companyAddress));
+    await expect(page.locator("main")).not.toContainText(/Fengyi|凤仪|凤怡/);
+    await page.goto(localePath("/", locale), { waitUntil: "domcontentloaded" });
+    await expect(page.locator("#contact")).toContainText(t(companyAddress));
   }
 });

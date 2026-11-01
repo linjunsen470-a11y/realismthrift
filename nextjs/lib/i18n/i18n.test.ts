@@ -16,7 +16,15 @@ import es from "./messages/es.json";
 import fr from "./messages/fr.json";
 import ar from "./messages/ar.json";
 import vi from "./messages/vi.json";
-import { companyStats, productsData, siteHeader } from "@/data/siteData";
+import {
+  companyAddress,
+  companyLocation,
+  companyPostalAddress,
+  companyStats,
+  productsData,
+  siteHeader,
+  siteFooter,
+} from "@/data/siteData";
 
 it("quality standards translate only the default heading, leaving supplied display copy intact", () => {
   const supplied = renderToStaticMarkup(
@@ -78,6 +86,44 @@ describe("published language URLs", () => {
 });
 
 describe("translation integrity and server/client boundaries", () => {
+  it("uses the owner-confirmed address in every language while retaining canonical postal and navigation facts", () => {
+    expect(companyAddress).toBe(
+      "RealismThrift (Baisha Alley Weilitang), County Road 193, Yuanzhou Town, Boluo County, Huizhou City, Guangdong Province, China",
+    );
+    expect(companyLocation.addressChinese).toBe(
+      "广东惠州博罗县园洲镇193县道RealismThrift（白沙巷尾礼堂）",
+    );
+    expect(companyLocation.didiAddress).toBe(
+      "Baisha Elementary School 193xiandao, Yuanzhou Town, Boluo County, Huizhou City, Guangdong Province, China",
+    );
+    expect(companyPostalAddress.addressCountry).toBe("CN");
+    expect(companyPostalAddress.mapsQuery).toBe(companyAddress);
+    expect(companyLocation.mapsUrl).toContain(
+      "mid=1tQMcpDr1wCiqu03ci3gFUnP7RlUudME",
+    );
+    for (const locale of ["es", "fr", "ar", "vi"] as const) {
+      const t = getTranslator(locale);
+      const display = getLocalizedData(siteFooter, locale).brand;
+      expect(display.address).toBe(t(companyAddress));
+      expect(display.address).not.toBe(companyAddress);
+      for (const landmark of [
+        "RealismThrift",
+        "Baisha",
+        "193",
+        "Yuanzhou",
+        "Boluo",
+        "Huizhou",
+        "Guangdong",
+      ])
+        expect(display.address).toContain(landmark);
+      expect(t(companyLocation.didiAddress)).not.toBe(
+        companyLocation.didiAddress,
+      );
+      expect(t(companyLocation.didiAddress)).toContain("193");
+      expect(display.email).toBe(siteFooter.brand.email);
+      expect(display.phone).toBe(siteFooter.brand.phone);
+    }
+  });
   for (const [locale, messages] of Object.entries({ es, fr, ar, vi })) {
     it(`${locale} covers all source copy and preserves interpolation tokens`, () => {
       for (const key of sourceKeys) {

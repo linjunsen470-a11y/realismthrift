@@ -22,5 +22,5 @@ This directory stores the human-reviewable gold-standard QA corpus for RealismTh
 
 - WhatsApp: `+86 17279444062`
 - Email: `sales@realismthrift.com`
-- Facility: RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China
+- Facility: RealismThrift (Baisha Alley Weilitang), County Road 193, Yuanzhou Town, Boluo County, Huizhou City, Guangdong Province, China
 - Expected response: within 12 hours where possible

@@ -63,7 +63,13 @@ export function SiteFooter({ locale = "en", data }: SiteFooterProps) {
             </div>
             <div className="rt-footer-contact-item">
               <MapPin size={18} strokeWidth={2.2} />
-              <span>{data.brand.address}</span>
+              <span
+                className="rt-postal-address"
+                lang={locale}
+                dir={locale === "ar" ? "rtl" : "ltr"}
+              >
+                {data.brand.address}
+              </span>
             </div>
           </div>
 

@@ -247,7 +247,13 @@ export default function PrivacyPolicyPage({
                 <p className="font-bold">
                   {t("Dongguan Huihe Realismthrift Trading Co., Ltd.")}
                   <br />
-                  {companyAddress}
+                  <span
+                    className="rt-postal-address"
+                    lang={locale}
+                    dir={locale === "ar" ? "rtl" : "ltr"}
+                  >
+                    {t(companyAddress)}
+                  </span>
                   <br />
                   {t("Email: {v0}", { v0: siteFooter.brand.email })}
                 </p>

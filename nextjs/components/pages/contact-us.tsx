@@ -147,7 +147,7 @@ export default function ContactUsPage({
                 i: <MapPin className="w-6 h-6 text-brand-dark" />,
                 t: t("Address"),
                 s: t("Visit our factory"),
-                v: "County Road 193, Yuanzhou",
+                v: t(companyAddress),
                 l: companyLocation.mapsUrl,
                 color: "bg-gray-100",
               },
@@ -177,7 +177,7 @@ export default function ContactUsPage({
                       ? "noopener noreferrer"
                       : undefined
                   }
-                  className="text-brand-red text-[0.875rem] font-bold font-montserrat hover:text-brand-red-dark transition-colors break-all block"
+                  className="text-brand-red text-[0.875rem] font-bold font-montserrat hover:text-brand-red-dark transition-colors break-words block"
                 >
                   {item.v}
                 </a>
@@ -366,14 +366,34 @@ export default function ContactUsPage({
                   <MapPin className="w-5 h-5 text-brand-red" />
                   {t("Factory Address")}
                 </h3>
-                <p className="text-[0.9375rem] text-[#444] font-open-sans leading-relaxed">
-                  {companyAddress}
-                </p>
                 <p
-                  lang="zh-CN"
-                  className="text-[0.875rem] text-[#666] font-open-sans mt-1"
+                  className="rt-postal-address text-[0.9375rem] text-[#444] font-open-sans leading-relaxed"
+                  lang={locale}
+                  dir={locale === "ar" ? "rtl" : "ltr"}
                 >
-                  中文地址：{companyLocation.addressChinese}
+                  {t(companyAddress)}
+                </p>
+                {locale !== "en" ? (
+                  <p className="text-[0.875rem] text-[#666] font-open-sans mt-2">
+                    {t("English address for navigation")}
+                    <span
+                      className="rt-postal-address block"
+                      lang="en"
+                      dir="ltr"
+                    >
+                      {companyAddress}
+                    </span>
+                  </p>
+                ) : null}
+                <p className="text-[0.875rem] text-[#666] font-open-sans mt-1">
+                  {t("Chinese address for navigation")}
+                  <span
+                    className="rt-postal-address block"
+                    lang="zh-CN"
+                    dir="ltr"
+                  >
+                    {companyLocation.addressChinese}
+                  </span>
                 </p>
                 <a
                   href={companyLocation.mapsUrl}
@@ -389,14 +409,34 @@ export default function ContactUsPage({
                 <h3 className="font-montserrat font-bold text-brand-dark text-[1rem] mb-2">
                   {t("DiDi Taxi Address")}
                 </h3>
-                <p className="text-[0.875rem] text-[#555] font-open-sans leading-relaxed">
-                  {companyLocation.didiAddress}
-                </p>
                 <p
-                  lang="zh-CN"
-                  className="text-[0.875rem] text-[#666] font-open-sans mt-1"
+                  className="rt-postal-address text-[0.875rem] text-[#555] font-open-sans leading-relaxed"
+                  lang={locale}
+                  dir={locale === "ar" ? "rtl" : "ltr"}
                 >
-                  滴滴打车导航地址：{companyLocation.didiAddressChinese}
+                  {t(companyLocation.didiAddress)}
+                </p>
+                {locale !== "en" ? (
+                  <p className="text-[0.875rem] text-[#666] font-open-sans mt-2">
+                    {t("English DiDi search address")}
+                    <span
+                      className="rt-postal-address block"
+                      lang="en"
+                      dir="ltr"
+                    >
+                      {companyLocation.didiAddress}
+                    </span>
+                  </p>
+                ) : null}
+                <p className="text-[0.875rem] text-[#666] font-open-sans mt-1">
+                  {t("Chinese DiDi search address")}
+                  <span
+                    className="rt-postal-address block"
+                    lang="zh-CN"
+                    dir="ltr"
+                  >
+                    {companyLocation.didiAddressChinese}
+                  </span>
                 </p>
               </div>
               <div className="pt-4 border-t border-black/5">

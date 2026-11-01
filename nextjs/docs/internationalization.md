@@ -48,6 +48,21 @@ Include complete templates for dynamic image alt text and accessibility labels,
 not English sentences joined to translated product names. Shared components take
 display-ready title props; they translate their own default titles only.
 
+## Factory address
+
+The owner-confirmed English factory address and Chinese navigation address in
+`data/siteData.ts` identify the same facility on County Road 193 in Yuanzhou,
+Boluo, Huizhou, Guangdong, China. Use those facts across the site, structured
+data, company documents and knowledge base. The DiDi search address is the
+owner-provided Baisha Elementary School navigation destination.
+
+Factory and DiDi address display strings are translated through the existing
+server dictionaries. Contact pages also retain copyable English and Chinese
+navigation text with explicit language and text direction. Postal schema and
+outreach email footers retain the canonical English address. Do not translate
+IDs, coordinates, map IDs, email addresses or phone numbers, or present a
+translated address as a different country or office.
+
 ## Inquiry and measurement boundaries
 
 Only form labels and display messages are localized. Field names, product and

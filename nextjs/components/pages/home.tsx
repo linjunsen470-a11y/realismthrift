@@ -209,7 +209,7 @@ export default async function Home({
     },
     {
       label: t("ADDRESS"),
-      value: companyAddress,
+      value: t(companyAddress),
       icon: MapPin,
     },
   ];
@@ -685,7 +685,11 @@ export default async function Home({
                         {value}
                       </a>
                     ) : (
-                      <span className="rt-contact-info-link static">
+                      <span
+                        className="rt-contact-info-link static rt-postal-address"
+                        lang={locale}
+                        dir={locale === "ar" ? "rtl" : "ltr"}
+                      >
                         {value}
                       </span>
                     )}
