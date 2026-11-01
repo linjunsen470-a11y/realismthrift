@@ -338,6 +338,7 @@ test("unpublished localized URLs return a translated, styled and non-indexable 4
     expect(html).toContain(`lang="${locale}"`);
     expect(html).toContain('class="rt-not-found"');
     expect(html).toContain(getTranslator(locale)("Page Not Found"));
+    expect(html).toContain('<meta name="robots" content="noindex, nofollow"');
     expect(html).toContain(
       `<title>${getTranslator(locale)("Page Not Found")} | RealismThrift</title>`,
     );
@@ -348,10 +349,17 @@ test("unpublished localized URLs return a translated, styled and non-indexable 4
     await expect(page).toHaveTitle(
       `${getTranslator(locale)("Page Not Found")} | RealismThrift`,
     );
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
-      "content",
-      /noindex/,
-    );
+    expect(
+      await page
+        .locator('meta[name="robots"]')
+        .evaluateAll(
+          (tags) =>
+            tags.length > 0 &&
+            tags.every((tag) =>
+              tag.getAttribute("content")?.includes("noindex"),
+            ),
+        ),
+    ).toBe(true);
     await expect(
       page
         .locator("main a")

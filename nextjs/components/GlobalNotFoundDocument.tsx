@@ -17,6 +17,7 @@ export function GlobalNotFoundDocument({
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       <body className="antialiased bg-white text-[#333]">
         <title>{`${t("Page Not Found")} | RealismThrift`}</title>
+        <meta name="robots" content="noindex, nofollow" />
         <StatusPageProvider locale={locale} messages={copies[locale] ?? {}}>
           <main id="main-content">
             <NotFoundPage />
