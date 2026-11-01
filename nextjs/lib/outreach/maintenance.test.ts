@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { PgDialect } from "drizzle-orm/pg-core";
 import nodemailer from "nodemailer";
 import { repairOutreachDraft, inspectOutreachDraftMaintenance } from "./maintenance";
-import { assertOutreachHeaders, mimeFingerprint, splitMime, unsubscribeFooter } from "./mime";
+import { addOutreachHeaders, assertOutreachHeaders, mimeFingerprint, splitMime, unsubscribeFooter } from "./mime";
 
 const mocks = vi.hoisted(() => ({ execute: vi.fn(), gmailRequest: vi.fn(), verifyGmailAccount: vi.fn() }));
 vi.mock("./database", () => ({ outreachDatabase: () => ({ execute: mocks.execute }) }));
@@ -12,9 +12,10 @@ const dialect = new PgDialect();
 let record: { [key: string]: unknown }, raw: Buffer, initial: Buffer, messageId: string;
 let input: Parameters<typeof repairOutreachDraft>[0];
 let corruptSave = false;
+let regenerateMetadata = false;
 beforeEach(async () => {
   vi.resetAllMocks(); vi.stubEnv("OUTREACH_DKIM_MODE", "google");
-  corruptSave = false; messageId = "old-message";
+  corruptSave = false; regenerateMetadata = false; messageId = "old-message";
   record = { id, contact_id: id, email, sender: "jason@realismthriftglobal.com", draft_id: "draft", status: "draft", source: "wrong-row-9", purpose: "cold_marketing", unsubscribe_token: token,
     preference_version: 4, updated_at: "before", marketing_status: "unsubscribed", safety_block: "complaint", conversation_paused: true };
   const mail = await nodemailer.createTransport({ streamTransport: true, buffer: true, newline: "windows" }).sendMail({
@@ -32,7 +33,7 @@ beforeEach(async () => {
     throw new Error("Unexpected SQL");
   });
   mocks.gmailRequest.mockImplementation(async (path, body, method) => {
-    if (method === "PUT") { expect(path).toBe("drafts/draft"); raw = Buffer.from(body.message.raw, "base64url"); messageId = "new-message"; raw = Buffer.concat([Buffer.from("Received: from gmailapi.google.com with HTTPREST\r\n"), raw]); if (corruptSave) raw = Buffer.from(raw.toString().replace("Existing subject", "Wrong subject")); }
+    if (method === "PUT") { expect(path).toBe("drafts/draft"); raw = Buffer.from(body.message.raw, "base64url"); messageId = "new-message"; raw = Buffer.concat([Buffer.from("Received: from gmailapi.google.com with HTTPREST\r\n"), raw]); if (regenerateMetadata) raw = Buffer.from(raw.toString().replace(/^Message-ID:[^\r\n]*/mi, "Message-Id: <gmail-saved@example.com>").replace(/^Date:[^\r\n]*/mi, "Date: Sat, 31 Oct 2026 21:24:03 -0700")); if (corruptSave) raw = Buffer.from(raw.toString().replace("Existing subject", "Wrong subject")); }
     else expect(path).toBe("drafts/draft?format=raw");
     return { id: "draft", message: { id: messageId, threadId: "thread", labelIds: ["DRAFT"], raw: raw.toString("base64url") } };
   });
@@ -58,6 +59,20 @@ describe("identity-pinned draft maintenance", () => {
     record.status = status;
     await expect(repairOutreachDraft(input)).rejects.toMatchObject({ code: "draft_not_maintainable" });
     expect(mocks.gmailRequest).not.toHaveBeenCalled();
+  });
+  it("accepts Gmail-regenerated Message-Id and Date while preserving the body and subject", async () => {
+    regenerateMetadata = true;
+    await expect(repairOutreachDraft(input)).resolves.toMatchObject({ content_unchanged: true, hold: true });
+    expect(splitMime(raw).body).toEqual(splitMime(initial).body);
+    expect(raw.toString()).toContain("Message-Id: <gmail-saved@example.com>");
+    expect(raw.toString()).toContain("Subject: Existing subject");
+  });
+  it("commits an inspected already-repaired draft without a second Gmail PUT", async () => {
+    raw = await addOutreachHeaders(raw, id, token);
+    record.status = "cancelled";
+    input.fingerprint = mimeFingerprint(raw);
+    await expect(repairOutreachDraft(input)).resolves.toMatchObject({ message_id: "old-message", source_verified: true, hold: true });
+    expect(mocks.gmailRequest.mock.calls.filter(call => call[2] === "PUT")).toHaveLength(0);
   });
   it.each(["email", "draft_id", "expected_source", "message_id", "fingerprint"])("rejects a changed %s", async key => {
     await expect(repairOutreachDraft({ ...input, [key]: "changed" })).rejects.toBeTruthy();

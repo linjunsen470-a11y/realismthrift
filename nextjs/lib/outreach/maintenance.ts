@@ -26,7 +26,8 @@ async function savedDraft(draftId: string) {
   return { draft, raw: Buffer.from(draft.message.raw, "base64url") };
 }
 function preservedHeaders(raw: Buffer, gmailSaved = false) {
-  return splitMime(raw).fields.filter(field => !(gmailSaved && /^received:/i.test(field)) && !/^(list-id|list-unsubscribe(?:-post)?|dkim-signature|x-realismthrift-outreach-id):/i.test(field)).join("\r\n");
+  // Gmail can regenerate transport metadata when saving a raw draft PUT.
+  return splitMime(raw).fields.filter(field => !(gmailSaved && /^(received|message-id|date):/i.test(field)) && !/^(list-id|list-unsubscribe(?:-post)?|dkim-signature|x-realismthrift-outreach-id):/i.test(field)).join("\r\n");
 }
 function sameContent(before: Buffer, after: Buffer, gmailSaved = false) {
   // Gmail may prepend a new Received field on draft PUT. It must retain every original one.
