@@ -20,4 +20,26 @@ describe("existing static catalog search", () => {
     expect(searchStaticEntries("!!!")).toEqual([]);
     expect(searchStaticEntries("unrelatedproductxyz")).toEqual([]);
   });
+  it("finds shipping, payment, MOQ and contact guidance in each buyer language", () => {
+    for (const [id, queries] of [
+      ["faq-shipping", ["envíos", "expédition", "الشحن", "vận chuyển"]],
+      ["faq-payment", ["pago", "paiement", "الدفع", "thanh toán"]],
+      [
+        "faq-moq",
+        [
+          "cantidad mínima",
+          "quantité minimale",
+          "الحد الأدنى للطلب",
+          "số lượng tối thiểu",
+        ],
+      ],
+      ["page-contact", ["contacto", "contacter", "اتصال", "liên hệ"]],
+    ] as const) {
+      for (const query of queries)
+        expect(
+          searchStaticEntries(query).map((result) => result.id),
+          query,
+        ).toContain(id);
+    }
+  });
 });

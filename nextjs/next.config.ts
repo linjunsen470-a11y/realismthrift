@@ -83,6 +83,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  experimental: { globalNotFound: true },
   env: {
     // Inline the same deployment environment into the browser bundle; no extra Vercel setting.
     NEXT_PUBLIC_META_ENVIRONMENT: process.env.VERCEL_ENV ?? 'development',

@@ -12,6 +12,18 @@ import {
   type Locale,
 } from "@/lib/i18n/routing";
 
+function syncLanguageLinks(
+  details: HTMLDetailsElement | null,
+  path: string,
+  target: string,
+) {
+  const hash = target === path ? window.location.hash : "";
+  for (const link of details?.querySelectorAll<HTMLAnchorElement>(
+    "a[hreflang]",
+  ) ?? [])
+    link.href = `${localePath(target, link.hreflang as Locale)}${window.location.search}${hash}`;
+}
+
 export function LanguageSwitcher({
   locale,
   label,
@@ -20,7 +32,21 @@ export function LanguageSwitcher({
   label: string;
 }) {
   const detailsRef = useRef<HTMLDetailsElement>(null);
+  const { path } = splitLocale(usePathname());
+  const target = localizedPaths.includes(
+    path as (typeof localizedPaths)[number],
+  )
+    ? path
+    : "/";
+  function syncLinks() {
+    syncLanguageLinks(detailsRef.current, path, target);
+  }
   useEffect(() => {
+    // Update real hrefs after hydration, including copied links and new-tab navigation.
+    const updateLinks = () => {
+      syncLanguageLinks(detailsRef.current, path, target);
+    };
+    updateLinks();
     function closeOutside(event: PointerEvent) {
       const details = detailsRef.current;
       if (
@@ -32,19 +58,21 @@ export function LanguageSwitcher({
       }
     }
     document.addEventListener("pointerdown", closeOutside);
-    return () => document.removeEventListener("pointerdown", closeOutside);
-  }, []);
-  const { path } = splitLocale(usePathname());
-  // English-only blog/search pages switch to the selected language's homepage.
-  const target = localizedPaths.includes(
-    path as (typeof localizedPaths)[number],
-  )
-    ? path
-    : "/";
+    window.addEventListener("hashchange", updateLinks);
+    window.addEventListener("popstate", updateLinks);
+    return () => {
+      document.removeEventListener("pointerdown", closeOutside);
+      window.removeEventListener("hashchange", updateLinks);
+      window.removeEventListener("popstate", updateLinks);
+    };
+  }, [path, target]);
   return (
     <details
       ref={detailsRef}
       className="rt-language-switcher"
+      onPointerEnter={syncLinks}
+      onPointerDown={syncLinks}
+      onFocus={syncLinks}
       onKeyDown={(event) => {
         if (event.key === "Escape") {
           event.currentTarget.open = false;
@@ -71,11 +99,7 @@ export function LanguageSwitcher({
               lang={language}
               dir="auto"
               aria-current={language === locale ? "true" : undefined}
-              onClick={(event) => {
-                // Campaign parameters survive fallback; section anchors only belong to the same page.
-                const hash = target === path ? window.location.hash : "";
-                event.currentTarget.href = `${localePath(target, language)}${window.location.search}${hash}`;
-              }}
+              onClick={syncLinks}
             >
               {languageNames[language]}
               {language === locale ? <span aria-hidden="true">✓</span> : null}

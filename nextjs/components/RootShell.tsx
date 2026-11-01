@@ -9,9 +9,14 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SanityLive } from "@/lib/sanity/live";
 import Analytics, { MetaPixelHead } from "@/components/Analytics";
 import SiteChrome from "@/components/SiteChrome";
+import { StatusPageProvider } from "@/components/StatusPageContext";
 import { siteHeader, siteFooter } from "@/data/siteData";
 import { siteUrl } from "@/lib/metadata";
-import { getLocalizedData, getTranslator } from "@/lib/i18n/server";
+import {
+  getClientMessages,
+  getLocalizedData,
+  getTranslator,
+} from "@/lib/i18n/server";
 import type { Locale } from "@/lib/i18n/routing";
 
 const montserrat = Montserrat({
@@ -100,34 +105,39 @@ export default async function RootShell({
           {t("Skip to main content")}
         </a>
         <Analytics />
-        <SiteChrome
-          header={
-            <SiteHeader
-              locale={locale}
-              data={getLocalizedData(siteHeader, locale)}
-            />
-          }
-          footer={
-            <SiteFooter
-              locale={locale}
-              data={getLocalizedData(siteFooter, locale)}
-            />
-          }
-          editing={
-            isDraftModeEnabled ? (
-              <>
-                <VisualEditing />
-                <SanityLive
-                  refreshOnMount={false}
-                  refreshOnFocus={false}
-                  refreshOnReconnect={false}
-                />
-              </>
-            ) : null
-          }
+        <StatusPageProvider
+          locale={locale}
+          messages={getClientMessages(locale, "status")}
         >
-          {children}
-        </SiteChrome>
+          <SiteChrome
+            header={
+              <SiteHeader
+                locale={locale}
+                data={getLocalizedData(siteHeader, locale)}
+              />
+            }
+            footer={
+              <SiteFooter
+                locale={locale}
+                data={getLocalizedData(siteFooter, locale)}
+              />
+            }
+            editing={
+              isDraftModeEnabled ? (
+                <>
+                  <VisualEditing />
+                  <SanityLive
+                    refreshOnMount={false}
+                    refreshOnFocus={false}
+                    refreshOnReconnect={false}
+                  />
+                </>
+              ) : null
+            }
+          >
+            {children}
+          </SiteChrome>
+        </StatusPageProvider>
       </body>
     </html>
   );

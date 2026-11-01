@@ -304,3 +304,195 @@ test("translated pages keep email labels and inline privacy identifiers intact",
     );
   }
 });
+
+test("language links contain campaign parameters before clicking and update with the anchor", async ({
+  page,
+}) => {
+  await page.goto(
+    "/es/used-brand-shoes?utm_source=copy-test&fbclid=test-click#inquiry",
+  );
+  const link = page.locator('.rt-language-switcher a[hreflang="fr"]');
+  await expect(link).toHaveAttribute(
+    "href",
+    "/fr/used-brand-shoes?utm_source=copy-test&fbclid=test-click#inquiry",
+  );
+  await page.evaluate(() => {
+    window.location.hash = "quality";
+  });
+  await expect(link).toHaveAttribute(
+    "href",
+    "/fr/used-brand-shoes?utm_source=copy-test&fbclid=test-click#quality",
+  );
+});
+
+test("unpublished localized URLs return a translated, styled and non-indexable 404", async ({
+  request,
+  page,
+}) => {
+  test.setTimeout(120_000);
+  for (const locale of ["es", "fr", "ar", "vi"] as const) {
+    const path = `/${locale}/blog/unpublished-translation`;
+    const response = await request.get(path);
+    expect(response.status(), path).toBe(404);
+    const html = await response.text();
+    expect(html).toContain(`lang="${locale}"`);
+    expect(html).toContain('class="rt-not-found"');
+    expect(html).toContain(getTranslator(locale)("Page Not Found"));
+    expect(html).toContain(
+      `<title>${getTranslator(locale)("Page Not Found")} | RealismThrift</title>`,
+    );
+    await page.goto(path, { waitUntil: "domcontentloaded" });
+    await expect(page.locator("main h1")).toHaveText(
+      getTranslator(locale)("Page Not Found"),
+    );
+    await expect(page).toHaveTitle(
+      `${getTranslator(locale)("Page Not Found")} | RealismThrift`,
+    );
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      "content",
+      /noindex/,
+    );
+    await expect(
+      page
+        .locator("main a")
+        .filter({ hasText: getTranslator(locale)("USED CLOTHES") }),
+    ).toHaveAttribute("href", `/${locale}/used-brand-clothes`);
+  }
+});
+
+test("native-language shipping searches return to the buyer's language", async ({
+  page,
+  isMobile,
+}) => {
+  test.setTimeout(120_000);
+  for (const [locale, query] of [
+    ["es", "envíos"],
+    ["fr", "expédition"],
+    ["ar", "الشحن"],
+    ["vi", "vận chuyển"],
+  ] as const) {
+    await page.goto(`/${locale}`);
+    if (isMobile) {
+      await page
+        .getByRole("button", {
+          name: getTranslator(locale)("Toggle navigation"),
+        })
+        .click();
+      await page.locator(".rt-mobile-search-item a").click();
+      await page.locator("#page-search").fill(query);
+      await page.locator("form.rt-page-search-form button").click();
+    } else {
+      await page.locator('header input[name="q"]').fill(query);
+      await page
+        .locator('header form[role="search"]')
+        .evaluate((form: HTMLFormElement) => form.requestSubmit());
+    }
+    await expect
+      .poll(() => new URL(page.url()).searchParams.get("lang"))
+      .toBe(locale);
+    const result = page.getByRole("link", {
+      name: /Shipping and destination countries/,
+    });
+    await expect(result).toHaveAttribute("href", `/${locale}/faq`);
+    await expect(
+      page.locator('form.rt-page-search-form input[name="lang"]'),
+    ).toHaveValue(locale);
+    await result.click();
+    await expect(page.locator("html")).toHaveAttribute("lang", locale);
+  }
+});
+
+test("localized form failures explain validation and rate limits without emitting a lead", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  const cases = [
+    [
+      429,
+      "Too many inquiries were submitted from this connection. Please wait a few minutes and try again.",
+    ],
+    [400, "Invalid email address."],
+    [400, "Missing required fields."],
+    [500, "An unknown server-only error"],
+  ] as const;
+  for (const locale of ["es", "fr", "ar", "vi"] as const) {
+    let index = 0;
+    await page.route("**/api/send", (route) => {
+      const [status, message] = cases[index++];
+      return route.fulfill({ status, json: { ok: false, message } });
+    });
+    await page.goto(`/${locale}/contact-us`);
+    await page.waitForFunction(() => typeof window.gtag === "function");
+    const form = page.locator(".rt-inquiry-form").first();
+    await form.locator('[name="name"]').fill("Test Buyer");
+    await form.locator('[name="email"]').fill("buyer@example.com");
+    await form.locator('[name="whatsapp"]').fill("+234 803 123 4567");
+    for (const [status, message] of cases) {
+      await form.locator('button[type="submit"]').click();
+      const expected =
+        status === 500
+          ? "We could not send your inquiry right now. Please try again or contact us via WhatsApp."
+          : message;
+      await expect(page.locator(".rt-form-state-error")).toContainText(
+        getTranslator(locale)(expected),
+      );
+      await expect(form.locator('[name="email"]')).toHaveValue(
+        "buyer@example.com",
+      );
+    }
+    expect(
+      await page.evaluate(() =>
+        (window.dataLayer ?? []).some(
+          (command) =>
+            Array.from(command as ArrayLike<unknown>)[1] === "generate_lead",
+        ),
+      ),
+    ).toBe(false);
+    expect(
+      await page.evaluate(() =>
+        (window.fbq?.queue ?? []).some(
+          (command) => Array.from(command as ArrayLike<unknown>)[1] === "Lead",
+        ),
+      ),
+    ).toBe(false);
+    await page.unroute("**/api/send");
+  }
+});
+
+test("Arabic text, borders, arrows and footer emphasis use the intended direction", async ({
+  page,
+}) => {
+  await page.goto("/ar/about-us");
+  await expect(page.locator(".rt-topbar-ticker-text")).toHaveAttribute(
+    "dir",
+    "rtl",
+  );
+  const quote = page.locator(".border-s-2");
+  expect(
+    await quote.evaluate(
+      (element) => getComputedStyle(element).borderRightWidth,
+    ),
+  ).toBe("2px");
+  expect(
+    await quote.evaluate(
+      (element) => getComputedStyle(element).borderLeftWidth,
+    ),
+  ).toBe("0px");
+  await expect(page.locator("footer .rt-footer-note-gold")).toHaveText(
+    getTranslator("ar")("12 hours"),
+  );
+  await page.goto("/ar/used-brand-clothes");
+  await expect(
+    page.getByRole("link", {
+      name: getTranslator("ar")("GET PRICE NOW →"),
+      exact: true,
+    }),
+  ).toContainText("←");
+  await page.goto("/ar/used-brand-bag");
+  const heading = page.locator("h2.border-s-4").first();
+  expect(
+    await heading.evaluate(
+      (element) => getComputedStyle(element).borderRightWidth,
+    ),
+  ).toBe("4px");
+});

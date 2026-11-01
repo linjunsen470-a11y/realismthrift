@@ -25,6 +25,14 @@ export function isLocale(value: string): value is Locale {
   return locales.includes(value as Locale);
 }
 
+/** The search UI remains English; carry the visitor's language to result links. */
+export function searchHref(query: string, locale: Locale = "en") {
+  const params = new URLSearchParams();
+  if (query) params.set("q", query);
+  if (locale !== "en") params.set("lang", locale);
+  return `/search${params.size ? `?${params}` : ""}`;
+}
+
 export function splitLocale(pathname: string): {
   locale: Locale;
   path: string;

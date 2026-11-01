@@ -104,7 +104,7 @@
 .rt-blog-excerpt {
   margin-bottom: 3rem;
   padding: 2rem 2.5rem;
-  border-left: 6px solid var(--color-brand-gold);
+  border-inline-start: 6px solid var(--color-brand-gold);
   background: rgba(240, 180, 41, 0.05);
   color: #2d3436;
   font-size: 1.25rem;
@@ -152,7 +152,7 @@
 .rt-prose ul,
 .rt-prose ol {
   margin-bottom: 1.8rem;
-  padding-left: 1.5rem;
+  padding-inline-start: 1.5rem;
 }
 
 .rt-prose li {
@@ -163,7 +163,7 @@
 .rt-prose-quote {
   margin: 3rem 0;
   padding: 2.5rem;
-  border-left: 6px solid var(--color-brand-red);
+  border-inline-start: 6px solid var(--color-brand-red);
   background: #fdfdfb;
   box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.02);
   color: #444;
@@ -414,7 +414,7 @@
   padding: 2rem;
   background: #fdfdfb;
   border: 1px solid #f0eee8;
-  border-left: 5px solid var(--color-brand-red);
+  border-inline-start: 5px solid var(--color-brand-red);
   border-radius: 4px;
 }
 

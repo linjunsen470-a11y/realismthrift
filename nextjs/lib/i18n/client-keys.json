@@ -45,6 +45,28 @@
     "We use your details to respond to your inquiry. After a successful inquiry, we share your email and, when valid, your international WhatsApp number in hashed form with Meta for advertising measurement. ",
     "Privacy Policy",
     "Contact us on WhatsApp",
-    "SENDING…"
+    "SENDING…",
+    "Too many inquiries were submitted from this connection. Please wait a few minutes and try again.",
+    "Missing required fields.",
+    "Invalid email address.",
+    "Invalid request payload.",
+    "Invalid submission identifier.",
+    "Invalid request origin."
+  ],
+  "status": [
+    "Page Not Found",
+    "This page may have moved or the link may be incorrect. Browse our product categories below or return to the homepage.",
+    "RETURN TO HOME",
+    "USED CLOTHES",
+    "USED SHOES",
+    "USED BAGS",
+    "Sorted selection from major Chinese cities.",
+    "Direct factory inventory, mixed and sorted.",
+    "Global wholesale supply for handbags and more.",
+    "Unable to Load This Page",
+    "Please try again. If the problem continues, contact our sales team for product and order information.",
+    "TRY AGAIN",
+    "BACK TO HOME",
+    "Error reference:"
   ]
 }

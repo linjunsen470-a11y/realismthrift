@@ -19,7 +19,10 @@ export function SiteHeader({ locale = "en", data }: SiteHeaderProps) {
           </span>
 
           <div className="rt-topbar-ticker" aria-hidden="true">
-            <span className="rt-topbar-ticker-text">
+            <span
+              className="rt-topbar-ticker-text"
+              dir={locale === "ar" ? "rtl" : "ltr"}
+            >
               {t(
                 "Wholesale Used Clothes | Wholesale Used Shoes | Wholesale Used Bags | Brand Clothes Wholesale | Second Hand Shoes Export | Used Bags Wholesale China |",
               )}

@@ -9,6 +9,7 @@ import { ProductTrustSections } from "@/components/product/ProductTrustSections"
 import { ProductCTA } from "@/components/product/ProductCTA";
 import { companyStats as englishCompanyStats } from "@/data/siteData";
 import {
+  ArrowRight,
   XCircle,
   CheckCircle2,
   Factory,
@@ -487,7 +488,7 @@ export default function UsedBrandClothesPage({
                   <div className="font-montserrat font-bold text-[0.8rem] text-[#1A1A1A] mb-[0.625rem]">
                     {t("What happens at this stage:")}
                   </div>
-                  <ul className="m-0 pl-[1.25rem] font-open-sans text-[0.8125rem] text-[#555] leading-[1.9] list-disc">
+                  <ul className="m-0 ps-[1.25rem] font-open-sans text-[0.8125rem] text-[#555] leading-[1.9] list-disc">
                     <li>
                       {t(
                         "Separated by type: tops / bottoms / outerwear / sportswear / accessories",
@@ -1178,9 +1179,11 @@ export default function UsedBrandClothesPage({
                   <span className="font-open-sans text-[0.8125rem] text-[#333] font-semibold group-hover:text-[#C0392B] transition-colors">
                     {rel.title}
                   </span>
-                  <span className="text-[#C0392B] text-[0.75rem] ml-auto group-hover:translate-x-1 transition-transform">
-                    →
-                  </span>
+                  <ArrowRight
+                    aria-hidden="true"
+                    size={12}
+                    className="text-[#C0392B] ms-auto ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform"
+                  />
                 </Link>
               ))}
             </div>

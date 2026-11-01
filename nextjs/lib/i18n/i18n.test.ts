@@ -4,6 +4,9 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { QualityStandards } from "@/components/product/QualityStandards";
 import { TranslatedText } from "@/components/TranslatedText";
 import PrivacyPolicyPage from "@/components/pages/privacy-policy";
+import NotFoundPage from "@/components/NotFoundPage";
+import ErrorPage from "@/components/ErrorPage";
+import { StatusPageContext } from "@/components/StatusPageContext";
 import { createTranslator } from "./translate";
 import {
   languageAlternates,
@@ -11,6 +14,7 @@ import {
   splitLocale,
   locales,
   localizedPaths,
+  searchHref,
 } from "./routing";
 import { getClientMessages, getLocalizedData, getTranslator } from "./server";
 import sourceKeys from "./source-keys.json";
@@ -45,6 +49,11 @@ it("quality standards translate only the default heading, leaving supplied displ
 });
 
 describe("published language URLs", () => {
+  it("keeps search English while preserving the destination locale and encoded query", () => {
+    expect(searchHref("used shoes")).toBe("/search?q=used+shoes");
+    expect(searchHref("envíos", "es")).toBe("/search?q=env%C3%ADos&lang=es");
+    expect(searchHref("", "ar")).toBe("/search?lang=ar");
+  });
   it("keeps English and all backend, utility and Sanity routes at their existing URLs", () => {
     expect(localePath("/used-brand-clothes", "en")).toBe("/used-brand-clothes");
     for (const path of [
@@ -88,6 +97,53 @@ describe("published language URLs", () => {
 });
 
 describe("translation integrity and server/client boundaries", () => {
+  it("retains explicit A/B/C grading instead of upgrading used-goods condition claims", () => {
+    for (const messages of [es, fr, ar, vi]) {
+      for (const [key, value] of Object.entries(messages)) {
+        if (/A[- ]grade|grade A/i.test(key))
+          expect(value, key).toMatch(/\bA\b/);
+      }
+    }
+    for (const [key, value] of Object.entries(es)) {
+      if (/A[- ]grade|grade A/i.test(key))
+        expect(value, key).not.toMatch(/primer nivel|calidad superior/i);
+      if (/bales?/i.test(key))
+        expect(value, key).not.toMatch(/\b(?:balas?|pacas?)\b/i);
+      expect(value, key).not.toMatch(/emfardo|de el fardo/i);
+    }
+    for (const [key, value] of Object.entries(vi)) {
+      if (/container/i.test(key)) expect(value, key).not.toMatch(/thùng chứa/i);
+      if (/deposit/i.test(key))
+        expect(value, key).not.toMatch(/tiền gửi|gửi tiền/i);
+    }
+  });
+  it("server-renders localized recovery links and a small error-copy allowlist", () => {
+    for (const locale of locales) {
+      const messages = getClientMessages(locale, "status");
+      const notFound = renderToStaticMarkup(
+        createElement(
+          StatusPageContext.Provider,
+          { value: { locale, messages } },
+          createElement(NotFoundPage),
+        ),
+      );
+      expect(notFound).toContain(
+        `href="${localePath("/used-brand-clothes", locale)}"`,
+      );
+      expect(notFound).toContain(getTranslator(locale)("Page Not Found"));
+      const error = renderToStaticMarkup(
+        createElement(
+          StatusPageContext.Provider,
+          { value: { locale, messages } },
+          createElement(ErrorPage, { error: new Error("test"), reset() {} }),
+        ),
+      );
+      expect(error).toContain(getTranslator(locale)("TRY AGAIN"));
+      expect(error).toContain(`href="${localePath("/", locale)}"`);
+      expect(Object.keys(messages).length).toBeLessThan(20);
+      expect(messages["1. Acceptance of Terms"]).toBeUndefined();
+    }
+  });
   it("preserves brand and service identifiers in every translation, including SEO copy", () => {
     const identifiers = [
       "RealismThrift",

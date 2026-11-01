@@ -360,7 +360,7 @@ export default function ContactUsPage({
                 className="absolute w-full h-[calc(100%+85px)] -top-[85px] left-0 border-0"
               ></iframe>
             </div>
-            <div className="mt-8 p-6 bg-brand-light rounded-[10px] border-l-4 border-brand-gold space-y-4">
+            <div className="mt-8 p-6 bg-brand-light rounded-[10px] border-s-4 border-brand-gold space-y-4">
               <div>
                 <h3 className="font-montserrat font-bold text-brand-dark text-[1rem] mb-2 flex items-center gap-2">
                   <MapPin className="w-5 h-5 text-brand-red" />

@@ -304,7 +304,7 @@ export default function AboutUsPage({
                 {t("Sales Manager")}
               </p>
 
-              <div className="relative mb-8 pl-5 border-l-2 border-white/20">
+              <div className="relative mb-8 ps-5 border-s-2 border-white/20">
                 <span
                   aria-hidden="true"
                   className="absolute -top-3 -left-3 text-5xl text-brand-gold/20 font-serif"
@@ -671,7 +671,7 @@ export default function AboutUsPage({
               ].map((cert) => (
                 <div
                   key={cert.title}
-                  className="bg-brand-light rounded-[6px] p-4 border-l-[3px] border-brand-red"
+                  className="bg-brand-light rounded-[6px] p-4 border-s-[3px] border-brand-red"
                 >
                   <div className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1.5">
                     {cert.title}

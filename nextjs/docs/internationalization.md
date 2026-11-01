@@ -56,6 +56,30 @@ counts or measurements, so review the surrounding grammar with their values.
 The existing English search index includes common product terms in all five
 languages and accepts accented and Arabic input; blog results remain English.
 
+Search also covers localized shipping, MOQ, payment, contact and other support
+keywords. `/search?lang=es&q=...` retains the English search UI while sending
+product, FAQ and contact result links to Spanish; the same applies to the other
+supported languages. Query forms and suggested searches preserve `lang`. Blog
+links remain English, and search pages remain `noindex`.
+
+Unknown URLs use Next.js's native `global-not-found` entry, which supplies its own
+document for the two root layouts. This requires the framework's currently
+experimental `globalNotFound` flag. Only that 404 entry uses request-time rendering
+to determine the original URL's language; the 40 published translations keep
+their existing static generation and `dynamicParams = false` guards. The global
+404 has correct server-rendered language, recovery links, HTTP 404 and `noindex`,
+without tracking scripts. A small `status` copy allowlist supplies the shared
+404/error views without exposing full dictionaries. The global 404 receives only
+that allowlist in each supported language, while normal pages receive one locale.
+Known inquiry validation/rate-limit messages are translated from the existing API
+response; unknown non-English errors keep the generic fallback.
+
+Language links receive the current query and same-page anchor after hydration,
+on focus/pointer interaction, and when the hash changes, so copied/new-tab links
+preserve them. Before JavaScript runs, the static HTML still provides the base
+language URL; request-specific query strings cannot be embedded in cached static
+HTML without changing the rendering strategy.
+
 ## Factory address
 
 The owner-confirmed English factory address and Chinese navigation address in

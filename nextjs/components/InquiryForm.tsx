@@ -152,9 +152,15 @@ export function InquiryForm({
         status: "error",
         message:
           (locale === "en" ? result?.message : undefined) ??
-          t(
-            "We could not send your inquiry right now. Please try again or contact us via WhatsApp.",
-          ),
+          (response.status === 429
+            ? t(
+                "Too many inquiries were submitted from this connection. Please wait a few minutes and try again.",
+              )
+            : result?.message && Object.hasOwn(messages ?? {}, result.message)
+              ? t(result.message)
+              : t(
+                  "We could not send your inquiry right now. Please try again or contact us via WhatsApp.",
+                )),
       });
     } catch {
       trackFormEvent("inquiry_error", { error_type: "network_error" });

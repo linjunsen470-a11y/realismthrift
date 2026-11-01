@@ -1,3 +1,9 @@
+import {
+  isLocale,
+  localePath,
+  searchHref,
+  type Locale,
+} from "@/lib/i18n/routing";
 import { createPageMetadata } from "@/lib/metadata";
 import "@/app/internal-pages.css";
 import type { Metadata } from "next";
@@ -16,7 +22,14 @@ export const metadata: Metadata = createPageMetadata({
   },
 });
 
-const suggestedTerms = ["used shoes", "clothes", "price list", "shipping", "moq", "bags"];
+const suggestedTerms = [
+  "used shoes",
+  "clothes",
+  "price list",
+  "shipping",
+  "moq",
+  "bags",
+];
 const popularSearches = [
   "used brand clothes",
   "used shoes wholesale",
@@ -29,8 +42,11 @@ const popularSearches = [
 function splitResults(results: SearchResult[]) {
   return {
     products: results.filter((result) => result.type === "product"),
-    support: results.filter((result) =>
-      result.type === "faq" || result.type === "page" || result.type === "contact"
+    support: results.filter(
+      (result) =>
+        result.type === "faq" ||
+        result.type === "page" ||
+        result.type === "contact",
     ),
     blog: results.filter((result) => result.type === "blog"),
   };
@@ -39,9 +55,11 @@ function splitResults(results: SearchResult[]) {
 function SearchHero({
   query,
   showSuggestedTerms,
+  locale,
 }: {
   query: string;
   showSuggestedTerms: boolean;
+  locale: Locale;
 }) {
   return (
     <section className="rt-page-hero">
@@ -56,11 +74,11 @@ function SearchHero({
         />
       </div>
       <div className="rt-page-hero-overlay" />
- 
+
       <div className="rt-container relative z-10 text-center md:text-left">
         <div className="rt-fade-in">
           <nav className="rt-breadcrumb mb-5 justify-center md:justify-start">
-            <Link href="/">Home</Link>
+            <Link href={localePath("/", locale)}>Home</Link>
             <span>›</span>
             <span className="text-white/70">Search</span>
           </nav>
@@ -68,22 +86,44 @@ function SearchHero({
             Site Search · RealismThrift
           </div>
           <h1 className="rt-page-hero-title mb-5 text-[clamp(2rem,8vw,4rem)] leading-[1.1] tracking-tight">
-            Search <span className="font-black text-brand-gold italic">Results</span>
+            Search{" "}
+            <span className="font-black text-brand-gold italic">Results</span>
           </h1>
           {query ? (
             <p className="rt-page-hero-sub max-w-[620px] mb-8 leading-relaxed text-[1.05rem]">
-              Displaying matches for <span className="font-bold text-white italic">&quot;{query}&quot;</span>.
+              Displaying matches for{" "}
+              <span className="font-bold text-white italic">
+                &quot;{query}&quot;
+              </span>
+              .
             </p>
           ) : (
             <p className="rt-page-hero-sub max-w-[620px] mb-8 leading-relaxed text-[1.05rem]">
-              Search products, shipping guidance, pricing, payment terms, and blog insights.
+              Search products, shipping guidance, pricing, payment terms, and
+              blog insights.
             </p>
           )}
 
-          <form action="/search" method="get" role="search" className="rt-page-search-form">
+          <form
+            action="/search"
+            method="get"
+            role="search"
+            className="rt-page-search-form"
+          >
+            {locale !== "en" ? (
+              <input type="hidden" name="lang" value={locale} />
+            ) : null}
             <label htmlFor="page-search">Search the site</label>
             <div>
-              <input id="page-search" name="q" type="search" defaultValue={query} key={query} maxLength={120} placeholder="Try clothes, shipping, or MOQ…" />
+              <input
+                id="page-search"
+                name="q"
+                type="search"
+                defaultValue={query}
+                key={query}
+                maxLength={120}
+                placeholder="Try clothes, shipping, or MOQ…"
+              />
               <button type="submit">Search</button>
             </div>
           </form>
@@ -92,7 +132,7 @@ function SearchHero({
               {suggestedTerms.map((term) => (
                 <Link
                   key={term}
-                  href={`/search?q=${encodeURIComponent(term)}`}
+                  href={searchHref(term, locale)}
                   className="bg-white/10 border border-white/25 text-white px-4 py-2.5 rounded-[2px] font-montserrat font-bold text-[0.7rem] uppercase tracking-wider hover:bg-white/20 transition-all"
                 >
                   {term}
@@ -109,9 +149,11 @@ function SearchHero({
 function ResultGroup({
   title,
   results,
+  locale,
 }: {
   title: string;
   results: SearchResult[];
+  locale: Locale;
 }) {
   if (!results.length) return null;
 
@@ -133,7 +175,7 @@ function ResultGroup({
         {results.map((result) => (
           <Link
             key={result.id}
-            href={result.href}
+            href={localePath(result.href, locale)}
             className="group block rounded-[8px] border border-gray-100 bg-white px-6 py-5 transition-all hover:border-brand-red/10 hover:shadow-[0_10px_30px_rgba(0,0,0,0.04)]"
           >
             <div className="mb-3 flex items-center gap-3">
@@ -147,7 +189,9 @@ function ResultGroup({
                 <h3 className="mb-2 font-montserrat text-[1.1rem] font-extrabold text-brand-dark transition-colors group-hover:text-brand-red">
                   {result.title}
                 </h3>
-                <p className="line-clamp-2 text-sm leading-relaxed text-gray-500">{result.description}</p>
+                <p className="line-clamp-2 text-sm leading-relaxed text-gray-500">
+                  {result.description}
+                </p>
               </div>
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gray-100 text-gray-300 transition-all group-hover:border-brand-red/20 group-hover:text-brand-red">
                 <ArrowRight size={18} strokeWidth={2.5} />
@@ -163,10 +207,11 @@ function ResultGroup({
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string | string[] }>;
+  searchParams: Promise<{ q?: string | string[]; lang?: string | string[] }>;
 }) {
-  const { q = "" } = await searchParams;
-  const query = (Array.isArray(q) ? q[0] ?? "" : q).trim().slice(0, 120);
+  const { q = "", lang } = await searchParams;
+  const locale = typeof lang === "string" && isLocale(lang) ? lang : "en";
+  const query = (Array.isArray(q) ? (q[0] ?? "") : q).trim().slice(0, 120);
   const posts = query ? await getAllBlogPosts().catch(() => null) : [];
   const results = query ? searchAllContent(query, posts ?? []) : [];
   const grouped = splitResults(results);
@@ -175,9 +220,16 @@ export default async function SearchPage({
 
   return (
     <div className="rt-search-page bg-[#f7f3ea]">
-      <SearchHero query={query} showSuggestedTerms={!hasQuery || hasResults} />
+      <SearchHero
+        locale={locale}
+        query={query}
+        showSuggestedTerms={!hasQuery || hasResults}
+      />
       {posts === null ? (
-        <p className="rt-container py-4" role="status">Blog search is temporarily unavailable. Product and ordering results are still available.</p>
+        <p className="rt-container py-4" role="status">
+          Blog search is temporarily unavailable. Product and ordering results
+          are still available.
+        </p>
       ) : null}
 
       {hasQuery && hasResults ? (
@@ -220,7 +272,7 @@ export default async function SearchPage({
                   {popularSearches.map((term) => (
                     <Link
                       key={term}
-                      href={`/search?q=${encodeURIComponent(term)}`}
+                      href={searchHref(term, locale)}
                       className="rounded-[3px] border border-[#e0e0e0] bg-[#F5F5F0] px-4 py-2 text-[0.78rem] font-montserrat font-semibold text-[#333] transition-colors hover:border-brand-red/20 hover:text-brand-red"
                     >
                       {term}
@@ -237,12 +289,13 @@ export default async function SearchPage({
                   Send Your Requirements
                 </h2>
                 <p className="mb-6 text-[0.9rem] leading-[1.8] text-white/70">
-                  If you already know what you need, contact our sales team directly for price lists,
-                  shipping estimates, and recommended product categories.
+                  If you already know what you need, contact our sales team
+                  directly for price lists, shipping estimates, and recommended
+                  product categories.
                 </p>
                 <div className="flex flex-col gap-3">
                   <Link
-                    href="/#contact"
+                    href={localePath("/#contact", locale)}
                     className="inline-flex items-center justify-center gap-2 rounded-[3px] bg-brand-gold px-5 py-3 text-[0.82rem] font-montserrat font-bold uppercase tracking-[0.08em] text-brand-dark transition-colors hover:bg-brand-gold-dark"
                   >
                     Send Inquiry
@@ -263,9 +316,21 @@ export default async function SearchPage({
           ) : hasResults ? (
             <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_320px]">
               <div className="grid gap-6">
-                <ResultGroup title="Products" results={grouped.products} />
-                <ResultGroup title="FAQ & Pages" results={grouped.support} />
-                <ResultGroup title="Blog" results={grouped.blog} />
+                <ResultGroup
+                  title="Products"
+                  locale={locale}
+                  results={grouped.products}
+                />
+                <ResultGroup
+                  title="FAQ & Pages"
+                  locale={locale}
+                  results={grouped.support}
+                />
+                <ResultGroup
+                  title="Blog"
+                  locale={locale}
+                  results={grouped.blog}
+                />
               </div>
 
               <aside className="space-y-6 lg:sticky lg:top-[88px]">
@@ -280,8 +345,8 @@ export default async function SearchPage({
                     {query}
                   </div>
                   <p className="mt-4 text-[0.8rem] leading-[1.7] text-[#666]">
-                    Results are filtered by exact term or close business synonym matches to keep the
-                    list relevant.
+                    Results are filtered by exact term or close business synonym
+                    matches to keep the list relevant.
                   </p>
                 </div>
 
@@ -293,12 +358,13 @@ export default async function SearchPage({
                     Ask Our Sales Team
                   </h2>
                   <p className="mb-5 text-[0.82rem] leading-[1.8] text-white/70">
-                    If you want a custom mix, current stock list, or a route-specific shipping quote,
-                    send us your request directly.
+                    If you want a custom mix, current stock list, or a
+                    route-specific shipping quote, send us your request
+                    directly.
                   </p>
                   <div className="flex flex-col gap-3">
                     <Link
-                      href="/#contact"
+                      href={localePath("/#contact", locale)}
                       className="inline-flex items-center justify-center gap-2 rounded-[3px] bg-brand-gold px-4 py-3 text-[0.78rem] font-montserrat font-bold uppercase tracking-[0.08em] text-brand-dark transition-colors hover:bg-brand-gold-dark"
                     >
                       Get Price List
@@ -328,14 +394,17 @@ export default async function SearchPage({
                   No exact match found
                 </h2>
                 <p className="mx-auto mb-7 max-w-xl text-[0.98rem] leading-relaxed text-gray-500 sm:text-[1rem]">
-                  We couldn&apos;t find an exact match for <span className="font-bold text-brand-dark">&quot;{query}&quot;</span>.
-                  Send your request directly and our team can recommend current stock, pricing, and
-                  shipping options.
+                  We couldn&apos;t find an exact match for{" "}
+                  <span className="font-bold text-brand-dark">
+                    &quot;{query}&quot;
+                  </span>
+                  . Send your request directly and our team can recommend
+                  current stock, pricing, and shipping options.
                 </p>
 
                 <div className="mb-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
                   <Link
-                    href="/#contact"
+                    href={localePath("/#contact", locale)}
                     className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-[3px] bg-brand-red px-7 py-3.5 text-[0.82rem] font-black uppercase tracking-[0.1em] text-white transition-all hover:bg-brand-red-dark hover:shadow-lg active:scale-[0.98]"
                   >
                     Send Inquiry
@@ -360,7 +429,7 @@ export default async function SearchPage({
                     {suggestedTerms.map((term) => (
                       <Link
                         key={term}
-                        href={`/search?q=${encodeURIComponent(term)}`}
+                        href={searchHref(term, locale)}
                         className="whitespace-nowrap rounded-[3px] border border-[#dfd2c2] bg-white px-3 py-2 text-[0.74rem] font-montserrat font-bold uppercase tracking-[0.08em] text-brand-dark transition-colors hover:border-brand-red/25 hover:text-brand-red sm:px-4"
                       >
                         {term}

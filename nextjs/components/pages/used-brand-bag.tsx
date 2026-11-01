@@ -276,7 +276,7 @@ export default function UsedBrandBagPage({
         <div className="min-w-0">
           {/* BRAND LIST */}
           <section className="mb-[3rem]">
-            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-l-4 border-[#C0392B] pl-[0.875rem] m-0 mb-[1.25rem]">
+            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-s-4 border-[#C0392B] ps-[0.875rem] m-0 mb-[1.25rem]">
               {t("Available Bag Brands")}
             </h2>
             <div className="flex flex-wrap gap-2 mb-6">
@@ -314,7 +314,7 @@ export default function UsedBrandBagPage({
 
           {/* PRODUCT SHOWCASE */}
           <section className="mb-[3rem]">
-            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-l-4 border-[#C0392B] pl-[0.875rem] m-0 mb-[1.25rem]">
+            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-s-4 border-[#C0392B] ps-[0.875rem] m-0 mb-[1.25rem]">
               {t("Product Categories")}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[1.25rem]">
@@ -402,7 +402,7 @@ export default function UsedBrandBagPage({
 
           {/* BAG INSPECTION & SORTING PROCESS */}
           <section className="mb-[3rem]">
-            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-l-4 border-[#C0392B] pl-[0.875rem] m-0 mb-6">
+            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-s-4 border-[#C0392B] ps-[0.875rem] m-0 mb-6">
               {t("Bag Inspection & Sorting Process")}
             </h2>
             <p className="text-[0.9375rem] text-[#555] leading-[1.75] mb-[1.75rem]">
@@ -546,7 +546,7 @@ export default function UsedBrandBagPage({
 
           {/* SPECS TABLE */}
           <section className="mb-[3rem]">
-            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-l-4 border-[#C0392B] pl-[0.875rem] m-0 mb-[1.25rem]">
+            <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-s-4 border-[#C0392B] ps-[0.875rem] m-0 mb-[1.25rem]">
               {t("Product Specifications")}
             </h2>
             <div className="rt-table-wrap overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">

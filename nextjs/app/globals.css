@@ -380,11 +380,11 @@ html[dir="rtl"] :is(h1,h2,h3,h4,h5,h6,.font-montserrat,.font-open-sans) { font-f
 html[dir="rtl"] :is(.text-left,.md\:text-left,.rt-hero-content,.rt-footer,.rt-contact-info,.rt-prose) { text-align: start; }
 html[dir="rtl"] :is(.rt-logo-combo-name,.rt-logo-combo-sub) { direction: ltr; }
 html[dir="rtl"] :is(input[type="email"],input[type="tel"],a[href^="tel:"],a[href^="mailto:"],.rt-hero-stat-value) { direction: ltr; unicode-bidi: isolate; }
-html[dir="rtl"] :is(.border-l-4,.border-l-\[3px\],.rt-prose ul) { border-left-width: 0; border-inline-start-width: 3px; }
 html[dir="rtl"] .rt-hamburger { margin-left: 0; margin-inline-start: auto; }
 html[dir="rtl"] .rt-floating-actions { right: auto; left: 1.5rem; }
 html[dir="rtl"] .rt-breadcrumb { direction: rtl; }
-html[dir="rtl"] .rt-topbar-ticker { direction: ltr; }
+/* Keep marquee motion stable while isolating each language’s text direction. */
+.rt-topbar-ticker-text { unicode-bidi: isolate; }
 html[dir="rtl"] .lucide-arrow-right { transform: scaleX(-1); }
 html[dir="rtl"] :is(.rt-footer-note,.rt-form-note) { border-left: 0; border-inline-start: 3px solid var(--color-brand-red); }
 

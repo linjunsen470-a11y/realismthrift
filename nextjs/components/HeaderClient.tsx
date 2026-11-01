@@ -7,7 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Menu, Search, X } from "lucide-react";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { SiteHeader as SiteHeaderType } from "@/types";
-import { localePath, type Locale } from "@/lib/i18n/routing";
+import { localePath, searchHref, type Locale } from "@/lib/i18n/routing";
 import { createTranslator, type Messages } from "@/lib/i18n/translate";
 
 interface HeaderClientProps {
@@ -38,7 +38,7 @@ export function HeaderClient({
 
     const formData = new FormData(event.currentTarget);
     const value = String(formData.get("q") ?? "").trim();
-    const target = value ? `/search?q=${encodeURIComponent(value)}` : "/search";
+    const target = searchHref(value, locale);
 
     startTransition(() => {
       router.push(target);
@@ -76,10 +76,15 @@ export function HeaderClient({
           <div className="rt-header-actions flex items-center gap-3">
             <LanguageSwitcher locale={locale} label={t("Language")} />
             <form
+              action="/search"
+              method="get"
               className="rt-search-form"
               role="search"
               onSubmit={handleSubmit}
             >
+              {locale !== "en" ? (
+                <input type="hidden" name="lang" value={locale} />
+              ) : null}
               <input
                 type="search"
                 name="q"
@@ -146,7 +151,7 @@ export function HeaderClient({
             className={`rt-nav-list${isMenuOpen ? " is-open" : ""}`}
           >
             <li className="rt-mobile-search-item">
-              <Link href={localePath("/search", locale)} onClick={closeMenu}>
+              <Link href={searchHref("", locale)} onClick={closeMenu}>
                 <Search size={16} aria-hidden="true" />
                 {t(" Search the Site")}
               </Link>

@@ -5,6 +5,7 @@ import { SiteFooter as SiteFooterType } from "@/types";
 import { FooterBackToTop } from "@/components/FooterBackToTop";
 import { localePath, type Locale } from "@/lib/i18n/routing";
 import { getTranslator } from "@/lib/i18n/server";
+import { TranslatedText } from "./TranslatedText";
 
 interface SiteFooterProps {
   locale?: Locale;
@@ -120,23 +121,35 @@ export function SiteFooter({ locale = "en", data }: SiteFooterProps) {
             </nav>
 
             <div className="rt-footer-note">
-              {locale !== "en"
-                ? data.contact.inquiryTime
-                : data.contact.inquiryTime.split(". ").map((text, idx) => (
-                    <div key={idx}>
-                      {text.includes("12 hours") ? (
-                        <>
-                          {t("We aim to reply within ")}
-                          <span className="rt-footer-note-gold">
-                            {t("12 hours")}
-                          </span>
-                          .
-                        </>
-                      ) : (
-                        text
-                      )}
-                    </div>
-                  ))}
+              {locale !== "en" ? (
+                <TranslatedText
+                  locale={locale}
+                  text="We aim to reply within {time}. Urgent? Contact via WhatsApp."
+                  values={{
+                    time: (
+                      <span className="rt-footer-note-gold">
+                        {t("12 hours")}
+                      </span>
+                    ),
+                  }}
+                />
+              ) : (
+                data.contact.inquiryTime.split(". ").map((text, idx) => (
+                  <div key={idx}>
+                    {text.includes("12 hours") ? (
+                      <>
+                        {t("We aim to reply within ")}
+                        <span className="rt-footer-note-gold">
+                          {t("12 hours")}
+                        </span>
+                        .
+                      </>
+                    ) : (
+                      text
+                    )}
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
