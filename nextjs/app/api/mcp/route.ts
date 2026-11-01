@@ -9,6 +9,8 @@ import { getPendingColdEmailInbound, recordColdEmailInbound } from "@/lib/outrea
 import { getColdEmailServiceStatus } from "@/lib/outreach/readiness";
 import { importExistingGmailDraft, listExistingColdEmailDrafts } from "@/lib/outreach/existing-drafts";
 
+import { inspectOutreachDraftMaintenance, repairOutreachDraft } from "@/lib/outreach/maintenance";
+
 export const runtime = "nodejs";
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
@@ -35,6 +37,15 @@ const handler = createMcpHandler(server => {
     inputSchema: z.object({ contact_id: z.uuid(), draft_id: z.string().regex(/^[A-Za-z0-9_-]{1,200}$/), fingerprint: z.string().regex(/^[a-f0-9]{64}$/), add_unsubscribe_footer: z.boolean().default(false) }),
     annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: true, idempotentHint: true },
   }, ({ contact_id, draft_id, fingerprint, add_unsubscribe_footer }) => toolResult(() => importExistingGmailDraft(contact_id, draft_id, fingerprint, add_unsubscribe_footer)));
+  server.registerTool("inspect_outreach_draft_maintenance", {
+    description: "Inspect an existing draft for repair, including actual Gmail message ID, MIME/body fingerprints, source and unsubscribe-header verification. Works on backend HOLD/cancelled drafts without restoring permission. No changes or sends.",
+    inputSchema, annotations: { readOnlyHint: true, openWorldHint: true },
+  }, ({ outreach_id }) => toolResult(() => inspectOutreachDraftMaintenance(outreach_id)));
+  server.registerTool("repair_outreach_draft", {
+    description: "Authorized maintenance only: pin recipient, Outreach ID, Draft ID, actual Message ID, fingerprint and current source. Add existing one-click headers on the same draft and correct source; preserve all other headers, body bytes and preferences. Places a durable backend HOLD (cancelled), never releases it or sends. On uncertain update, inspect before any retry.",
+    inputSchema: z.object({ outreach_id: z.uuid(), email: z.email().max(254), draft_id: z.string().regex(/^[A-Za-z0-9_-]{1,200}$/), message_id: z.string().regex(/^[A-Za-z0-9_-]{1,200}$/), fingerprint: z.string().regex(/^[a-f0-9]{64}$/), expected_source: z.string().min(1).max(1000), corrected_source: z.string().trim().min(1).max(1000) }),
+    annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: true, idempotentHint: false },
+  }, input => toolResult(() => repairOutreachDraft(input)));
   server.registerTool("lookup_cold_email_contact", {
     description: "Read one exact contact's source, suppression, reply-pause state and cold_email_allowed. Use get_cold_email_history for correspondence.",
     inputSchema: z.object({ email: z.email().max(254) }),

@@ -2,7 +2,7 @@
 
 Private, single-operator MCP at `https://www.realismthrift.com/api/mcp`, sending
 from `jason@realismthriftglobal.com`. Use the existing Supabase OAuth client and
-Gmail connection. The twelve MCP tools cover contact lookup/import, history,
+Gmail connection. The fourteen MCP tools cover contact lookup/import, history,
 incoming-message processing, new drafts, existing-draft linking, review, sending,
 reconciliation and service diagnosis. Daily agent instructions live in
 `../../plugins/realismthrift-cold-email-app/skills/cold-email/SKILL.md`; both
@@ -91,3 +91,34 @@ Release the existing server and plugin IDs, preserving audience and OAuth
 bindings. Refresh/rescan the existing cloud App after tool-definition changes;
 a plugin package update alone does not refresh a conversation's tool directory.
 Never create another App to work around stale discovery.
+
+## Draft repair (server 1.7.0)
+
+New drafts include both unsubscribe headers and escaped HTML product keyword
+bolding before Gmail creation; the service reads saved MIME before returning
+success. Failed save verification returns the known Draft/Outreach IDs and puts
+the record on backend HOLD rather than asking the caller to recreate it.
+
+1. `inspect_outreach_draft_maintenance({outreach_id})` reads actual Gmail MIME,
+   message ID, body/MIME SHA-256, contact source and suppression, including drafts
+   whose gateway state is cancelled. It does not restore sending permission.
+2. Call `repair_outreach_draft` with the inspected Outreach ID, exact normalized
+   email, Draft ID, Message ID, fingerprint, expected_source and corrected_source.
+   Preserve external manual HOLD. This call claims a durable backend HOLD using
+   the existing `cancelled` state, then rechecks identity/state and raw bytes.
+3. The service PUTs raw MIME to the same Gmail Draft ID, adding the existing
+   `/api/email-preferences/one-click` headers without rendering or changing body
+   bytes, attachments, subject or sender. Gmail may prepend Received headers.
+   It reads saved MIME, checks content/headers, then CAS-updates source metadata
+   and fingerprints with an audit event. Preferences and blocks are never written.
+4. Inspect/read back the first repaired item and contact before continuing the
+   other items. Record the new Message ID and fingerprint in the existing queue.
+   Neither success nor retry releases HOLD. No send endpoint is called.
+
+A stale identity, source, fingerprint, status or update timestamp stops repair.
+Gmail does not expose conditional draft PUT; the final prewrite read narrows but
+cannot eliminate the external edit window. An ambiguous PUT stops with
+`draft_update_uncertain_inspect_before_retry`, leaving HOLD in place. Inspect
+before deciding whether any retry is needed. Never retry old pinned values.
+Registration reports conflicting existing source instead of pretending to fix it.
+This change requires no database migration or new secrets.

@@ -14,7 +14,8 @@ export function splitMime(raw: Buffer) {
   return { fields, body: raw.subarray(separator + 4) };
 }
 
-export async function reviewMime(raw: Buffer, recipient: string, footer: string | null) {
+export async function reviewMime(raw: Buffer, recipient: string, footer: string | null, headers?: { outreachId: string; token: string }) {
+  if (headers) assertOutreachHeaders(raw, headers.outreachId, headers.token);
   const { fields } = splitMime(raw);
   const names = fields.map(field => field.split(":", 1)[0].toLowerCase());
   for (const field of ["from", "to", "subject", "reply-to", "mime-version", "content-type"]) {
@@ -68,4 +69,19 @@ export async function addOutreachHeaders(raw: Buffer, messageId: string, token: 
   });
   const result = await transporter.sendMail({ raw: modified });
   return result.message as Buffer;
+}
+
+// Validate the actual stored top-level fields, including duplicates and folded lines.
+export function assertOutreachHeaders(raw: Buffer, outreachId: string, token: string) {
+  const expected = {
+    "list-unsubscribe": `<${outreachOrigin()}/api/email-preferences/one-click?token=${token}&m=${outreachId}>`,
+    "list-unsubscribe-post": "List-Unsubscribe=One-Click",
+    "x-realismthrift-outreach-id": outreachId,
+  };
+  const { fields } = splitMime(raw);
+  for (const [name, value] of Object.entries(expected)) {
+    const values = fields.filter(field => field.slice(0, field.indexOf(":")).toLowerCase() === name)
+      .map(field => field.slice(field.indexOf(":") + 1).replace(/\r\n[ \t]+/g, " ").trim());
+    if (values.length !== 1 || values[0] !== value) throw new OutreachError("outreach_headers_missing_or_changed", 409);
+  }
 }

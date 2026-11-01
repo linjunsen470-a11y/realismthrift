@@ -39,7 +39,7 @@ async function loadSendableDraft(record: SendRecord) {
   const draft = await gmailRequest<{ id: string; message: GmailMessage }>(`drafts/${encodeURIComponent(record.draft_id)}?format=raw`);
   if (!draft.message.raw) throw new OutreachError("invalid_mime", 400);
   const raw = Buffer.from(draft.message.raw, "base64url");
-  const review = await reviewMime(raw, record.email, unsubscribeFooter(record.unsubscribe_token));
+  const review = await reviewMime(raw, record.email, unsubscribeFooter(record.unsubscribe_token), { outreachId: record.id, token: record.unsubscribe_token });
   await checkInbound(record, draft.message.threadId);
   return { raw, review, threadId: draft.message.threadId };
 }
