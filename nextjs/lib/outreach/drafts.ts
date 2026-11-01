@@ -6,6 +6,7 @@ import { gmailRequest, verifyGmailAccount, type GmailMessage } from "./gmail";
 import { renderColdEmail } from "./template";
 import { normalizeEmail } from "./tokens";
 import { coldEmailAllowed } from "./eligibility";
+import { addOutreachHeaders, reviewMime, unsubscribeFooter } from "./mime";
 import { sendingConfiguration } from "./readiness";
 
 export async function lookupColdEmailContact(email: string) {
@@ -19,6 +20,10 @@ export async function lookupColdEmailContact(email: string) {
 export async function registerColdEmailContact(email: string, source?: string, company?: string, country?: string) {
   const normalized = normalizeEmail(email);
   if (!normalized) throw new OutreachError("invalid_request", 400);
+  if (source) {
+    const existing = await outreachDatabase().execute<{ source: string }>(sql`select source from outreach_contacts where email=${normalized}`);
+    if (existing.rows[0] && existing.rows[0].source !== source.trim()) throw new OutreachError("contact_source_conflict", 409, { email: normalized, stored_source: existing.rows[0].source, next_step: "Keep the queue HOLD. Use inspected, identity-pinned maintenance to correct source; registration never overwrites it." });
+  }
   // Import never clears an existing unsubscribe, block or reply pause.
   await outreachDatabase().execute(sql`select outreach_import_contact(${normalized},${source?.trim() || "Operator-provided cold outreach recipient"},${company || null},${country || null})`);
   return lookupColdEmailContact(normalized);
@@ -29,7 +34,7 @@ export async function createColdEmailDraft(contactId: string, subject: string, p
   // Validate content before creating a DB record or contacting Gmail.
   renderColdEmail(paragraphs, "A".repeat(43));
   const database = outreachDatabase();
-  const contact = await database.execute<{ email: string; marketing_status: string; safety_block: string | null; conversation_paused: boolean }>(sql`select email,marketing_status,safety_block,conversation_paused from outreach_contacts where id=${contactId}::uuid`);
+  const contact = await database.execute<{ email: string; source: string; marketing_status: string; safety_block: string | null; conversation_paused: boolean }>(sql`select email,source,marketing_status,safety_block,conversation_paused from outreach_contacts where id=${contactId}::uuid`);
   const c = contact.rows[0];
   if (!c || !coldEmailAllowed(c)) throw new OutreachError("marketing_not_eligible", 409);
   await verifyGmailAccount();
@@ -38,8 +43,20 @@ export async function createColdEmailDraft(contactId: string, subject: string, p
   const content = renderColdEmail(paragraphs, record.unsubscribe_token);
   const transport = nodemailer.createTransport({ streamTransport: true, buffer: true, newline: "windows" });
   const mail = await transport.sendMail({ from: { name: "Jason | RealismThrift", address: OUTREACH_SENDER }, to: record.email, replyTo: OUTREACH_SENDER, subject: subject.trim(), ...content });
-  const draft = await gmailRequest<{ id: string; message: GmailMessage }>("drafts", { message: { raw: (mail.message as Buffer).toString("base64url") } });
-  const attached = await database.execute<{ ok: boolean }>(sql`select outreach_attach_draft(${record.outreach_id}::uuid,${draft.id}) as ok`);
-  if (!attached.rows[0]?.ok) throw new OutreachError("draft_registration_failed", 409);
-  return { outreach_id: record.outreach_id, draft_id: draft.id, status: "draft", to: record.email, subject: subject.trim(), ...content, next_step: "Draft saved; no email has been sent. When sending is authorized, call send_approved_outreach with this outreach_id. No separate review or queue approval is required." };
+  const raw = await addOutreachHeaders(mail.message as Buffer, record.outreach_id, record.unsubscribe_token);
+  const headers = { outreachId: record.outreach_id, token: record.unsubscribe_token };
+  await reviewMime(raw, record.email, unsubscribeFooter(record.unsubscribe_token), headers);
+  const draft = await gmailRequest<{ id: string; message: GmailMessage }>("drafts", { message: { raw: raw.toString("base64url") } });
+  try {
+    const attached = await database.execute<{ ok: boolean }>(sql`select outreach_attach_draft(${record.outreach_id}::uuid,${draft.id}) as ok`);
+    if (!attached.rows[0]?.ok) throw new OutreachError("draft_registration_failed", 409);
+    const saved = await gmailRequest<{ message: GmailMessage }>(`drafts/${encodeURIComponent(draft.id)}?format=raw`);
+    if (!saved.message.raw || !saved.message.labelIds?.includes("DRAFT")) throw new OutreachError("draft_save_unverified_do_not_retry", 409, { draft_id: draft.id, outreach_id: record.outreach_id });
+    const review = await reviewMime(Buffer.from(saved.message.raw, "base64url"), record.email, unsubscribeFooter(record.unsubscribe_token), headers);
+    await database.execute(sql`update outreach_messages set fingerprint=${review.fingerprint},gmail_message_id=${saved.message.id},gmail_thread_id=${saved.message.threadId},updated_at=now() where id=${record.outreach_id}::uuid and status='draft' and draft_id=${draft.id}`);
+    return { contact_id: contactId, source: c.source, message_id: saved.message.id, fingerprint: review.fingerprint, unsubscribe_headers_verified: true, outreach_id: record.outreach_id, draft_id: draft.id, status: "draft", to: record.email, subject: subject.trim(), ...content, next_step: "Draft saved; no email has been sent. When sending is authorized, call send_approved_outreach with this outreach_id. No separate review or queue approval is required." };
+  } catch (error) {
+    try { await database.execute(sql`update outreach_messages set draft_id=coalesce(draft_id,${draft.id}),status='cancelled',updated_at=now() where id=${record.outreach_id}::uuid and status='draft'`); } catch { /* Return the known Gmail ID even if bookkeeping is unavailable. */ }
+    throw new OutreachError("draft_save_unverified_do_not_retry", 409, { draft_id: draft.id, outreach_id: record.outreach_id, hold: true, cause: error instanceof OutreachError ? error.code : "service_unavailable" });
+  }
 }

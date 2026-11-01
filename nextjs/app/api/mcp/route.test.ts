@@ -15,7 +15,7 @@ async function rpc(method: string, params: unknown, authorized = true) {
 }
 
 describe("cold email MCP discovery", () => {
-  it("advertises all twelve tools through the actual HTTP handler with their input contracts", async () => {
+  it("advertises all maintenance and outreach tools through the actual HTTP handler with their input contracts", async () => {
     const response = await rpc("tools/list", {});
     expect(response.status).toBe(200);
     const body = await response.text();
@@ -26,6 +26,7 @@ describe("cold email MCP discovery", () => {
       "get_pending_cold_email_inbound", "record_cold_email_inbound", "create_cold_email_draft",
       "review_outreach_draft", "send_approved_outreach", "reconcile_outreach_send",
       "get_cold_email_service_status", "list_existing_cold_email_drafts", "import_existing_gmail_draft",
+      "inspect_outreach_draft_maintenance", "repair_outreach_draft",
     ].sort());
     expect(tools.find(tool => tool.name === "record_cold_email_inbound")).toMatchObject({
       inputSchema: { required: ["contact_id", "gmail_message_id", "classification", "note"] }, annotations: { readOnlyHint: false },

@@ -9,7 +9,7 @@ vi.mock("./database", () => ({ outreachDatabase: () => ({ execute: mocks.execute
 vi.mock("./gmail", () => ({ ...mocks, gmailHeader: (message: { payload?: { headers?: { name: string; value: string }[] } }, name: string) => message.payload?.headers?.find(header => header.name.toLowerCase() === name.toLowerCase())?.value, GmailError: class extends Error { httpStatus = 403; } }));
 
 const token = newPreferenceToken();
-const raw = Buffer.from(`From: jason@realismthriftglobal.com\r\nTo: buyer@example.com\r\nSubject: Wholesale clothes\r\nContent-Type: text/plain\r\n\r\nHello\r\n${unsubscribeFooter(token)}\r\n`);
+const raw = Buffer.from(`From: jason@realismthriftglobal.com\r\nTo: buyer@example.com\r\nSubject: Wholesale clothes\r\nX-RealismThrift-Outreach-ID: d6e07dc9-cb5a-4cb6-a9b7-e950a4d552d5\r\nList-Unsubscribe: <https://www.realismthrift.com/api/email-preferences/one-click?token=${token}&m=d6e07dc9-cb5a-4cb6-a9b7-e950a4d552d5>\r\nList-Unsubscribe-Post: List-Unsubscribe=One-Click\r\nContent-Type: text/plain\r\n\r\nHello\r\n${unsubscribeFooter(token)}\r\n`);
 const id = "d6e07dc9-cb5a-4cb6-a9b7-e950a4d552d5";
 let status: string;
 let version: number;
@@ -80,6 +80,11 @@ describe("authorized draft sending", () => {
     const query = mocks.execute.mock.calls.map(call => dialect.sqlToQuery(call[0])).find(query => query.sql.includes("outreach_claim_send"));
     expect(query?.params).toContain(mimeFingerprint(raw));
     expect(mocks.gmailRequest.mock.calls.filter(call => call[0] === "drafts/send")).toHaveLength(1);
+  });
+  it("refuses a saved legacy draft lacking the required unsubscribe headers", async () => {
+    mocks.gmailRequest.mockImplementation(async () => ({ message: { threadId: "thread", raw: Buffer.from(raw.toString().replace(/^List-Unsubscribe(?:-Post)?:.*\r\n/gmi, "")).toString("base64url") } }));
+    await expect(sendApprovedOutreach(id)).rejects.toMatchObject({ code: "outreach_headers_missing_or_changed" });
+    expect(mocks.gmailRequest.mock.calls.some(call => call[0] === "drafts/send")).toBe(false);
   });
   it("stops a direct send if the saved content changes during the operation", async () => {
     let draftReads = 0;
