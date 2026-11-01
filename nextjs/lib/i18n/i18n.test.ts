@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { QualityStandards } from "@/components/product/QualityStandards";
+import { TranslatedText } from "@/components/TranslatedText";
+import PrivacyPolicyPage from "@/components/pages/privacy-policy";
 import { createTranslator } from "./translate";
 import {
   languageAlternates,
@@ -86,6 +88,78 @@ describe("published language URLs", () => {
 });
 
 describe("translation integrity and server/client boundaries", () => {
+  it("preserves brand and service identifiers in every translation, including SEO copy", () => {
+    const identifiers = [
+      "RealismThrift",
+      "Coach",
+      "MK",
+      "Michael Kors",
+      "Kate Spade",
+      "Champion",
+      "Mango",
+      "North Face",
+      "Under Armour",
+      "Gap",
+      "Nike",
+      "Herschel",
+      "JanSport",
+      "NF",
+      "Western Union",
+      "Samsonite",
+      "Tumi",
+      "Vera Bradley",
+      "Calvin Klein",
+      "DKNY",
+      "Longchamp",
+      "Tory Burch",
+      "Ukay",
+    ];
+    for (const messages of [es, fr, ar, vi]) {
+      for (const [key, value] of Object.entries(messages)) {
+        for (const name of identifiers) {
+          const pattern = new RegExp(`\\b${name}\\b`, "i");
+          if (pattern.test(key)) expect(value, key).toMatch(pattern);
+        }
+      }
+      expect(messages.Leo).toBe("Leo");
+      expect(messages["FOB Guangzhou"]).toBe("FOB Guangzhou");
+    }
+    expect(sourceKeys).not.toContain("sales@realismthrift.com");
+    expect(sourceKeys).not.toContain("privacy@realismthrift.com");
+  });
+  it("renders complete translated sentences with safe emphasis and unchanged privacy identifiers", () => {
+    const text = "Our sales team aims to reply within {time}.";
+    const markup = renderToStaticMarkup(
+      createElement(TranslatedText, {
+        locale: "ar",
+        text,
+        values: { time: createElement("strong", null, "12 ساعة") },
+      }),
+    );
+    expect(markup).toContain("خلال <strong>12 ساعة</strong>");
+    const escaped = renderToStaticMarkup(
+      createElement(TranslatedText, {
+        locale: "en",
+        text: "{value}",
+        values: { value: "<script>alert(1)</script>" },
+      }),
+    );
+    expect(escaped).not.toContain("<script>");
+    for (const locale of locales) {
+      const policy = renderToStaticMarkup(PrivacyPolicyPage({ locale }));
+      expect(policy).toContain(
+        'href="mailto:privacy@realismthrift.com">privacy@realismthrift.com</a>',
+      );
+      expect(
+        policy.match(/<code dir="ltr">_(?:fbp|fbc)<\/code>/g),
+      ).toHaveLength(4);
+      expect(policy).toContain("Lead");
+      expect(policy).toContain("SHA-256");
+      expect(policy).not.toMatch(
+        /\{(?:browserId|clickId|clickCookie|browserCookie|policy|email)\}/,
+      );
+    }
+  });
   it("uses the owner-confirmed address in every language while retaining canonical postal and navigation facts", () => {
     expect(companyAddress).toBe(
       "RealismThrift (Baisha Alley Weilitang), County Road 193, Yuanzhou Town, Boluo County, Huizhou City, Guangdong Province, China",

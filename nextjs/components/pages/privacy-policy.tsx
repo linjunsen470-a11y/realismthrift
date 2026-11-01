@@ -1,3 +1,4 @@
+import { TranslatedText } from "@/components/TranslatedText";
 import { createPageMetadata } from "@/lib/metadata";
 import "@/app/internal-pages.css";
 import Link from "next/link";
@@ -193,44 +194,44 @@ export default function PrivacyPolicyPage({
                   )}
                 </p>
                 <p>
-                  {t(
-                    'We use the Meta Pixel to measure advertising and conversions. On public pages it records a PageView. When an inquiry form is submitted successfully, the browser records a Lead event with the product category you selected, or "not specified" if you left that field blank. Our server then sends the same Lead to Meta through the Conversions API, using one shared event id so Meta can deduplicate the browser and server events. The browser Pixel does not receive your inquiry contact details. After an inquiry is successfully saved, our server normalizes your email address and sends its SHA-256 hash to Meta through the Conversions API to help match the Lead to a Meta account. If your WhatsApp number includes an explicit international prefix and passes number validation, our server also sends its SHA-256 hash for matching. Numbers without a reliable country code or with an invalid format are omitted from phone matching; your inquiry is still saved. We do not send your plaintext email address, plaintext phone or WhatsApp number, name, company, country, or message to Meta. The server event may include technical information such as IP address, browser type, and page address. When available, the server also forwards the existing ',
-                  )}
-                  <code>{t("_fbp")}</code>
-                  {t(" browser identifier and ")}
-                  <code>{t("_fbc")}</code>
-                  {t(
-                    " advertising click identifier to help match events. When a landing URL contains a real Meta advertising click identifier (fbclid), we save it in the first-party ",
-                  )}
-                  <code>{t("_fbc")}</code>
-                  {t(
-                    " cookie for up to 90 days so it remains available if you visit another page before submitting an inquiry. We preserve its original capture time for the same click and update it for a new advertising click. Visits without a click identifier do not create one. Meta may also receive technical information from the browser pixel, such as the ",
-                  )}
-                  <code>{t("_fbp")}</code>
-                  {t(
-                    " cookie, and may use that information to measure and optimize ads under ",
-                  )}
-                  <a
-                    href="https://www.facebook.com/privacy/policy/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {t("Meta's privacy policy")}
-                  </a>
-                  {t(
-                    ". Email preference pages and private operator pages do not load Google Analytics or the Meta Pixel.",
-                  )}
+                  <TranslatedText
+                    locale={locale}
+                    text={
+                      'We use the Meta Pixel to measure advertising and conversions. On public pages it records a PageView. When an inquiry form is submitted successfully, the browser records a Lead event with the product category you selected, or "not specified" if you left that field blank. Our server then sends the same Lead to Meta through the Conversions API, using one shared event id so Meta can deduplicate the browser and server events. The browser Pixel does not receive your inquiry contact details. After an inquiry is successfully saved, our server normalizes your email address and sends its SHA-256 hash to Meta through the Conversions API to help match the Lead to a Meta account. If your WhatsApp number includes an explicit international prefix and passes number validation, our server also sends its SHA-256 hash for matching. Numbers without a reliable country code or with an invalid format are omitted from phone matching; your inquiry is still saved. We do not send your plaintext email address, plaintext phone or WhatsApp number, name, company, country, or message to Meta. The server event may include technical information such as IP address, browser type, and page address. When available, the server also forwards the existing {browserId} browser identifier and {clickId} advertising click identifier to help match events. When a landing URL contains a real Meta advertising click identifier (fbclid), we save it in the first-party {clickCookie} cookie for up to 90 days so it remains available if you visit another page before submitting an inquiry. We preserve its original capture time for the same click and update it for a new advertising click. Visits without a click identifier do not create one. Meta may also receive technical information from the browser pixel, such as the {browserCookie} cookie, and may use that information to measure and optimize ads under {policy}. Email preference pages and private operator pages do not load Google Analytics or the Meta Pixel.'
+                    }
+                    values={{
+                      browserId: <code dir="ltr">_fbp</code>,
+                      clickId: <code dir="ltr">_fbc</code>,
+                      clickCookie: <code dir="ltr">_fbc</code>,
+                      browserCookie: <code dir="ltr">_fbp</code>,
+                      policy: (
+                        <a
+                          href="https://www.facebook.com/privacy/policy/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {t("Meta's privacy policy")}
+                        </a>
+                      ),
+                    }}
+                  />
                 </p>
 
                 <h2>{t("6. Your Rights")}</h2>
                 <p>
-                  {t(
-                    "You have the right to access, correct, or delete your personal data, including information submitted through our inquiry form. If you wish to exercise these rights, please contact us at ",
-                  )}
-                  <a href="mailto:privacy@realismthrift.com">
-                    {t("privacy@realismthrift.com")}
-                  </a>
-                  .
+                  <TranslatedText
+                    locale={locale}
+                    text={
+                      "You have the right to access, correct, or delete your personal data, including information submitted through our inquiry form. If you wish to exercise these rights, please contact us at {email}."
+                    }
+                    values={{
+                      email: (
+                        <a href="mailto:privacy@realismthrift.com">
+                          privacy@realismthrift.com
+                        </a>
+                      ),
+                    }}
+                  />
                 </p>
                 <p>
                   {t(

@@ -1,3 +1,4 @@
+import { TranslatedText } from "@/components/TranslatedText";
 import { createPageMetadata } from "@/lib/metadata";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,6 +28,7 @@ import {
   productsData as englishProductsData,
   companyStats as englishCompanyStats,
   companyAddress,
+  siteFooter as englishSiteFooter,
 } from "@/data/siteData";
 import { InquiryForm } from "@/components/InquiryForm";
 import { getLatestBlogPosts } from "@/lib/blog";
@@ -703,8 +705,11 @@ export default async function Home({
                   <span>
                     <strong>{t("Sales Support")}</strong>
                     <br />
-                    {t("Our sales team aims to reply within ")}
-                    <strong>{t("12 hours")}</strong>.
+                    <TranslatedText
+                      locale={locale}
+                      text="Our sales team aims to reply within {time}."
+                      values={{ time: <strong>{t("12 hours")}</strong> }}
+                    />
                   </span>
                 </p>
               </div>
@@ -726,23 +731,28 @@ export default async function Home({
           <div className="rt-seo-copy-inner">
             <h2>{t("About Dongguan Huihe Realismthrift Trading Co., Ltd.")}</h2>
             <p>
-              {t("Dongguan Huihe Realismthrift Trading Co., Ltd. is a")}{" "}
-              <strong>{t("second hand clothes wholesale supplier")}</strong>{" "}
-              {t(
-                "based in Huizhou, China. We specialize in exporting sorted used clothes, used shoes, and used bags to wholesalers and importers worldwide. With experience since 2012 in the",
-              )}{" "}
-              <strong>{t("used clothing export")}</strong>{" "}
-              {t(
-                "industry, we have built strong relationships with buyers in {v0} countries across Africa, Southeast Asia, the Middle East, and the Americas.",
-                { v0: companyStats.countriesCount },
-              )}
+              <TranslatedText
+                locale={locale}
+                text={
+                  "Dongguan Huihe Realismthrift Trading Co., Ltd. is a {supplier} based in Huizhou, China. We specialize in exporting sorted used clothes, used shoes, and used bags to wholesalers and importers worldwide. With experience since 2012 in the {industry} industry, we have built strong relationships with buyers in {count} countries across Africa, Southeast Asia, the Middle East, and the Americas."
+                }
+                values={{
+                  supplier: (
+                    <strong>
+                      {t("second hand clothes wholesale supplier")}
+                    </strong>
+                  ),
+                  industry: <strong>{t("used clothing export")}</strong>,
+                  count: companyStats.countriesCount,
+                }}
+              />
             </p>
             <p>
               {t(
                 "Contact us today to get our latest wholesale price list and start your profitable second-hand clothing business. Email:",
               )}{" "}
               <a href="mailto:sales@realismthrift.com">
-                {t("sales@realismthrift.com")}
+                {englishSiteFooter.brand.email}
               </a>
             </p>
           </div>

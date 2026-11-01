@@ -231,7 +231,7 @@ export function InquiryForm({
             spellCheck={false}
             inputMode="email"
             required
-            placeholder={t("john@company.com")}
+            placeholder="john@company.com"
           />
         </div>
 

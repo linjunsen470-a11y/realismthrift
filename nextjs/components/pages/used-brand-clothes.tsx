@@ -1,3 +1,4 @@
+import { TranslatedText } from "@/components/TranslatedText";
 import { createPageMetadata } from "@/lib/metadata";
 import "@/app/internal-pages.css";
 import Image from "next/image";
@@ -311,25 +312,30 @@ export default function UsedBrandClothesPage({
               )}
             </p>
             <p className="font-open-sans text-[0.9375rem] text-[#555] leading-[1.8] m-0">
-              {t(
-                "We supply wholesale buyers, thrift store chains, market traders, and NGOs across Africa, Southeast Asia, the Middle East, Latin America, and Europe. To complement your clothing orders, we also supply wholesale ",
-              )}
-              <Link
-                href={localePath("/used-brand-shoes", locale)}
-                className="text-[#C0392B] font-bold hover:underline"
-              >
-                {t("Used Brand Shoes")}
-              </Link>
-              {t(" and ")}
-              <Link
-                href={localePath("/used-brand-bag", locale)}
-                className="text-[#C0392B] font-bold hover:underline"
-              >
-                {t("Used Brand Bags")}
-              </Link>
-              {t(
-                " directly from our specialized sorting lines. Whether you need a 100-bale trial order or a full 40HQ container, we coordinate sorting, packing, and export shipment planning.",
-              )}
+              <TranslatedText
+                locale={locale}
+                text={
+                  "We supply wholesale buyers, thrift store chains, market traders, and NGOs across Africa, Southeast Asia, the Middle East, Latin America, and Europe. To complement your clothing orders, we also supply wholesale {shoes} and {bags} directly from our specialized sorting lines. Whether you need a 100-bale trial order or a full 40HQ container, we coordinate sorting, packing, and export shipment planning."
+                }
+                values={{
+                  shoes: (
+                    <Link
+                      href={localePath("/used-brand-shoes", locale)}
+                      className="text-[#C0392B] font-bold hover:underline"
+                    >
+                      {t("Used Brand Shoes")}
+                    </Link>
+                  ),
+                  bags: (
+                    <Link
+                      href={localePath("/used-brand-bag", locale)}
+                      className="text-[#C0392B] font-bold hover:underline"
+                    >
+                      {t("Used Brand Bags")}
+                    </Link>
+                  ),
+                }}
+              />
             </p>
           </section>
 

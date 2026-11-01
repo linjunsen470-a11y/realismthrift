@@ -48,6 +48,14 @@ Include complete templates for dynamic image alt text and accessibility labels,
 not English sentences joined to translated product names. Shared components take
 display-ready title props; they translate their own default titles only.
 
+Keep email addresses, brand names, model names and trade abbreviations such as
+FOB as identifiers. Use `TranslatedText` for complete sentences containing links,
+emphasis or code; its named placeholders allow translators to move those elements
+without raw HTML or sentence fragments. Numeric placeholders represent actual
+counts or measurements, so review the surrounding grammar with their values.
+The existing English search index includes common product terms in all five
+languages and accepts accented and Arabic input; blog results remain English.
+
 ## Factory address
 
 The owner-confirmed English factory address and Chinese navigation address in

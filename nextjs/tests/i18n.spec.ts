@@ -271,3 +271,36 @@ test("confirmed factory and DiDi addresses are localized and retain copyable Eng
     await expect(page.locator("#contact")).toContainText(t(companyAddress));
   }
 });
+
+test("translated pages keep email labels and inline privacy identifiers intact", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  for (const locale of locales) {
+    await page.goto(localePath("/", locale), { waitUntil: "domcontentloaded" });
+    const emails = page.locator('a[href="mailto:sales@realismthrift.com"]');
+    await expect(emails.first()).toBeVisible();
+    for (const email of await emails.all()) {
+      if ((await email.textContent())?.includes("@"))
+        await expect(email).toHaveText("sales@realismthrift.com");
+    }
+    await expect(page.locator("body")).not.toContainText("realismothrift.com");
+    await page.goto(localePath("/privacy-policy", locale), {
+      waitUntil: "domcontentloaded",
+    });
+    await expect(
+      page.locator('a[href="mailto:privacy@realismthrift.com"]'),
+    ).toHaveText("privacy@realismthrift.com");
+    await expect(page.locator("main code")).toHaveText([
+      "_fbp",
+      "_fbc",
+      "_fbc",
+      "_fbp",
+    ]);
+    for (const code of await page.locator("main code").all())
+      await expect(code).toHaveAttribute("dir", "ltr");
+    await expect(page.locator("main")).not.toContainText(
+      /\{(?:browserId|clickId|clickCookie|browserCookie|policy|email)\}/,
+    );
+  }
+});

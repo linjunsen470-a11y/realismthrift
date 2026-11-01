@@ -1,3 +1,4 @@
+import { TranslatedText } from "@/components/TranslatedText";
 import { createPageMetadata } from "@/lib/metadata";
 import "@/app/internal-pages.css";
 import Image from "next/image";
@@ -405,25 +406,30 @@ export default function UsedBrandBagPage({
               {t("Bag Inspection & Sorting Process")}
             </h2>
             <p className="text-[0.9375rem] text-[#555] leading-[1.75] mb-[1.75rem]">
-              {t(
-                "Bags require the most detailed inspection of all our product categories. If you are ordering multiple categories, we can easily pack bags alongside ",
-              )}
-              <Link
-                href={localePath("/used-brand-clothes", locale)}
-                className="text-[#C0392B] font-bold hover:underline"
-              >
-                {t("Used Brand Clothes")}
-              </Link>
-              {t(" or ")}
-              <Link
-                href={localePath("/used-brand-shoes", locale)}
-                className="text-[#C0392B] font-bold hover:underline"
-              >
-                {t("Used Brand Shoes")}
-              </Link>
-              {t(
-                " in a single container. Our dedicated bag sorting team checks every zipper, strap, clasp, and lining before grading. Only fully functional bags pass our A-grade standard.",
-              )}
+              <TranslatedText
+                locale={locale}
+                text={
+                  "Bags require the most detailed inspection of all our product categories. If you are ordering multiple categories, we can easily pack bags alongside {clothes} or {shoes} in a single container. Our dedicated bag sorting team checks every zipper, strap, clasp, and lining before grading. Only fully functional bags pass our A-grade standard."
+                }
+                values={{
+                  clothes: (
+                    <Link
+                      href={localePath("/used-brand-clothes", locale)}
+                      className="text-[#C0392B] font-bold hover:underline"
+                    >
+                      {t("Used Brand Clothes")}
+                    </Link>
+                  ),
+                  shoes: (
+                    <Link
+                      href={localePath("/used-brand-shoes", locale)}
+                      className="text-[#C0392B] font-bold hover:underline"
+                    >
+                      {t("Used Brand Shoes")}
+                    </Link>
+                  ),
+                }}
+              />
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-[1.25rem]">
               {[
