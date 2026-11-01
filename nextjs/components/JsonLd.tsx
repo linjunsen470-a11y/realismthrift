@@ -1,6 +1,7 @@
 import React from "react";
 import { companyPostalAddress } from "@/data/siteData";
 import { serializeJsonLd } from "@/lib/structured-data";
+import { locales, type Locale } from '@/lib/i18n/routing';
 
 type JsonLdData = Record<string, unknown>;
 
@@ -112,6 +113,7 @@ export function getWebsiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "inLanguage": locales,
     "@id": "https://www.realismthrift.com/#website",
     "name": "RealismThrift",
     "url": "https://www.realismthrift.com",
@@ -134,15 +136,18 @@ export function getWholesaleCatalogSchema({
   description, 
   image, 
   url,
+  language = 'en',
 }: { 
   name: string; 
   description: string; 
   image: string; 
   url: string;
+  language?: Locale;
 }) {
   return {
     "@context": "https://schema.org/",
     "@type": "CollectionPage",
+    "inLanguage": language,
     "name": name,
     "image": image,
     "description": description,

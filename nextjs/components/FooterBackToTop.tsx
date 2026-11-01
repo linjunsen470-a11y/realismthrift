@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export function FooterBackToTop() {
+export function FooterBackToTop({ label = 'Back to top' }: { label?: string }) {
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export function FooterBackToTop() {
   return (
     <button
       type="button"
-      aria-label="Back to top"
+      aria-label={label}
       aria-hidden={!showBackToTop}
       hidden={!showBackToTop}
       className={`rt-floating-top${showBackToTop ? " is-visible" : ""}`}

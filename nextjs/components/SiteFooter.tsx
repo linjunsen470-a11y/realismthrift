@@ -1,19 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Mail,
-  MapPin,
-  MessageCircle,
-  Phone,
-} from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { SiteFooter as SiteFooterType } from "@/types";
 import { FooterBackToTop } from "@/components/FooterBackToTop";
+import { localePath, type Locale } from "@/lib/i18n/routing";
+import { getTranslator } from "@/lib/i18n/server";
 
 interface SiteFooterProps {
+  locale?: Locale;
   data: SiteFooterType;
 }
 
-export function SiteFooter({ data }: SiteFooterProps) {
+export function SiteFooter({ locale = "en", data }: SiteFooterProps) {
+  const t = getTranslator(locale);
   return (
     <footer className="rt-footer">
       <div className="rt-container">
@@ -22,15 +21,21 @@ export function SiteFooter({ data }: SiteFooterProps) {
             <div className="rt-footer-logo">
               <Image
                 src="/img/logo.webp"
-                alt="RealismThrift Logo - Used Fashion Export Supplier from Huizhou China"
+                alt={t(
+                  "RealismThrift Logo - Used Fashion Export Supplier from Huizhou China",
+                )}
                 width={56}
                 height={56}
                 sizes="56px"
                 className="rt-footer-logo-image"
               />
               <div className="rt-footer-logo-copy">
-                <span className="rt-footer-logo-name">RealismThrift</span>
-                <span className="rt-footer-logo-sub">Wholesale Export</span>
+                <span className="rt-footer-logo-name">
+                  {t("RealismThrift")}
+                </span>
+                <span className="rt-footer-logo-sub">
+                  {t("Wholesale Export")}
+                </span>
               </div>
             </div>
 
@@ -43,7 +48,11 @@ export function SiteFooter({ data }: SiteFooterProps) {
             {data.brand.whatsapp && (
               <div className="rt-footer-contact-item">
                 <MessageCircle size={18} strokeWidth={2.2} />
-                <a href={`https://wa.me/${data.brand.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noreferrer">
+                <a
+                  href={`https://wa.me/${data.brand.whatsapp.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {data.brand.whatsapp}
                 </a>
               </div>
@@ -58,10 +67,15 @@ export function SiteFooter({ data }: SiteFooterProps) {
             </div>
           </div>
 
-          {data.sections.map((section) => (
+          {data.sections.map((section, index) => (
             <div key={section.title}>
-              <p className="rt-footer-col-title" id={`footer-nav-${section.title.toLowerCase().replace(/\s/g, '-')}`}>{section.title}</p>
-              <nav aria-labelledby={`footer-nav-${section.title.toLowerCase().replace(/\s/g, '-')}`}>
+              <p
+                className="rt-footer-col-title"
+                id={`footer-nav-section-${index}`}
+              >
+                {section.title}
+              </p>
+              <nav aria-labelledby={`footer-nav-section-${index}`}>
                 <ul className="rt-footer-links">
                   {section.links.map((link) => (
                     <li key={link.label}>
@@ -74,35 +88,49 @@ export function SiteFooter({ data }: SiteFooterProps) {
           ))}
 
           <div>
-            <p className="rt-footer-col-title" id="footer-nav-contact">Contact</p>
+            <p className="rt-footer-col-title" id="footer-nav-contact">
+              {t("Contact")}
+            </p>
             <nav aria-labelledby="footer-nav-contact">
               <ul className="rt-footer-links">
                 <li>
-                  <a href={`https://wa.me/${data.contact.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noreferrer">
-                    WhatsApp
+                  <a
+                    href={`https://wa.me/${data.contact.whatsapp.replace(/\D/g, "")}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {t("WhatsApp")}
                   </a>
                 </li>
                 <li>
-                  <a href={`mailto:${data.contact.email}`}>Email Us</a>
+                  <a href={`mailto:${data.contact.email}`}>{t("Email Us")}</a>
                 </li>
                 <li>
-                  <Link href="/#contact">Inquiry Form</Link>
+                  <Link href={localePath("/#contact", locale)}>
+                    {t("Inquiry Form")}
+                  </Link>
                 </li>
               </ul>
             </nav>
 
             <div className="rt-footer-note">
-              {data.contact.inquiryTime.split(". ").map((text, idx) => (
-                <div key={idx}>
-                  {text.includes("12 hours") ? (
-                    <>
-                      We aim to reply within <span className="rt-footer-note-gold">12 hours</span>.
-                    </>
-                  ) : (
-                    text
-                  )}
-                </div>
-              ))}
+              {locale !== "en"
+                ? data.contact.inquiryTime
+                : data.contact.inquiryTime.split(". ").map((text, idx) => (
+                    <div key={idx}>
+                      {text.includes("12 hours") ? (
+                        <>
+                          {t("We aim to reply within ")}
+                          <span className="rt-footer-note-gold">
+                            {t("12 hours")}
+                          </span>
+                          .
+                        </>
+                      ) : (
+                        text
+                      )}
+                    </div>
+                  ))}
             </div>
           </div>
         </div>
@@ -125,12 +153,12 @@ export function SiteFooter({ data }: SiteFooterProps) {
           href={`https://wa.me/${data.contact.whatsapp.replace(/\D/g, "")}`}
           target="_blank"
           rel="noreferrer"
-          aria-label="Contact via WhatsApp"
+          aria-label={t("Contact via WhatsApp")}
           className="rt-floating-whatsapp"
         >
           <MessageCircle size={26} strokeWidth={2.2} />
         </a>
-        <FooterBackToTop />
+        <FooterBackToTop label={t("Back to top")} />
       </div>
     </footer>
   );

@@ -2,11 +2,21 @@
 
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, LoaderCircle, MessageCircle, TriangleAlert } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  LoaderCircle,
+  MessageCircle,
+  TriangleAlert,
+} from "lucide-react";
 import { trackEvent, trackMetaLead } from "./Analytics";
 import { captureMetaFbc } from "@/lib/meta-pixel";
+import { localePath, type Locale } from "@/lib/i18n/routing";
+import { createTranslator, type Messages } from "@/lib/i18n/translate";
 
 interface InquiryFormProps {
+  locale?: Locale;
+  messages?: Messages;
   variant?: "default" | "sidebar";
   showWhatsApp?: boolean;
 }
@@ -17,11 +27,19 @@ type SubmissionState =
   | { status: "error"; message: string };
 
 export function InquiryForm({
+  locale = "en",
+  messages,
   variant = "default",
   showWhatsApp = false,
 }: InquiryFormProps) {
-  const [submission, setSubmission] = useState<SubmissionState>({ status: "idle" });
-  const submissionAttemptRef = useRef<{ id: string; fingerprint: string } | null>(null);
+  const t = createTranslator(messages);
+  const [submission, setSubmission] = useState<SubmissionState>({
+    status: "idle",
+  });
+  const submissionAttemptRef = useRef<{
+    id: string;
+    fingerprint: string;
+  } | null>(null);
   const isSubmittingRef = useRef(false);
   const formId = useId();
   const isSidebar = variant === "sidebar";
@@ -32,7 +50,12 @@ export function InquiryForm({
   }, [submission.status]);
 
   function trackFormEvent(name: string, extra: Record<string, string> = {}) {
-    trackEvent(name, { form_name: "wholesale_inquiry", form_variant: variant, page_path: window.location.pathname, ...extra });
+    trackEvent(name, {
+      form_name: "wholesale_inquiry",
+      form_variant: variant,
+      page_path: window.location.pathname,
+      ...extra,
+    });
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -44,7 +67,10 @@ export function InquiryForm({
     const form = event.currentTarget;
     try {
       const formData = new FormData(form);
-      const formValues = Object.fromEntries(formData.entries()) as Record<string, string>;
+      const formValues = Object.fromEntries(formData.entries()) as Record<
+        string,
+        string
+      >;
       const fingerprint = JSON.stringify(formValues);
 
       if (submissionAttemptRef.current?.fingerprint !== fingerprint) {
@@ -70,16 +96,26 @@ export function InquiryForm({
         body: JSON.stringify(payload),
       });
 
-      const result = (await response.json().catch(() => null)) as
-        | { ok?: boolean; message?: string; event_id?: string }
-        | null;
+      const result = (await response.json().catch(() => null)) as {
+        ok?: boolean;
+        message?: string;
+        event_id?: string;
+      } | null;
 
       if (response.ok && result?.ok) {
         form.reset();
         submissionAttemptRef.current = null;
         setSubmission({
           status: "success",
-          message: result.message ?? "Inquiry received. Our sales team aims to reply within 12 hours.",
+          message:
+            locale === "en"
+              ? (result.message ??
+                t(
+                  "Inquiry received. Our sales team aims to reply within 12 hours.",
+                ))
+              : t(
+                  "Inquiry received. Our sales team aims to reply within 12 hours.",
+                ),
         });
 
         // Track only non-identifying lead metadata. Never send contact details or free text.
@@ -94,7 +130,8 @@ export function InquiryForm({
           // Analytics must not turn an accepted inquiry into a displayed error.
         }
         try {
-          const eventId = typeof result.event_id === "string" ? result.event_id : undefined;
+          const eventId =
+            typeof result.event_id === "string" ? result.event_id : undefined;
           trackMetaLead(formValues.product, eventId);
         } catch {
           // A pixel failure must not turn an accepted inquiry into a displayed error.
@@ -103,18 +140,29 @@ export function InquiryForm({
         return;
       }
 
-      trackFormEvent("inquiry_error", { error_type: response.status === 429 ? "rate_limited" : response.status >= 500 ? "server_error" : "request_rejected" });
+      trackFormEvent("inquiry_error", {
+        error_type:
+          response.status === 429
+            ? "rate_limited"
+            : response.status >= 500
+              ? "server_error"
+              : "request_rejected",
+      });
       setSubmission({
         status: "error",
         message:
-          result?.message ??
-          "We could not send your inquiry right now. Please try again or contact us via WhatsApp.",
+          (locale === "en" ? result?.message : undefined) ??
+          t(
+            "We could not send your inquiry right now. Please try again or contact us via WhatsApp.",
+          ),
       });
     } catch {
       trackFormEvent("inquiry_error", { error_type: "network_error" });
       setSubmission({
         status: "error",
-        message: "Network error. Please try again or contact us via WhatsApp.",
+        message: t(
+          "Network error. Please try again or contact us via WhatsApp.",
+        ),
       });
     } finally {
       isSubmittingRef.current = false;
@@ -123,9 +171,15 @@ export function InquiryForm({
 
   if (submission.status === "success") {
     return (
-      <div className={`rt-form-state rt-form-state-success${isSidebar ? " is-sidebar" : ""}`} role="status" aria-live="polite">
+      <div
+        className={`rt-form-state rt-form-state-success${isSidebar ? " is-sidebar" : ""}`}
+        role="status"
+        aria-live="polite"
+      >
         <CheckCircle2 size={24} strokeWidth={2.2} />
-        <h3 ref={successHeadingRef} tabIndex={-1}>Inquiry Received</h3>
+        <h3 ref={successHeadingRef} tabIndex={-1}>
+          {t("Inquiry Received")}
+        </h3>
         <p>{submission.message}</p>
       </div>
     );
@@ -154,90 +208,100 @@ export function InquiryForm({
         />
 
         <div className="rt-form-group">
-          <label htmlFor={`${formId}-name`}>Your Name *</label>
+          <label htmlFor={`${formId}-name`}>{t("Your Name *")}</label>
           <input
             id={`${formId}-name`}
             name="name"
             type="text"
-            autoComplete="name" maxLength={80}
+            autoComplete="name"
+            maxLength={80}
             required
-            placeholder="John Smith"
+            placeholder={t("John Smith")}
           />
         </div>
 
         <div className="rt-form-group">
-          <label htmlFor={`${formId}-email`}>Your Email *</label>
+          <label htmlFor={`${formId}-email`}>{t("Your Email *")}</label>
           <input
             id={`${formId}-email`}
             name="email"
             type="email"
-            autoComplete="email" maxLength={120} spellCheck={false}
+            autoComplete="email"
+            maxLength={120}
+            spellCheck={false}
             inputMode="email"
             required
-            placeholder="john@company.com"
+            placeholder={t("john@company.com")}
           />
         </div>
 
         <div className="rt-form-group">
-          <label htmlFor={`${formId}-whatsapp`}>Your WhatsApp *</label>
+          <label htmlFor={`${formId}-whatsapp`}>{t("Your WhatsApp *")}</label>
           <input
             id={`${formId}-whatsapp`}
             name="whatsapp"
             type="tel"
-            autoComplete="tel" maxLength={32}
+            autoComplete="tel"
+            maxLength={32}
             inputMode="tel"
             aria-describedby={`${formId}-whatsapp-hint`}
             required
             placeholder="+1 234 567 8900"
           />
-          <p id={`${formId}-whatsapp-hint`} className="rt-form-note">Please include your country code, starting with + or 00.</p>
+          <p id={`${formId}-whatsapp-hint`} className="rt-form-note">
+            {t("Please include your country code, starting with + or 00.")}
+          </p>
         </div>
 
         <div className="rt-form-group">
-          <label htmlFor={`${formId}-country`}>Your Country</label>
+          <label htmlFor={`${formId}-country`}>{t("Your Country")}</label>
           <input
             id={`${formId}-country`}
             name="country"
             type="text"
-            autoComplete="country-name" maxLength={80}
-            placeholder="Nigeria, Philippines..."
+            autoComplete="country-name"
+            maxLength={80}
+            placeholder={t("Nigeria, Philippines...")}
           />
         </div>
       </div>
 
       <div className="rt-form-group">
-        <label htmlFor={`${formId}-product`}>Product Interest</label>
+        <label htmlFor={`${formId}-product`}>{t("Product Interest")}</label>
         <select id={`${formId}-product`} name="product">
-          <option value="">Select product...</option>
-          <option value="Used Brand Clothes">Used Brand Clothes</option>
-          <option value="Used Brand Shoes">Used Brand Shoes</option>
-          <option value="Used Brand Bags">Used Brand Bags</option>
-          <option value="Mixed Products">Mixed Products</option>
+          <option value="">{t("Select product...")}</option>
+          <option value="Used Brand Clothes">{t("Used Brand Clothes")}</option>
+          <option value="Used Brand Shoes">{t("Used Brand Shoes")}</option>
+          <option value="Used Brand Bags">{t("Used Brand Bags")}</option>
+          <option value="Mixed Products">{t("Mixed Products")}</option>
         </select>
       </div>
 
       <div className="rt-form-group">
-        <label htmlFor={`${formId}-quantity`}>Your Quantity</label>
+        <label htmlFor={`${formId}-quantity`}>{t("Your Quantity")}</label>
         <select id={`${formId}-quantity`} name="quantity">
-          <option value="">Select quantity...</option>
-          <option value="100bales">100+ bales of clothes</option>
-          <option value="shoes">Shoes — specify pairs below</option>
-          <option value="bags">Bags — specify pieces below</option>
-          <option value="trial">Trial order — confirm minimum</option>
-          <option value="20ft">One 20ft container</option>
-          <option value="40ft">One 40ft container</option>
-          <option value="2x40ft">Two 40ft containers</option>
+          <option value="">{t("Select quantity...")}</option>
+          <option value="100bales">{t("100+ bales of clothes")}</option>
+          <option value="shoes">{t("Shoes — specify pairs below")}</option>
+          <option value="bags">{t("Bags — specify pieces below")}</option>
+          <option value="trial">{t("Trial order — confirm minimum")}</option>
+          <option value="20ft">{t("One 20ft container")}</option>
+          <option value="40ft">{t("One 40ft container")}</option>
+          <option value="2x40ft">{t("Two 40ft containers")}</option>
         </select>
       </div>
 
       <div className="rt-form-group">
-        <label htmlFor={`${formId}-message`}>Your Message</label>
+        <label htmlFor={`${formId}-message`}>{t("Your Message")}</label>
         <textarea
           id={`${formId}-message`}
           name="message"
           rows={isSidebar ? 4 : 5}
-          spellCheck={true} maxLength={2000}
-          placeholder="Tell us about your requirements, target market, quantity needed..."
+          spellCheck={true}
+          maxLength={2000}
+          placeholder={t(
+            "Tell us about your requirements, target market, quantity needed...",
+          )}
         />
       </div>
 
@@ -247,9 +311,19 @@ export function InquiryForm({
           className="rt-form-submit"
           disabled={submission.status === "loading"}
         >
-          {submission.status === "loading" ? "SENDING…" : "SEND INQUIRY NOW"}
-          {submission.status === "loading" ? <LoaderCircle size={16} className="animate-spin" aria-hidden="true" /> : null}
-          {submission.status !== "loading" && <ArrowRight size={16} strokeWidth={2.25} />}
+          {submission.status === "loading"
+            ? t("SENDING…")
+            : t("SEND INQUIRY NOW")}
+          {submission.status === "loading" ? (
+            <LoaderCircle
+              size={16}
+              className="animate-spin"
+              aria-hidden="true"
+            />
+          ) : null}
+          {submission.status !== "loading" && (
+            <ArrowRight size={16} strokeWidth={2.25} />
+          )}
         </button>
 
         {showWhatsApp && !isSidebar ? (
@@ -260,24 +334,45 @@ export function InquiryForm({
             className="rt-form-whatsapp"
           >
             <MessageCircle size={18} strokeWidth={2.2} />
-            WhatsApp
+            {t("WhatsApp")}
           </a>
         ) : null}
       </div>
 
       {!isSidebar ? (
-        <p className="rt-form-note">We aim to reply within 12 hours. Free consultation.</p>
+        <p className="rt-form-note">
+          {t("We aim to reply within 12 hours. Free consultation.")}
+        </p>
       ) : null}
 
       <p className="rt-form-note">
-        We use your details to respond to your inquiry. After a successful inquiry, we share your email and, when valid, your international WhatsApp number in hashed form with Meta for advertising measurement. <Link href="/privacy-policy" className="underline">Privacy Policy</Link>
+        {t(
+          "We use your details to respond to your inquiry. After a successful inquiry, we share your email and, when valid, your international WhatsApp number in hashed form with Meta for advertising measurement. ",
+        )}
+        <Link
+          href={localePath("/privacy-policy", locale)}
+          className="underline"
+        >
+          {t("Privacy Policy")}
+        </Link>
       </p>
 
       {submission.status === "error" ? (
-        <div className="rt-form-state rt-form-state-error" role="alert" aria-live="polite">
+        <div
+          className="rt-form-state rt-form-state-error"
+          role="alert"
+          aria-live="polite"
+        >
           <TriangleAlert size={18} strokeWidth={2.2} />
           <p>{submission.message}</p>
-          <a href="https://wa.me/8617279444062" target="_blank" rel="noopener noreferrer" className="underline">Contact us on WhatsApp</a>
+          <a
+            href="https://wa.me/8617279444062"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            {t("Contact us on WhatsApp")}
+          </a>
         </div>
       ) : null}
     </form>

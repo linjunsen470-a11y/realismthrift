@@ -1,18 +1,23 @@
 import React from "react";
+import { type Locale } from "@/lib/i18n/routing";
+import { getTranslator } from "@/lib/i18n/server";
 
 interface ProductCTAProps {
+  locale?: Locale;
   title: string;
   description: string;
   whatsappNumber?: string;
   whatsappMessage?: string;
 }
 
-export function ProductCTA({ 
-  title, 
-  description, 
+export function ProductCTA({
+  locale = "en",
+  title,
+  description,
   whatsappNumber = "8617279444062",
-  whatsappMessage = "Hi, I want to get a wholesale price list"
+  whatsappMessage = "Hi, I want to get a wholesale price list",
 }: ProductCTAProps) {
+  const t = getTranslator(locale);
   return (
     <section className="bg-gradient-to-br from-[#1A1A1A] to-[#2d1515] py-16 text-center rounded-[8px] overflow-hidden">
       <div className="max-w-[700px] mx-auto px-6">
@@ -23,23 +28,23 @@ export function ProductCTA({
           {description}
         </p>
         <div className="flex gap-4 justify-center flex-wrap">
-          <a 
-            href="#inquiry" 
+          <a
+            href="#inquiry"
             className="bg-[#F0B429] shadow-[0_4px_14px_rgba(240,180,41,0.3)] text-[#1A1A1A] px-10 py-4 rounded-[4px] no-underline font-black font-montserrat text-[0.875rem] uppercase tracking-wider hover:bg-[#d4a017] transition-all hover:-translate-y-0.5"
           >
-            Get Price Quote
+            {t("Get Price Quote")}
           </a>
-          <a 
-            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`} 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-[#137a3c] shadow-[0_4px_14px_rgba(37,211,102,0.3)] text-white px-10 py-4 rounded-[4px] no-underline font-black font-montserrat text-[0.875rem] uppercase tracking-wider hover:bg-[#106631] transition-all hover:-translate-y-0.5"
           >
-            WhatsApp Now
+            {t("WhatsApp Now")}
           </a>
         </div>
         <p className="text-white/40 text-[0.75rem] mt-8 font-open-sans">
-          * Our team usually replies within 12 hours.
+          {t("* Our team usually replies within 12 hours.")}
         </p>
       </div>
     </section>

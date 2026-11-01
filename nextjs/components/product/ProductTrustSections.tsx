@@ -1,4 +1,6 @@
 import React from "react";
+import { type Locale } from "@/lib/i18n/routing";
+import { getTranslator } from "@/lib/i18n/server";
 
 interface TrustItem {
   icon: React.ReactNode;
@@ -12,11 +14,17 @@ interface FaqItem {
 }
 
 interface ProductTrustSectionsProps {
+  locale?: Locale;
   features?: TrustItem[];
   faqs?: FaqItem[];
 }
 
-export function ProductTrustSections({ features, faqs }: ProductTrustSectionsProps) {
+export function ProductTrustSections({
+  locale = "en",
+  features,
+  faqs,
+}: ProductTrustSectionsProps) {
+  const t = getTranslator(locale);
   if (!features && !faqs) return null;
 
   return (
@@ -27,16 +35,18 @@ export function ProductTrustSections({ features, faqs }: ProductTrustSectionsPro
           <div className="flex items-center gap-3 mb-6">
             <div className="w-[4px] h-[24px] bg-[#C0392B] rounded-[2px]" />
             <h2 className="font-montserrat font-extrabold text-[1.25rem] text-[#1A1A1A] m-0 uppercase tracking-tight">
-              Why Choose RealismThrift
+              {t("Why Choose RealismThrift")}
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {features.map((why, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="bg-white border border-[#eee] rounded-[4px] p-4 flex gap-4 items-start shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
               >
-                <div className="text-[1.25rem] shrink-0 leading-none mt-1">{why.icon}</div>
+                <div className="text-[1.25rem] shrink-0 leading-none mt-1">
+                  {why.icon}
+                </div>
                 <div>
                   <h3 className="font-montserrat font-bold text-[0.875rem] text-[#1A1A1A] m-0 mb-1">
                     {why.title}
@@ -57,13 +67,13 @@ export function ProductTrustSections({ features, faqs }: ProductTrustSectionsPro
           <div className="flex items-center gap-3 mb-6">
             <div className="w-[4px] h-[24px] bg-[#C0392B] rounded-[2px]" />
             <h2 className="font-montserrat font-extrabold text-[1.25rem] text-[#1A1A1A] m-0 uppercase tracking-tight">
-              Frequently Asked Questions
+              {t("Frequently Asked Questions")}
             </h2>
           </div>
           <div className="space-y-2">
             {faqs.map((faq, idx) => (
-              <details 
-                key={idx} 
+              <details
+                key={idx}
                 className="group border border-[#eee] rounded-[4px] bg-white overflow-hidden"
               >
                 <summary className="w-full bg-white p-4 text-left cursor-pointer flex justify-between items-center font-montserrat font-bold text-[0.85rem] text-[#1A1A1A] list-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#C0392B] hover:bg-gray-50 transition-colors">
