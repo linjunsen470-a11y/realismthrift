@@ -2,11 +2,25 @@ import { describe, expect, it } from "vitest";
 import { searchStaticEntries } from "./search";
 
 describe("existing static catalog search", () => {
-  it("finds the correct products using the five supported languages", () => {
+  it("finds the correct products using all supported languages", () => {
     for (const [product, queries] of [
-      ["clothes", ["clothes", "ropa", "vêtements", "ملابس", "quần áo"]],
-      ["shoes", ["shoes", "zapatos", "chaussures", "أحذية", "giày"]],
-      ["bags", ["bags", "bolsos", "sacs", "حقائب", "túi xách"]],
+      [
+        "clothes",
+        [
+          "clothes",
+          "ropa",
+          "vêtements",
+          "ملابس",
+          "quần áo",
+          "pakaian bekas",
+          "grosir baju bekas",
+        ],
+      ],
+      [
+        "shoes",
+        ["shoes", "zapatos", "chaussures", "أحذية", "giày", "sepatu bekas"],
+      ],
+      ["bags", ["bags", "bolsos", "sacs", "حقائب", "túi xách", "tas bekas"]],
     ] as const) {
       for (const query of queries)
         expect(searchStaticEntries(query)[0]?.id, query).toBe(
@@ -22,8 +36,14 @@ describe("existing static catalog search", () => {
   });
   it("finds shipping, payment, MOQ and contact guidance in each buyer language", () => {
     for (const [id, queries] of [
-      ["faq-shipping", ["envíos", "expédition", "الشحن", "vận chuyển"]],
-      ["faq-payment", ["pago", "paiement", "الدفع", "thanh toán"]],
+      [
+        "faq-shipping",
+        ["envíos", "expédition", "الشحن", "vận chuyển", "pengiriman"],
+      ],
+      [
+        "faq-payment",
+        ["pago", "paiement", "الدفع", "thanh toán", "pembayaran"],
+      ],
       [
         "faq-moq",
         [
@@ -31,9 +51,14 @@ describe("existing static catalog search", () => {
           "quantité minimale",
           "الحد الأدنى للطلب",
           "số lượng tối thiểu",
+          "minimum pesanan",
         ],
       ],
-      ["page-contact", ["contacto", "contacter", "اتصال", "liên hệ"]],
+      [
+        "page-contact",
+        ["contacto", "contacter", "اتصال", "liên hệ", "hubungi", "harga", "daftar harga"],
+      ],
+      ["page-about", ["tentang", "pabrik"]],
     ] as const) {
       for (const query of queries)
         expect(

@@ -678,7 +678,7 @@ export default function UsedBrandBagPage({
 
             <div className="mt-[1.25rem]">
               <a
-                href="https://wa.me/8617279444062?text=Hi%2C+I+want+used+brand+bags+wholesale+price"
+                href={`https://wa.me/8617279444062?text=${encodeURIComponent(t("Hi, I want to wholesale used brand bags. Can I get a price list?"))}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 bg-[#137a3c] text-white py-3 rounded-[3px] no-underline font-montserrat font-bold text-[0.875rem] hover:bg-[#106631] transition-colors"

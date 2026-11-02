@@ -1,6 +1,6 @@
-export const locales = ["en", "es", "fr", "ar", "vi"] as const;
+export const locales = ["en", "es", "fr", "ar", "vi", "id"] as const;
 export type Locale = (typeof locales)[number];
-export const translatedLocales = ["es", "fr", "ar", "vi"] as const;
+export const translatedLocales = ["es", "fr", "ar", "vi", "id"] as const;
 export const localizedPaths = [
   "/",
   "/used-brand-clothes",
@@ -19,6 +19,7 @@ export const languageNames: Record<Locale, string> = {
   fr: "Français",
   ar: "العربية",
   vi: "Tiếng Việt",
+  id: "Bahasa Indonesia",
 };
 
 export function isLocale(value: string): value is Locale {

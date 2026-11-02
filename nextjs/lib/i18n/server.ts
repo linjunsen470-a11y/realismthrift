@@ -3,11 +3,12 @@ import es from "./messages/es.json";
 import fr from "./messages/fr.json";
 import ar from "./messages/ar.json";
 import vi from "./messages/vi.json";
+import id from "./messages/id.json";
 import clientKeys from "./client-keys.json";
 import { createTranslator, type Messages } from "./translate";
 import { languageAlternates, localePath, type Locale } from "./routing";
 
-const dictionaries: Record<Locale, Messages> = { en: {}, es, fr, ar, vi };
+const dictionaries: Record<Locale, Messages> = { en: {}, es, fr, ar, vi, id };
 export function getTranslator(locale: Locale) {
   return createTranslator(dictionaries[locale]);
 }
@@ -55,6 +56,7 @@ export function localizeMetadata(metadata: Metadata, locale: Locale): Metadata {
     fr: "fr_FR",
     ar: "ar_AR",
     vi: "vi_VN",
+    id: "id_ID",
   };
   return {
     ...metadata,

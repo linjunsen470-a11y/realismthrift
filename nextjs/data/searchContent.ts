@@ -18,6 +18,10 @@ export const staticSearchEntries: SearchEntry[] = [
       "Wholesale used brand clothes with grade sorting, bale packing, and export service.",
     href: "/used-brand-clothes",
     keywords: [
+      "pakaian bekas",
+      "baju bekas",
+      "grosir pakaian",
+      "pakaian bermerek",
       "clothes",
       "used clothes",
       "brand clothes",
@@ -47,6 +51,9 @@ export const staticSearchEntries: SearchEntry[] = [
       "Wholesale used brand shoes including sneakers, boots, and mixed footwear lots.",
     href: "/used-brand-shoes",
     keywords: [
+      "sepatu bekas",
+      "grosir sepatu",
+      "alas kaki",
       "shoes",
       "used shoes",
       "brand shoes",
@@ -75,6 +82,10 @@ export const staticSearchEntries: SearchEntry[] = [
       "Wholesale used brand bags including handbags, backpacks, and mixed bag categories.",
     href: "/used-brand-bag",
     keywords: [
+      "tas bekas",
+      "grosir tas",
+      "ransel",
+      "tas tangan",
       "bags",
       "used bags",
       "brand bags",
@@ -104,6 +115,9 @@ export const staticSearchEntries: SearchEntry[] = [
       "Learn the full order process, from inquiry and quotation to deposit, loading, and shipment.",
     href: "/how-to-order",
     keywords: [
+      "cara memesan",
+      "pemesanan",
+      "pesanan",
       "pedido",
       "commande",
       "طلب",
@@ -128,6 +142,7 @@ export const staticSearchEntries: SearchEntry[] = [
       "Answers about MOQ, quality, payment terms, shipping countries, and customized sorting.",
     href: "/faq",
     keywords: [
+      "pertanyaan umum",
       "faq",
       "questions",
       "answers",
@@ -149,6 +164,11 @@ export const staticSearchEntries: SearchEntry[] = [
       "Reach our sales team by inquiry form, email, or WhatsApp for price lists and shipping advice.",
     href: "/contact-us",
     keywords: [
+      "harga",
+      "daftar harga",
+      "hubungi",
+      "kontak",
+      "penawaran",
       "contacto",
       "contacter",
       "اتصال",
@@ -172,6 +192,8 @@ export const staticSearchEntries: SearchEntry[] = [
       "Learn about RealismThrift's facility, quality control process, and export experience.",
     href: "/about-us",
     keywords: [
+      "tentang",
+      "pabrik",
       "empresa",
       "entreprise",
       "مصنع",
@@ -194,6 +216,8 @@ export const staticSearchEntries: SearchEntry[] = [
       "Find MOQ details for clothes, shoes, bags, and trial orders before placing a bulk order.",
     href: "/faq",
     keywords: [
+      "minimum pesanan",
+      "jumlah minimum",
       "cantidad mínima",
       "quantité minimale",
       "الحد الأدنى للطلب",
@@ -217,6 +241,8 @@ export const staticSearchEntries: SearchEntry[] = [
       "Understand our grading, sorting, inspection, and quality assurance standards for export orders.",
     href: "/faq",
     keywords: [
+      "kualitas",
+      "kondisi",
       "calidad",
       "qualité",
       "جودة",
@@ -241,6 +267,9 @@ export const staticSearchEntries: SearchEntry[] = [
       "See how we ship globally, handle export documents, and coordinate container delivery.",
     href: "/faq",
     keywords: [
+      "pengiriman",
+      "pelabuhan",
+      "kontainer",
       "envíos",
       "envío",
       "expédition",
@@ -270,6 +299,9 @@ export const staticSearchEntries: SearchEntry[] = [
       "Review accepted payment methods including deposit terms and balance before shipment.",
     href: "/faq",
     keywords: [
+      "pembayaran",
+      "uang muka",
+      "pelunasan",
       "pago",
       "paiement",
       "الدفع",
@@ -294,6 +326,7 @@ export const staticSearchEntries: SearchEntry[] = [
       "Learn whether sample orders and customized category or brand mixes are available.",
     href: "/faq",
     keywords: [
+      "sampel",
       "muestras",
       "échantillons",
       "عينات",

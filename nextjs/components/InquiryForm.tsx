@@ -334,7 +334,7 @@ export function InquiryForm({
 
         {showWhatsApp && !isSidebar ? (
           <a
-            href="https://wa.me/8617279444062?text=Hi%2C+I+want+to+place+a+wholesale+order"
+            href={`https://wa.me/8617279444062?text=${encodeURIComponent(t("Hi, I want to get a wholesale price list"))}`}
             target="_blank"
             rel="noopener noreferrer"
             className="rt-form-whatsapp"

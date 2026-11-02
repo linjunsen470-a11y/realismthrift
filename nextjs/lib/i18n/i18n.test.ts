@@ -13,6 +13,7 @@ import {
   localePath,
   splitLocale,
   locales,
+  translatedLocales,
   localizedPaths,
   searchHref,
 } from "./routing";
@@ -22,6 +23,7 @@ import es from "./messages/es.json";
 import fr from "./messages/fr.json";
 import ar from "./messages/ar.json";
 import vi from "./messages/vi.json";
+import id from "./messages/id.json";
 import {
   companyAddress,
   companyLocation,
@@ -98,7 +100,7 @@ describe("published language URLs", () => {
 
 describe("translation integrity and server/client boundaries", () => {
   it("retains explicit A/B/C grading instead of upgrading used-goods condition claims", () => {
-    for (const messages of [es, fr, ar, vi]) {
+    for (const messages of [es, fr, ar, vi, id]) {
       for (const [key, value] of Object.entries(messages)) {
         if (/A[- ]grade|grade A/i.test(key))
           expect(value, key).toMatch(/\bA\b/);
@@ -170,7 +172,7 @@ describe("translation integrity and server/client boundaries", () => {
       "Tory Burch",
       "Ukay",
     ];
-    for (const messages of [es, fr, ar, vi]) {
+    for (const messages of [es, fr, ar, vi, id]) {
       for (const [key, value] of Object.entries(messages)) {
         for (const name of identifiers) {
           const pattern = new RegExp(`\\b${name}\\b`, "i");
@@ -231,7 +233,7 @@ describe("translation integrity and server/client boundaries", () => {
     expect(companyLocation.mapsUrl).toContain(
       "mid=1tQMcpDr1wCiqu03ci3gFUnP7RlUudME",
     );
-    for (const locale of ["es", "fr", "ar", "vi"] as const) {
+    for (const locale of translatedLocales) {
       const t = getTranslator(locale);
       const display = getLocalizedData(siteFooter, locale).brand;
       expect(display.address).toBe(t(companyAddress));
@@ -254,7 +256,7 @@ describe("translation integrity and server/client boundaries", () => {
       expect(display.phone).toBe(siteFooter.brand.phone);
     }
   });
-  for (const [locale, messages] of Object.entries({ es, fr, ar, vi })) {
+  for (const [locale, messages] of Object.entries({ es, fr, ar, vi, id })) {
     it(`${locale} covers all source copy and preserves interpolation tokens`, () => {
       for (const key of sourceKeys) {
         const translated = (messages as Record<string, string>)[key];
@@ -285,11 +287,14 @@ describe("translation integrity and server/client boundaries", () => {
     expect(getLocalizedData(companyStats, "vi").foundedYear).toBe(
       companyStats.foundedYear,
     );
-    for (const locale of ["es", "fr", "ar", "vi"] as const) {
+    expect(getLocalizedData(companyStats, "id").facilitySize).toBe("15.000 m²");
+    expect(getTranslator("id")("100 bales (4,500 kg)")).toBe("100 bal (4.500 kg)");
+    for (const locale of translatedLocales) {
       const t = getTranslator(locale);
       expect(t("A/B/C")).toBe("A/B/C");
       expect(t("Michael Kors")).toBe("Michael Kors");
       expect(t("100 bales (4,500 kg)")).toContain("100");
+      expect(getLocalizedData(productsData, locale).every((product) => product.category !== "WHOLESALE")).toBe(true);
     }
   });
   it("ships only the form/header copy to client components", () => {
@@ -303,5 +308,8 @@ describe("translation integrity and server/client boundaries", () => {
     ).toBeTruthy();
     expect(messages["1. Acceptance of Terms"]).toBeUndefined();
     expect(getClientMessages("en", "form")).toEqual({});
+    expect(getClientMessages("id", "form")["Hi, I want to get a wholesale price list"]).toBe(
+      "Halo, saya ingin mendapatkan daftar harga grosir.",
+    );
   });
 });

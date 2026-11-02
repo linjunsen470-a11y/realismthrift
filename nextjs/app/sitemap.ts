@@ -10,7 +10,13 @@ import {
 export const revalidate = 86400; // Cache sitemap for 24 hours on CDN edge
 
 const baseUrl = "https://www.realismthrift.com";
-const translationPublishedAt = new Date("2026-11-01");
+const translationPublishedAt = {
+  es: new Date("2026-11-01"),
+  fr: new Date("2026-11-01"),
+  ar: new Date("2026-11-01"),
+  vi: new Date("2026-11-01"),
+  id: new Date("2026-11-02"),
+};
 
 type StaticPageConfig = {
   path: string;
@@ -133,7 +139,7 @@ function buildStaticRoutes(blogLastModified: Date): MetadataRoute.Sitemap {
             lastModified: new Date(
               Math.max(
                 entry.lastModified.getTime(),
-                translationPublishedAt.getTime(),
+                translationPublishedAt[locale].getTime(),
               ),
             ),
           }))

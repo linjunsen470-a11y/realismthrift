@@ -260,7 +260,7 @@ export default function UsedBrandClothesPage({
                 {t("GET PRICE NOW →")}
               </a>
               <a
-                href="https://wa.me/8617279444062?text=Hi%2C+I+want+to+wholesale+used+brand+clothes"
+                href={`https://wa.me/8617279444062?text=${encodeURIComponent(t("Hi, I want to wholesale used brand clothes. Can I get a price list?"))}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#137a3c] text-white font-montserrat font-bold text-[0.875rem] px-6 md:px-8 py-3 md:py-[0.875rem] rounded-[3px] no-underline hover:bg-[#106631] transition-colors whitespace-nowrap"
@@ -1107,7 +1107,7 @@ export default function UsedBrandClothesPage({
                   variant="sidebar"
                 />
                 <a
-                  href="https://wa.me/8617279444062?text=Hi%2C+I+want+used+brand+clothes+wholesale+price"
+                  href={`https://wa.me/8617279444062?text=${encodeURIComponent(t("Hi, I want to wholesale used brand clothes. Can I get a price list?"))}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-[0.5rem] bg-[#137a3c] text-white p-[0.625rem] rounded-[3px] no-underline font-montserrat font-bold text-[0.8125rem] mt-[0.75rem] hover:bg-[#106631] transition-colors"

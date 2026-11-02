@@ -1,5 +1,11 @@
 import { expect, test } from "@playwright/test";
-import { locales, localizedPaths, localePath } from "../lib/i18n/routing";
+import {
+  locales,
+  translatedLocales,
+  localizedPaths,
+  localePath,
+  languageAlternates,
+} from "../lib/i18n/routing";
 import { companyAddress, companyLocation } from "../data/siteData";
 import { getTranslator } from "../lib/i18n/server";
 
@@ -21,7 +27,7 @@ test.beforeEach(async ({ page }) => {
   );
 });
 
-test("all 50 core URLs have translated server HTML and reciprocal SEO", async ({
+test("all published core URLs have translated server HTML and reciprocal SEO", async ({
   request,
 }) => {
   test.setTimeout(180_000);
@@ -44,8 +50,23 @@ test("all 50 core URLs have translated server HTML and reciprocal SEO", async ({
         expect(canonical?.replace(/\/$/, ""), url).toBe(
           `https://www.realismthrift.com${url === "/" ? "" : url}`,
         );
-        for (const language of [...locales, "x-default"])
-          expect(html, url).toContain(`hrefLang="${language}"`);
+        for (const [language, href] of Object.entries(languageAlternates(path))) {
+          const actual = html.match(
+            new RegExp(`<link rel="alternate" hrefLang="${language}" href="([^"]+)"`),
+          )?.[1];
+          expect(actual?.replace(/\/$/, ""), `${url}: ${language}`).toBe(String(href).replace(/\/$/, ""));
+        }
+        if (locale === "id") {
+          expect(html, url).toContain(
+            '<meta property="og:locale" content="id_ID"',
+          );
+          expect(html, url).not.toContain(
+            '<meta property="og:locale:alternate" content="id_ID"',
+          );
+          expect(html, url).toContain(
+            getTranslator(locale)("Skip to main content"),
+          );
+        }
         expect(html, url).toMatch(/<meta name="description" content="[^"]+"/u);
         expect(html, url).not.toMatch(/ZXQ\d+QXZ|\{v\d+\}/u);
         if (locale !== "en") {
@@ -88,7 +109,7 @@ test("language menu retains product path and updates document direction", async 
   await page.goto("/es/used-brand-shoes?campaign=test#inquiry");
   const menu = page.locator(".rt-language-switcher");
   await menu.locator("summary").click();
-  await expect(menu.getByRole("link")).toHaveCount(5);
+  await expect(menu.getByRole("link")).toHaveCount(locales.length);
   await menu.getByRole("link", { name: "العربية" }).click();
   await expect(page).toHaveURL(
     /\/ar\/used-brand-shoes\?campaign=test#inquiry$/,
@@ -107,7 +128,7 @@ test("language menu retains product path and updates document direction", async 
   ).toBe(true);
 });
 
-for (const locale of ["es", "fr", "ar", "vi"] as const) {
+for (const locale of translatedLocales) {
   test(`${locale} form keeps backend values and one deduplicated lead`, async ({
     page,
   }) => {
@@ -134,8 +155,11 @@ for (const locale of ["es", "fr", "ar", "vi"] as const) {
     const form = page.locator(".rt-inquiry-form").first();
     await form.locator('[name="name"]').fill("Test Buyer");
     await form.locator('[name="email"]').fill("buyer@example.com");
-    await form.locator('[name="whatsapp"]').fill("+234 803 123 4567");
-    await form.locator('[name="country"]').fill("Nigeria");
+    await form
+      .locator('[name="whatsapp"]')
+      .fill(locale === "id" ? "+62 812-3456-7890" : "+234 803 123 4567");
+    const country = locale === "id" ? "Indonesia" : "Nigeria";
+    await form.locator('[name="country"]').fill(country);
     await form.locator('[name="product"]').selectOption("Used Brand Clothes");
     await form.locator('[name="quantity"]').selectOption("20ft");
     await expect(form.locator('a[href$="/privacy-policy"]')).toHaveAttribute(
@@ -163,7 +187,7 @@ for (const locale of ["es", "fr", "ar", "vi"] as const) {
       page_path: `/${locale}/contact-us`,
     });
     expect(JSON.stringify(leads)).not.toContain("buyer@example.com");
-    expect(JSON.stringify(leads)).not.toContain("Nigeria");
+    expect(JSON.stringify(leads)).not.toContain(country);
     const pixelCommands = await page.evaluate(() =>
       (window.fbq?.queue ?? []).map((command) =>
         Array.from(command as ArrayLike<unknown>),
@@ -204,7 +228,11 @@ test("English-only pages stay English and unpublished translations return 404", 
     "https://www.realismthrift.com/ar/used-brand-clothes",
   );
   expect(sitemap).toContain('hreflang="x-default"');
-  expect(sitemap).not.toMatch(/\/(es|fr|ar|vi)\/blog/);
+  for (const path of localizedPaths)
+    expect(sitemap).toContain(
+      `<loc>https://www.realismthrift.com${localePath(path, "id")}</loc>`,
+    );
+  expect(sitemap).not.toMatch(/\/(es|fr|ar|vi|id)\/blog/);
 });
 
 test("translated navigation and content fit a 320px screen", async ({
@@ -212,7 +240,7 @@ test("translated navigation and content fit a 320px screen", async ({
 }) => {
   test.setTimeout(180_000);
   await page.setViewportSize({ width: 320, height: 800 });
-  for (const locale of ["es", "fr", "ar", "vi"] as const) {
+  for (const locale of translatedLocales) {
     for (const path of [
       "/",
       "/used-brand-clothes",
@@ -325,12 +353,72 @@ test("language links contain campaign parameters before clicking and update with
   );
 });
 
+test("Indonesian language switching preserves attribution and tracks each public page once", async ({
+  page,
+}) => {
+  const query =
+    "utm_source=facebook&utm_medium=paid_social&utm_campaign=bahasa-id&fbclid=test-indonesia-click";
+  await page.goto(`/used-brand-shoes?${query}#inquiry`);
+  const menu = page.locator(".rt-language-switcher");
+  await menu.locator("summary").click();
+  await menu.getByRole("link", { name: "Bahasa Indonesia" }).click();
+  await expect(page).toHaveURL(`/id/used-brand-shoes?${query}#inquiry`);
+  await expect(page.locator("html")).toHaveAttribute("lang", "id");
+  await page.waitForFunction(() =>
+    (window.dataLayer ?? []).some(
+      (command) => Array.from(command as ArrayLike<unknown>)[1] === "page_view",
+    ),
+  );
+  const commands = () =>
+    page.evaluate(() =>
+      (window.dataLayer ?? []).map((command) =>
+        Array.from(command as ArrayLike<unknown>),
+      ),
+    );
+  expect(await commands()).toContainEqual([
+    "set",
+    expect.objectContaining({
+      campaign_source: "facebook",
+      campaign_medium: "paid_social",
+      campaign_name: "bahasa-id",
+    }),
+  ]);
+  const clickCookie = (await page.context().cookies()).find(
+    (cookie) => cookie.name === "_fbc",
+  )?.value;
+  expect(clickCookie).toMatch(/^fb\.1\.\d+\.test-indonesia-click$/);
+  await page.locator('footer a[href="/id/contact-us"]').first().click();
+  await expect(page).toHaveURL("/id/contact-us");
+  await expect
+    .poll(async () =>
+      (await commands()).filter((command) => command[1] === "page_view"),
+    )
+    .toHaveLength(2);
+  const views = (await commands()).filter(
+    (command) => command[1] === "page_view",
+  );
+  expect(
+    views.map((command) => (command[2] as Record<string, string>).page_path),
+  ).toEqual(["/id/used-brand-shoes", "/id/contact-us"]);
+  expect(JSON.stringify(views)).not.toContain("fbclid");
+  expect(
+    (await page.context().cookies()).find((cookie) => cookie.name === "_fbc")
+      ?.value,
+  ).toBe(clickCookie);
+  const pixelViews = await page.evaluate(() =>
+    (window.fbq?.queue ?? []).filter(
+      (command) => Array.from(command as ArrayLike<unknown>)[1] === "PageView",
+    ),
+  );
+  expect(pixelViews).toHaveLength(2);
+});
+
 test("unpublished localized URLs return a translated, styled and non-indexable 404", async ({
   request,
   page,
 }) => {
   test.setTimeout(120_000);
-  for (const locale of ["es", "fr", "ar", "vi"] as const) {
+  for (const locale of translatedLocales) {
     const path = `/${locale}/blog/unpublished-translation`;
     const response = await request.get(path);
     expect(response.status(), path).toBe(404);
@@ -378,6 +466,7 @@ test("native-language shipping searches return to the buyer's language", async (
     ["fr", "expédition"],
     ["ar", "الشحن"],
     ["vi", "vận chuyển"],
+    ["id", "pengiriman"],
   ] as const) {
     await page.goto(`/${locale}`);
     if (isMobile) {
@@ -423,7 +512,7 @@ test("localized form failures explain validation and rate limits without emittin
     [400, "Missing required fields."],
     [500, "An unknown server-only error"],
   ] as const;
-  for (const locale of ["es", "fr", "ar", "vi"] as const) {
+  for (const locale of translatedLocales) {
     let index = 0;
     await page.route("**/api/send", (route) => {
       const [status, message] = cases[index++];

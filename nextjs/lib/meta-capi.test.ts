@@ -40,6 +40,15 @@ function baseInput() {
 }
 
 describe("buildMetaCapiLeadEvent", () => {
+  it("retains the Indonesian source URL without campaign or contact query data", () => {
+    const event = buildMetaCapiLeadEvent({
+      ...baseInput(),
+      eventSourceUrl: "https://www.realismthrift.com/id/contact-us?utm_source=facebook&email=private@example.com#inquiry",
+    });
+    expect(event.event_source_url).toBe("https://www.realismthrift.com/id/contact-us");
+    expect(event.event_id).toBe(EVENT_ID);
+    expect(event.custom_data).toEqual(metaLeadParams("Used Brand Shoes"));
+  });
   it("accepts only phone hashes and omits ph when the phone is unusable", () => {
     const event = buildMetaCapiLeadEvent({ ...baseInput(), phoneHash: hashMetaPhone("+1 (650) 555-1212") });
     expect(event.user_data.ph).toEqual([EXAMPLE_PHONE_HASH]);
