@@ -1,4 +1,3 @@
-import React from "react";
 import { type Locale } from "@/lib/i18n/routing";
 import { getTranslator } from "@/lib/i18n/server";
 

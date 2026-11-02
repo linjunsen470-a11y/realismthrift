@@ -2,7 +2,6 @@ import { createPageMetadata } from "@/lib/metadata";
 import "@/app/internal-pages.css";
 import Image from "next/image";
 import Link from "next/link";
-import { InquiryForm } from "@/components/InquiryForm";
 import { companyStats as englishCompanyStats } from "@/data/siteData";
 import {
   Building2,
@@ -11,7 +10,6 @@ import {
   Brush,
   Box,
   Ship,
-  Globe2,
   MessageCircle,
   Mail,
 } from "lucide-react";

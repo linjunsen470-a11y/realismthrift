@@ -731,7 +731,7 @@ export default function UsedBrandClothesPage({
                         [t("20GP capacity"), t("~280 bales (~13 tons)")],
                         [t("40HQ capacity"), t("~580 bales (~28 tons)")],
                         [t("Custom packing"), t("Available on request")],
-                      ].map(([label, val], i) => (
+                      ].map(([label, val]) => (
                         <tr key={label} className="border-b border-[#e8e8e8]">
                           <td className="py-[0.375rem] px-[0.5rem] text-[#666]">
                             {label}

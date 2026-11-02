@@ -1,4 +1,3 @@
-import React from "react";
 import { companyPostalAddress } from "@/data/siteData";
 import { serializeJsonLd } from "@/lib/structured-data";
 import { locales, type Locale } from '@/lib/i18n/routing';
