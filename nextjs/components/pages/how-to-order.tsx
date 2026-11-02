@@ -512,7 +512,7 @@ export default function HowToOrderPage({
           <h2>{t("Bale & Sack Size Reference")}</h2>
           <div className="rt-section-divider" />
         </div>
-        <div className="overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
+        <div role="region" aria-label={t("Bale & Sack Size Reference")} tabIndex={0} className="overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
           <table className="w-full border-collapse text-[0.8125rem] bg-white text-left font-open-sans">
             <thead>
               <tr className="bg-brand-dark text-white">

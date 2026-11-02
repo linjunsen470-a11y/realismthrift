@@ -493,7 +493,7 @@ export default async function Home({
               <Link
                 href={localePath("/about-us", locale)}
                 className="rt-btn-primary"
-                aria-label={t("Know more about RealismThrift export services")}
+                aria-label={`${t("KNOW MORE ").trim()}: ${t("Know more about RealismThrift export services")}`}
               >
                 {t("KNOW MORE ")}
                 <ArrowRight size={16} strokeWidth={2.25} />

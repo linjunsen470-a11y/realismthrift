@@ -80,7 +80,7 @@ export function LanguageSwitcher({
         }
       }}
     >
-      <summary aria-label={label}>
+      <summary aria-label={`${label}: ${languageNames[locale]}`}>
         <Globe2 size={17} aria-hidden="true" />
         <span lang={locale} dir="auto">
           {languageNames[locale]}

@@ -262,7 +262,7 @@ export default function UsedBrandBagPage({
               <div className="font-montserrat font-black text-[1.25rem]">
                 {stat.num}
               </div>
-              <div className="text-[0.65rem] opacity-85 uppercase tracking-[0.07em] mt-[0.15rem]">
+              <div className="text-[0.65rem] opacity-100 uppercase tracking-[0.07em] mt-[0.15rem]">
                 {stat.label}
               </div>
             </div>
@@ -379,7 +379,7 @@ export default function UsedBrandBagPage({
                     <h3 className="font-montserrat text-[0.875rem] font-bold text-[#1A1A1A] m-0 mb-[0.35rem]">
                       {prod.title}
                     </h3>
-                    <p className="text-[0.75rem] text-[#888] m-0 mb-2">
+                    <p className="text-[0.75rem] text-[#666] m-0 mb-2">
                       {prod.desc}
                     </p>
                     <div className="flex justify-between items-center">
@@ -389,7 +389,7 @@ export default function UsedBrandBagPage({
                       <a
                         href="#inquiry"
                         className="bg-[#1A1A1A] text-white text-[0.7rem] px-[0.75rem] py-[0.3rem] rounded-[2px] no-underline font-montserrat font-semibold"
-                        aria-label={t("Inquire about {v0}", { v0: prod.title })}
+                        aria-label={`${t("Inquire")}: ${prod.title}`}
                       >
                         {t("Inquire")}
                       </a>
@@ -549,7 +549,7 @@ export default function UsedBrandBagPage({
             <h2 className="font-montserrat text-[1.4rem] font-extrabold text-[#1A1A1A] border-s-4 border-[#C0392B] ps-[0.875rem] m-0 mb-[1.25rem]">
               {t("Product Specifications")}
             </h2>
-            <div className="rt-table-wrap overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
+            <div role="region" aria-label={t("Product Specifications")} tabIndex={0} className="rt-table-wrap overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
               <table className="w-full border-collapse text-[0.8125rem] bg-white min-w-[650px]">
                 <thead>
                   <tr className="bg-[#1A1A1A] text-white">
@@ -660,10 +660,10 @@ export default function UsedBrandBagPage({
           >
             {/* Sidebar header — gold/brown */}
             <div className="bg-[#8B6914] text-white -mx-[1.75rem] -mt-[1.75rem] px-[1.75rem] py-[1.25rem] rounded-t-[8px] mb-6">
-              <h3 className="font-montserrat text-[1rem] font-extrabold m-0 mb-[0.25rem]">
+              <h3 className="font-montserrat text-[1rem] font-extrabold text-white m-0 mb-[0.25rem]">
                 {t("Get Bag Price Now")}
               </h3>
-              <p className="text-[0.75rem] opacity-85 m-0">
+              <p className="text-[0.75rem] opacity-100 m-0">
                 {t(
                   "We aim to reply within 12 hours · Ask about sample pricing",
                 )}

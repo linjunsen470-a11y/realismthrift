@@ -252,7 +252,7 @@ export default function UsedBrandShoesPage({
               <div className="font-montserrat font-black text-[1.25rem] text-brand-gold">
                 {stat.num}
               </div>
-              <div className="text-[0.65rem] opacity-85 uppercase tracking-[0.07em] mt-[0.15rem]">
+              <div className="text-[0.65rem] opacity-100 uppercase tracking-[0.07em] mt-[0.15rem]">
                 {stat.label}
               </div>
             </div>
@@ -380,7 +380,7 @@ export default function UsedBrandShoesPage({
                     <h3 className="font-montserrat text-[0.875rem] font-bold text-brand-dark mb-1">
                       {prod.title}
                     </h3>
-                    <p className="text-[0.75rem] text-[#888] mb-2">
+                    <p className="text-[0.75rem] text-[#666] mb-2">
                       {prod.desc}
                     </p>
                     <div className="flex justify-between items-center break-all gap-1">
@@ -390,7 +390,7 @@ export default function UsedBrandShoesPage({
                       <a
                         href="#inquiry"
                         className="bg-brand-dark text-white text-[0.7rem] px-3 py-1.5 rounded-[2px] font-semibold font-montserrat shrink-0 hover:bg-brand-red transition-colors"
-                        aria-label={t("Inquire about {v0}", { v0: prod.title })}
+                        aria-label={`${t("Inquire")}: ${prod.title}`}
                       >
                         {t("Inquire")}
                       </a>
@@ -538,7 +538,7 @@ export default function UsedBrandShoesPage({
               <h2>{t("Product Specifications")}</h2>
               <div className="rt-section-divider" />
             </div>
-            <div className="rt-table-wrap overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
+            <div role="region" aria-label={t("Product Specifications")} tabIndex={0} className="rt-table-wrap overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
               <table className="w-full border-collapse text-[0.8125rem] bg-white min-w-[650px]">
                 <thead>
                   <tr className="bg-brand-dark text-white text-left font-montserrat">

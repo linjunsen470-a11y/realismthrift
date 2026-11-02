@@ -123,7 +123,7 @@ export default function AboutUsPage({
               <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">
                 10+
               </div>
-              <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">
+              <div className="text-[0.75rem] opacity-100 mt-1.5 tracking-wider uppercase">
                 {t("Years Experience")}
               </div>
             </div>
@@ -131,7 +131,7 @@ export default function AboutUsPage({
               <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">
                 {companyStats.facilitySize}
               </div>
-              <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">
+              <div className="text-[0.75rem] opacity-100 mt-1.5 tracking-wider uppercase">
                 {t("Sorting Facility")}
               </div>
             </div>
@@ -139,7 +139,7 @@ export default function AboutUsPage({
               <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">
                 {t("B2B")}
               </div>
-              <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">
+              <div className="text-[0.75rem] opacity-100 mt-1.5 tracking-wider uppercase">
                 {t("Wholesale Supply")}
               </div>
             </div>
@@ -147,7 +147,7 @@ export default function AboutUsPage({
               <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">
                 {companyStats.countriesCount}
               </div>
-              <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">
+              <div className="text-[0.75rem] opacity-100 mt-1.5 tracking-wider uppercase">
                 {t("Export Countries")}
               </div>
             </div>
@@ -155,7 +155,7 @@ export default function AboutUsPage({
               <div className="font-montserrat text-[1.75rem] font-extrabold leading-none">
                 {t("Repeat")}
               </div>
-              <div className="text-[0.75rem] opacity-85 mt-1.5 tracking-wider uppercase">
+              <div className="text-[0.75rem] opacity-100 mt-1.5 tracking-wider uppercase">
                 {t("Buyer Support")}
               </div>
             </div>
@@ -612,7 +612,7 @@ export default function AboutUsPage({
                 <div className="font-montserrat text-[0.8rem] font-bold text-brand-dark mb-1.5">
                   {step.title}
                 </div>
-                <div className="text-[0.7rem] text-[#888] leading-[1.5] max-w-[150px] mx-auto">
+                <div className="text-[0.7rem] text-[#666] leading-[1.5] max-w-[150px] mx-auto">
                   {step.desc}
                 </div>
               </div>
@@ -726,7 +726,7 @@ export default function AboutUsPage({
                   <div className="font-montserrat text-[0.8rem] font-bold text-brand-dark">
                     {buyer.name}
                   </div>
-                  <div className="text-[0.75rem] text-[#888]">
+                  <div className="text-[0.75rem] text-[#666]">
                     {buyer.country}
                   </div>
                 </div>

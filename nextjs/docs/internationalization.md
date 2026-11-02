@@ -149,6 +149,46 @@ i18n/search unit tests, TypeScript and ESLint for changed source files passed.
 Browser checks and production builds above predate these copy corrections and
 were not rerun for this follow-up. Production remains undeployed.
 
+### SEO/AEO and accessibility audit, 2026-11-02
+
+Checked all 60 core URLs in English, Spanish, French, Arabic, Vietnamese and
+Indonesian. The initial preview scan found low-contrast text and accessible names
+that omitted visible button/menu labels. Corrected shared logo/footer/date text,
+product notes and grade labels, sidebar headings, language and inquiry labels.
+Strengthened input borders, placeholders and keyboard focus. Mobile scans also
+found non-focusable horizontal specification tables; all four table layouts now
+have localized region names, keyboard focus and visible outlines. Decorative FAQ
+arrows are hidden from assistive technology.
+
+Final local production build: all 60 pages return 200, have one H1, correct
+document language/direction, self canonicals, reciprocal six-language alternates
+and x-default, localized title/description/OG locale, valid JSON-LD, no duplicate
+IDs or missing local anchors. Product CollectionPage URLs/languages match their
+pages. FAQ schema and visible questions/answers use the same translated arrays.
+Robots/sitemap and localized noindex 404 behavior are covered by existing checks.
+No special AI-only schema or files were added: follow Google's
+[AI features guidance](https://developers.google.com/search/docs/appearance/ai-features)
+and [localized page guidance](https://developers.google.com/search/docs/specialty/international/localized-versions).
+
+Validation: axe-core 4.14.0 WCAG 2 A/AA, WCAG 2.1 A/AA and best-practice scans
+reported zero violations on 60 desktop and 60 mobile (320px) page states. All
+24 table keyboard-scroll/focus checks passed, including RTL. All 269 unit tests,
+69 browser regressions (one desktop-only skip of the mobile-menu test), changed
+source ESLint and the final TypeScript/production build passed. Browser regressions
+preceded the final table-focus change; the 120-state scan and 24 keyboard checks
+were run again after that change. Inquiry and analytics transports were intercepted.
+
+Preview deployments now send `X-Robots-Tag: noindex` using VERCEL_ENV=preview;
+production builds do not receive this blanket header. Canonicals continue to point
+to production. Production release remains separate from preview updates.
+
+Limits: automated scans are not WCAG certification or a guarantee of rankings,
+indexing or AI citations. Axe leaves image-background contrast and some language
+name checks for human review. The Google Maps iframe was replaced with a local
+placeholder during scans, so its embedded UI was not audited. No full screen-reader
+or native-speaker linguistic review, production field Core Web Vitals, Search
+Console indexing inspection or live advertising-conversion verification was done.
+
 After moving routes, stale `.next/dev/types` from an earlier dev session may
 refer to the old filesystem paths. Stop that dev session and regenerate the
 generated types before checking the build; no source files need changing.

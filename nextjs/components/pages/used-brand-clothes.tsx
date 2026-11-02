@@ -287,7 +287,7 @@ export default function UsedBrandClothesPage({
               <div className="font-montserrat font-black text-[1.25rem]">
                 {stat.num}
               </div>
-              <div className="text-[0.65rem] opacity-85 uppercase tracking-[0.07em] mt-[0.15rem]">
+              <div className="text-[0.65rem] opacity-100 uppercase tracking-[0.07em] mt-[0.15rem]">
                 {stat.label}
               </div>
             </div>
@@ -440,7 +440,7 @@ export default function UsedBrandClothesPage({
                 </div>
               </div>
             ))}
-            <p className="text-[0.8rem] text-[#aaa] font-open-sans italic mt-2">
+            <p className="text-[0.8rem] text-[#666] font-open-sans italic mt-2">
               {t(
                 "* Brand availability varies by season and batch. Contact us for current stock list and photos.",
               )}
@@ -605,7 +605,7 @@ export default function UsedBrandClothesPage({
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-[0.75rem]">
                   <div className="border-2 border-[#27AE60] rounded-[4px] p-[0.875rem] text-center">
-                    <div className="font-montserrat font-extrabold text-[0.875rem] text-[#27AE60] mb-[0.4rem]">
+                    <div className="font-montserrat font-extrabold text-[0.875rem] text-[#137a3c] mb-[0.4rem]">
                       {t("Grade A")}
                     </div>
                     <p className="text-[0.75rem] text-[#666] font-open-sans leading-[1.6] m-0">
@@ -615,7 +615,7 @@ export default function UsedBrandClothesPage({
                     </p>
                   </div>
                   <div className="border-2 border-[#F0B429] rounded-[4px] p-[0.875rem] text-center">
-                    <div className="font-montserrat font-extrabold text-[0.875rem] text-[#F0B429] mb-[0.4rem]">
+                    <div className="font-montserrat font-extrabold text-[0.875rem] text-[#805b00] mb-[0.4rem]">
                       {t("Grade B")}
                     </div>
                     <p className="text-[0.75rem] text-[#666] font-open-sans leading-[1.6] m-0">
@@ -733,7 +733,7 @@ export default function UsedBrandClothesPage({
                         [t("Custom packing"), t("Available on request")],
                       ].map(([label, val], i) => (
                         <tr key={label} className="border-b border-[#e8e8e8]">
-                          <td className="py-[0.375rem] px-[0.5rem] text-[#888]">
+                          <td className="py-[0.375rem] px-[0.5rem] text-[#666]">
                             {label}
                           </td>
                           <td className="py-[0.375rem] px-[0.5rem] text-[#333] font-semibold">
@@ -915,7 +915,7 @@ export default function UsedBrandClothesPage({
                     <h3 className="font-montserrat text-[0.875rem] font-bold text-[#1A1A1A] m-0 mb-[0.3rem]">
                       {prod.title}
                     </h3>
-                    <p className="text-[0.75rem] text-[#888] m-0 mb-[0.5rem]">
+                    <p className="text-[0.75rem] text-[#666] m-0 mb-[0.5rem]">
                       {prod.desc}
                     </p>
                     <div className="flex justify-between items-center">
@@ -925,7 +925,7 @@ export default function UsedBrandClothesPage({
                       <a
                         href="#inquiry"
                         className="bg-[#1A1A1A] text-white text-[0.7rem] px-[0.75rem] py-[0.3rem] rounded-[2px] no-underline font-montserrat font-semibold"
-                        aria-label={t("Inquire about {v0}", { v0: prod.title })}
+                        aria-label={`${t("Inquire")}: ${prod.title}`}
                       >
                         {t("Inquire")}
                       </a>
@@ -944,7 +944,7 @@ export default function UsedBrandClothesPage({
                 {t("Product Specifications & Pricing")}
               </h2>
             </div>
-            <div className="rt-table-wrap overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
+            <div role="region" aria-label={t("Product Specifications & Pricing")} tabIndex={0} className="rt-table-wrap overflow-x-auto rounded-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">
               <table className="w-full border-collapse text-[0.8125rem] bg-white min-w-[700px]">
                 <thead>
                   <tr className="bg-[#1A1A1A]">
@@ -1063,7 +1063,7 @@ export default function UsedBrandClothesPage({
                 </tbody>
               </table>
             </div>
-            <p className="text-[0.75rem] text-[#aaa] font-open-sans italic mt-[0.625rem]">
+            <p className="text-[0.75rem] text-[#666] font-open-sans italic mt-[0.625rem]">
               {t(
                 "* Prices are indicative. Contact us for a current quote. Volume discounts for orders above 1,000 bales.",
               )}
@@ -1094,7 +1094,7 @@ export default function UsedBrandClothesPage({
                 <h3 className="font-montserrat text-[1rem] font-extrabold text-white m-0 mb-[0.25rem]">
                   {t("Get Wholesale Price")}
                 </h3>
-                <p className="text-[0.75rem] text-white/80 m-0">
+                <p className="text-[0.75rem] text-white m-0">
                   {t(
                     "We aim to reply within 12 hours · Ask about sample pricing",
                   )}

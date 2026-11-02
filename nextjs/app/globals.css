@@ -52,7 +52,7 @@
     margin: 0;
   }
 
-  :where(a, button, summary, input, select, textarea):focus-visible {
+  :where(a, button, summary, input, select, textarea, [role="region"][tabindex="0"]):focus-visible {
     outline: 3px solid #2563eb;
     outline-offset: 3px;
   }
@@ -432,7 +432,7 @@ html[dir="rtl"] :is(.rt-footer-note,.rt-form-note) { border-left: 0; border-inli
 }
 
 .rt-logo-combo-name {
-  color: #c9922a;
+  color: #916615;
   font-family: var(--font-montserrat);
   font-size: 1.25rem;
   font-weight: 800;
@@ -454,7 +454,7 @@ html[dir="rtl"] :is(.rt-footer-note,.rt-form-note) { border-left: 0; border-inli
   flex: 1 1 auto;
   align-items: center;
   max-width: 320px;
-  border: 2px solid #ddd;
+  border: 2px solid #888;
   border-radius: 4px;
   overflow: hidden;
 }
@@ -1422,7 +1422,7 @@ html[dir="rtl"] :is(.rt-footer-note,.rt-form-note) { border-left: 0; border-inli
 .rt-form-group textarea {
   min-width: 0;
   width: 100%;
-  border: 1.5px solid #ddd;
+  border: 1.5px solid #888;
   border-radius: 4px;
   background: #fff;
   color: #333;
@@ -1438,6 +1438,17 @@ html[dir="rtl"] :is(.rt-footer-note,.rt-form-note) { border-left: 0; border-inli
 .rt-form-group textarea {
   min-height: 120px;
   resize: vertical;
+}
+
+.rt-form-group :is(input, textarea)::placeholder,
+.rt-search-form input::placeholder {
+  color: #666;
+  opacity: 1;
+}
+
+.rt-form-group :is(input, select, textarea):focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
 }
 
 .rt-inquiry-form.is-sidebar .rt-form-group input,
@@ -1718,7 +1729,7 @@ html[dir="rtl"] :is(.rt-footer-note,.rt-form-note) { border-left: 0; border-inli
 }
 
 .rt-news-card-date {
-  color: #aaa;
+  color: #666;
   font-size: 0.75rem;
 }
 
@@ -1971,7 +1982,7 @@ html[dir="rtl"] :is(.rt-footer-note,.rt-form-note) { border-left: 0; border-inli
   gap: 1rem;
   padding-top: 1.8rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.65);
   font-size: 0.75rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
