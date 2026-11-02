@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Globe2 } from "lucide-react";
+import { saveLanguagePreference } from "@/lib/i18n/preference";
 import {
   languageNames,
   localePath,
@@ -99,7 +100,13 @@ export function LanguageSwitcher({
               lang={language}
               dir="auto"
               aria-current={language === locale ? "true" : undefined}
-              onClick={syncLinks}
+              onClick={() => {
+                syncLinks();
+                saveLanguagePreference(language);
+              }}
+              onAuxClick={(event) => {
+                if (event.button === 1) saveLanguagePreference(language);
+              }}
             >
               {languageNames[language]}
               {language === locale ? <span aria-hidden="true">✓</span> : null}
