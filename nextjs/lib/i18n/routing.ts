@@ -1,6 +1,6 @@
 export const locales = ["en", "es", "fr", "ar", "vi", "id"] as const;
 export type Locale = (typeof locales)[number];
-export const translatedLocales = ["es", "fr", "ar", "vi", "id"] as const;
+export const translatedLocales = locales.filter((locale) => locale !== "en");
 export const localizedPaths = [
   "/",
   "/used-brand-clothes",
