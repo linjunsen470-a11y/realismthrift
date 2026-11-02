@@ -1,5 +1,6 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
+import { createSupabaseAuthRetryFetch } from "./supabase-fetch";
 
 export class InquiryConfigurationError extends Error {
   constructor(message: string) {
@@ -25,6 +26,7 @@ export function getSupabaseAdmin() {
       requireEnvironmentVariable("SUPABASE_URL"),
       requireEnvironmentVariable("SUPABASE_SECRET_KEY"),
       {
+        global: { fetch: createSupabaseAuthRetryFetch(fetch) },
         auth: {
           persistSession: false,
           autoRefreshToken: false,

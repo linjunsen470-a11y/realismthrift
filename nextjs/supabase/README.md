@@ -108,6 +108,16 @@ order by routine_name;
 
 If a table or function is missing, apply `migrations/202607100001_inquiry_pipeline.sql`. If all objects exist, confirm that Vercel Production has the matching `SUPABASE_URL`, a server-only `SUPABASE_SECRET_KEY`, and the same `INQUIRY_RETRY_SECRET` stored in Supabase Vault. Redeploy only after correcting environment variables; never print their values in logs.
 
+### Intermittent PostgREST authentication failures
+
+The Supabase admin client retries only a PostgREST HTTP 401 response whose JSON code is `PGRST303`: up to four retries after 250, 750, 1,500 and 2,500 ms. Authentication rejected these requests before the database operation ran. Network errors, timeouts, other authentication failures and server errors are not replayed, because their execution outcome can be uncertain. Request cancellation still stops the retry wait. The `Supabase PostgREST authentication retry` log records the number of retries, outcome and HTTP status, and classifies the exact known `JWT issued at future` message as `jwt_issued_in_future`; other messages are not logged. It does not record credentials, inquiry details or request URLs.
+
+PostgREST 14.18 [fixes a known intermittent JWT clock-validation issue](https://github.com/PostgREST/postgrest/blob/main/CHANGELOG.md). A `PGRST303` code by itself does not establish that specific cause: inspect the safe reason classification and project service version before drawing that conclusion. This retry is a mitigation, not a replacement for addressing persistent authentication failures or updating the service. A [Supabase project upgrade](https://supabase.com/docs/guides/platform/upgrading) takes the project offline and must be planned with backups and a maintenance window.
+
+When Resend has accepted an email but recording that acceptance fails, the job keeps its processing lease. After the lease expires, the scheduled worker can reclaim it with the same email payload and Resend idempotency key. The existing 23-hour safety boundary still applies; investigate persistent failures and expired jobs rather than manually resending blindly.
+
+After a deployment, check scheduled worker history, aggregate job statuses and application logs from normal traffic. Do not submit test inquiries or synthetic Meta leads to production.
+
 ## Built-in abuse and retry boundaries
 
 - Every valid submission is stored and creates a sales notification job.
