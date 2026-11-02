@@ -29,7 +29,7 @@ Warehouse teams manage sorting, grading, packing, and container preparation insi
 
 - Specialization: Teams are organized by category, including used clothes, shoes, and bags.
 - Focus: Build export batches that match buyer market needs rather than generic mixed lots.
-- Facility context: RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China.
+- Facility context: RealismThrift (Baisha Alley Weilitang), County Road 193, Yuanzhou Town, Boluo County, Huizhou City, Guangdong Province, China.
 
 ## The Global Logistics Agent: Supply Chain
 
@@ -65,6 +65,9 @@ The digital platform supports the public storefront, inquiry pipeline, Sanity bl
 
 - WhatsApp: [+86 17279444062](https://wa.me/8617279444062)
 - Email: sales@realismthrift.com
-- Address: RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China
+- Address: RealismThrift (Baisha Alley Weilitang), County Road 193, Yuanzhou Town, Boluo County, Huizhou City, Guangdong Province, China
+- Chinese navigation address: 广东惠州博罗县园洲镇193县道RealismThrift（白沙巷尾礼堂）
+- DiDi search address: Baisha Elementary School 193xiandao, Yuanzhou Town, Boluo County, Huizhou City, Guangdong Province, China
+- Factory map: https://www.google.com/maps/d/viewer?mid=1tQMcpDr1wCiqu03ci3gFUnP7RlUudME
 
 Copyright 2026 Dongguan Huihe Realismthrift Trading Co., Ltd. Stability, Quality, Trust.

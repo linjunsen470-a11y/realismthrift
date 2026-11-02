@@ -68,6 +68,9 @@ const contentSecurityPolicy = [
 ].join('; ');
 
 const securityHeaders = [
+  ...(process.env.VERCEL_ENV === 'preview'
+    ? [{ key: 'X-Robots-Tag', value: 'noindex' }]
+    : []),
   {key: 'Content-Security-Policy', value: contentSecurityPolicy},
   {key: 'X-Frame-Options', value: 'DENY'},
   {key: 'X-Content-Type-Options', value: 'nosniff'},
@@ -83,6 +86,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  experimental: { globalNotFound: true },
   env: {
     // Inline the same deployment environment into the browser bundle; no extra Vercel setting.
     NEXT_PUBLIC_META_ENVIRONMENT: process.env.VERCEL_ENV ?? 'development',

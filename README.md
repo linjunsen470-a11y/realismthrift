@@ -19,6 +19,7 @@
 
 ## 二、当前主要能力
 
+- **六语种核心页面**：英语保留原网址，西班牙语、法语、阿拉伯语、越南语、印尼语使用独立语言路径；博客及搜索界面保持英文。维护、SEO 与验证边界见 [多语言说明](nextjs/docs/internationalization.md)。
 - **完整官网展示**：包含首页、关于我们、联系我们、订购流程、FAQ、Used Brand Clothes、Used Brand Shoes、Used Brand Bags 等页面。
 - **产品分类说明**：围绕旧衣、旧鞋、旧包三大业务线，展示产品特点、质量标准、采购建议和询盘入口。
 - **博客内容管理**：博客内容由 Sanity 管理，支持英文文章、分类、作者、图文排版、表格、封面图和 SEO 字段。
@@ -56,7 +57,7 @@
    - 产品、FAQ、文章、博客列表和面包屑结构化数据。
    - 具体、可理解的图片 Alt Text。
 
-   robots 统一由 `nextjs/app/robots.ts` 生成；静态页面实质内容修改后同步维护 `nextjs/app/sitemap.ts` 的日期，不按部署时间刷新。实施记录、测试结果及 Vercel 平台跳转待办统一见 [跟踪与维护说明](nextjs/docs/meta-tracking.md)，避免重复维护审计文件。
+   robots 统一由 `nextjs/app/robots.ts` 生成；静态页面实质内容修改后同步维护 `nextjs/app/sitemap.ts` 的日期，不按部署时间刷新。询盘统计及 Vercel 平台跳转待办见 [跟踪说明](nextjs/docs/meta-tracking.md)；语言路由、SEO、无障碍及验证记录见 [多语言说明](nextjs/docs/internationalization.md)。
 
 6. **询盘链路实装**  
    表单系统已连接 Supabase 与邮件发送服务。询盘与邮件任务持久化后，邮件在响应结束后处理，避免邮件慢响应阻塞询盘成功提示。
@@ -228,7 +229,7 @@ pnpm build
 
 - **WhatsApp**: [+86 17279444062](https://wa.me/8617279444062)
 - **Email**: sales@realismthrift.com
-- **Address**: RealismThrift Co., Ltd. on Fengyi Road, Yuanzhou, Boluo, Huizhou, Guangdong, China
+- **Address**: RealismThrift (Baisha Alley Weilitang), County Road 193, Yuanzhou Town, Boluo County, Huizhou City, Guangdong Province, China
 - **Website**: [www.realismthrift.com](https://www.realismthrift.com)
 
 Copyright 2026 Dongguan Huihe Realismthrift Trading Co., Ltd.

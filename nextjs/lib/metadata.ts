@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { languageAlternates, localizedPaths } from './i18n/routing';
 
 export const siteUrl = "https://www.realismthrift.com";
 export const defaultSocialImage = "/img/og-realismthrift.webp";
@@ -11,6 +12,9 @@ export function createPageMetadata(metadata: Metadata): Metadata {
 
   return {
     ...metadata,
+    ...(typeof canonical === 'string' && localizedPaths.includes(canonical as (typeof localizedPaths)[number])
+      ? { alternates: { ...metadata.alternates, languages: languageAlternates(canonical) } }
+      : {}),
     openGraph: {
       type: "website",
       siteName: "RealismThrift",

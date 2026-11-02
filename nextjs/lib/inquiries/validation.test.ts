@@ -15,6 +15,17 @@ const validPayload = {
 };
 
 describe("validateInquiryPayload", () => {
+  it("preserves Indonesian source paths and canonical product values", () => {
+    const result = validateInquiryPayload({
+      ...validPayload,
+      sourcePath: "/id/contact-us?utm_source=facebook#inquiry",
+    });
+    expect(result.data).toMatchObject({
+      sourcePath: "/id/contact-us",
+      product: "Used Brand Clothes",
+      quantity: "20ft",
+    });
+  });
   it("normalizes a valid inquiry and keeps only the source pathname", () => {
     const result = validateInquiryPayload(validPayload);
 

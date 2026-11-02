@@ -34,7 +34,9 @@ const SYNONYM_MAP: Record<string, string[]> = {
 function normalizeText(value: string) {
   return value
     .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, " ")
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -136,7 +138,7 @@ export function buildBlogSearchEntries(posts: BlogPostCard[]): SearchEntry[] {
     description: post.excerpt,
     href: `/blog/${post.slug}`,
     keywords: [post.category?.title, post.author?.name].filter(
-      (value): value is string => Boolean(value)
+      (value): value is string => Boolean(value),
     ),
   }));
 }
@@ -155,7 +157,10 @@ export function searchStaticEntries(query: string): SearchResult[] {
   return sortResults(results);
 }
 
-export function searchAllContent(query: string, posts: BlogPostCard[]): SearchResult[] {
+export function searchAllContent(
+  query: string,
+  posts: BlogPostCard[],
+): SearchResult[] {
   if (!normalizeText(query)) return [];
 
   const blogEntries = buildBlogSearchEntries(posts);
