@@ -66,7 +66,7 @@ export default function PrivacyPolicyPage({
             </h1>
             <p className="text-white/60 text-lg leading-relaxed">
               {t(
-                "Last updated: October 18, 2026. This policy explains how we protect your personal data in our global wholesale operations.",
+                "Last updated: November 3, 2026. This policy explains how we protect your personal data in our global wholesale operations.",
               )}
             </p>
           </div>
@@ -147,6 +147,12 @@ export default function PrivacyPolicyPage({
                     )}
                   </li>
                 </ul>
+
+                <p>
+                  {t(
+                    "We use your browser language and country inferred from your IP address to choose a website language. A session cookie prevents repeated automatic changes, and a language preference cookie remembers your manual choice for one year. You can delete these cookies through your browser settings.",
+                  )}
+                </p>
 
                 <h2>{t("3. Data Security")}</h2>
                 <p>

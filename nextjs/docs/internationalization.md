@@ -15,14 +15,33 @@ core URLs. Blog articles, search and operator/email-preference pages remain Engl
   HTML language/direction are set before hydration; Arabic uses RTL.
 - `data/siteData.ts`: company facts and shared content.
 - `lib/i18n/messages/{es,fr,ar,vi,id}.json`: five server dictionaries, each matching
-  the 1,051 keys in `source-keys.json`. Only `client-keys.json` allowlisted copy is
+  the 1,052 keys in `source-keys.json`. Only `client-keys.json` allowlisted copy is
   passed to interactive components.
 
-There is no browser-language redirect, language cookie or runtime translation API.
-The language menu uses ordinary links, preserving the core page, campaign query
-and same-page anchor. On English-only pages it links to the selected homepage and
-omits page-specific anchors. Query/hash are added after hydration and refreshed on
-interaction; cached HTML contains the base language URL.
+There is no runtime translation API. On a new browser session, a top-level
+document navigation from outside the site or the address bar to an unprefixed core
+URL selects a language from a saved manual choice, weighted `Accept-Language`, the
+Vercel `X-Vercel-IP-Country` header, then English. The country fallback uses the
+Node/ICU likely language with French overrides for SN, ML, NE, CF, MG and BI.
+Requests without Fetch Metadata, in-site navigation, prefetches, assets, APIs and
+unknown routes are not redirected. A direct published `/es`, `/fr`, `/ar`, `/vi`
+or `/id` URL is always respected. Opening `/blog` or `/search` first marks the
+session as English; navigation from an English-only article also stays English.
+
+The first eligible document sets an HTTP-only `rt_language_session` session cookie.
+The language menu sets the `rt_language_preference` first-party cookie for 365 days
+when JavaScript and cookies are available. Both use `SameSite=Lax`, `Path=/` and
+`Secure` on HTTPS. Manual links still work without storage; a fresh outside entry
+may be selected again if cookies are blocked. The ordinary language links preserve
+the core page, campaign query and same-page anchor. On English-only pages they link
+to the selected homepage and omit page-specific anchors. Query/hash are added after
+hydration and refreshed on interaction; cached HTML contains the base language URL.
+
+Personalized redirects and responses setting the session cookie are `no-store`;
+the translated HTML remains static. `AUTO_LOCALE_DETECTION_ENABLED=false` disables
+automatic selection on a new deployment without disabling manual links. With no
+Vercel country header, country inference is skipped. No new IP/country log, GA4
+field, or third-party geolocation request is introduced.
 
 ## Maintaining copy
 
@@ -55,6 +74,10 @@ identity and canonical postal fields remain shared. Sales `availableLanguage`
 lists only confirmed spoken languages; website translations do not promise
 Indonesian-speaking staff. Follow Google's [localized page guidance](https://developers.google.com/search/docs/specialty/international/localized-versions)
 and [AI features guidance](https://developers.google.com/search/docs/appearance/ai-features).
+Google recommends avoiding automatic language redirects: because English and
+`x-default` share unprefixed URLs, the entry redirect still carries an indexing
+risk. Monitor Search Console after deployment and disable automatic selection if
+the results deteriorate. The proxy does not special-case crawler user agents.
 
 Preview builds send `X-Robots-Tag: noindex` when `VERCEL_ENV=preview`; production
 builds do not receive that blanket header. Keep preview canonicals pointing at
