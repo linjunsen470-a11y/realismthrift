@@ -48,6 +48,7 @@ async function sendEmailJob(job: ClaimedEmailJob) {
   const salesProps = salesEmailProps(job);
   const customerProps = customerEmailProps(job);
 
+  let resendEmailId: string;
   try {
     const result = await getResend().emails.send(
       {
@@ -75,8 +76,7 @@ async function sendEmailJob(job: ClaimedEmailJob) {
       throw result.error ?? new Error("Resend returned no email identifier.");
     }
 
-    await markEmailJobAccepted(job.job_id, result.data.id);
-    return "accepted" as const;
+    resendEmailId = result.data.id;
   } catch (error) {
     const failure = classifyEmailError(error);
     const canRetry = failure.transient && job.attempt_count < MAX_EMAIL_ATTEMPTS;
@@ -98,6 +98,12 @@ async function sendEmailJob(job: ClaimedEmailJob) {
     });
     return canRetry ? ("deferred" as const) : ("dead" as const);
   }
+
+  // Once Resend accepted the message, a storage failure is not a send failure.
+  // Leave the processing lease intact so the scheduled worker can retry using
+  // the same Resend idempotency key instead of marking an accepted email dead.
+  await markEmailJobAccepted(job.job_id, resendEmailId);
+  return "accepted" as const;
 }
 
 export async function processPendingEmailJobs(
