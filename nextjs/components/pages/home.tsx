@@ -6,7 +6,6 @@ import {
   ArrowRight,
   Award,
   BarChart3,
-  Check,
   CheckCircle2,
   ChevronDown,
   Clock3,

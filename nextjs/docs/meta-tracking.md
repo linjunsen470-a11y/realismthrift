@@ -20,6 +20,7 @@
 - robots 的唯一来源为 `app/robots.ts`；`/search` 保持可抓取并在页面输出 noindex。
 - sitemap 静态日期按实质内容变更维护，不按构建时间更新。2026-10-29 已核对现有提交历史；颜色、焦点和测量调整不刷新所有页面日期。
 - 应用层已有裸域名到 www 的永久跳转。2026-10-29 检查 Vercel 项目域名 `realismthrift.com`：目标为 `www.realismthrift.com`，`redirectStatusCode` 为 null，线上返回 307。需要在项目 Settings → Domains 将该现有跳转状态设为 308；不要删除域名或修改 DNS。完成后分别检查根路径及带路径/UTM 的地址，确认 Location 保留路径和参数。本记录不表示平台修改已经完成。
+- 2026-11-03 只读复查带路径和 UTM 的裸域名请求，仍返回 307，目标地址保留了路径和参数；平台跳转状态仍待调整。
 
 ## 2026-10-29 实施与验证记录
 

@@ -15,10 +15,6 @@ import {
   Sparkles,
   Globe2,
   Camera,
-  Footprints,
-  ShoppingBag,
-  ClipboardList,
-  Mail,
 } from "lucide-react";
 import {
   JsonLd,

@@ -14,9 +14,6 @@ import {
   Sparkles,
   Package,
   Globe2,
-  ShoppingBag,
-  ClipboardList,
-  Mail,
 } from "lucide-react";
 import {
   JsonLd,

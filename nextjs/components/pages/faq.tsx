@@ -1,7 +1,5 @@
 import { createPageMetadata } from "@/lib/metadata";
 import "@/app/internal-pages.css";
-import React from "react";
-
 import Link from "next/link";
 import { FaqContent } from "@/components/faq/FaqContent";
 import { JsonLd, getFaqSchema } from "@/components/JsonLd";

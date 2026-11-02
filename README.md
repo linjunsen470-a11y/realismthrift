@@ -19,7 +19,7 @@
 
 ## 二、当前主要能力
 
-- **六语种核心页面**：英语保留原网址，西班牙语、法语、阿拉伯语、越南语、印尼语使用独立语言路径；博客及搜索界面保持英文。维护、SEO 与验证边界见 [多语言说明](nextjs/docs/internationalization.md)。
+- **六语种核心页面**：英语保留原网址，西班牙语、法语、阿拉伯语、越南语、印尼语使用独立语言路径；博客及搜索界面保持英文。新会话的适用入口依次参考手动选择、浏览器语言、访问国家和英语；语言菜单始终可用。维护、SEO 与验证边界见 [多语言说明](nextjs/docs/internationalization.md)。
 - **完整官网展示**：包含首页、关于我们、联系我们、订购流程、FAQ、Used Brand Clothes、Used Brand Shoes、Used Brand Bags 等页面。
 - **产品分类说明**：围绕旧衣、旧鞋、旧包三大业务线，展示产品特点、质量标准、采购建议和询盘入口。
 - **博客内容管理**：博客内容由 Sanity 管理，支持英文文章、分类、作者、图文排版、表格、封面图和 SEO 字段。
@@ -85,11 +85,12 @@
 
 如果没有收到邮件，请检查：
 
-- `.env.local` 中的 `RESEND_API_KEY` 是否正确。
-- `CONTACT_EMAIL` 是否设置为正确接收邮箱。
+- 本地运行时检查 `.env.local`；生产环境检查 Vercel Production 中的 `RESEND_API_KEY` 和 `CONTACT_EMAIL`，不要输出密钥值。
 - 发件域名是否完成 Resend 验证。
 - 邮件是否进入垃圾邮件箱。
-- Supabase 的邮件任务状态与定时重试是否正常，部署步骤见 [询盘链路说明](nextjs/supabase/README.md)。
+- Supabase 的邮件任务状态、每五分钟的定时重试及其实际 HTTP 响应是否正常；认证错误排查见 [询盘链路说明](nextjs/supabase/README.md)。
+
+检查生产环境时使用真实流量和只读日志，不提交测试询盘或合成广告转化。
 
 ### 3. 修改网站联系信息
 
@@ -113,7 +114,7 @@
 
 如需调整出口国家数、工厂面积、业务年限等数据，请先确认这些数字与全站其他页面一致，再进行修改。
 
-- 注意：该项目footer中的社媒按钮目前已暂被注释隐藏。
+- 社交媒体地址保留在数据中，但当前页脚不展示社媒按钮。
 
 ---
 
@@ -126,6 +127,8 @@
 - `AGENTS.MD`：业务背景、团队角色和项目维护规则。
 - `Company_Introduction.md`：公司介绍文档。
 - `Company_Introduction_Professional.md`：更克制、专业版本的公司介绍。
+- `knowledge/`：业务知识与问答资料。
+- `plugins/`：开发信工具的私有插件与操作说明；服务实现位于 `nextjs/outreach/` 和 `nextjs/lib/outreach/`。
 - `archive/`：历史审计、临时方案和过期技术文档。本目录已加入 `.gitignore`，后续默认不纳入 Git 版本管理。
 
 ### 2. 包管理要求
@@ -136,9 +139,11 @@
 
 ```powershell
 cd nextjs
-pnpm install
+pnpm install --frozen-lockfile
 pnpm dev
 pnpm lint
+pnpm test:unit
+pnpm exec tsc --noEmit
 pnpm build
 ```
 
@@ -156,9 +161,14 @@ pnpm build
 网站正常运行需要配置环境变量。真实密钥只应保存在本地或部署平台，不应提交到代码仓库。
 
 - `RESEND_API_KEY`：邮件发送服务密钥。
+- `RESEND_WEBHOOK_SECRET`：验证 Resend 投递状态回调的签名。
 - `CONTACT_EMAIL`：接收询盘的邮箱。
 - `CONTACT_FROM_EMAIL`：系统发件邮箱。
+- `AUTO_REPLY_FROM_EMAIL`：客户自动确认邮件的发件邮箱。
 - `SUPABASE_URL`、`SUPABASE_SECRET_KEY`：询盘数据库与仅服务端使用的凭据。
+- `INQUIRY_RETRY_SECRET`：邮件重试接口的服务端密钥，须与 Supabase Vault 配置一致。
+- `AUTO_LOCALE_DETECTION_ENABLED`：设为 `false` 可关闭自动语言选择，保留手动语言菜单。
+- `APP_URL`：网站的正式来源地址，用于来源校验等服务端逻辑。
 - `NEXT_PUBLIC_ANALYTICS_ENABLED`：设为 `false` 时关闭 GA4、Meta Pixel 和服务端 CAPI；修改公开变量后须重新构建部署。
 - `NEXT_PUBLIC_GA_ID`：GA4 数据流测量 ID。关键事件标记与计数方式在 GA4 后台维护，见 [跟踪说明](nextjs/docs/meta-tracking.md)。
 - `NEXT_PUBLIC_FB_PIXEL_ID`：Meta Pixel ID，当前为 `1661409812003549`。

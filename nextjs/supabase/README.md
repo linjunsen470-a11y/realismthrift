@@ -114,9 +114,32 @@ The Supabase admin client retries only a PostgREST HTTP 401 response whose JSON 
 
 PostgREST 14.18 [fixes a known intermittent JWT clock-validation issue](https://github.com/PostgREST/postgrest/blob/main/CHANGELOG.md). A `PGRST303` code by itself does not establish that specific cause: inspect the safe reason classification and project service version before drawing that conclusion. This retry is a mitigation, not a replacement for addressing persistent authentication failures or updating the service. A [Supabase project upgrade](https://supabase.com/docs/guides/platform/upgrading) takes the project offline and must be planned with backups and a maintenance window.
 
+On 2026-11-03 at 02:50 Singapore time, the production worker on PostgREST 14.5 logged `jwt_issued_in_future`, recovered after one retry and returned HTTP 200. This is a historical observation, not a guarantee of future delivery; check current logs and the service version when investigating a new incident.
+
 When Resend has accepted an email but recording that acceptance fails, the job keeps its processing lease. After the lease expires, the scheduled worker can reclaim it with the same email payload and Resend idempotency key. The existing 23-hour safety boundary still applies; investigate persistent failures and expired jobs rather than manually resending blindly.
 
 After a deployment, check scheduled worker history, aggregate job statuses and application logs from normal traffic. Do not submit test inquiries or synthetic Meta leads to production.
+
+Cron's `succeeded` status means its SQL ran; `net.http_post` queues a request asynchronously, so also inspect actual HTTP responses. `net._http_response` may include other jobs: correlate timestamps with the retry schedule rather than assuming every response belongs to this worker. These checks are read-only:
+
+```sql
+select status, count(*)
+from public.inquiry_email_jobs
+group by status
+order by status;
+
+select start_time, status
+from cron.job_run_details
+where jobid in (select jobid from cron.job where jobname = 'retry-inquiry-emails')
+order by start_time desc
+limit 12;
+
+select created, status_code
+from net._http_response
+where created > now() - interval '1 hour'
+order by created desc
+limit 12;
+```
 
 ## Built-in abuse and retry boundaries
 
