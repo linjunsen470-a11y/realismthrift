@@ -10,7 +10,8 @@ on:
 jobs:
   playwright:
     name: Playwright smoke
-    runs-on: ubuntu-latest
+    # Match the OS supported by the lockfile's Playwright version.
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: nextjs
