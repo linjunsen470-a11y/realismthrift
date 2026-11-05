@@ -94,6 +94,8 @@
 
 Vercel Preview 的询盘提交返回 503，不写库或安排发信；GA4 与 Meta 只在 Production 加载。2026-11-06 已将 11 项高权限凭据限定为 Production，保留 Sanity 只读预览；旧部署仍保留创建时的配置，详见[询盘部署说明](nextjs/supabase/README.md)。邮件解析、Neon 恢复、安全重定向与错误日志的维护说明分别见 [开发信说明](nextjs/outreach/README.md) 和 [测量说明](nextjs/docs/meta-tracking.md)。
 
+构建使用仓库内的 Montserrat 和 Open Sans WOFF2 字体，通过 `next/font/local` 加载，不再请求 Google Fonts。2026-11-06 的 Actions 失败发生在字体解析的构建阶段，冒烟测试尚未执行；字体来源、许可证和更新方法见[字体说明](nextjs/app/fonts/README.md)。Vercel 此前的 Supabase 分支预配失败另见[询盘部署说明](nextjs/supabase/README.md)，两者原因不同。
+
 ### 3. 修改网站联系信息
 
 全站通用的联系方式、页脚链接和社交媒体地址主要维护在：

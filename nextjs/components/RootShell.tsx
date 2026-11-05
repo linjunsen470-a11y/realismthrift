@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-head-element -- Shared App Router root shell owns the document head. */
 import type { Metadata } from "next";
-import { Montserrat, Open_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import "@/app/globals.css";
@@ -19,17 +19,20 @@ import {
 } from "@/lib/i18n/server";
 import type { Locale } from "@/lib/i18n/routing";
 
-const montserrat = Montserrat({
-  subsets: ["latin", "vietnamese"],
+// Bundled fonts keep builds independent of Google Fonts response formats/availability.
+const montserrat = localFont({
+  src: "../app/fonts/Montserrat.woff2",
   variable: "--font-montserrat",
-  weight: ["700", "800", "900"],
+  weight: "700 900",
+  style: "normal",
   display: "swap",
 });
 
-const openSans = Open_Sans({
-  subsets: ["latin", "vietnamese"],
+const openSans = localFont({
+  src: "../app/fonts/OpenSans.woff2",
   variable: "--font-open-sans",
-  weight: ["400", "700"],
+  weight: "400 700",
+  style: "normal",
   display: "swap",
 });
 
