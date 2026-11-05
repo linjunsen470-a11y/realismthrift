@@ -92,7 +92,7 @@
 
 检查生产环境时使用真实流量和只读日志，不提交测试询盘或合成广告转化。
 
-Vercel Preview 的询盘提交返回 503，不写库或安排发信；GA4 与 Meta 只在 Production 加载。预览目前仍需进一步分离生产凭据，这些代码保护不代表权限已经隔离。邮件解析、安全重定向与错误日志的维护说明分别见 [开发信说明](nextjs/outreach/README.md) 和 [测量说明](nextjs/docs/meta-tracking.md)。
+Vercel Preview 的询盘提交返回 503，不写库或安排发信；GA4 与 Meta 只在 Production 加载。2026-11-06 已将 11 项高权限凭据限定为 Production，保留 Sanity 只读预览；旧部署仍保留创建时的配置，详见[询盘部署说明](nextjs/supabase/README.md)。邮件解析、Neon 恢复、安全重定向与错误日志的维护说明分别见 [开发信说明](nextjs/outreach/README.md) 和 [测量说明](nextjs/docs/meta-tracking.md)。
 
 ### 3. 修改网站联系信息
 

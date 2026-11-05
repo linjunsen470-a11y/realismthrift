@@ -83,6 +83,26 @@ dependency includes the fix; the MIME identity regression test must remain green
 
 ## Maintenance and verification
 
+### Neon recovery baseline (2026-11-06)
+
+The `Realismthrift` Neon project remains on the free plan with a six-hour restore
+window. Its single free manual snapshot was created from `production` at
+2026-11-05 17:46:02 UTC (2026-11-06 01:46:02 Singapore time):
+`audit-baseline-20261106`, ID `snap-cold-field-b5ry38dt`, approximately 34 MB.
+The snapshot listing confirms it exists; no restore rehearsal was performed.
+This is a fixed recovery point, not scheduled backup coverage for later writes.
+No paid upgrade, backup scheduler, or extra infrastructure was introduced.
+
+Before a risky database change, check the current restore window and snapshot
+availability in Neon. Restore to a separate branch and validate before any
+production cutover. Never replay email sends after restoring historical state:
+reconcile Gmail Sent, suppressions and send reservations first. A longer restore
+window or recurring snapshots requires a separate cost decision. Local test and
+production owner credentials still need separation before running destructive
+database tests; an environment flag alone is not isolation.
+
+### Migrations and release checks
+
 Run migrations explicitly with `node outreach/migrate.mjs`; do not edit applied
 SQL or migration hashes. Migration 0004 supplies existing-draft import and the
 mailbox-aware quota claim. Old database fields/functions remain for historical

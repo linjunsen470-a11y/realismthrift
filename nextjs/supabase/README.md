@@ -2,7 +2,15 @@
 
 The application code is build-safe without production secrets, but `/api/send` becomes active only after the Supabase migration and server-only environment variables are configured.
 
-Vercel Preview submissions return 503 before any inquiry write or delivery is scheduled. This guard prevents accidental real submissions while Preview shares credentials; it does not replace separate credentials. Production submissions and scheduled retries are unchanged.
+Vercel Preview submissions return 503 before any inquiry write or delivery is scheduled. Production submissions and scheduled retries are unchanged.
+
+## 2026-11-06 access hardening
+
+- The following Vercel variables now target Production only: `INQUIRY_RETRY_SECRET`, `SANITY_API_EDITOR_TOKEN`, `RESEND_WEBHOOK_SECRET`, `RESEND_API_KEY`, `SUPABASE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_JWT_SECRET`, `POSTGRES_URL`, `POSTGRES_PRISMA_URL`, `POSTGRES_URL_NON_POOLING`, and `POSTGRES_PASSWORD`. Their production values were preserved. Sanity's read token remains available for visual previews; public keys and URLs are not privileged credentials.
+- Scope changes apply to new deployments. Existing Preview deployments retain their original environment snapshots and remain behind Vercel deployment protection. No credential rotation or historical-deployment deletion was performed. Do not treat this as retroactive credential isolation; retire old previews or coordinate rotation if access needs to be revoked. Recheck targets after reconnecting a Marketplace integration.
+- Applied `migrations/20261105174232_restrict_rt_leads_client_access.sql` to the existing lead-deduplication table (remote migration version `20261105174559`). `rt_leads` is maintained outside the inquiry schema and is service/MCP only; this migration is not needed on an inquiry-only installation without that table.
+- Verified all seven table privileges are denied to `anon` and `authenticated`, while `service_role` retains its existing privileges. RLS remains enabled with no client policies; the row count remained 9,998. No data or functions were changed.
+- If the permission change must be rolled back, restore the previous grants with `grant select, insert, update, delete, truncate, references, trigger on table public.rt_leads to anon, authenticated;`. Keep RLS enabled. Rollback is unnecessary for ordinary server/MCP access.
 
 ## 1. Create and migrate Supabase
 

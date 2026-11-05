@@ -64,3 +64,4 @@ mcps/
 terminals/
 .nextjs-build/
 nextjs/.build-log.txt
+nextjs/supabase/.temp/
