@@ -101,6 +101,16 @@ describe("POST /api/send Meta Lead", () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.unstubAllEnvs();
+  });
+
+  it("blocks preview submissions before writing or scheduling any delivery", async () => {
+    vi.stubEnv("VERCEL_ENV", "preview");
+    const response = await POST(inquiryRequest(inquiryBody));
+    expect(response.status).toBe(503);
+    expect(mocks.createInquiry).not.toHaveBeenCalled();
+    expect(mocks.after).not.toHaveBeenCalled();
+    expect(mocks.sendMetaCapiLead).not.toHaveBeenCalled();
   });
 
   it("returns the stable event id and sends no plaintext contact details", async () => {

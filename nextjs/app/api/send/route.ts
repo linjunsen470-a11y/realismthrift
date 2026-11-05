@@ -159,6 +159,11 @@ function isRateLimited(clientIp: string) {
 }
 
 export async function POST(request: Request) {
+  // Preview currently shares production credentials; never create real inquiries there.
+  if (process.env.VERCEL_ENV === "preview") {
+    return jsonError("config_error", "Inquiry service is temporarily unavailable.", 503);
+  }
+
   if (!isAllowedRequestOrigin(request)) {
     return jsonError("validation_error", "Invalid request origin.", 403);
   }

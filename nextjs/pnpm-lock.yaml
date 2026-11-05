@@ -12,6 +12,7 @@ overrides:
   form-data: 4.0.6
   js-yaml@>=3 <4: 3.15.1
   linkify-it: 5.0.2
+  mailparser>nodemailer: 10.1.4
   nanoid@>=3 <4: 3.3.18
   nanoid@>=5 <6: 5.1.16
   postcss: 8.5.26
@@ -5910,10 +5911,6 @@ packages:
   node-releases@2.0.60:
     resolution: {integrity: sha512-OmO8+GM1JUZqXET720VrJCwkjUCXmCMQm0Z3UDDRbfNLHS4NEAvY60j5jiFv0tkKw2PNNlqOLhahVmwJIOLDIQ==}
     engines: {node: '>=18'}
-
-  nodemailer@10.0.13:
-    resolution: {integrity: sha512-SzG86OlvcW/NNhUFC6uROMwRTL4n7MswfQqC/T8mhkmnY1YVa23zUEMYi4ijSeXSl9GLz9ZeTJDUatEDuY5FeQ==}
-    engines: {node: '>=20.0.0'}
 
   nodemailer@10.1.4:
     resolution: {integrity: sha512-EsMnOR2oRv4LGnWvHgcVYkkQ4O2j8KO4WTw6l+PHR4sOXo8SAgIraxtEnGDmotjbhv0hDsu3IuDIFZm8iXwO4A==}
@@ -13197,7 +13194,7 @@ snapshots:
       iconv-lite: 0.7.3
       libmime: 5.4.6
       linkify-it: 5.0.2
-      nodemailer: 10.0.13
+      nodemailer: 10.1.4
       punycode.js: 2.3.1
       tlds: 1.261.0
 
@@ -13425,8 +13422,6 @@ snapshots:
   node-releases@2.0.37: {}
 
   node-releases@2.0.60: {}
-
-  nodemailer@10.0.13: {}
 
   nodemailer@10.1.4: {}
 

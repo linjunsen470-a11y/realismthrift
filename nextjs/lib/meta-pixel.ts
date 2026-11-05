@@ -3,7 +3,7 @@ export const PRODUCTION_FB_PIXEL_ID = "1661409812003549";
 
 const PIXEL_ID_PATTERN = /^\d{10,20}$/;
 
-/** Meta measures production only. GA4 keeps its separate existing behavior. */
+/** Meta measures production only; GA4 uses the same deployment environment gate. */
 export function isMetaMeasurementEnabled(analyticsEnabled: string | undefined, environment: string | undefined): boolean {
   return analyticsEnabled !== "false" && environment === "production";
 }

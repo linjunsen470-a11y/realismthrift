@@ -9,6 +9,14 @@ function message(body: string, extra = "") {
   return Buffer.from(`From: Jason <jason@realismthriftglobal.com>\r\nTo: buyer@example.com\r\nSubject: Wholesale clothes\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=utf-8\r\n${extra}\r\n${body}`);
 }
 describe("approved MIME", () => {
+  it("does not accept a sender hidden inside a nested comment", async () => {
+    const raw = message("Hello").toString().replace(
+      "Jason <jason@realismthriftglobal.com>",
+      "Other (x(y) <jason@realismthriftglobal.com>) <other@example.net>",
+    );
+    await expect(reviewMime(Buffer.from(raw), "buyer@example.com", null))
+      .rejects.toMatchObject({ code: "recipient_or_sender_changed" });
+  });
   it("checks recipient identity and the reviewed footer", async () => {
     const footer = unsubscribeFooter(newPreferenceToken());
     expect((await reviewMime(message(`Hello\r\n${footer}`), "buyer@example.com", footer)).to).toBe("buyer@example.com");

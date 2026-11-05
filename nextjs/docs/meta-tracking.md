@@ -1,6 +1,6 @@
 # GA4、Meta Pixel 与 Conversions API
 
-本说明维护网站询盘的当前测量配置，更新于 2026-11-02。适用于网站表单与联系入口点击，不涉及 Meta 原生潜在客户广告、目录或 WhatsApp 站外对话事件。
+本说明维护网站询盘的当前测量配置，更新于 2026-11-05。适用于网站表单与联系入口点击，不涉及 Meta 原生潜在客户广告、目录或 WhatsApp 站外对话事件。
 
 ## 多语言测量
 
@@ -32,6 +32,8 @@
 - 以上是代码与本地验证记录，不代表云端部署验收。Vercel 平台域名 307 设置仍待修改；GA4 实际来源报告及新增自定义维度仍需上线后核对。
 
 ## GA4 询盘关键事件
+
+- GA4 与 Meta 均只在 Production 加载，复用构建时的 `NEXT_PUBLIC_META_ENVIRONMENT`；Preview 和本地开发不加载生产统计标签。CI 已显式模拟 production 并拦截统计传输。
 
 - 生产属性：`realismthrift`，Property ID `534735463`；Web 测量 ID：`G-854G1RXBJM`。
 - 浏览器只在 `/api/send` 返回 HTTP 成功且 `ok: true` 后发送 `generate_lead`。校验失败、入库失败或网络错误不发送成功事件。

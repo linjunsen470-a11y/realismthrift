@@ -2,6 +2,8 @@
 
 The application code is build-safe without production secrets, but `/api/send` becomes active only after the Supabase migration and server-only environment variables are configured.
 
+Vercel Preview submissions return 503 before any inquiry write or delivery is scheduled. This guard prevents accidental real submissions while Preview shares credentials; it does not replace separate credentials. Production submissions and scheduled retries are unchanged.
+
 ## 1. Create and migrate Supabase
 
 1. In the Vercel Marketplace, create a Supabase project in Singapore and connect it to the production Vercel project.

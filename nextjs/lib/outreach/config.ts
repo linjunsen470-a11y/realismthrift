@@ -12,6 +12,12 @@ export class OutreachError extends Error {
   }
 }
 
+export class GmailError extends OutreachError {
+  constructor(public httpStatus: number, public stage: "oauth_token" | "gmail_api" = "gmail_api") {
+    super("gmail_request_failed", 502);
+  }
+}
+
 export function requiredSetting(name: string) {
   const value = process.env[name]?.trim();
   if (!value) throw new OutreachError("service_unavailable");
@@ -40,5 +46,6 @@ export function logOutreachError(operation: string, error: unknown) {
   console.error("Outreach operation failed", {
     operation,
     code: error instanceof OutreachError ? error.code : "provider_error",
+    ...(error instanceof GmailError ? { httpStatus: error.httpStatus, stage: error.stage } : {}),
   });
 }

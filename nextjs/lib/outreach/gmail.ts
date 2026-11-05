@@ -1,13 +1,12 @@
 import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
 import { sql } from "drizzle-orm";
 import { outreachDatabase } from "./database";
-import { OutreachError, OUTREACH_SENDER, requiredSetting } from "./config";
+import { GmailError, OutreachError, OUTREACH_SENDER, requiredSetting } from "./config";
+
+export { GmailError } from "./config";
 
 type Token = { value: string; expires: number };
 let accessToken: Token | undefined;
-export class GmailError extends OutreachError {
-  constructor(public httpStatus: number) { super("gmail_request_failed", 502); }
-}
 
 function credentialKey() {
   const key = Buffer.from(requiredSetting("OUTREACH_CREDENTIAL_KEY"), "base64");
@@ -37,7 +36,7 @@ export async function googleTokenRequest(values: Record<string, string>) {
     body: new URLSearchParams({ ...values, client_id: requiredSetting("OUTREACH_GOOGLE_CLIENT_ID"), client_secret: requiredSetting("OUTREACH_GOOGLE_CLIENT_SECRET") }),
     signal: AbortSignal.timeout(10_000), cache: "no-store",
   });
-  if (!response.ok) throw new GmailError(response.status);
+  if (!response.ok) throw new GmailError(response.status, "oauth_token");
   return response.json() as Promise<{ access_token: string; expires_in: number; refresh_token?: string; scope?: string }>;
 }
 async function currentAccessToken() {

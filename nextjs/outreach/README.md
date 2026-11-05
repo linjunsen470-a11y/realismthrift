@@ -73,6 +73,13 @@ Public preference endpoints:
 Confirmation tokens are hashed in storage, expire after 24 hours and cannot
 override a newer unsubscribe. Preference pages have no marketing tracking.
 Provider failures must not be logged with email bodies, addresses or tokens.
+Gmail HTTP failures log only the status and stage (`oauth_token` or `gmail_api`)
+alongside the existing operation/code. Inspect these before suggesting a reconnect;
+a missing draft, rate limit and failed token refresh need different responses.
+
+The workspace pins `mailparser>nodemailer` to 10.1.4 to fix address parsing of
+nested comments and quoted addresses. Keep this override until the upstream
+dependency includes the fix; the MIME identity regression test must remain green.
 
 ## Maintenance and verification
 
