@@ -69,6 +69,10 @@ test("all published core URLs have translated server HTML and reciprocal SEO", a
         }
         expect(html, url).toMatch(/<meta name="description" content="[^"]+"/u);
         expect(html, url).not.toMatch(/ZXQ\d+QXZ|\{v\d+\}/u);
+        if (path === "/how-to-order") {
+          expect(html, url).toContain(getTranslator(locale)("Sample Orders Available"));
+          expect(html, url).not.toContain("Free Samples");
+        }
         if (locale !== "en") {
           expect(html, url).not.toMatch(
             /(?:alt|aria-label)="(?:Inquire about|RealismThrift Wholesale )/u,
@@ -259,6 +263,21 @@ test("translated navigation and content fit a 320px screen", async ({
   }
 });
 
+test("Arabic labels use normal tracking and quantity ranges retain their meaning", async ({ page }) => {
+  await page.goto("/ar/contact-us");
+  const labels = page.locator("main .tracking-widest");
+  expect(await labels.count()).toBeGreaterThan(0);
+  for (const label of await labels.all())
+    await expect(label).toHaveCSS("letter-spacing", "normal");
+  await expect(page.locator('aside bdi[dir="ltr"]').filter({ hasText: "+86 17279444062" }))
+    .toHaveCSS("direction", "ltr");
+  await page.goto("/ar/how-to-order");
+  await expect(page.locator("main")).toContainText(getTranslator("ar")("≥100 Bales"));
+  await expect(page.locator("main")).not.toContainText(/≥|≤/);
+  await page.goto("/ar/used-brand-shoes");
+  await expect(page.locator("main")).toContainText(getTranslator("ar")("25–30 kg"));
+});
+
 test("confirmed factory and DiDi addresses are localized and retain copyable English and Chinese navigation text", async ({
   page,
 }) => {
@@ -288,6 +307,16 @@ test("confirmed factory and DiDi addresses are localized and retain copyable Eng
       page
         .locator('.rt-postal-address[lang="zh-CN"][dir="ltr"]')
         .filter({ hasText: companyLocation.addressChinese }),
+    ).toBeVisible();
+    await expect(
+      page
+        .locator('.rt-postal-address[lang="en"][dir="ltr"]')
+        .filter({ hasText: companyLocation.didiAddress }),
+    ).toBeVisible();
+    await expect(
+      page
+        .locator('.rt-postal-address[lang="zh-CN"][dir="ltr"]')
+        .filter({ hasText: companyLocation.didiAddressChinese }),
     ).toBeVisible();
     await expect(page.locator("iframe")).toHaveAttribute(
       "src",

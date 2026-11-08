@@ -23,21 +23,34 @@ export function getClientMessages(
   );
 }
 
-/** Translate display copy, including the confirmed address; preserve IDs and contact identifiers. */
+/** Only these display fields may be translated. Unknown fields remain source data. */
+const localizedDataFields = new Set([
+  "label",
+  "title",
+  "description",
+  "alt",
+  "category",
+  "address",
+  "inquiryCta",
+  "inquiryTime",
+  "copyright",
+  "staffCount",
+  "countriesCount",
+  "facilitySize",
+  "monthlyCapacity",
+  "reorderRate",
+  "buyersCount",
+]);
+
+/** Translate registered display fields and published links; preserve identifiers and unknown fields. */
 export function getLocalizedData<T>(value: T, locale: Locale): T {
   const t = getTranslator(locale);
   const visit = (item: unknown, key = ""): unknown => {
     if (typeof item === "string") {
       if (key === "href") return localePath(item, locale);
-      if (
-        ["id", "icon", "email", "phone", "whatsapp", "logo", "image"].includes(
-          key,
-        )
-      )
-        return item;
-      return t(item);
+      return localizedDataFields.has(key) ? t(item) : item;
     }
-    if (Array.isArray(item)) return item.map((entry) => visit(entry));
+    if (Array.isArray(item)) return item.map((entry) => visit(entry, key));
     if (item && typeof item === "object")
       return Object.fromEntries(
         Object.entries(item).map(([key, entry]) => [key, visit(entry, key)]),

@@ -376,7 +376,9 @@ html:not([lang="en"]) :is(.rt-news-view-all,.rt-news-footer-link) svg { flex-shr
 
 /* Arabic inherits direction at the document root, including grids and forms. */
 html[dir="rtl"] body { font-family: Tahoma, Arial, sans-serif; }
-html[dir="rtl"] :is(h1,h2,h3,h4,h5,h6,.font-montserrat,.font-open-sans) { font-family: Tahoma, Arial, sans-serif; letter-spacing: normal; }
+html[dir="rtl"] :is(h1,h2,h3,h4,h5,h6,.font-montserrat,.font-open-sans) { font-family: Tahoma, Arial, sans-serif; }
+/* Reset Arabic tracking, including utility classes; retain explicit LTR brand/address typography. */
+html[dir="rtl"] :where(body, body *):not(:where([dir="ltr"], [dir="ltr"] *)) { letter-spacing: normal; }
 html[dir="rtl"] :is(.text-left,.md\:text-left,.rt-hero-content,.rt-footer,.rt-contact-info,.rt-prose) { text-align: start; }
 html[dir="rtl"] :is(.rt-logo-combo-name,.rt-logo-combo-sub) { direction: ltr; }
 html[dir="rtl"] :is(input[type="email"],input[type="tel"],a[href^="tel:"],a[href^="mailto:"],.rt-hero-stat-value) { direction: ltr; unicode-bidi: isolate; }

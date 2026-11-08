@@ -3,6 +3,7 @@ import "@/app/internal-pages.css";
 import Image from "next/image";
 import Link from "next/link";
 import { companyStats as englishCompanyStats } from "@/data/siteData";
+import { TranslatedText } from "@/components/TranslatedText";
 import {
   Building2,
   Search,
@@ -166,10 +167,17 @@ export default function AboutUsPage({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="font-montserrat text-[1.75rem] font-extrabold text-brand-dark mb-5 leading-[1.3]">
-              {t("Our Story: ")}
-              <span className="text-brand-red">
-                {t("From Guangzhou to the World")}
-              </span>
+              <TranslatedText
+                locale={locale}
+                text="Our Story: {story}"
+                values={{
+                  story: (
+                    <span className="text-brand-red">
+                      {t("From Guangzhou to the World")}
+                    </span>
+                  ),
+                }}
+              />
             </h2>
             <p className="text-[0.9375rem] text-[#555] leading-[1.85] mb-5">
               {t(

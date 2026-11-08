@@ -359,7 +359,6 @@
   "For used clothes, the minimum is 100 bales (approximately 4,500 kg). For used shoes, the minimum is 200 pairs. For used bags, the minimum is 100 pieces. Container orders receive better pricing.",
   "Forever 21",
   "Founded",
-  "Free Samples",
   "Frequently Asked ",
   "Frequently Asked Questions",
   "From Guangzhou to the World",
@@ -549,7 +548,6 @@
   "Our Facility",
   "Our Factory Location",
   "Our Production Process",
-  "Our Story: ",
   "Our commitment to data protection and privacy for our global wholesale partners.",
   "Our goal is not just to sell used goods, but to build long-term partnerships with global wholesale buyers. We enforce strict A-grade quality control on our clothes, shoes, and bags to ensure your business thrives. From the first inquiry to container loading, our team is committed to your success.",
   "Our minimum order is 100 bales (approximately 4,500 kg). For brand-specific orders, the MOQ is 200 bales.",
@@ -1050,5 +1048,7 @@
   "≥500 pairs",
   "≥630 bales",
   "≥650 sacks",
-  "≥8,000 pairs"
+  "≥8,000 pairs",
+  "Sample Orders Available",
+  "Our Story: {story}"
 ]

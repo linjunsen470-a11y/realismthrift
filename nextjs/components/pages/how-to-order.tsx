@@ -221,7 +221,7 @@ export default function HowToOrderPage({
                 {t("Volume Discounts")}
               </span>
               <span className="bg-[#F5F5F0] border border-[#e0e0e0] text-[#333] px-3 py-1.5 rounded-sm text-[0.75rem] font-montserrat font-semibold">
-                {t("Free Samples")}
+                {t("Sample Orders Available")}
               </span>
             </div>
           </div>

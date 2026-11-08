@@ -219,6 +219,7 @@ export default function ContactUsPage({
                       i: <Building2 className="w-5 h-5 text-brand-gold" />,
                       l: t("Full Name"),
                       v: "Dongguan Huihe Realismthrift Trading Co., Ltd.",
+                      dir: "ltr" as const,
                     },
                     {
                       i: <MapPin className="w-5 h-5 text-brand-gold" />,
@@ -229,11 +230,13 @@ export default function ContactUsPage({
                       i: <Mail className="w-5 h-5 text-brand-gold" />,
                       l: t("Official Email"),
                       v: "sales@realismthrift.com",
+                      dir: "ltr" as const,
                     },
                     {
                       i: <Phone className="w-5 h-5 text-brand-gold" />,
                       l: t("Sales Hotline"),
                       v: "+86 17279444062",
+                      dir: "ltr" as const,
                     },
                     {
                       i: <Clock className="w-5 h-5 text-brand-gold" />,
@@ -251,7 +254,7 @@ export default function ContactUsPage({
                           {item.l}
                         </div>
                         <div className="font-semibold text-white/95 leading-relaxed">
-                          {item.v}
+                          {item.dir ? <bdi dir={item.dir}>{item.v}</bdi> : item.v}
                         </div>
                       </div>
                     </div>

@@ -359,7 +359,6 @@
   "For used clothes, the minimum is 100 bales (approximately 4,500 kg). For used shoes, the minimum is 200 pairs. For used bags, the minimum is 100 pieces. Container orders receive better pricing.": "Minimum pesanan pakaian bekas adalah 100 bal (sekitar 4.500 kg). Untuk sepatu bekas, minimum 200 pasang. Untuk tas bekas, minimum 100 buah. Pesanan kontainer memperoleh harga lebih baik.",
   "Forever 21": "Forever 21",
   "Founded": "Tahun Berdiri",
-  "Free Samples": "Sampel Gratis",
   "Frequently Asked ": "Pertanyaan ",
   "Frequently Asked Questions": "Pertanyaan Umum",
   "From Guangzhou to the World": "Dari Guangzhou ke Dunia",
@@ -549,7 +548,6 @@
   "Our Facility": "Fasilitas Kami",
   "Our Factory Location": "Lokasi Pabrik Kami",
   "Our Production Process": "Proses Produksi Kami",
-  "Our Story: ": "Kisah Kami: ",
   "Our commitment to data protection and privacy for our global wholesale partners.": "Komitmen kami terhadap perlindungan data dan privasi mitra grosir global kami.",
   "Our goal is not just to sell used goods, but to build long-term partnerships with global wholesale buyers. We enforce strict A-grade quality control on our clothes, shoes, and bags to ensure your business thrives. From the first inquiry to container loading, our team is committed to your success.": "Tujuan kami bukan sekadar menjual barang bekas, melainkan membangun kemitraan jangka panjang dengan pembeli grosir global. Kami menerapkan pengendalian kualitas grade A yang ketat pada pakaian, sepatu, dan tas agar bisnis Anda berkembang. Dari permintaan pertama hingga pemuatan kontainer, tim kami berkomitmen mendukung kesuksesan Anda.",
   "Our minimum order is 100 bales (approximately 4,500 kg). For brand-specific orders, the MOQ is 200 bales.": "Minimum pesanan kami 100 bal (sekitar 4.500 kg). Untuk pesanan merek tertentu, MOQ adalah 200 bal.",
@@ -1050,5 +1048,7 @@
   "≥500 pairs": "≥500 pasang",
   "≥630 bales": "≥630 bal",
   "≥650 sacks": "≥650 karung",
-  "≥8,000 pairs": "≥8.000 pasang"
+  "≥8,000 pairs": "≥8.000 pasang",
+  "Sample Orders Available": "Pesanan Sampel Tersedia",
+  "Our Story: {story}": "Kisah Kami: {story}"
 }

@@ -1,4 +1,8 @@
 import { describe, expect, it } from "vitest";
+import { readdirSync, readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+import ts from "typescript";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { QualityStandards } from "@/components/product/QualityStandards";
@@ -99,6 +103,53 @@ describe("published language URLs", () => {
 });
 
 describe("translation integrity and server/client boundaries", () => {
+  it("registers every literal translator call and rich-text message used by the UI", () => {
+    const projectRoot = fileURLToPath(new URL("../../", import.meta.url));
+    const registered = new Set(sourceKeys);
+    const missing: string[] = [];
+    const scan = (directory: string) => {
+      for (const entry of readdirSync(directory, { withFileTypes: true })) {
+        const filename = path.join(directory, entry.name);
+        if (entry.isDirectory()) {
+          scan(filename);
+          continue;
+        }
+        if (!/\.tsx?$/.test(entry.name) || /\.(?:test|spec)\./.test(entry.name))
+          continue;
+        const source = ts.createSourceFile(
+          filename,
+          readFileSync(filename, "utf8"),
+          ts.ScriptTarget.Latest,
+          true,
+        );
+        const check = (literal: ts.Node | undefined) => {
+          if (literal && ts.isStringLiteralLike(literal) && !registered.has(literal.text)) {
+            const { line } = source.getLineAndCharacterOfPosition(literal.getStart(source));
+            missing.push(`${path.relative(projectRoot, filename)}:${line + 1}: ${literal.text}`);
+          }
+        };
+        const visit = (node: ts.Node) => {
+          if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "t")
+            check(node.arguments[0]);
+          if (
+            (ts.isJsxOpeningElement(node) || ts.isJsxSelfClosingElement(node)) &&
+            node.tagName.getText(source) === "TranslatedText"
+          ) {
+            for (const property of node.attributes.properties) {
+              if (ts.isJsxAttribute(property) && property.name.getText(source) === "text") {
+                const value = property.initializer;
+                check(value && ts.isJsxExpression(value) ? value.expression : value);
+              }
+            }
+          }
+          ts.forEachChild(node, visit);
+        };
+        visit(source);
+      }
+    };
+    for (const directory of ["app", "components"]) scan(path.join(projectRoot, directory));
+    expect(missing).toEqual([]);
+  });
   it("retains explicit A/B/C grading instead of upgrading used-goods condition claims", () => {
     for (const messages of [es, fr, ar, vi, id]) {
       for (const [key, value] of Object.entries(messages)) {
@@ -171,16 +222,22 @@ describe("translation integrity and server/client boundaries", () => {
       "Longchamp",
       "Tory Burch",
       "Ukay",
+      "Dr. Martens",
+      "Timberland",
+      "Polo Ralph Lauren",
     ];
     for (const messages of [es, fr, ar, vi, id]) {
       for (const [key, value] of Object.entries(messages)) {
         for (const name of identifiers) {
-          const pattern = new RegExp(`\\b${name}\\b`, "i");
+          const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          const pattern = new RegExp(`\\b${escapedName}\\b`, "i");
           if (pattern.test(key)) expect(value, key).toMatch(pattern);
         }
       }
       expect(messages.Leo).toBe("Leo");
       expect(messages["FOB Guangzhou"]).toBe("FOB Guangzhou");
+      expect(messages["Timberland, Dr. Martens"]).toBe("Timberland, Dr. Martens");
+      expect(messages["Polo Ralph Lauren"]).toBe("Polo Ralph Lauren");
     }
     expect(sourceKeys).not.toContain("sales@realismthrift.com");
     expect(sourceKeys).not.toContain("privacy@realismthrift.com");
@@ -258,10 +315,13 @@ describe("translation integrity and server/client boundaries", () => {
   });
   for (const [locale, messages] of Object.entries({ es, fr, ar, vi, id })) {
     it(`${locale} covers all source copy and preserves interpolation tokens`, () => {
+      expect(Object.keys(messages).sort()).toEqual([...sourceKeys].sort());
       for (const key of sourceKeys) {
         const translated = (messages as Record<string, string>)[key];
         expect(translated, key).toBeTruthy();
         expect(translated, key).not.toMatch(/ZXQ\d+QXZ/i);
+        expect(translated, key).not.toContain("\u200b");
+        expect(translated, key).not.toContain("Ltd..");
         expect((translated.match(/\{\w+\}/g) ?? []).sort(), key).toEqual(
           (key.match(/\{\w+\}/g) ?? []).sort(),
         );
@@ -296,6 +356,49 @@ describe("translation integrity and server/client boundaries", () => {
       expect(t("100 bales (4,500 kg)")).toContain("100");
       expect(getLocalizedData(productsData, locale).every((product) => product.category !== "WHOLESALE")).toBe(true);
     }
+  });
+  it("preserves unregistered fields and machine identifiers even when their values match display copy", () => {
+    const original = {
+      title: "Home",
+      href: "/contact-us",
+      id: "Home",
+      slug: "Home",
+      code: "Grade",
+      currency: "Grade",
+      grade: "Grade",
+      email: "Home",
+      image: "Home",
+      metadata: ["Home", "Grade"],
+      labels: [{ label: "Home", code: "Grade" }],
+    };
+    const localized = getLocalizedData(original, "ar");
+    expect(localized).toEqual({
+      ...original,
+      title: getTranslator("ar")("Home"),
+      href: "/ar/contact-us",
+      labels: [{ label: getTranslator("ar")("Home"), code: "Grade" }],
+    });
+    expect(original.title).toBe("Home");
+  });
+  it("preserves quantity magnitudes and expresses Arabic minimums without mirrored operators", () => {
+    for (const messages of [es, fr, ar, vi, id]) {
+      for (const [key, value] of Object.entries(messages)) {
+        if (!/^[~≥]\d/.test(key)) continue;
+        const integer = (text: string) =>
+          text.match(/\d{1,3}(?:[., \u00a0\u202f]\d{3})+|\d+/)?.[0].replace(/\D/g, "");
+        expect(integer(value), key).toBe(integer(key));
+        if (messages === ar && key.startsWith("≥")) {
+          expect(value, key).not.toMatch(/[≥≤]/);
+          expect(value, key).toMatch(/فأكثر|على الأقل/);
+        }
+      }
+    }
+    for (const messages of [es, fr, vi]) {
+      for (const [key, value] of Object.entries(messages))
+        expect(value, key).not.toMatch(/\b\d{1,3}(?:,\d{3})+\b/);
+    }
+    for (const key of ["12–18 pcs", "25–30 kg", "7–14 days"])
+      expect(getTranslator("ar")(key), key).toMatch(/من \d+ إلى \d+/);
   });
   it("ships only the form/header copy to client components", () => {
     const messages = getClientMessages("ar", "form");
