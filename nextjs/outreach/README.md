@@ -5,7 +5,7 @@ from `jason@realismthriftglobal.com`. Use the existing Supabase OAuth client and
 Gmail connection. The fourteen MCP tools cover contact lookup/import, history,
 incoming-message processing, new drafts, existing-draft linking, review, sending,
 reconciliation and service diagnosis. Daily agent instructions live in
-`../../plugins/realismthrift-cold-email-app/skills/cold-email/SKILL.md`; both
+[the cloud App skill](../../plugins/realismthrift-cold-email-app/skills/cold-email/SKILL.md); both
 private plugin wrappers use the same workflow and cloud App.
 
 ## Current behavior
@@ -40,7 +40,7 @@ private plugin wrappers use the same workflow and cloud App.
 
 ## Runtime settings
 
-Keep credentials server-side. Do not print or commit values. See `../.env.example`
+Keep credentials server-side. Do not print or commit values. See the [environment template](../.env.example)
 for names. Production requires the outreach Neon URLs, credential/rate-limit
 keys, Google OAuth client settings, operator ID and pinned Supabase OAuth client
 ID. The encrypted Google refresh token is stored by `/outreach/connect`.
@@ -111,7 +111,7 @@ contacts, suppression, consent or sending evidence.
 
 Run unit tests, TypeScript and ESLint for changed code. The isolated database
 and HTTP scripts require `OUTREACH_DATABASE_TEST_ALLOWED=true` and nonproduction
-Neon URLs; they do not send real mail. The concurrency script exercises the
+Neon URLs; they do not send real mail. The database verification script exercises the
 current five-argument claim. Login browser tests mock form submission.
 
 Release the existing server and plugin IDs, preserving audience and OAuth

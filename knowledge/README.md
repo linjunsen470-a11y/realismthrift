@@ -4,11 +4,15 @@ This directory stores the human-reviewable gold-standard QA corpus for RealismTh
 
 ## Files
 
-- `qa-01-company-general.md`: company profile, trust, sourcing, contact, service regions, inquiry qualification.
-- `qa-02-used-brand-clothes.md`: used brand clothes, bales, grades, MOQ, prices, packing, clothes QC.
-- `qa-03-used-brand-shoes.md`: used brand shoes, pairs, sacks, brands, pairing, cleaning, packing, shoe QC.
-- `qa-04-used-brand-bags.md`: used brand bags, pieces, sacks, categories, hardware checks, packing, bag QC.
-- `qa-05-order-logistics-after-sales.md`: order flow, quotation, payment, shipping, documents, claims, handoff rules.
+| QA IDs | Buyer questions |
+| --- | --- |
+| 001–100 | [Company, sourcing and contact](qa-01-company-general.md) |
+| 101–200 | [Clothing grades, bales and packing](qa-02-used-brand-clothes.md) |
+| 201–300 | [Shoe grading, pairs and sacks](qa-03-used-brand-shoes.md) |
+| 301–400 | [Bags, hardware and packing](qa-04-used-brand-bags.md) |
+| 401–500 | [Orders, shipping and after-sales support](qa-05-order-logistics-after-sales.md) |
+| 501–524 | [Luxury bags and Indonesian freight](qa-06-luxury-bags-and-logistics-supplement.md) |
+| 601–624 | [Global wholesale selection and shipping documents](qa-07-global-wholesale-and-shipping-supplement.md) |
 
 ## Usage Notes
 

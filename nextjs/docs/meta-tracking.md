@@ -6,7 +6,11 @@
 
 生产公共页面加载一次 Google 标签，并配置 Google Ads 目标 `AW-18518055702`。配置了 GA4 时，两者共用加载脚本。所有语言采用相同设置，邮件偏好和内部操作页面排除在外。Google 广告存储、广告用户数据和个性化设置均为 denied，启用广告数据遮盖。Google 可接收无广告 Cookie 的测量信号，广告点击与询盘的归因能力有限。
 
-上线后用 Google Tag Assistant 打开正式站的公开页面，确认显示上述 AW 目标。询盘成功事件 `generate_lead` 仅发往 GA4。如要以询盘优化出价，可在关联 GA4 后将该关键事件导入 Google Ads；也可以在 Ads 创建网站转化并将事件代码中的转化标签接入询盘成功回调。同一询盘只选一个主要转化来源。
+2026-11-14 已验证正式站在提交 `5d5cd92` 加载上述 AW 目标。浏览器将成功询盘的 `generate_lead` 事件发往 GA4。广告后台仍有三项待有权限的账号核对：
+
+- 在 Google 标签诊断中查看 `AW-18518055702` 是否已收到正式站信号。
+- 在转化操作中核对 GA4 属性 `realismthrift` 和事件名 `generate_lead`，确认导入的操作已设为主要转化。[Google Ads 的 GA4 导入说明](https://support.google.com/google-ads/answer/2375435?hl=zh-Hans)
+- 检查投放中广告系列实际使用的目标，特别是记录同一次表单成功的原生网站转化。自定义目标中的次要操作也可参与出价。每个广告系列只选一个操作衡量成功询盘，核对询盘数时按该操作筛选。[Google Ads 转化目标说明](https://support.google.com/google-ads/answer/10995103?hl=zh-Hans)
 
 ## 多语言测量
 
@@ -38,7 +42,7 @@
 
 ## GA4 询盘关键事件
 
-- GA4 与 Meta 均只在 Production 加载，复用构建时的 `NEXT_PUBLIC_META_ENVIRONMENT`；Preview 和本地开发不加载生产统计标签。CI 已显式模拟 production 并拦截统计传输。
+- GA4、Google Ads 与 Meta 均只在 Production 加载，复用构建时的 `NEXT_PUBLIC_META_ENVIRONMENT`；Preview 和本地开发不加载生产统计标签。CI 已显式模拟 production 并拦截统计传输。
 
 - 生产属性：`realismthrift`，Property ID `534735463`；Web 测量 ID：`G-854G1RXBJM`。
 - 浏览器只在 `/api/send` 返回 HTTP 成功且 `ok: true` 后发送 `generate_lead`。校验失败、入库失败或网络错误不发送成功事件。
@@ -117,7 +121,7 @@ Pixel 的内联初始化代码先检查当前落地 URL 的 `fbclid`，再加载
 | `NEXT_PUBLIC_ANALYTICS_ENABLED` | `false` 同时关闭 GA4、Google Ads、Meta Pixel 和 CAPI。 |
 | `NEXT_PUBLIC_GOOGLE_ADS_ID` | Google Ads 基础标签 ID；默认 `AW-18518055702`，自动化测试使用测试 ID。 |
 | `NEXT_PUBLIC_GA_ID` | GA4 Web 测量 ID；`generate_lead` 的关键事件标记与计数方式在 GA4 后台维护。 |
-| `VERCEL_ENV` | 仅 `production` 启用 Meta，Vercel 自动设置；本地和 Preview 默认关闭。 |
+| `VERCEL_ENV` | 仅 `production` 启用 GA4、Google Ads 和 Meta，Vercel 自动设置；本地和 Preview 默认关闭。 |
 | `NEXT_PUBLIC_META_ENVIRONMENT` | 由 `next.config.ts` 从构建时的 `VERCEL_ENV` 派生，确保浏览器环境隔离；无需单独配置。 |
 | `NEXT_PUBLIC_FB_PIXEL_ID` | 数字格式的 Pixel ID；空值回退到生产 ID，无效值禁用 Pixel。环境隔离仍然适用。 |
 | `META_CAPI_ACCESS_TOKEN` | 仅服务端读取的生产密钥。缺失时跳过 CAPI，询盘仍成功。 |
@@ -158,7 +162,7 @@ pnpm exec tsc --noEmit
 pnpm exec playwright test tests/analytics.spec.ts --project=chromium --project=mobile-chromium --workers=2
 ```
 
-Playwright 的本地服务器显式模拟生产 Meta 环境，测试拦截 GA/Meta 传输及询盘 API。不要去掉这些拦截后向生产数据集发送合成转化。
+Playwright 的本地服务器模拟生产环境，使用测试 GA4 和 Google Ads ID；测量回归用例拦截 Google、Meta 传输及询盘 API。不要去掉这些拦截后向生产数据集发送合成转化。
 
 浏览器验证涵盖成功/失败询盘、延迟 Google 脚本时保留事件、国家自由文本排除、真实落地参数跨页面保留、失败后重试复用 ID、缺区号仍可提交及私有页面排除。服务端单元测试覆盖慢邮件不阻塞成功响应、后台邮件异常隔离、入库失败不安排邮件任务，以及邮箱/电话散列规则。每次改动应重新运行相关检查，不沿用历史批次的测试数量或构建结论。
 

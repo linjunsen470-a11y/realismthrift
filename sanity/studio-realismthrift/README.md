@@ -25,15 +25,19 @@ The Studio manages:
 Use `pnpm` only.
 
 ```powershell
-pnpm install
+pnpm install --frozen-lockfile
 pnpm dev
 pnpm build
-pnpm deploy
 ```
+
+After editing a Studio schema or a storefront GROQ query, run `pnpm typegen`
+from this directory. Review and commit [schema.json](schema.json) and the
+[generated storefront types](../../nextjs/types/sanity.types.ts) with the source
+change. To publish the Studio, run `pnpm deploy`.
 
 ## Preview
 
-The Studio is configured with Sanity Presentation. By default it previews against `http://localhost:3000`; set `SANITY_STUDIO_PREVIEW_ORIGIN` when previewing another origin.
+Sanity Presentation previews the local storefront at `http://localhost:3000` by default. Set `SANITY_STUDIO_PREVIEW_ORIGIN` to `https://www.realismthrift.com` for the production site. The allowed origins are listed in [sanity.config.ts](sanity.config.ts).
 
 ## Content Notes
 

@@ -53,21 +53,6 @@ const postBySlugQuery = defineQuery(`*[
   }
 }`);
 
-const postSlugsQuery = defineQuery(`*[
-  _type == "post" && defined(slug.current) && defined(publishedAt) &&
-  publishedAt <= now() && isArchived != true
-].slug.current`);
-
-const relatedPostsQuery = defineQuery(`*[
-  _type == "post" && defined(slug.current) && defined(publishedAt) &&
-  publishedAt <= now() && isArchived != true &&
-  _id != $currentId && category._ref == $categoryId
-] | order(publishedAt desc)[0...3] {
-  _id, title, "slug": slug.current, excerpt, publishedAt, _updatedAt, coverImage,
-  category->{_id, title, "slug": slug.current, description},
-  author->{name, role, bio, avatar}
-}`);
-
 const prevNextQuery = defineQuery(`{
   "prev": *[
     _type == "post" && defined(slug.current) && defined(publishedAt) &&
@@ -120,37 +105,6 @@ export async function getBlogPostBySlug(
   });
 
   return data ?? null;
-}
-
-export async function getBlogSlugs(): Promise<string[]> {
-  const { data } = await sanityFetch({
-    query: postSlugsQuery,
-    tags: ["post"],
-    requestTag: "blog.slugs",
-    stega: false,
-  });
-
-  return data;
-}
-
-export async function getRelatedBlogPosts(
-  currentId: string,
-  categoryId: string
-): Promise<BlogPostCard[]> {
-  if (!categoryId) return [];
-
-  const { data } = await sanityFetch({
-    query: relatedPostsQuery,
-    params: {
-      currentId,
-      categoryId,
-    },
-    tags: ["post", "category"],
-    requestTag: "blog.related",
-    stega: false,
-  });
-
-  return data;
 }
 
 export async function getPrevNextPosts(publishedAt: string): Promise<{

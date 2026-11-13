@@ -1,6 +1,6 @@
 # Bundled fonts
 
-`RootShell.tsx` uses `next/font/local` so builds do not depend on Google Fonts
+[RootShell.tsx](../../components/RootShell.tsx) uses `next/font/local` so builds do not depend on Google Fonts
 responses. This avoids the extensionless URL parsing failure described in
 [Next.js #99114](https://github.com/vercel/next.js/issues/99114), observed in
 GitHub Actions run `42080612513` on 2026-11-06 (Singapore time).

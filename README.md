@@ -25,7 +25,7 @@
 - **博客内容管理**：博客内容由 Sanity 管理，支持英文文章、分类、作者、图文排版、表格、封面图和 SEO 字段。
 - **全站搜索**：支持产品、FAQ 和博客内容的站内检索，帮助访客快速找到相关信息。
 - **询盘收集**：客户可通过网站表单、WhatsApp 和邮箱联系销售团队。
-- **询盘统计与广告归因**：GA4 在浏览器收到提交成功响应后记录 `generate_lead`，后台将其标记为关键事件；生产 Meta Pixel/CAPI 使用 `Lead` 与相同提交 ID 去重。配置与数据边界见 [GA4 与 Meta 跟踪说明](nextjs/docs/meta-tracking.md)。
+- **询盘统计与广告归因**：成功询盘触发 GA4 的 `generate_lead`。公开页共用 Google 标签加载 GA4 和 Google Ads 基础标签；Meta Pixel 和 CAPI 通过相同提交 ID 为 `Lead` 去重。各平台的事件与广告后台核验步骤见[测量说明](nextjs/docs/meta-tracking.md)。
 - **SEO 基础设施**：已配置页面 Metadata、OpenGraph、Canonical、sitemap.xml、robots.txt、结构化数据和图片 Alt Text。
 - **入口与表单漏斗**：记录销售 WhatsApp、邮件、电话点击和询盘开始/失败事件；UTM 使用营销参数白名单，点击不等同于有效询盘。
 - **无障碍交互**：提供表单标签、键盘导航和减少动画支持；询盘成功后焦点移至提示标题，WhatsApp 文字按钮采用符合 AA 对比度要求的配色。
@@ -33,38 +33,7 @@
 
 ---
 
-## 三、重构与优化亮点
-
-本项目基于 RealismThrift 官网业务重新整理，在保持品牌识别的基础上，重点优化了内容可信度、页面结构和海外买家体验。
-
-1. **视觉与交互优化**  
-   网站采用统一的品牌视觉风格，并对图标、间距、响应式布局和移动端显示进行了调整，使页面更适合海外 B2B 买家浏览。
-
-2. **业务模块补齐**  
-   完整覆盖 Used Brand Clothes、Used Brand Shoes、Used Brand Bags 三类核心产品，不再只依赖单一产品页面。
-
-3. **博客内容生态**  
-   独立搭建 Blog 模块，并接入 Sanity Studio。博客文章改为面向海外采购商的英文实务笔记，内容重点包括货源、分级、混批、装柜和出口准备。
-
-4. **内容可信度修正**  
-   旧站中过于夸张或不符合二手货行业实际的表达已逐步调整，例如避免“每件都是名牌”“完美无瑕”等绝对承诺，改为解释真实的 A-Grade 标准和可接受轻微使用痕迹。
-
-5. **SEO 与 AEO 优化**  
-   网站已配置面向搜索引擎和 AI 答案引擎的基础结构，包括：
-   - 页面标题和描述。
-   - OpenGraph 分享信息。
-   - sitemap.xml 和 robots.txt。
-   - 产品、FAQ、文章、博客列表和面包屑结构化数据。
-   - 具体、可理解的图片 Alt Text。
-
-   robots 统一由 `nextjs/app/robots.ts` 生成；静态页面实质内容修改后同步维护 `nextjs/app/sitemap.ts` 的日期，不按部署时间刷新。询盘统计及 Vercel 平台跳转待办见 [跟踪说明](nextjs/docs/meta-tracking.md)；语言路由、SEO、无障碍及验证记录见 [多语言说明](nextjs/docs/internationalization.md)。
-
-6. **询盘链路实装**  
-   表单系统已连接 Supabase 与邮件发送服务。询盘与邮件任务持久化后，邮件在响应结束后处理，避免邮件慢响应阻塞询盘成功提示。
-
----
-
-## 四、快速使用指南
+## 三、快速使用指南
 
 ### 1. 发布或修改博客
 
@@ -75,69 +44,39 @@
 5. 使用 Presentation 模式预览页面效果。
 6. 确认无误后点击 `Publish`。
 
-> 注意：修改后必须点击 `Publish`，前台网站才会显示正式内容。
-
 ### 2. 处理客户询盘
 
-客户提交后，询盘先保存到 Supabase；销售通知和客户确认邮件通过持久化任务发送。页面成功提示表示询盘已保存，邮件投递状态应在 `inquiry_delivery_overview` 中核实。当前业务联系邮箱为：
-
-- `sales@realismthrift.com`
+客户提交后，询盘先保存到 Supabase，再由邮件任务通知销售并向客户发送英文回执。六种语言共用回执模板。页面显示成功表示询盘已保存，可在 `inquiry_delivery_overview` 中核实投递状态。业务联系邮箱为 `sales@realismthrift.com`。
 
 如果没有收到邮件，请检查：
 
 - 本地运行时检查 `.env.local`；生产环境检查 Vercel Production 中的 `RESEND_API_KEY` 和 `CONTACT_EMAIL`，不要输出密钥值。
 - 发件域名是否完成 Resend 验证。
 - 邮件是否进入垃圾邮件箱。
-- Supabase 的邮件任务状态、每五分钟的定时重试及其实际 HTTP 响应是否正常；认证错误排查见 [询盘链路说明](nextjs/supabase/README.md)。
+- Supabase 的邮件任务状态、每五分钟的定时重试及其实际 HTTP 响应是否正常。数据库权限、发信配置和重试排查见[询盘部署说明](nextjs/supabase/README.md)。
 
-检查生产环境时使用真实流量和只读日志，不提交测试询盘或合成广告转化。
+Vercel Preview 的询盘提交返回 503。检查生产环境时使用真实流量和只读日志，不提交测试询盘或合成广告转化。
 
-Vercel Preview 的询盘提交返回 503，不写库或安排发信；GA4 与 Meta 只在 Production 加载。2026-11-06 已将 11 项高权限凭据限定为 Production，保留 Sanity 只读预览；旧部署仍保留创建时的配置，详见[询盘部署说明](nextjs/supabase/README.md)。邮件解析、Neon 恢复、安全重定向与错误日志的维护说明分别见 [开发信说明](nextjs/outreach/README.md) 和 [测量说明](nextjs/docs/meta-tracking.md)。
+### 3. 修改网站资料
 
-构建使用仓库内的 Montserrat 和 Open Sans WOFF2 字体，通过 `next/font/local` 加载，不再请求 Google Fonts。2026-11-06 的 Actions 失败发生在字体解析的构建阶段，冒烟测试尚未执行；字体来源、许可证和更新方法见[字体说明](nextjs/app/fonts/README.md)。Vercel 此前的 Supabase 分支预配失败另见[询盘部署说明](nextjs/supabase/README.md)，两者原因不同。
+联系方式、页脚链接和首页经营数据维护在 [siteData.ts](nextjs/data/siteData.ts)。涉及地址、业务数字或产品说明时，同步核对相关页面、翻译和结构化数据。实质内容变更的日期维护在 [sitemap.ts](nextjs/app/sitemap.ts)。
 
-### 3. 修改网站联系信息
-
-全站通用的联系方式、页脚链接和社交媒体地址主要维护在：
-
-- `nextjs/data/siteData.ts`
-
-常见可维护内容包括：
-
-- WhatsApp 电话。
-- 邮箱地址。
-- 公司地址。
-- 页脚链接。
-- Facebook、Instagram、YouTube、X 等社交媒体链接。
-
-### 4. 修改首页统计数据
-
-首页展示的部分公司数据也集中维护在：
-
-- `nextjs/data/siteData.ts`
-
-如需调整出口国家数、工厂面积、业务年限等数据，请先确认这些数字与全站其他页面一致，再进行修改。
-
-- 社交媒体地址保留在数据中，但当前页脚不展示社媒按钮。
-
----
-
-## 五、项目结构与配置
+## 四、项目结构与配置
 
 ### 1. 目录说明
 
 - `nextjs/`：官网前台代码。
 - `sanity/studio-realismthrift/`：Sanity 内容管理后台代码。
-- `AGENTS.MD`：业务背景、团队角色和项目维护规则。
+- [AGENTS.md](AGENTS.md)：业务背景、团队角色和项目维护规则。
 - `Company_Introduction.md`：公司介绍文档。
 - `Company_Introduction_Professional.md`：更克制、专业版本的公司介绍。
-- `knowledge/`：业务知识与问答资料。
+- [knowledge/README.md](knowledge/README.md)：七份业务问答资料的索引和使用范围。
 - `plugins/`：开发信工具的私有插件与操作说明；服务实现位于 `nextjs/outreach/` 和 `nextjs/lib/outreach/`。
 - `archive/`：历史审计、临时方案和过期技术文档。本目录已加入 `.gitignore`，后续默认不纳入 Git 版本管理。
 
 ### 2. 包管理要求
 
-本项目强制使用 **pnpm** 进行依赖管理。请勿使用 `npm` 或 `yarn`，否则 `preinstall` 钩子会报错。
+官网和 Studio 各有一份锁文件，两者均使用 Node.js 24 和 pnpm 10.33.0。从仓库根目录分别进入对应目录执行命令。
 
 常用命令：
 
@@ -147,7 +86,6 @@ pnpm install --frozen-lockfile
 pnpm dev
 pnpm lint
 pnpm test:unit
-pnpm exec tsc --noEmit
 pnpm build
 ```
 
@@ -155,37 +93,25 @@ Sanity Studio：
 
 ```powershell
 cd sanity/studio-realismthrift
-pnpm install
+pnpm install --frozen-lockfile
 pnpm dev
 pnpm build
 ```
 
 ### 3. 关键环境变量
 
-网站正常运行需要配置环境变量。真实密钥只应保存在本地或部署平台，不应提交到代码仓库。
+按功能从[环境变量示例](nextjs/.env.example)配置本地或部署环境。部署平台保存真实凭据。
 
-- `RESEND_API_KEY`：邮件发送服务密钥。
-- `RESEND_WEBHOOK_SECRET`：验证 Resend 投递状态回调的签名。
-- `CONTACT_EMAIL`：接收询盘的邮箱。
-- `CONTACT_FROM_EMAIL`：系统发件邮箱。
-- `AUTO_REPLY_FROM_EMAIL`：客户自动确认邮件的发件邮箱。
-- `SUPABASE_URL`、`SUPABASE_SECRET_KEY`：询盘数据库与仅服务端使用的凭据。
-- `INQUIRY_RETRY_SECRET`：邮件重试接口的服务端密钥，须与 Supabase Vault 配置一致。
-- `AUTO_LOCALE_DETECTION_ENABLED`：设为 `false` 可关闭自动语言选择，保留手动语言菜单。
-- `APP_URL`：网站的正式来源地址，用于来源校验等服务端逻辑。
-- `NEXT_PUBLIC_ANALYTICS_ENABLED`：设为 `false` 时关闭 GA4、Meta Pixel 和服务端 CAPI；修改公开变量后须重新构建部署。
-- `NEXT_PUBLIC_GA_ID`：GA4 数据流测量 ID。关键事件标记与计数方式在 GA4 后台维护，见 [跟踪说明](nextjs/docs/meta-tracking.md)。
-- `NEXT_PUBLIC_FB_PIXEL_ID`：Meta Pixel ID，当前为 `1661409812003549`。
-- `META_CAPI_ACCESS_TOKEN`：仅供服务端使用的 Meta Conversions API 密钥，保存在 Vercel Production 环境。
-- `NEXT_PUBLIC_SANITY_PROJECT_ID`：Sanity 项目 ID。
-- `NEXT_PUBLIC_SANITY_DATASET`：Sanity 数据集。
-- `NEXT_PUBLIC_SANITY_API_VERSION`：Sanity API 版本。
-- `SANITY_API_EDITOR_TOKEN`：用于写入 Sanity 内容的 token。
-- `SANITY_API_READ_TOKEN`：用于读取 Sanity 内容的 token。
+| 维护事项 | 说明 |
+| --- | --- |
+| 官网语言、自动选择和 SEO | [多语言说明](nextjs/docs/internationalization.md) |
+| GA4、Google Ads、Meta 与询盘归因 | [测量说明](nextjs/docs/meta-tracking.md) |
+| 询盘入库、回执和重试 | [Supabase 与 Resend](nextjs/supabase/README.md) |
+| 开发信、邮箱连接和退订 | [开发信运维](nextjs/outreach/README.md) |
+| 博客预览、查询类型生成 | [Sanity Studio](sanity/studio-realismthrift/README.md) |
+| 网站自托管字体及许可证 | [字体说明](nextjs/app/fonts/README.md) |
 
----
-
-## 六、注意事项与常见问题
+## 五、注意事项与常见问题
 
 ### 1. 可视化编辑覆盖范围
 
@@ -239,7 +165,7 @@ pnpm build
 
 ---
 
-## 七、联系我们
+## 六、联系我们
 
 - **WhatsApp**: [+86 17279444062](https://wa.me/8617279444062)
 - **Email**: sales@realismthrift.com

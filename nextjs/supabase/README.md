@@ -2,7 +2,7 @@
 
 The application code is build-safe without production secrets, but `/api/send` becomes active only after the Supabase migration and server-only environment variables are configured.
 
-Vercel Preview submissions return 503 before any inquiry write or delivery is scheduled. Production submissions and scheduled retries are unchanged.
+Vercel Preview submissions return 503 before any inquiry write or delivery is scheduled. Production jobs send the English v1 acknowledgement for every storefront language. Retries use the stored subject and idempotency key.
 
 ## 2026-11-06 access hardening
 

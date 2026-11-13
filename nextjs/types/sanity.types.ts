@@ -451,49 +451,6 @@ export type PostBySlugQueryResult = {
 } | null;
 
 // Source: ../../nextjs/lib/blog.ts
-// Variable: postSlugsQuery
-// Query: *[  _type == "post" && defined(slug.current) && defined(publishedAt) &&  publishedAt <= now() && isArchived != true].slug.current
-export type PostSlugsQueryResult = Array<string>;
-
-// Source: ../../nextjs/lib/blog.ts
-// Variable: relatedPostsQuery
-// Query: *[  _type == "post" && defined(slug.current) && defined(publishedAt) &&  publishedAt <= now() && isArchived != true &&  _id != $currentId && category._ref == $categoryId] | order(publishedAt desc)[0...3] {  _id, title, "slug": slug.current, excerpt, publishedAt, _updatedAt, coverImage,  category->{_id, title, "slug": slug.current, description},  author->{name, role, bio, avatar}}
-export type RelatedPostsQueryResult = Array<{
-  _id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  publishedAt: string;
-  _updatedAt: string;
-  coverImage: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt: string;
-    _type: "image";
-  };
-  category: {
-    _id: string;
-    title: string;
-    slug: string;
-    description: string | null;
-  };
-  author: {
-    name: string;
-    role: string | null;
-    bio: string | null;
-    avatar: {
-      asset?: SanityImageAssetReference;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    } | null;
-  };
-}>;
-
-// Source: ../../nextjs/lib/blog.ts
 // Variable: prevNextQuery
 // Query: {  "prev": *[    _type == "post" && defined(slug.current) && defined(publishedAt) &&    publishedAt <= now() && isArchived != true && publishedAt < $publishedAt  ] | order(publishedAt desc)[0] {    title,    "slug": slug.current  },  "next": *[    _type == "post" && defined(slug.current) && defined(publishedAt) &&    publishedAt <= now() && isArchived != true && publishedAt > $publishedAt  ] | order(publishedAt asc)[0] {    title,    "slug": slug.current  }}
 export type PrevNextQueryResult = {
@@ -514,8 +471,6 @@ declare module "@sanity/client" {
     '*[\n  _type == "post" && defined(slug.current) && defined(publishedAt) &&\n  publishedAt <= now() && isArchived != true\n] | order(publishedAt desc)[0...3] {\n  _id, title, "slug": slug.current, excerpt, publishedAt, _updatedAt, coverImage,\n  category->{_id, title, "slug": slug.current, description},\n  author->{name, role, bio, avatar}\n}': LatestPostsQueryResult;
     '*[\n  _type == "post" && defined(slug.current) && defined(publishedAt) &&\n  publishedAt <= now() && isArchived != true\n] | order(publishedAt desc)[0...200] {\n  _id, title, "slug": slug.current, excerpt, publishedAt, _updatedAt, coverImage,\n  category->{_id, title, "slug": slug.current, description},\n  author->{name, role, bio, avatar}\n}': AllPostsQueryResult;
     '*[\n  _type == "post" && defined(slug.current) && defined(publishedAt) &&\n  publishedAt <= now() && isArchived != true && slug.current == $slug\n][0] {\n  _id,\n  title,\n  "slug": slug.current,\n  excerpt,\n  publishedAt,\n  _updatedAt,\n  coverImage,\n  category->{\n    _id,\n    title,\n    "slug": slug.current,\n    description\n  },\n  author->{\n    name,\n    role,\n    bio,\n    avatar\n  },\n  body,\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage\n  }\n}': PostBySlugQueryResult;
-    '*[\n  _type == "post" && defined(slug.current) && defined(publishedAt) &&\n  publishedAt <= now() && isArchived != true\n].slug.current': PostSlugsQueryResult;
-    '*[\n  _type == "post" && defined(slug.current) && defined(publishedAt) &&\n  publishedAt <= now() && isArchived != true &&\n  _id != $currentId && category._ref == $categoryId\n] | order(publishedAt desc)[0...3] {\n  _id, title, "slug": slug.current, excerpt, publishedAt, _updatedAt, coverImage,\n  category->{_id, title, "slug": slug.current, description},\n  author->{name, role, bio, avatar}\n}': RelatedPostsQueryResult;
     '{\n  "prev": *[\n    _type == "post" && defined(slug.current) && defined(publishedAt) &&\n    publishedAt <= now() && isArchived != true && publishedAt < $publishedAt\n  ] | order(publishedAt desc)[0] {\n    title,\n    "slug": slug.current\n  },\n  "next": *[\n    _type == "post" && defined(slug.current) && defined(publishedAt) &&\n    publishedAt <= now() && isArchived != true && publishedAt > $publishedAt\n  ] | order(publishedAt asc)[0] {\n    title,\n    "slug": slug.current\n  }\n}': PrevNextQueryResult;
   }
 }

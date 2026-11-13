@@ -15,7 +15,7 @@ core URLs. Blog articles, search and operator/email-preference pages remain Engl
   HTML language/direction are set before hydration; Arabic uses RTL.
 - `data/siteData.ts`: company facts and shared content.
 - `lib/i18n/messages/{es,fr,ar,vi,id}.json`: five server dictionaries, each matching
-  the 1,052 keys in `source-keys.json`. Only `client-keys.json` allowlisted copy is
+  the keys in `source-keys.json`. Only `client-keys.json` allowlisted copy is
   passed to interactive components.
 
 There is no runtime translation API. On a new browser session, a top-level
@@ -65,8 +65,9 @@ English; search pages use noindex.
 
 Pages have localized metadata, self-referencing production canonicals, reciprocal
 six-language hreflang and English `x-default`. Open Graph uses the matching locale,
-including `id_ID`. Sitemap translations use the later of source content date and
-translation launch date: `2026-11-01` for es/fr/ar/vi and `2026-11-02` for id.
+including `id_ID`. Each translated sitemap entry uses the later of the source
+page’s modification date and its translation date. The shared review date and
+subsequent page-specific corrections are recorded in [sitemap.ts](../app/sitemap.ts).
 Do not refresh content dates for builds or style-only changes.
 
 Product collection and FAQ JSON-LD share the visible translated copy. Organization
@@ -98,12 +99,13 @@ China. The DiDi destination is Baisha Elementary School. Display addresses are
 translated; contact pages also retain the original copyable English and Chinese
 navigation/search strings. Do not translate coordinates, map IDs or contact details.
 
-Only form labels and display messages are localized. Field names, product/quantity
+Form labels and on-screen responses follow the storefront language. Customer
+acknowledgement emails use the English v1 template for every locale. Field names, product/quantity
 values, `/api/send`, submission IDs and Meta browser/server event IDs keep their
 contracts. Source paths retain `/id/contact-us` or the actual localized page.
 GA4 does not receive contact fields or country free text. Measurement, hashing,
 email outbox/retries and utility-page exclusions are documented in
-[meta-tracking.md](meta-tracking.md). Use the same GA4 property/Meta Pixel for all
+[meta-tracking.md](meta-tracking.md). Use the same GA4 property, Google Ads destination and Meta Pixel for all
 languages and report by page path, rather than translating event names.
 
 ## Verification
