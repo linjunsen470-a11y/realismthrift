@@ -53,4 +53,4 @@ The sales team helps buyers choose product categories and grade expectations bas
 - Address: RealismThrift (Baisha Alley Weilitang), County Road 193, Yuanzhou Town, Boluo County, Huizhou City, Guangdong Province, China
 - Website: [www.realismthrift.com](https://www.realismthrift.com)
 
-RealismThrift: Stability, Quality, Transparency.
+RealismThrift: Stability, Quality, Trust.

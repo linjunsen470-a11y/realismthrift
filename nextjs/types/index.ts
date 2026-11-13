@@ -1,3 +1,5 @@
+import type { LatestPostsQueryResult, PostBySlugQueryResult } from "./sanity.types";
+
 export interface NavItem {
   label: string;
   href: string;
@@ -79,29 +81,3 @@ export interface SanityImage {
 
 export type BlogPostCard = LatestPostsQueryResult[number];
 export type BlogPostDetail = NonNullable<PostBySlugQueryResult>;
-
-export interface HomePageData {
-  hero: {
-    title: string;
-    subtitle: string;
-    cta: string;
-    bgImage: string;
-  };
-  features: {
-    title: string;
-    icon: string;
-    description: string;
-  }[];
-  sections: {
-    title: string;
-    subtitle?: string;
-    content?: string;
-    image?: string;
-    buttonText?: string;
-    buttonHref?: string;
-  }[];
-}
-import type {
-  LatestPostsQueryResult,
-  PostBySlugQueryResult,
-} from "./sanity.types";

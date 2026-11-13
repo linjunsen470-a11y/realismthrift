@@ -14,7 +14,6 @@
     "test:smoke": "playwright test",
     "test:smoke:ui": "playwright test --ui",
     "test:smoke:report": "playwright show-report",
-    "clean": "next clean",
     "preinstall": "npx only-allow pnpm"
   },
   "engines": {
