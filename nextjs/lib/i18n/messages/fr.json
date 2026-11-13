@@ -1052,17 +1052,5 @@
   "Sample Orders Available": "Commandes d’échantillons disponibles",
   "Our Story: {story}": "Notre histoire : {story}",
   "Founded in {year}, we have rich experience in used clothes, shoes, and bags wholesale export to global markets.": "Fondée en {year}, notre entreprise possède une solide expérience de l’exportation en gros de vêtements, chaussures et sacs d’occasion vers les marchés du monde entier.",
-  "Export to {count} Countries": "Exportation vers {count} pays",
-  "Thank you for your inquiry, {name} — RealismThrift": "Merci pour votre demande, {name} — RealismThrift",
-  "Thank you, {name}.": "Merci, {name}.",
-  "AUTOMATED CONFIRMATION": "CONFIRMATION AUTOMATIQUE",
-  "Your inquiry summary": "Récapitulatif de votre demande",
-  "Product:": "Produit :",
-  "Quantity:": "Quantité :",
-  "Country:": "Pays :",
-  "Not specified": "Non précisé",
-  "Stability · Quality · Trust": "Stabilité · Qualité · Confiance",
-  "Reply directly to this email or contact us on WhatsApp to add details or ask questions.": "Répondez directement à cet e-mail ou contactez-nous sur WhatsApp pour ajouter des précisions ou poser des questions.",
-  "This automated message confirms receipt of your inquiry. Our sales team monitors replies.": "Ce message automatique confirme la réception de votre demande. Notre équipe commerciale consulte les réponses.",
-  "RealismThrift Co., Ltd. · Huizhou, Guangdong, China": "RealismThrift Co., Ltd. · Huizhou, Guangdong, Chine"
+  "Export to {count} Countries": "Exportation vers {count} pays"
 }

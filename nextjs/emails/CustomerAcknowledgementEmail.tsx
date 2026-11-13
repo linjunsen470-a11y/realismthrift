@@ -1,95 +1,116 @@
-import { Body, Button, Container, Head, Heading, Hr, Html, Link, Preview, Section, Text } from "@react-email/components";
-import { getTranslator } from "@/lib/i18n/server";
-import type { Locale } from "@/lib/i18n/routing";
+import {
+  Body,
+  Button,
+  Container,
+  Head,
+  Heading,
+  Hr,
+  Html,
+  Link,
+  Preview,
+  Section,
+  Text,
+} from "@react-email/components";
 
 export interface CustomerAcknowledgementEmailProps {
   name: string;
   country: string;
   product: string;
   quantity: string;
-  locale?: Locale;
 }
 
-const quantityLabels: Record<string, string> = {
-  "100bales": "100+ bales of clothes",
-  shoes: "Shoes — specify pairs below",
-  bags: "Bags — specify pieces below",
-  trial: "Trial order — confirm minimum",
-  "20ft": "One 20ft container",
-  "40ft": "One 40ft container",
-  "2x40ft": "Two 40ft containers",
-};
-
-export function customerAcknowledgementSubject(name: string, locale: Locale = "en") {
-  return getTranslator(locale)("Thank you for your inquiry, {name} — RealismThrift", { name });
+function display(value: string) {
+  return value || "Not specified";
 }
 
-function copy(props: CustomerAcknowledgementEmailProps) {
-  const t = getTranslator(props.locale ?? "en");
-  return {
-    t,
-    thanks: t("Thank you, {name}.", { name: props.name }),
-    received: t("Inquiry received. Our sales team aims to reply within 12 hours."),
-    product: props.product ? t(props.product) : t("Not specified"),
-    quantity: props.quantity ? t(quantityLabels[props.quantity] ?? props.quantity) : t("Not specified"),
-    country: props.country || t("Not specified"),
-    contact: t("Reply directly to this email or contact us on WhatsApp to add details or ask questions."),
-    notice: t("This automated message confirms receipt of your inquiry. Our sales team monitors replies."),
-    address: t("RealismThrift Co., Ltd. · Huizhou, Guangdong, China"),
-  };
-}
-
-export function CustomerAcknowledgementEmail(props: CustomerAcknowledgementEmailProps) {
-  const c = copy(props);
-  const t = c.t;
+export function CustomerAcknowledgementEmail({
+  name,
+  country,
+  product,
+  quantity,
+}: CustomerAcknowledgementEmailProps) {
   return (
-    <Html lang={props.locale ?? "en"} dir={props.locale === "ar" ? "rtl" : "ltr"}>
+    <Html lang="en">
       <Head />
-      <Preview>{c.received}</Preview>
+      <Preview>We received your wholesale inquiry and aim to reply within 12 hours.</Preview>
       <Body style={bodyStyle}>
         <Container style={containerStyle}>
           <Section style={headerStyle}>
             <Text style={brandStyle}>REALISMTHRIFT</Text>
-            <Text style={brandSublineStyle}>{t("Stability · Quality · Trust")}</Text>
+            <Text style={brandSublineStyle}>Stability · Quality · Trust</Text>
           </Section>
+
           <Section style={contentStyle}>
-            <Text style={automaticStyle}>{t("AUTOMATED CONFIRMATION")}</Text>
-            <Heading style={headingStyle}>{c.thanks}</Heading>
-            <Text style={copyStyle}>{c.received}</Text>
-            <Section style={summaryStyle}>
-              <Text style={summaryTitleStyle}>{t("Your inquiry summary")}</Text>
-              <Text style={summaryLineStyle}><strong>{t("Product:")}</strong> {c.product}</Text>
-              <Text style={summaryLineStyle}><strong>{t("Quantity:")}</strong> {c.quantity}</Text>
-              <Text style={summaryLineStyle}><strong>{t("Country:")}</strong> {c.country}</Text>
-            </Section>
-            <Text style={copyStyle}>{c.contact}</Text>
-            <Section style={buttonRowStyle}>
-              <Button href="https://wa.me/8617279444062" style={primaryButtonStyle}>{t("Contact us on WhatsApp")}</Button>
-            </Section>
-            <Text style={contactStyle}>
-              {t("Email")}: <Link href="mailto:sales@realismthrift.com" dir="ltr" style={linkStyle}>sales@realismthrift.com</Link>
-              <br />
-              WhatsApp: <Link href="https://wa.me/8617279444062" dir="ltr" style={linkStyle}>+86 17279444062</Link>
+            <Text style={automaticStyle}>AUTOMATED CONFIRMATION</Text>
+            <Heading style={headingStyle}>Thank you, {name}.</Heading>
+            <Text style={copyStyle}>
+              We have received your wholesale inquiry. Our sales team will review your requirements.
+              We aim to reply within 12 hours.
             </Text>
+
+            <Section style={summaryStyle}>
+              <Text style={summaryTitleStyle}>Your inquiry summary</Text>
+              <Text style={summaryLineStyle}><strong>Product:</strong> {display(product)}</Text>
+              <Text style={summaryLineStyle}><strong>Quantity:</strong> {display(quantity)}</Text>
+              <Text style={summaryLineStyle}><strong>Country:</strong> {display(country)}</Text>
+            </Section>
+
+            <Text style={copyStyle}>
+              Need a faster response or want to add more details? Reply directly to this email or
+              message us on WhatsApp.
+            </Text>
+
+            <Section style={buttonRowStyle}>
+              <Button href="https://wa.me/8617279444062?text=Hi%2C%20I%20submitted%20a%20wholesale%20inquiry" style={primaryButtonStyle}>
+                Contact us on WhatsApp
+              </Button>
+            </Section>
+
+            <Text style={contactStyle}>
+              Email: <Link href="mailto:sales@realismthrift.com" style={linkStyle}>sales@realismthrift.com</Link>
+              <br />
+              WhatsApp: <Link href="https://wa.me/8617279444062" style={linkStyle}>+86 17279444062</Link>
+            </Text>
+
             <Hr style={dividerStyle} />
-            <Text style={noticeStyle}>{c.notice}</Text>
+            <Text style={noticeStyle}>
+              This message was generated automatically to confirm receipt. Replies are monitored by
+              our sales team.
+            </Text>
           </Section>
-          <Section style={footerStyle}><Text style={footerTextStyle}>{c.address}</Text></Section>
+
+          <Section style={footerStyle}>
+            <Text style={footerTextStyle}>
+              RealismThrift Co., Ltd. · Huizhou, Guangdong, China
+            </Text>
+          </Section>
         </Container>
       </Body>
     </Html>
   );
 }
 
-export function customerAcknowledgementText(props: CustomerAcknowledgementEmailProps) {
-  const c = copy(props);
+export function customerAcknowledgementText({
+  name,
+  country,
+  product,
+  quantity,
+}: CustomerAcknowledgementEmailProps) {
   return [
-    c.thanks, "", c.t("AUTOMATED CONFIRMATION"), c.received, "",
-    c.t("Your inquiry summary"),
-    `${c.t("Product:")} ${c.product}`,
-    `${c.t("Quantity:")} ${c.quantity}`,
-    `${c.t("Country:")} ${c.country}`, "", c.contact,
-    "sales@realismthrift.com", "https://wa.me/8617279444062", "", c.notice, "", c.address,
+    `Thank you, ${name}.`,
+    "",
+    "This is an automated confirmation that we received your wholesale inquiry.",
+    "Our sales team will review your requirements. We aim to reply within 12 hours.",
+    "",
+    "YOUR INQUIRY SUMMARY",
+    `Product: ${display(product)}`,
+    `Quantity: ${display(quantity)}`,
+    `Country: ${display(country)}`,
+    "",
+    "You may reply directly to this email, email sales@realismthrift.com, or contact us on WhatsApp:",
+    "https://wa.me/8617279444062",
+    "",
+    "RealismThrift Co., Ltd. · Huizhou, Guangdong, China",
   ].join("\n");
 }
 
