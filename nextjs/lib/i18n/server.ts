@@ -43,12 +43,16 @@ const localizedDataFields = new Set([
 ]);
 
 /** Translate registered display fields and published links; preserve identifiers and unknown fields. */
-export function getLocalizedData<T>(value: T, locale: Locale): T {
+export function getLocalizedData<T>(
+  value: T,
+  locale: Locale,
+  values?: Record<string, string | number>,
+): T {
   const t = getTranslator(locale);
   const visit = (item: unknown, key = ""): unknown => {
     if (typeof item === "string") {
       if (key === "href") return localePath(item, locale);
-      return localizedDataFields.has(key) ? t(item) : item;
+      return localizedDataFields.has(key) ? t(item, values) : item;
     }
     if (Array.isArray(item)) return item.map((entry) => visit(entry, key));
     if (item && typeof item === "object")

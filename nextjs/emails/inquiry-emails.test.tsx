@@ -1,3 +1,5 @@
+import { translatedLocales } from "@/lib/i18n/routing";
+import { getTranslator } from "@/lib/i18n/server";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
@@ -42,3 +44,20 @@ describe("inquiry email templates", () => {
   });
 });
 
+
+
+it("localizes customer email body and summary in all published languages, preserving user text", () => {
+  for (const locale of translatedLocales) {
+    const props = { locale, name: "Buyer <script>", country: "Buyer country", product: "Used Brand Clothes", quantity: "20ft" };
+    const html = renderToStaticMarkup(<CustomerAcknowledgementEmail {...props} />);
+    const text = customerAcknowledgementText(props);
+    expect(html).toContain(`lang="${locale}"`);
+    expect(html).toContain(`dir="${locale === "ar" ? "rtl" : "ltr"}"`);
+    expect(html).not.toContain("<script>");
+    expect(text).toContain(getTranslator(locale)("Used Brand Clothes"));
+    expect(text).toContain(getTranslator(locale)("One 20ft container"));
+    expect(text).toContain("Buyer country");
+    expect(text).not.toContain("AUTOMATED CONFIRMATION");
+    expect(text).not.toMatch(/\{name\}/);
+  }
+});

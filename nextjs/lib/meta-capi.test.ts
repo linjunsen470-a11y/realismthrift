@@ -553,3 +553,13 @@ describe("CAPI safe attempt diagnostics", () => {
     expect(fetchImpl).toHaveBeenCalledTimes(1);
   });
 });
+
+
+it("matches Arabic and Persian international digits without weakening number validation", () => {
+  const expected = hashMetaPhone("+971501234567");
+  expect(expected).toBeTruthy();
+  expect(hashMetaPhone("+٩٧١٥٠١٢٣٤٥٦٧")).toBe(expected);
+  expect(hashMetaPhone("۰۰۹۷۱۵۰۱۲۳۴۵۶۷")).toBe(expected);
+  expect(hashMetaPhone("٠٥٠١٢٣٤٥٦٧")).toBeUndefined();
+  expect(hashMetaPhone("+٩٧١٥٠١٢٣٤٥٦٧ ext ١")).toBeUndefined();
+});

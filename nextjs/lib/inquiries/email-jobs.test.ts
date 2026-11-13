@@ -60,3 +60,16 @@ describe("email outbox storage failures", () => {
     vi.restoreAllMocks();
   });
 });
+
+
+it("uses the persisted source language for customer subject and retry payload", async () => {
+  mocks.claim.mockResolvedValue([{ ...job, kind: "customer_ack", source_path: "/fr/contact-us" }]);
+  mocks.send.mockResolvedValue({ data: { id: "resend-fr" }, error: null });
+  mocks.accept.mockResolvedValue(undefined);
+  await processPendingEmailJobs();
+  const [payload, options] = mocks.send.mock.calls.at(-1)!;
+  expect(payload.subject).toBe("Merci pour votre demande, Buyer — RealismThrift");
+  expect(payload.text).toContain("CONFIRMATION AUTOMATIQUE");
+  expect(payload.react.props.locale).toBe("fr");
+  expect(options.idempotencyKey).toBe(job.idempotency_key);
+});

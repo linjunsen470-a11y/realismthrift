@@ -1,6 +1,8 @@
+import { splitLocale } from "@/lib/i18n/routing";
 import {
   CustomerAcknowledgementEmail,
   customerAcknowledgementText,
+  customerAcknowledgementSubject,
 } from "@/emails/CustomerAcknowledgementEmail";
 import {
   SalesInquiryEmail,
@@ -36,6 +38,8 @@ function salesEmailProps(job: ClaimedEmailJob) {
 
 function customerEmailProps(job: ClaimedEmailJob) {
   return {
+    // The persisted source path also survives scheduled email retries.
+    locale: splitLocale(job.source_path).locale,
     name: job.name,
     country: job.country,
     product: job.product,
@@ -55,7 +59,9 @@ async function sendEmailJob(job: ClaimedEmailJob) {
         from: `${isSalesNotification ? "RealismThrift Website" : "RealismThrift Sales"} <${job.from_email}>`,
         to: [job.to_email],
         replyTo: job.reply_to_email,
-        subject: job.subject,
+        subject: isSalesNotification
+          ? job.subject
+          : customerAcknowledgementSubject(job.name, customerProps.locale),
         react: isSalesNotification ? (
           <SalesInquiryEmail {...salesProps} />
         ) : (
