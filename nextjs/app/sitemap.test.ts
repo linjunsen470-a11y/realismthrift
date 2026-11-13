@@ -11,6 +11,7 @@ vi.mock("@/lib/blog", () => ({
 }));
 
 import sitemap from "./sitemap";
+import { getAllBlogPosts } from "@/lib/blog";
 
 it("lists each published translation with reciprocal alternates and its own publication date", async () => {
   const entries = await sitemap();
@@ -22,16 +23,25 @@ it("lists each published translation with reciprocal alternates and its own publ
       );
       expect(entry, url).toBeDefined();
       expect(entry?.alternates?.languages).toEqual(languageAlternates(path));
-      if (path === "/privacy-policy")
-        expect(entry?.lastModified).toEqual(new Date("2026-11-03"));
-      else if (locale === "id")
-        expect(entry?.lastModified).toEqual(new Date("2026-11-02"));
-      else if (locale === "fr")
-        expect(entry?.lastModified).toEqual(new Date("2026-11-01"));
+
     }
   }
   expect(new Set(entries.map((entry) => entry.url)).size).toBe(entries.length);
   expect(
     entries.some((entry) => /\/(?:es|fr|ar|vi|id)\/blog/.test(entry.url)),
   ).toBe(false);
+});
+
+
+it("records substantive translation corrections without advancing every page to today", async () => {
+  const entries = await sitemap();
+  const date = (path: string) => entries.find(entry => entry.url.endsWith(path))?.lastModified;
+  expect(date("/fr/how-to-order")).toEqual(new Date("2026-11-13"));
+  expect(date("/id")).toEqual(new Date("2026-11-13"));
+  expect(date("/id/how-to-order")).toEqual(new Date("2026-11-08"));
+});
+
+it("propagates CMS failures instead of publishing an incomplete sitemap", async () => {
+  vi.mocked(getAllBlogPosts).mockRejectedValueOnce(new Error("CMS unavailable"));
+  await expect(sitemap()).rejects.toThrow("CMS unavailable");
 });

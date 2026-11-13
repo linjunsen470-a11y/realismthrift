@@ -107,7 +107,10 @@ export function hashMetaEmail(email: string): string {
 
 /** Optional matching only: never infer a country or block an inquiry on an invalid number. */
 export function hashMetaPhone(value: string): string | undefined {
-  const input = value.trim();
+  // Arabic and Persian keyboards may use native digits for international numbers.
+  const input = value.trim().replace(/[٠-٩۰-۹]/g, (digit) =>
+    String(digit.charCodeAt(0) - (digit <= "٩" ? 0x0660 : 0x06f0)),
+  );
   // Permit formatting, but reject text, extensions, and multiple-number separators before parsing.
   if (input.length > 64 || !/^(?:\+|00)[0-9\s().-]+$/.test(input)) return undefined;
   try {
