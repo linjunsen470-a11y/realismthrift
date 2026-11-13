@@ -29,6 +29,7 @@ import ar from "./messages/ar.json";
 import vi from "./messages/vi.json";
 import id from "./messages/id.json";
 import {
+  features,
   companyAddress,
   companyLocation,
   companyPostalAddress,
@@ -415,4 +416,17 @@ describe("translation integrity and server/client boundaries", () => {
       "Halo, saya ingin mendapatkan daftar harga grosir.",
     );
   });
+});
+
+
+it("translates data-driven homepage copy after interpolating business facts", () => {
+  for (const locale of translatedLocales) {
+    const localized = getLocalizedData(features, locale, { year: companyStats.foundedYear, count: companyStats.countriesCount });
+    for (const feature of localized) {
+      expect(feature.title).not.toMatch(/Export to|\{count\}/);
+      expect(feature.description).not.toMatch(/Founded in|\{year\}/);
+    }
+    expect(localized[4].description).toContain(String(companyStats.foundedYear));
+    expect(localized[5].title).toContain(companyStats.countriesCount);
+  }
 });

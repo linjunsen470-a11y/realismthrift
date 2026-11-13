@@ -1,4 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { renderToStaticMarkup } from "react-dom/server";
+import { locales, localePath } from "@/lib/i18n/routing";
 import type { ClaimedEmailJob } from "./types";
 
 const mocks = vi.hoisted(() => ({
@@ -58,5 +60,31 @@ describe("email outbox storage failures", () => {
     expect(mocks.accept).not.toHaveBeenCalled();
     expect(mocks.fail).toHaveBeenCalledWith("job-1", expect.objectContaining({ status: "failed", code: "rate_limit_exceeded" }));
     vi.restoreAllMocks();
+  });
+
+  it.each(locales)("sends the English v1 acknowledgement on first send and retry from %s", async (locale) => {
+    const receipt = {
+      ...job,
+      kind: "customer_ack",
+      subject: "Thank you for your inquiry, Buyer — RealismThrift",
+      source_path: localePath("/contact-us", locale),
+      country: "Côte d’Ivoire",
+    };
+    mocks.claim.mockResolvedValueOnce([{ ...receipt, attempt_count: 1 }])
+      .mockResolvedValueOnce([{ ...receipt, attempt_count: 2 }]);
+    mocks.accept.mockRejectedValueOnce(new Error("PostgREST unavailable"));
+
+    await expect(processPendingEmailJobs()).rejects.toThrow("PostgREST unavailable");
+    expect((await processPendingEmailJobs()).accepted).toBe(1);
+    const [firstSend, retry] = mocks.send.mock.calls;
+    expect(retry).toEqual(firstSend);
+    const [payload, options] = retry;
+    expect(options.idempotencyKey).toBe(receipt.idempotency_key);
+    expect(payload.subject).toBe(receipt.subject);
+    expect(payload.text).toContain("This is an automated confirmation that we received your wholesale inquiry.");
+    expect(payload.text).toContain("Country: Côte d’Ivoire");
+    const html = renderToStaticMarkup(payload.react);
+    expect(html).toContain('lang="en"');
+    expect(html).toContain("We have received your wholesale inquiry.");
   });
 });

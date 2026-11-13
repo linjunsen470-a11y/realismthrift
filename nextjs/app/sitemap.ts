@@ -10,13 +10,16 @@ import {
 export const revalidate = 86400; // Cache sitemap for 24 hours on CDN edge
 
 const baseUrl = "https://www.realismthrift.com";
-const translationPublishedAt = {
-  es: new Date("2026-11-01"),
-  fr: new Date("2026-11-01"),
-  ar: new Date("2026-11-01"),
-  vi: new Date("2026-11-01"),
-  id: new Date("2026-11-02"),
+// Shared translated copy was reviewed on November 8. Track later page edits explicitly.
+const translationReviewedAt = new Date("2026-11-08");
+const correctedPaths: Record<string, readonly string[]> = {
+  es: ["/", "/about-us", "/used-brand-clothes", "/used-brand-shoes", "/used-brand-bag", "/terms-of-service"],
+  fr: ["/", "/about-us", "/used-brand-shoes", "/used-brand-bag", "/how-to-order", "/terms-of-service"],
+  ar: ["/", "/used-brand-clothes", "/used-brand-shoes"],
+  vi: ["/", "/used-brand-clothes", "/used-brand-shoes", "/used-brand-bag", "/how-to-order", "/terms-of-service"],
+  id: ["/"],
 };
+const translationCorrectedAt = new Date("2026-11-13");
 
 type StaticPageConfig = {
   path: string;
@@ -139,7 +142,8 @@ function buildStaticRoutes(blogLastModified: Date): MetadataRoute.Sitemap {
             lastModified: new Date(
               Math.max(
                 entry.lastModified.getTime(),
-                translationPublishedAt[locale].getTime(),
+                (correctedPaths[locale].includes(page.path)
+                  ? translationCorrectedAt : translationReviewedAt).getTime(),
               ),
             ),
           }))
@@ -149,25 +153,14 @@ function buildStaticRoutes(blogLastModified: Date): MetadataRoute.Sitemap {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let blogRoutes: MetadataRoute.Sitemap = [];
-  let blogLastModified = new Date("2026-04-27");
-
-  try {
-    const posts = await getAllBlogPosts();
-    if (posts && Array.isArray(posts)) {
-      blogLastModified = resolveLatestPostDate(posts, "2026-04-27");
-      blogRoutes = posts.map((post) => ({
-        url: `${baseUrl}/blog/${post.slug}`,
-        lastModified: new Date(
-          post._updatedAt || post.publishedAt || new Date(),
-        ),
-        changeFrequency: "monthly" as const,
-        priority: 0.6,
-      }));
-    }
-  } catch (error) {
-    console.error("Failed to generate blog routes for sitemap:", error);
-  }
-
+  // Do not replace a valid sitemap with an incomplete success response on CMS failure.
+  const posts = await getAllBlogPosts();
+  const blogLastModified = resolveLatestPostDate(posts, "2026-04-27");
+  const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post._updatedAt || post.publishedAt),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
   return [...buildStaticRoutes(blogLastModified), ...blogRoutes];
 }

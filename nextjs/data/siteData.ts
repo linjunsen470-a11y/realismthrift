@@ -172,10 +172,10 @@ export const features = [
   {
     title: "Export Experience Since 2012",
     icon: "clock-3",
-    description: `Founded in ${companyStats.foundedYear}, we have rich experience in used clothes, shoes, and bags wholesale export to global markets.`,
+    description: "Founded in {year}, we have rich experience in used clothes, shoes, and bags wholesale export to global markets.",
   },
   {
-    title: `Export to ${companyStats.countriesCount} Countries`,
+    title: "Export to {count} Countries",
     icon: "globe-2",
     description:
       "Our products are well-appreciated by wholesalers in Africa, Middle East, Southeast Asia, and South America.",

@@ -76,7 +76,10 @@ export default async function Home({
   locale = "en",
 }: { locale?: Locale } = {}) {
   const t = getTranslator(locale);
-  const features = getLocalizedData(englishFeatures, locale);
+  const features = getLocalizedData(englishFeatures, locale, {
+    year: englishCompanyStats.foundedYear,
+    count: englishCompanyStats.countriesCount,
+  });
   const orderSteps = getLocalizedData(englishOrderSteps, locale);
   const productsData = getLocalizedData(englishProductsData, locale);
   const companyStats = getLocalizedData(englishCompanyStats, locale);
