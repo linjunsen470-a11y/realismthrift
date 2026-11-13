@@ -88,7 +88,7 @@ const staticPages: StaticPageConfig[] = [
   },
   {
     path: "/privacy-policy",
-    lastModified: "2026-11-03",
+    lastModified: "2026-11-14",
     changeFrequency: "yearly",
     priority: 0.3,
   },

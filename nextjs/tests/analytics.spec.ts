@@ -78,6 +78,11 @@ test("first visit and client navigation record page views with basic analytics e
     ad_personalization: "denied",
   }]);
   const configuration = commands.find(command => command[0] === "config");
+  const adsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || "AW-000000001";
+  expect(commands.filter(command => command[0] === "config" && command[1] === adsId)).toHaveLength(1);
+  expect(commands).toContainEqual(["set", "ads_data_redaction", true]);
+  await expect(page.locator('script[src*="googletagmanager.com/gtag/js"]')).toHaveCount(1);
+  expect(cspDirective(csp, "connect-src")).toContain("https://www.googleadservices.com");
   expect(configuration?.[1]).toMatch(/^G-/);
   expect(configuration?.[2]).toMatchObject({
     send_page_view: false,
@@ -111,7 +116,7 @@ test("first visit and client navigation record page views with basic analytics e
   await expect.poll(() => pageViews(page)).toHaveLength(3);
   await expect.poll(() => metaPageViews(page)).toHaveLength(3);
   expect((await pageViews(page))[2][2]).toMatchObject({ page_path: "/" });
-  expect((await analyticsCommands(page)).filter(command => command[0] === "config")).toHaveLength(1);
+  expect((await analyticsCommands(page)).filter(command => command[0] === "config").map(command => command[1])).toEqual([configuration?.[1], adsId]);
   expect((await metaCommands(page)).filter(command => command[0] === "init")).toHaveLength(1);
 });
 
@@ -135,6 +140,8 @@ test("a delayed Google script does not lose the first page view or a successful 
     const commands = await analyticsCommands(page);
     const leads = commands.filter(command => command[0] === "event" && command[1] === "generate_lead");
     expect(leads).toHaveLength(1);
+    expect(leads[0][2]).toMatchObject({ send_to: expect.stringMatching(/^G-/) });
+    expect(commands.filter(command => command[1] === "conversion")).toHaveLength(0);
     expect(leads[0][2]).toMatchObject({ form_name: "wholesale_inquiry", page_path: "/contact-us" });
     expect(leads[0][2]).not.toHaveProperty("country");
     const pixelLeads = await metaLeads(page);
@@ -173,7 +180,8 @@ test("privacy policy discloses the Meta Pixel and does not deny using it", async
   expect(text).toContain("Lead");
   expect(text).toContain("SHA-256 hash");
   expect(text).toContain("international WhatsApp number");
-  expect(text).not.toContain("do not use Google Ads, Meta Pixel");
+  expect(text).toContain("Google Ads");
+  expect(text).not.toContain("do not use Google Ads");
   expect(text.toLowerCase()).not.toContain("cookie settings");
   expect(text.toLowerCase()).not.toContain("consent banner");
 });
@@ -291,12 +299,14 @@ test("only a successful inquiry records one Meta Lead", async ({ page }) => {
 test("UTM attribution survives clean page URLs and SPA navigation", async ({ page }) => {
   await page.goto("/contact-us?utm_source=facebook&utm_medium=paid_social&utm_campaign=october-bags&email=buyer%40example.invalid&token=secret");
   await expect.poll(() => pageViews(page)).toHaveLength(1);
-  const config = (await analyticsCommands(page)).find(command => command[0] === "config");
+  const commands = await analyticsCommands(page);
   expect((await analyticsCommands(page)).filter(command => command[0] === "set").map(command => command[1])).toContainEqual(expect.objectContaining({ campaign_source: "facebook", campaign_medium: "paid_social", campaign_name: "october-bags" }));
-  expect((config?.[2] as Record<string, string>).page_location).not.toContain("?");
+  expect(commands.slice(0, commands.findIndex(command => command[0] === "config"))).toContainEqual([
+    "set", expect.objectContaining({ page_location: new URL("/contact-us", page.url()).href, page_referrer: "" }),
+  ]);
   await page.locator(".rt-logo-link").click();
   await expect.poll(() => pageViews(page)).toHaveLength(2);
-  expect((await analyticsCommands(page)).filter(command => command[0] === "config")).toHaveLength(1);
+  expect((await analyticsCommands(page)).filter(command => command[0] === "config")).toHaveLength(2);
   const serialized = JSON.stringify(await analyticsCommands(page));
   expect(serialized).not.toContain("example.invalid");
   expect(serialized).not.toContain("secret");

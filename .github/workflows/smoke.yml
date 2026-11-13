@@ -51,6 +51,7 @@ jobs:
           NEXT_PUBLIC_ANALYTICS_ENABLED: "true"
           # Browser tests intercept this tag; no CI events reach the live property.
           NEXT_PUBLIC_GA_ID: G-TEST000001
+          NEXT_PUBLIC_GOOGLE_ADS_ID: AW-000000001
         run: pnpm build
 
       - name: Run smoke tests

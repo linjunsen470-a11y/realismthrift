@@ -1,6 +1,12 @@
-# GA4、Meta Pixel 与 Conversions API
+# GA4、Google Ads、Meta Pixel 与 Conversions API
 
-本说明维护网站询盘的当前测量配置，更新于 2026-11-06。适用于网站表单与联系入口点击，不涉及 Meta 原生潜在客户广告、目录或 WhatsApp 站外对话事件。
+本说明维护网站询盘的当前测量配置，更新于 2026-11-14。适用于网站表单与联系入口点击。
+
+## Google Ads 基础标签
+
+生产公共页面加载一次 Google 标签，并配置 Google Ads 目标 `AW-18518055702`。配置了 GA4 时，两者共用加载脚本。所有语言采用相同设置，邮件偏好和内部操作页面排除在外。Google 广告存储、广告用户数据和个性化设置均为 denied，启用广告数据遮盖。Google 可接收无广告 Cookie 的测量信号，广告点击与询盘的归因能力有限。
+
+上线后用 Google Tag Assistant 打开正式站的公开页面，确认显示上述 AW 目标。询盘成功事件 `generate_lead` 仅发往 GA4。如要以询盘优化出价，可在关联 GA4 后将该关键事件导入 Google Ads；也可以在 Ads 创建网站转化并将事件代码中的转化标签接入询盘成功回调。同一询盘只选一个主要转化来源。
 
 ## 多语言测量
 
@@ -108,7 +114,8 @@ Pixel 的内联初始化代码先检查当前落地 URL 的 `fbclid`，再加载
 
 | 变量 | 行为 |
 | --- | --- |
-| `NEXT_PUBLIC_ANALYTICS_ENABLED` | `false` 同时关闭 GA4、Meta Pixel 和 CAPI。 |
+| `NEXT_PUBLIC_ANALYTICS_ENABLED` | `false` 同时关闭 GA4、Google Ads、Meta Pixel 和 CAPI。 |
+| `NEXT_PUBLIC_GOOGLE_ADS_ID` | Google Ads 基础标签 ID；默认 `AW-18518055702`，自动化测试使用测试 ID。 |
 | `NEXT_PUBLIC_GA_ID` | GA4 Web 测量 ID；`generate_lead` 的关键事件标记与计数方式在 GA4 后台维护。 |
 | `VERCEL_ENV` | 仅 `production` 启用 Meta，Vercel 自动设置；本地和 Preview 默认关闭。 |
 | `NEXT_PUBLIC_META_ENVIRONMENT` | 由 `next.config.ts` 从构建时的 `VERCEL_ENV` 派生，确保浏览器环境隔离；无需单独配置。 |

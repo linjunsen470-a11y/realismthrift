@@ -9,6 +9,7 @@ import { campaignParameters } from "@/lib/analytics-campaign";
 
 const isAnalyticsEnabled = isMetaMeasurementEnabled(process.env.NEXT_PUBLIC_ANALYTICS_ENABLED, process.env.NEXT_PUBLIC_META_ENVIRONMENT);
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID?.trim();
+const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim() || "AW-18518055702";
 const FB_PIXEL_ID = resolveFacebookPixelId(process.env.NEXT_PUBLIC_FB_PIXEL_ID);
 
 function metaPixelActive(pathname: string) {
@@ -50,7 +51,10 @@ export default function Analytics() {
 
   return (
     <>
-      {GA_ID ? <Suspense fallback={null}><GoogleAnalytics pathname={pathname} /><ContactClickEvents /></Suspense> : null}
+      <Suspense fallback={null}>
+        <GoogleTag pathname={pathname} />
+        {GA_ID ? <ContactClickEvents /> : null}
+      </Suspense>
       {FB_PIXEL_ID ? (
         <Suspense fallback={null}><MetaPixelPageViews pathname={pathname} /></Suspense>
       ) : null}
@@ -58,13 +62,13 @@ export default function Analytics() {
   );
 }
 
-function GoogleAnalytics({ pathname }: { pathname: string }) {
+function GoogleTag({ pathname }: { pathname: string }) {
   const searchParams = useSearchParams();
   const [initialized, setInitialized] = useState(false);
   const lastPagePath = useRef<string | null>(null);
 
   useEffect(() => {
-    if (!isAnalyticsEnabled || !GA_ID || !initialized || !window.gtag) return;
+    if (!initialized || !window.gtag) return;
     const campaign = campaignParameters(searchParams.toString());
     if (Object.keys(campaign).length) window.gtag("set", campaign);
     if (lastPagePath.current === pathname) return;
@@ -72,13 +76,14 @@ function GoogleAnalytics({ pathname }: { pathname: string }) {
     const pageLocation = `${window.location.origin}${window.location.pathname}`;
     // Keep subsequent lead/engagement events on the current public page, without query strings.
     window.gtag("set", { page_location: pageLocation });
+    lastPagePath.current = pathname;
+    if (!GA_ID) return;
     window.gtag("event", "page_view", {
       send_to: GA_ID,
       page_title: document.title,
       page_location: pageLocation,
       page_path: pathname,
     });
-    lastPagePath.current = pathname;
   }, [pathname, searchParams, initialized]);
 
   return (
@@ -94,18 +99,22 @@ function GoogleAnalytics({ pathname }: { pathname: string }) {
             ad_personalization: 'denied'
           });
           gtag('js', new Date());
-          gtag('set', (${campaignParameters.toString()})(window.location.search));
-          gtag('config', ${JSON.stringify(GA_ID)}, {
-            send_page_view: false,
-            allow_google_signals: false,
-            allow_ad_personalization_signals: false,
+          gtag('set', 'ads_data_redaction', true);
+          gtag('set', {
             page_location: window.location.origin + window.location.pathname,
             page_referrer: document.referrer ? document.referrer.split(/[?#]/)[0] : ''
           });
+          gtag('set', (${campaignParameters.toString()})(window.location.search));
+          ${GA_ID ? `gtag('config', ${JSON.stringify(GA_ID)}, {
+            send_page_view: false,
+            allow_google_signals: false,
+            allow_ad_personalization_signals: false
+          });` : ""}
+          gtag('config', ${JSON.stringify(GOOGLE_ADS_ID)});
         `}
       </Script>
       <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID || GOOGLE_ADS_ID}`}
         strategy="afterInteractive"
       />
     </>

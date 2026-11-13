@@ -23,7 +23,8 @@ it("lists each published translation with reciprocal alternates and its own publ
       );
       expect(entry, url).toBeDefined();
       expect(entry?.alternates?.languages).toEqual(languageAlternates(path));
-
+      if (path === "/privacy-policy")
+        expect(entry?.lastModified).toEqual(new Date("2026-11-14"));
     }
   }
   expect(new Set(entries.map((entry) => entry.url)).size).toBe(entries.length);
