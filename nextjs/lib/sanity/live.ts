@@ -6,5 +6,7 @@ export const { sanityFetch, SanityLive } = defineLive({
   client: sanityClient,
   serverToken: sanityReadToken || false,
   browserToken: false,
-  fetchOptions: { revalidate: 300 },
+  // Publishing still invalidates the post tag via /api/revalidate. Keep an
+  // hourly fallback for missed webhooks and future publishedAt dates.
+  fetchOptions: { revalidate: 3600 },
 });

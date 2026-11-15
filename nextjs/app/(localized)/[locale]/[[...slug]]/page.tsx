@@ -47,7 +47,8 @@ function resolve({ locale, slug = [] }: Awaited<Props["params"]>) {
   return { locale, page: pages[path as keyof typeof pages] };
 }
 
-export const revalidate = 300;
+// Fixed pages stay cached until deployment; only Home's Sanity fetch sets
+// an hourly revalidation interval for the localized homepages.
 export const dynamicParams = false;
 export function generateStaticParams() {
   return localizedPaths.map((path) => ({

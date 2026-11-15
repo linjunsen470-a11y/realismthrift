@@ -1,7 +1,7 @@
 import "@/app/internal-pages.css";
 import { defaultSocialImage } from "@/lib/metadata";
 import type { Metadata } from "next";
-import Image from "next/image";
+import SanityImage from "@/components/blog/SanityImage";
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -17,6 +17,14 @@ import {
   getPrevNextPosts,
 } from "@/lib/blog";
 import { hasUsableImageAsset, urlForImage } from "@/lib/sanity/image";
+
+export const revalidate = 3600;
+
+// Cache each published article on first access, including newly published slugs.
+// Draft Mode continues to bypass the public page cache for editor previews.
+export function generateStaticParams() {
+  return [];
+}
 
 function resolveSeoImage(post: Awaited<ReturnType<typeof getBlogPostBySlug>>) {
   if (!post) {
@@ -160,7 +168,7 @@ export default async function BlogPostPage({
 
           {/* Featured Image */}
           <div className="relative w-full h-[240px] sm:h-[380px] md:h-[480px] rounded-2xl overflow-hidden mb-10 shadow-md">
-            <Image
+            <SanityImage
               src={heroImage}
               alt={post.coverImage?.alt || post.title}
               fill
@@ -192,7 +200,7 @@ export default async function BlogPostPage({
               <div className="rt-blog-author-card">
                 <div className="flex items-center gap-4 mb-4">
                   {authorAvatar ? (
-                    <Image
+                    <SanityImage
                       src={authorAvatar}
                       alt={post.author.name}
                       width={64}

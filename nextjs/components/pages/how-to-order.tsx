@@ -392,7 +392,6 @@ export default function HowToOrderPage({
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
               className="object-cover object-[58%_52%] md:object-center"
-              priority
             />
           </div>
         </div>

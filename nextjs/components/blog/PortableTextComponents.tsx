@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SanityImage from "@/components/blog/SanityImage";
 import type { PortableTextComponents } from "@portabletext/react";
 import { hasUsableImageAsset, urlForImage } from "@/lib/sanity/image";
 
@@ -24,11 +24,12 @@ export const portableTextComponents: PortableTextComponents = {
 
       return (
         <figure className="rt-rich-figure">
-          <Image
+          <SanityImage
             src={imageUrl}
             alt={value.alt || ""}
             width={1200}
             height={700}
+            sizes="(max-width: 768px) 100vw, 896px"
             className="rt-rich-image"
           />
           {value.caption ? <figcaption>{value.caption}</figcaption> : null}

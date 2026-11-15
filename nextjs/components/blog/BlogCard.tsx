@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SanityImage from "@/components/blog/SanityImage";
 import Link from "next/link";
 import { ArrowRight, ClipboardList } from "lucide-react";
 import { BlogPostCard } from "@/types";
@@ -23,7 +23,7 @@ export function BlogCard({ post, showAuthor = false }: BlogCardProps) {
       >
         <span className="rt-sr-only">Read article: {post.title}</span>
         {imageUrl ? (
-          <Image
+          <SanityImage
             src={imageUrl}
             alt={post.coverImage?.alt || post.title}
             width={720}

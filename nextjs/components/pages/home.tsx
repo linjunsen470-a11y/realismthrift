@@ -422,6 +422,7 @@ export default async function Home({
                       "RealismThrift QC Inspection - Sorting Branded Used Shoes",
                     )}
                     fill
+                    sizes="128px"
                     className="object-cover"
                   />
                 </div>
@@ -432,6 +433,7 @@ export default async function Home({
                       "RealismThrift Quality Control - Inspecting Used Clothing",
                     )}
                     fill
+                    sizes="96px"
                     className="object-cover"
                   />
                 </div>
