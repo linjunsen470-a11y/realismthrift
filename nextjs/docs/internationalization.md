@@ -43,6 +43,23 @@ automatic selection on a new deployment without disabling manual links. With no
 Vercel country header, country inference is skipped. No new IP/country log, GA4
 field, or third-party geolocation request is introduced.
 
+## Cache and images
+
+The 54 fixed core pages (nine per language) have no timed revalidation; code and
+translation changes take effect on deployment. The six homepages and blog index
+use a one-hour fallback. Blog articles are generated and cached on first access,
+including slugs published after deployment. Draft Mode bypasses the public cache.
+The signed Sanity webhook still invalidates the existing `post` tag on publication;
+the hourly fallback covers missed webhooks and future `publishedAt` dates.
+Revalidation occurs on access after expiry, so a visitor may receive stale content
+while it refreshes. The first-session language responses described above remain
+personalized and `no-store`.
+
+`components/blog/SanityImage.tsx` sends responsive image requests directly to
+Sanity CDN, preserving the existing crop and aspect ratio. Local image fallbacks
+continue to use Next.js image optimization. No extra image files are generated.
+Keep `sizes` aligned with the rendered width and reserve `priority` for hero images.
+
 ## Maintaining copy
 
 Translate complete sentences and preserve interpolation tokens, brands, model
@@ -117,6 +134,19 @@ send synthetic inquiries or conversions to production. For local measurement
 checks, build with `VERCEL_ENV=production` and test analytics IDs, then point
 `PLAYWRIGHT_BASE_URL` at that server. Never commit these environment overrides.
 
+Install the matching browser with `pnpm exec playwright install chromium` before
+browser checks. `next-env.d.ts`, `.next/`, `*.tsbuildinfo`, screenshots and test
+reports are generated local artifacts, not source files. Next.js recreates
+`next-env.d.ts` when running `pnpm dev`, `pnpm build` or `pnpm exec next typegen`.
+After changing branches with different route layouts, remove stale
+`.next/dev/types` if type checking still references deleted routes.
+
+For cache changes, check the production build's prerender manifest and make two
+anonymous requests to an article: the second should hit the page cache. Also
+check Draft Mode, an unknown article's 404, and desktop/mobile image loading.
+Use the branch's Vercel preview URL and verify its commit SHA before reviewing;
+keep the production domain on `main` until the change is merged.
+
 On 2026-11-02, the multilingual audit covered 60 core pages. Fixed low text contrast,
 accessible names omitting visible labels, form focus/borders and non-focusable
 horizontal tables. Final axe-core 4.14.0 scans reported zero violations across
@@ -129,4 +159,4 @@ These results are not WCAG certification or a guarantee of indexing, rankings or
 AI citations. Image-background contrast and some accessible-name checks need human
 review. The Maps iframe was mocked, and full screen-reader/native-speaker review,
 field Core Web Vitals, Search Console inspection and live conversion receipt were
-not tested. Some Sanity blog images timed out through the local image optimizer.
+not tested. Sanity blog images now use the direct CDN loader described above.

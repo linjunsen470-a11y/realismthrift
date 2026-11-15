@@ -50,6 +50,8 @@
 - 保留 Sanity 的 `/api/revalidate` 发布 Webhook 和签名验证。发布通知会使相关缓存失效；通知丢失或预设的 `publishedAt` 到期时，由缓存过期后的访问触发更新，可能先显示旧内容。
 - 博客图片由 Sanity CDN 按显示尺寸提供，避免再次经过 Vercel 图片优化。现有本地图片继续使用 Next.js 优化，不预生成额外尺寸文件。
 
+具体缓存范围与页面检查方式见[多语言与页面维护说明](nextjs/docs/internationalization.md)。
+
 ### 2. 处理客户询盘
 
 客户提交后，询盘先保存到 Supabase，再由邮件任务通知销售并向客户发送英文回执。六种语言共用回执模板。页面显示成功表示询盘已保存，可在 `inquiry_delivery_overview` 中核实投递状态。业务联系邮箱为 `sales@realismthrift.com`。
