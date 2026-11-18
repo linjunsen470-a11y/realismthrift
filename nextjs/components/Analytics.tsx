@@ -128,7 +128,7 @@ function GoogleTag({ pathname, consentCopy }: { pathname: string; consentCopy: C
               <h2 className="font-bold" id="google-measurement-title">{consentCopy.title}</h2>
               <p>{consentCopy.description}</p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex max-w-full flex-wrap gap-2">
               {(["granted", "denied"] as const).map(value => (
                 <button key={value} type="button" aria-pressed={choice === value}
                   className="rounded border border-current px-4 py-2 font-semibold aria-pressed:bg-black aria-pressed:text-white"

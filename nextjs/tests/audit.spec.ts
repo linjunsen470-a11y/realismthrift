@@ -87,8 +87,14 @@ test("320px layouts do not scroll horizontally", async ({ page }) => {
   for (const route of ["/about-us", "/privacy-policy", "/used-brand-clothes", "/contact-us"]) {
     await page.goto(route);
     await page.evaluate(() => document.fonts.ready);
-    const width = await page.evaluate(() => document.documentElement.scrollWidth);
-    expect(width, `${route} overflow`).toBeLessThanOrEqual(321);
+    const { width, overflow } = await page.evaluate(() => ({
+      width: document.documentElement.scrollWidth,
+      overflow: [...document.querySelectorAll("body *")]
+        .filter(element => element.getBoundingClientRect().right > innerWidth + 1)
+        .map(element => `${element.tagName}.${element.getAttribute("class") ?? ""}`)
+        .slice(0, 8),
+    }));
+    expect(width, `${route} overflow: ${overflow.join(", ")}`).toBeLessThanOrEqual(321);
   }
 });
 
