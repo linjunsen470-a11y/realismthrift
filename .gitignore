@@ -6,6 +6,8 @@ node_modules/
 
 # Build output and caches
 .next/
+/nextjs/next-env.d.ts
+/nextjs/AGENTS.md
 out/
 dist/
 build/
@@ -14,7 +16,6 @@ build/
 .vercel/
 .firebase/
 .sanity/
-/nextjs/next-env.d.ts
 
 # Test and coverage output
 coverage/
@@ -64,5 +65,5 @@ index_filter.sh
 mcps/
 terminals/
 .nextjs-build/
-nextjs/.build-log.txt
+/nextjs/.build-log.txt
 nextjs/supabase/.temp/

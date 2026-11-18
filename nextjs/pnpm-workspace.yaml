@@ -21,4 +21,6 @@ overrides:
   "ws@>=8 <9": 8.21.0
 
 allowBuilds:
+  "@tailwindcss/oxide": false
   esbuild: true
+  unrs-resolver: false

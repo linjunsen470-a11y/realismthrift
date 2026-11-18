@@ -66,7 +66,7 @@ export default function PrivacyPolicyPage({
             </h1>
             <p className="text-white/60 text-lg leading-relaxed">
               {t(
-                "Last updated: November 14, 2026. This policy explains how we protect your personal data in our global wholesale operations.",
+                "Last updated: November 18, 2026. This policy explains how we protect your personal data in our global wholesale operations.",
               )}
             </p>
           </div>
@@ -191,7 +191,7 @@ export default function PrivacyPolicyPage({
                 <h2>{t("5. Analytics and Advertising Measurement")}</h2>
                 <p>
                   {t(
-                    "We use Google Analytics 4 to measure website traffic and the Google Ads tag to measure advertising on public pages. Google may receive measurement signals without advertising cookies. Advertising storage, advertising user data and ad personalization are disabled. Google Signals is also disabled in Google Analytics.",
+                    "Google Analytics 4 and Google Ads use cookies and ad click identifiers to measure visits and link successful inquiries to ads. In the European Economic Area, the UK and Switzerland, we ask for permission first. Elsewhere, measurement is enabled by default. You can allow or decline it in Google measurement settings in the footer. We save your choice in this browser. If you decline, Google may receive signals without measurement cookies. Ad personalization and Google Signals stay off.",
                   )}
                 </p>
                 <p>

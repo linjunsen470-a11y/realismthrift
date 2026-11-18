@@ -1,3 +1,18 @@
+/** Google auto-tagging needs the landing click ID before the first config.
+ * Keep self-contained for the inline bootstrap. Never forward the raw search.
+ */
+export function googlePageLocation(href: string): string {
+  const url = new URL(href);
+  const allowed = new URLSearchParams();
+  for (const key of ["gclid", "gbraid", "wbraid"]) {
+    const values = url.searchParams.getAll(key);
+    if (values.length === 1 && /^[A-Za-z0-9_-]{1,1024}$/.test(values[0])) {
+      allowed.set(key, values[0]);
+    }
+  }
+  return url.origin + url.pathname + (allowed.size ? `?${allowed}` : "");
+}
+
 /** Marketing labels only: no arbitrary query strings, click IDs, or free text.
  * Keep self-contained: this function also runs in the pre-config inline bootstrap.
  */

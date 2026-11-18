@@ -3,7 +3,8 @@ import { expect, test } from "@playwright/test";
 // Opt-in only: this test creates one real visit in the production GA4 property.
 test.skip(process.env.GA4_LIVE_CHECK !== "true", "Run the manual GA4 verification workflow to test the real Google endpoint.");
 
-test("production sends a page view to the correct GA4 stream with advertising disabled", async ({ page, context }) => {
+test("production honors a saved refusal on a real GA4 page view", async ({ page, context }) => {
+  await page.addInitScript(() => { localStorage.setItem("rt-google-measurement", "denied"); });
   const measurementId = "G-854G1RXBJM";
   const collection = page.waitForResponse(response => {
     const url = new URL(response.url());
@@ -17,7 +18,7 @@ test("production sends a page view to the correct GA4 stream with advertising di
   const response = await collection;
   expect(response.status()).toBe(204);
   const url = new URL(response.url());
-  expect(url.searchParams.get("gcs")).toBe("G101");
+  expect(url.searchParams.get("gcs")).toBe("G100");
   expect(url.searchParams.get("dl")).toBe("https://www.realismthrift.com/faq");
 
   const commands = await page.evaluate(() => (window.dataLayer ?? []).map(command => Array.from(command as ArrayLike<unknown>)));
@@ -26,7 +27,7 @@ test("production sends a page view to the correct GA4 stream with advertising di
     allow_ad_personalization_signals: false,
   });
   const cookieNames = (await context.cookies()).map(cookie => cookie.name);
-  expect(cookieNames).toContain("_ga");
+  expect(cookieNames).not.toContain("_ga");
   expect(cookieNames.some(name => name.startsWith("_gcl"))).toBe(false);
   console.log(JSON.stringify({
     measurementId,

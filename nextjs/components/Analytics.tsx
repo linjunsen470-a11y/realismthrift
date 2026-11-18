@@ -5,10 +5,12 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { captureMetaFbc, isMetaMeasurementEnabled, metaLeadEventOptions, metaLeadParams, metaPixelBaseCode, metaPixelNoscriptSrc, resolveFacebookPixelId } from "@/lib/meta-pixel";
 import { isUtilityPath } from "./SiteChrome";
-import { campaignParameters } from "@/lib/analytics-campaign";
+import { campaignParameters, googlePageLocation } from "@/lib/analytics-campaign";
+import { measurementConsent, optInRegions, savedMeasurementChoice, type MeasurementChoice } from "@/lib/google-consent";
+import { splitLocale } from "@/lib/i18n/routing";
 
 const isAnalyticsEnabled = isMetaMeasurementEnabled(process.env.NEXT_PUBLIC_ANALYTICS_ENABLED, process.env.NEXT_PUBLIC_META_ENVIRONMENT);
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID?.trim();
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID?.trim() || "G-854G1RXBJM";
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim() || "AW-18518055702";
 const FB_PIXEL_ID = resolveFacebookPixelId(process.env.NEXT_PUBLIC_FB_PIXEL_ID);
 
@@ -45,15 +47,17 @@ export function MetaPixelHead() {
   );
 }
 
-export default function Analytics() {
+type ConsentCopy = { title: string; description: string; allow: string; decline: string };
+
+export default function Analytics({ consentCopy }: { consentCopy: ConsentCopy }) {
   const pathname = usePathname();
   if (isUtilityPath(pathname) || !isAnalyticsEnabled) return null;
 
   return (
     <>
       <Suspense fallback={null}>
-        <GoogleTag pathname={pathname} />
-        {GA_ID ? <ContactClickEvents /> : null}
+        <GoogleTag pathname={pathname} consentCopy={consentCopy} />
+        <ContactClickEvents />
       </Suspense>
       {FB_PIXEL_ID ? (
         <Suspense fallback={null}><MetaPixelPageViews pathname={pathname} /></Suspense>
@@ -62,22 +66,20 @@ export default function Analytics() {
   );
 }
 
-function GoogleTag({ pathname }: { pathname: string }) {
+function GoogleTag({ pathname, consentCopy }: { pathname: string; consentCopy: ConsentCopy }) {
   const searchParams = useSearchParams();
   const [initialized, setInitialized] = useState(false);
+  const [choice, setChoice] = useState<MeasurementChoice | null>(null);
   const lastPagePath = useRef<string | null>(null);
 
   useEffect(() => {
     if (!initialized || !window.gtag) return;
     const campaign = campaignParameters(searchParams.toString());
     if (Object.keys(campaign).length) window.gtag("set", campaign);
-    if (lastPagePath.current === pathname) return;
-
-    const pageLocation = `${window.location.origin}${window.location.pathname}`;
-    // Keep subsequent lead/engagement events on the current public page, without query strings.
+    const pageLocation = googlePageLocation(window.location.href);
     window.gtag("set", { page_location: pageLocation });
+    if (lastPagePath.current === pathname) return;
     lastPagePath.current = pathname;
-    if (!GA_ID) return;
     window.gtag("event", "page_view", {
       send_to: GA_ID,
       page_title: document.title,
@@ -88,35 +90,60 @@ function GoogleTag({ pathname }: { pathname: string }) {
 
   return (
     <>
-      <Script id="google-analytics" strategy="afterInteractive" onReady={() => setInitialized(true)}>
+      <Script id="google-analytics" strategy="afterInteractive" onReady={() => {
+        setChoice(savedMeasurementChoice());
+        setInitialized(true);
+      }}>
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
-          gtag('consent', 'default', {
-            analytics_storage: 'granted',
-            ad_storage: 'denied',
-            ad_user_data: 'denied',
-            ad_personalization: 'denied'
-          });
+          gtag('consent', 'default', ${JSON.stringify({ ...measurementConsent("denied"), region: optInRegions })});
+          gtag('consent', 'default', ${JSON.stringify(measurementConsent("granted"))});
+          var savedChoice = (${savedMeasurementChoice.toString()})();
+          if (savedChoice) gtag('consent', 'update', (${measurementConsent.toString()})(savedChoice));
           gtag('js', new Date());
+          gtag('set', 'url_passthrough', true);
           gtag('set', 'ads_data_redaction', true);
           gtag('set', {
-            page_location: window.location.origin + window.location.pathname,
+            page_location: (${googlePageLocation.toString()})(window.location.href),
             page_referrer: document.referrer ? document.referrer.split(/[?#]/)[0] : ''
           });
           gtag('set', (${campaignParameters.toString()})(window.location.search));
-          ${GA_ID ? `gtag('config', ${JSON.stringify(GA_ID)}, {
+          gtag('config', ${JSON.stringify(GA_ID)}, {
             send_page_view: false,
             allow_google_signals: false,
             allow_ad_personalization_signals: false
-          });` : ""}
+          });
           gtag('config', ${JSON.stringify(GOOGLE_ADS_ID)});
         `}
       </Script>
       <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID || GOOGLE_ADS_ID}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
         strategy="afterInteractive"
       />
+      {initialized && (!choice || splitLocale(pathname).path === "/privacy-policy") && (
+        <section id="google-measurement" aria-labelledby="google-measurement-title" className="bg-[#f4f3ec] px-5 py-3 text-sm">
+          <div className="rt-container flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="font-bold" id="google-measurement-title">{consentCopy.title}</h2>
+              <p>{consentCopy.description}</p>
+            </div>
+            <div className="flex gap-2">
+              {(["granted", "denied"] as const).map(value => (
+                <button key={value} type="button" aria-pressed={choice === value}
+                  className="rounded border border-current px-4 py-2 font-semibold aria-pressed:bg-black aria-pressed:text-white"
+                  onClick={() => {
+                    window.gtag?.("consent", "update", measurementConsent(value));
+                    setChoice(value);
+                    try { localStorage.setItem("rt-google-measurement", value); } catch { /* Current page still honors the choice. */ }
+                  }}>
+                  {value === "granted" ? consentCopy.allow : consentCopy.decline}
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }
@@ -146,7 +173,7 @@ function MetaPixelPageViews({ pathname }: { pathname: string }) {
  * Never pass names, email addresses, phone numbers, company names, or free text.
  */
 export function trackEvent(eventName: string, params?: Record<string, string>) {
-  if (typeof window === "undefined" || !isAnalyticsEnabled || !GA_ID || !window.gtag) return;
+  if (typeof window === "undefined" || !isAnalyticsEnabled || !window.gtag) return;
   if (isUtilityPath(window.location.pathname)) return;
   try {
     window.gtag("event", eventName, { ...params, send_to: GA_ID });

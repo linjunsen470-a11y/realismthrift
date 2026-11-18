@@ -6,12 +6,12 @@ import {
   localePath,
 } from "@/lib/i18n/routing";
 
-vi.mock("@/lib/blog", () => ({
-  getAllBlogPosts: vi.fn().mockResolvedValue([]),
+const { fetchPosts } = vi.hoisted(() => ({ fetchPosts: vi.fn().mockResolvedValue([]) }));
+vi.mock("@/lib/sanity/client", () => ({
+  sanityClient: { fetch: fetchPosts },
 }));
 
 import sitemap from "./sitemap";
-import { getAllBlogPosts } from "@/lib/blog";
 
 it("lists each published translation with reciprocal alternates and its own publication date", async () => {
   const entries = await sitemap();
@@ -24,7 +24,7 @@ it("lists each published translation with reciprocal alternates and its own publ
       expect(entry, url).toBeDefined();
       expect(entry?.alternates?.languages).toEqual(languageAlternates(path));
       if (path === "/privacy-policy")
-        expect(entry?.lastModified).toEqual(new Date("2026-11-14"));
+        expect(entry?.lastModified).toEqual(new Date("2026-11-18"));
     }
   }
   expect(new Set(entries.map((entry) => entry.url)).size).toBe(entries.length);
@@ -43,6 +43,17 @@ it("records substantive translation corrections without advancing every page to 
 });
 
 it("propagates CMS failures instead of publishing an incomplete sitemap", async () => {
-  vi.mocked(getAllBlogPosts).mockRejectedValueOnce(new Error("CMS unavailable"));
+  fetchPosts.mockRejectedValueOnce(new Error("CMS unavailable"));
   await expect(sitemap()).rejects.toThrow("CMS unavailable");
+});
+
+it("lists published posts and uses the latest article update for the blog index", async () => {
+  fetchPosts.mockResolvedValueOnce([
+    { slug: "packing-guide", publishedAt: "2026-11-01", _updatedAt: "2026-11-12" },
+  ]);
+  const entries = await sitemap();
+  for (const path of ["/blog", "/blog/packing-guide"]) {
+    expect(entries.find(entry => entry.url === `https://www.realismthrift.com${path}`)?.lastModified)
+      .toEqual(new Date("2026-11-12"));
+  }
 });

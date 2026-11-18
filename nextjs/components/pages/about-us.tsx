@@ -253,7 +253,7 @@ export default function AboutUsPage({
             </div>
             <div className="relative h-[200px] w-full col-span-2 rounded-[6px] overflow-hidden">
               <Image
-                src="/images/about/story-3-clear.webp"
+                src="/images/bags/second-hand-designer-bags-warehouse-inventory-pile.webp"
                 alt={t(
                   "RealismThrift Professional Baling and Packing - Compressed Bales of Second Hand Clothes Ready for Global Wholesale Shipping",
                 )}
