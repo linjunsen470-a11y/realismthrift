@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { campaignParameters } from "./analytics-campaign";
+import { campaignParameters, googlePageLocation } from "./analytics-campaign";
+
+it("keeps only unique Google click IDs, preserving their case and dropping fragments", () => {
+  const base = "https://www.realismthrift.com/fr/contact-us";
+  expect(googlePageLocation(base + "?gclid=Ab_C-123&gbraid=Xy&wbraid=aB&fbclid=meta&q=private#email"))
+    .toBe(base + "?gclid=Ab_C-123&gbraid=Xy&wbraid=aB");
+  expect(googlePageLocation(base + "?gclid=a&gclid=b&wbraid=buyer%40example.com&gbraid=")).toBe(base);
+});
 
 describe("campaign attribution privacy boundary", () => {
   it("maps marketing slugs without retaining unrelated query values", () => {

@@ -6,6 +6,7 @@ import { FooterBackToTop } from "@/components/FooterBackToTop";
 import { localePath, type Locale } from "@/lib/i18n/routing";
 import { getTranslator } from "@/lib/i18n/server";
 import { TranslatedText } from "./TranslatedText";
+import { isMetaMeasurementEnabled } from "@/lib/meta-pixel";
 
 interface SiteFooterProps {
   locale?: Locale;
@@ -158,6 +159,11 @@ export function SiteFooter({ locale = "en", data }: SiteFooterProps) {
           <p>{data.bottom.copyright}</p>
 
           <div className="rt-footer-bottom-links">
+            {isMetaMeasurementEnabled(process.env.NEXT_PUBLIC_ANALYTICS_ENABLED, process.env.NEXT_PUBLIC_META_ENVIRONMENT) && (
+              <Link href={localePath("/privacy-policy#google-measurement", locale)}>
+                {t("Google measurement settings")}
+              </Link>
+            )}
             {data.bottom.links.map((link) => (
               <Link key={link.label} href={link.href}>
                 {link.label}

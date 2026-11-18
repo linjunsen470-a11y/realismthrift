@@ -76,7 +76,7 @@ Vercel Preview 的询盘提交返回 503。检查生产环境时使用真实流�
 
 ### 2. 包管理要求
 
-官网和 Studio 各有一份锁文件，两者均使用 Node.js 24 和 pnpm 10.33.0。从仓库根目录分别进入对应目录执行命令。
+官网和 Studio 使用 Node.js 24，各自维护 `pnpm-lock.yaml`。从仓库根目录进入对应目录，使用该目录 `package.json` 的 `packageManager` 指定的 pnpm 版本。当前两个项目均为 pnpm 12.18.0，官网使用 Next.js 16.4.6。
 
 常用命令：
 
@@ -88,6 +88,10 @@ pnpm lint
 pnpm test:unit
 pnpm build
 ```
+
+`pnpm dev` 会持续运行；请在另一个终端执行检查命令。Next.js 会生成 `next-env.d.ts`。如需在全新检出后单独运行 TypeScript 检查，先执行 `pnpm exec next typegen`。
+
+生产构建完成后可检查 `/robots.txt` 和 `/sitemap.xml`。站点地图在请求时生成，已发布文章清单缓存 24 小时；Sanity 发布回调会使缓存失效。首次读取需要连通 Sanity。
 
 Sanity Studio：
 

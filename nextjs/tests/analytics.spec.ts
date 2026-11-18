@@ -72,15 +72,24 @@ test("first visit and client navigation record page views with basic analytics e
 
   const commands = await analyticsCommands(page);
   expect(commands[0]).toEqual(["consent", "default", {
-    analytics_storage: "granted",
+    analytics_storage: "denied",
     ad_storage: "denied",
     ad_user_data: "denied",
+    ad_personalization: "denied",
+    region: expect.arrayContaining(["FR", "DE", "IS", "NO", "LI", "GB", "CH"]),
+  }]);
+  expect((commands[0][2] as { region: string[] }).region).toHaveLength(32);
+  expect(commands[1]).toEqual(["consent", "default", {
+    analytics_storage: "granted",
+    ad_storage: "granted",
+    ad_user_data: "granted",
     ad_personalization: "denied",
   }]);
   const configuration = commands.find(command => command[0] === "config");
   const adsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || "AW-000000001";
   expect(commands.filter(command => command[0] === "config" && command[1] === adsId)).toHaveLength(1);
   expect(commands).toContainEqual(["set", "ads_data_redaction", true]);
+  expect(commands).toContainEqual(["set", "url_passthrough", true]);
   await expect(page.locator('script[src*="googletagmanager.com/gtag/js"]')).toHaveCount(1);
   expect(cspDirective(csp, "connect-src")).toContain("https://www.googleadservices.com");
   expect(configuration?.[1]).toMatch(/^G-/);
@@ -128,7 +137,7 @@ test("a delayed Google script does not lose the first page view or a successful 
     await route.fulfill({ contentType: "application/javascript", body: "/* delayed GA4 transport */" });
   });
   try {
-    await page.goto("/contact-us?token=private-token", { waitUntil: "domcontentloaded" });
+    await page.goto("/contact-us?gclid=TeSt_012-AB&token=private-token", { waitUntil: "domcontentloaded" });
     await expect.poll(() => pageViews(page)).toHaveLength(1);
     const form = page.locator("form.rt-inquiry-form");
     await form.getByLabel("Your Name *").fill("Private Analytics Test");
@@ -138,6 +147,11 @@ test("a delayed Google script does not lose the first page view or a successful 
     await form.getByRole("button", { name: "SEND INQUIRY NOW" }).click();
     await expect(page.getByRole("heading", { name: "Inquiry Received" })).toBeVisible();
     const commands = await analyticsCommands(page);
+    const landing = new URL("/contact-us?gclid=TeSt_012-AB", page.url()).href;
+    expect(commands.slice(0, commands.findIndex(command => command[0] === "config"))).toContainEqual([
+      "set", expect.objectContaining({ page_location: landing }),
+    ]);
+    expect((await pageViews(page))[0][2]).toMatchObject({ page_location: landing });
     const leads = commands.filter(command => command[0] === "event" && command[1] === "generate_lead");
     expect(leads).toHaveLength(1);
     expect(leads[0][2]).toMatchObject({ send_to: expect.stringMatching(/^G-/) });
@@ -182,8 +196,26 @@ test("privacy policy discloses the Meta Pixel and does not deny using it", async
   expect(text).toContain("international WhatsApp number");
   expect(text).toContain("Google Ads");
   expect(text).not.toContain("do not use Google Ads");
-  expect(text.toLowerCase()).not.toContain("cookie settings");
-  expect(text.toLowerCase()).not.toContain("consent banner");
+  expect(text).toContain("European Economic Area");
+  await expect(page.getByRole("button", { name: "Decline measurement" })).toBeVisible();
+});
+
+test("a visitor can grant, revisit the footer settings and withdraw before the next config", async ({ page }) => {
+  await page.goto("/contact-us");
+  await page.getByRole("button", { name: "Allow measurement" }).click();
+  await expect(page.locator("#google-measurement")).toHaveCount(0);
+  const update = (value: string) => ["consent", "update", {
+    analytics_storage: value, ad_storage: value, ad_user_data: value, ad_personalization: "denied",
+  }];
+  expect(await analyticsCommands(page)).toContainEqual(update("granted"));
+  await page.locator("footer").getByRole("link", { name: "Google measurement settings" }).click();
+  await expect(page.getByRole("button", { name: "Allow measurement" })).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Decline measurement" }).click();
+  expect(await analyticsCommands(page)).toContainEqual(update("denied"));
+  await page.reload();
+  await expect(page.getByRole("button", { name: "Decline measurement" })).toHaveAttribute("aria-pressed", "true");
+  const commands = await analyticsCommands(page);
+  expect(commands.slice(0, commands.findIndex(command => command[0] === "config"))).toContainEqual(update("denied"));
 });
 
 test("a real landing fbclid survives page navigation and reaches the inquiry request with the SDK blocked", async ({ page, context }) => {

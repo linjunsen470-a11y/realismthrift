@@ -21,6 +21,14 @@ const scriptSources = [
   'https://connect.facebook.net',
 ];
 
+// Google country endpoints for the sales markets listed on the contact page.
+const regionalGoogleSources = [
+  'com.ng', 'com.gh', 'co.ke', 'co.tz', 'com.et', 'sn', 'ci', 'cm', 'co.ug', 'co.mz',
+  'com.vn', 'co.th', 'com.ph', 'co.id', 'com.my', 'com.kh', 'com.mm', 'la',
+  'ae', 'com.sa', 'jo', 'com.lb', 'iq', 'ca', 'com.mx', 'com.br', 'com.co', 'com.pe', 'cl', 'com.ec',
+  'co.uk', 'fr', 'de', 'pl', 'ro', 'com.ua', 'bg', 'hu', 'com.au', 'co.nz', 'com.pg', 'com.fj', 'com.sb',
+].map(suffix => `https://*.google.${suffix}`);
+
 const contentSecurityPolicy = [
   "default-src 'self'",
   [
@@ -34,13 +42,14 @@ const contentSecurityPolicy = [
     'data:',
     'blob:',
     'https://cdn.sanity.io',
-    'https://www.google-analytics.com',
+    'https://*.google-analytics.com',
     'https://www.googletagmanager.com',
     'https://www.googleadservices.com',
-    'https://googleads.g.doubleclick.net',
+    'https://*.g.doubleclick.net',
     'https://pagead2.googlesyndication.com',
     'https://www.facebook.com',
     'https://*.google.com',
+    ...regionalGoogleSources,
     'https://*.googleapis.com',
     'https://*.gstatic.com',
   ].join(' '),
@@ -50,10 +59,11 @@ const contentSecurityPolicy = [
     "'self'",
     'https://www.googletagmanager.com',
     'https://www.googleadservices.com',
-    'https://googleads.g.doubleclick.net',
+    'https://*.g.doubleclick.net',
     'https://pagead2.googlesyndication.com',
     'https://ad.doubleclick.net',
-    'https://www.google.com',
+    'https://*.google.com',
+    ...regionalGoogleSources,
     'https://www.google-analytics.com',
     'https://analytics.google.com',
     'https://*.google-analytics.com',
@@ -126,6 +136,11 @@ const nextConfig: NextConfig = {
         source: '/:path*',
         has: [{ type: 'host', value: 'realismthrift.com' }],
         destination: 'https://www.realismthrift.com/:path*',
+        permanent: true,
+      },
+      {
+        source: '/images/about/story-3-clear.webp',
+        destination: '/images/bags/second-hand-designer-bags-warehouse-inventory-pile.webp',
         permanent: true,
       },
     ];

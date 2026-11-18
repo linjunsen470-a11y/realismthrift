@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
-import { getAllBlogPosts } from "@/lib/blog";
+import { sanityClient } from "@/lib/sanity/client";
+import type { BlogPostCard } from "@/types";
 import {
   languageAlternates,
   localePath,
@@ -7,7 +8,15 @@ import {
   translatedLocales,
 } from "@/lib/i18n/routing";
 
-export const revalidate = 86400; // Cache sitemap for 24 hours on CDN edge
+// Generate the XML on request so a CMS outage cannot block the build.
+export const revalidate = 0;
+
+type SitemapPost = Pick<BlogPostCard, "slug" | "publishedAt" | "_updatedAt">;
+
+const sitemapPostsQuery = `*[
+  _type == "post" && defined(slug.current) && defined(publishedAt) &&
+  publishedAt <= now() && isArchived != true
+] | order(publishedAt desc)[0...200] { "slug": slug.current, publishedAt, _updatedAt }`;
 
 const baseUrl = "https://www.realismthrift.com";
 // Shared translated copy was reviewed on November 8. Track later page edits explicitly.
@@ -88,7 +97,7 @@ const staticPages: StaticPageConfig[] = [
   },
   {
     path: "/privacy-policy",
-    lastModified: "2026-11-14",
+    lastModified: "2026-11-18",
     changeFrequency: "yearly",
     priority: 0.3,
   },
@@ -101,13 +110,9 @@ const staticPages: StaticPageConfig[] = [
 ];
 
 function resolveLatestPostDate(
-  posts: Awaited<ReturnType<typeof getAllBlogPosts>>,
+  posts: SitemapPost[],
   fallback: string,
 ): Date {
-  if (!posts.length) {
-    return new Date(fallback);
-  }
-
   const timestamps = posts
     .map((post) => post._updatedAt || post.publishedAt)
     .filter(Boolean)
@@ -154,7 +159,11 @@ function buildStaticRoutes(blogLastModified: Date): MetadataRoute.Sitemap {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Do not replace a valid sitemap with an incomplete success response on CMS failure.
-  const posts = await getAllBlogPosts();
+  const posts = await sanityClient.fetch<SitemapPost[]>(sitemapPostsQuery, {}, {
+    perspective: "published",
+    stega: false,
+    next: { revalidate: 86400, tags: ["post"] },
+  });
   const blogLastModified = resolveLatestPostDate(posts, "2026-04-27");
   const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,

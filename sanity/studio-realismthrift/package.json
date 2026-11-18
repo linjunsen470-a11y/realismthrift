@@ -2,7 +2,7 @@
   "name": "realismthrift",
   "private": true,
   "version": "1.0.0",
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@12.18.0",
   "main": "package.json",
   "license": "UNLICENSED",
   "scripts": {

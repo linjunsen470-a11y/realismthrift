@@ -107,7 +107,12 @@ export default async function RootShell({
         <a className="rt-skip-link" href="#main-content">
           {t("Skip to main content")}
         </a>
-        <Analytics />
+        <Analytics consentCopy={{
+          title: t("Google measurement settings"),
+          description: t("Google can use cookies to measure visits and match ad clicks to inquiries. You can change your choice in the footer."),
+          allow: t("Allow measurement"),
+          decline: t("Decline measurement"),
+        }} />
         <StatusPageProvider
           locale={locale}
           messages={getClientMessages(locale, "status")}

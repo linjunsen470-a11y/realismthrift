@@ -1,14 +1,16 @@
 # GA4、Google Ads、Meta Pixel 与 Conversions API
 
-本说明维护网站询盘的当前测量配置，更新于 2026-11-14。适用于网站表单与联系入口点击。
+本说明维护网站询盘的当前测量配置，更新于 2026-11-18。适用于网站表单与联系入口点击。
 
 ## Google Ads 基础标签
 
-生产公共页面加载一次 Google 标签，并配置 Google Ads 目标 `AW-18518055702`。配置了 GA4 时，两者共用加载脚本。所有语言采用相同设置，邮件偏好和内部操作页面排除在外。Google 广告存储、广告用户数据和个性化设置均为 denied，启用广告数据遮盖。Google 可接收无广告 Cookie 的测量信号，广告点击与询盘的归因能力有限。
+生产公共页面共用一个 Google 标签，默认连接 GA4 数据流 `G-854G1RXBJM` 和 Google Ads 目标 `AW-18518055702`。邮件偏好和内部操作页面排除在外。
 
-2026-11-14 已验证正式站在提交 `5d5cd92` 加载上述 AW 目标。浏览器将成功询盘的 `generate_lead` 事件发往 GA4。广告后台仍有三项待有权限的账号核对：
+Google Consent Mode v2 按访问地区应用默认值。欧洲经济区、英国和瑞士的 `analytics_storage`、`ad_storage`、`ad_user_data` 默认拒绝，其他地区默认允许。所有地区均关闭个性化广告和 Google Signals。首次访问可允许或拒绝 Google 测量，之后可从各语言页脚更改。选择立即生效，保存在当前来源的 localStorage，下次加载时先恢复选择，再配置两个目标。广告存储被拒绝时采用数据遮盖，并为同域链接启用 Google 的 URL passthrough。[Google 同意模式说明](https://developers.google.com/tag-platform/security/guides/consent)
 
-- 在 Google 标签诊断中查看 `AW-18518055702` 是否已收到正式站信号。
+2026-11-18 在本次修复部署前读取正式站联系页的公开追踪脚本，已确认其中同时包含 `G-854G1RXBJM` 和 `AW-18518055702`。成功询盘沿用 GA4 的 `generate_lead` 导入路径。广告后台仍有三项待有权限的账号核对：
+
+- 在 Google 标签诊断中查看 `AW-18518055702` 的正式站信号，并确认广告账号已启用自动标记、已关联上述 GA4 数据流所属的属性。
 - 在转化操作中核对 GA4 属性 `realismthrift` 和事件名 `generate_lead`，确认导入的操作已设为主要转化。[Google Ads 的 GA4 导入说明](https://support.google.com/google-ads/answer/2375435?hl=zh-Hans)
 - 检查投放中广告系列实际使用的目标，特别是记录同一次表单成功的原生网站转化。自定义目标中的次要操作也可参与出价。每个广告系列只选一个操作衡量成功询盘，核对询盘数时按该操作筛选。[Google Ads 转化目标说明](https://support.google.com/google-ads/answer/10995103?hl=zh-Hans)
 
@@ -21,8 +23,8 @@
 - `whatsapp_click`、`email_click`、`phone_click` 只匹配网站销售号码和销售邮箱，排除博客分享及隐私联系链接。原生鼠标、键盘 Enter 和中键激活由一个委托监听器记录，不阻止跳转。参数仅为 `placement`（floating、footer、header、inquiry_form、inquiry_error、page_content）及 `page_path`，不发送链接地址、预填消息或联系方式。
 - `inquiry_start` 在表单首次修改时记录一次；`inquiry_error` 记录 API 拒绝、限流、服务端错误或网络错误，仅发送固定错误类别。原生必填校验失败不计入该 API 错误事件。两者包含固定表单名、default/sidebar 变体和页面路径，不含字段内容。重试不重复记录开始事件。
 - 这些事件是微转化，不能替代 `generate_lead`，也不触发 Meta `Lead`。GA4 的增强型衡量可能另外产生通用 click/form 事件，报表请按本节明确事件名筛选，不把两套事件相加。需要按入口、表单变体和错误类别分析时，在 GA4 注册事件级自定义维度 `placement`、`form_variant`、`error_type`。
-- 初始化 GA4 前，将 UTM 白名单映射为 GA4 `campaign_source`、`campaign_medium`、`campaign_name`、`campaign_id`、`campaign_content`；站内 SPA 导航沿用全局设置，遇到新的有效 UTM 时更新。URL 和 referrer 仍去除全部查询参数；不传 gclid、fbclid、utm_term 或任意其他参数。本改动针对 UTM 手动归因，不声称实现 Google Ads 自动标记归因。
-- 广告链接使用非个人化营销 slug，例如 `?utm_source=facebook&utm_medium=paid_social&utm_campaign=october-bags&utm_content=video_1`。仅接受 1–100 位 ASCII 字母、数字、下划线、连字符，拒绝重复参数及连续 7 位以上数字；不要把姓名、客户编号或联系方式写入营销参数。过滤并不能识别所有伪装成 slug 的个人信息。没有新增 cookie/localStorage；跨整页访问的会话归因由 GA4 管理。
+- 初始化 Google 标签前，页面地址仅保留唯一、格式有效的 `gclid`、`gbraid`、`wbraid`。页面片段和其他查询参数排除，来源页地址去除所有查询参数及片段。两个目标在首次配置时收到同一落地地址，客户端导航更新当前地址。有效的 UTM 白名单另行映射为 GA4 的 campaign 字段。
+- 广告链接使用非个人化营销 slug，例如 `?utm_source=facebook&utm_medium=paid_social&utm_campaign=october-bags&utm_content=video_1`。仅接受 1–100 位 ASCII 字母、数字、下划线、连字符，拒绝重复参数及连续 7 位以上数字。不要把姓名、客户编号或联系方式写入营销参数。Google 标签按有效同意状态管理其测量 Cookie，站点只在 localStorage 保存 Google 测量选择。
 - 回归测试拦截 Google/Meta 网络传输，验证命令队列、来源字段、隐私边界、入口计数与成功后焦点。它不证明 GA4 生产报表已归因；上线后以真实带 UTM 的访问确认来源/媒介/广告系列，并检查事件级维度。不要向生产属性发送合成询盘。
 
 ## SEO 配置维护
@@ -120,7 +122,7 @@ Pixel 的内联初始化代码先检查当前落地 URL 的 `fbclid`，再加载
 | --- | --- |
 | `NEXT_PUBLIC_ANALYTICS_ENABLED` | `false` 同时关闭 GA4、Google Ads、Meta Pixel 和 CAPI。 |
 | `NEXT_PUBLIC_GOOGLE_ADS_ID` | Google Ads 基础标签 ID；默认 `AW-18518055702`，自动化测试使用测试 ID。 |
-| `NEXT_PUBLIC_GA_ID` | GA4 Web 测量 ID；`generate_lead` 的关键事件标记与计数方式在 GA4 后台维护。 |
+| `NEXT_PUBLIC_GA_ID` | GA4 Web 测量 ID，留空使用 `G-854G1RXBJM`。关键事件标记与计数方式在 GA4 后台维护。 |
 | `VERCEL_ENV` | 仅 `production` 启用 GA4、Google Ads 和 Meta，Vercel 自动设置；本地和 Preview 默认关闭。 |
 | `NEXT_PUBLIC_META_ENVIRONMENT` | 由 `next.config.ts` 从构建时的 `VERCEL_ENV` 派生，确保浏览器环境隔离；无需单独配置。 |
 | `NEXT_PUBLIC_FB_PIXEL_ID` | 数字格式的 Pixel ID；空值回退到生产 ID，无效值禁用 Pixel。环境隔离仍然适用。 |
