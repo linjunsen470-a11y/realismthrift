@@ -223,6 +223,7 @@ export default async function Home({
   const websiteSchema = getWebsiteSchema();
   const faqSchema = getFaqSchema(
     faqs.map((f) => ({ q: f.question, a: f.answer })),
+    locale,
   );
 
   return (

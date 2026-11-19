@@ -24,7 +24,9 @@ it("lists each published translation with reciprocal alternates and its own publ
       expect(entry, url).toBeDefined();
       expect(entry?.alternates?.languages).toEqual(languageAlternates(path));
       if (path === "/privacy-policy")
-        expect(entry?.lastModified).toEqual(new Date("2026-11-18"));
+        expect(entry?.lastModified).toEqual(
+          new Date(locale === "en" || locale === "id" ? "2026-11-18" : "2026-11-20"),
+        );
     }
   }
   expect(new Set(entries.map((entry) => entry.url)).size).toBe(entries.length);
@@ -37,9 +39,9 @@ it("lists each published translation with reciprocal alternates and its own publ
 it("records substantive translation corrections without advancing every page to today", async () => {
   const entries = await sitemap();
   const date = (path: string) => entries.find(entry => entry.url.endsWith(path))?.lastModified;
-  expect(date("/fr/how-to-order")).toEqual(new Date("2026-11-13"));
-  expect(date("/id")).toEqual(new Date("2026-11-13"));
-  expect(date("/id/how-to-order")).toEqual(new Date("2026-11-08"));
+  expect(date("/fr/how-to-order")).toEqual(new Date("2026-11-20"));
+  expect(date("/id")).toEqual(new Date("2026-11-20"));
+  expect(date("/id/faq")).toEqual(new Date("2026-11-08"));
 });
 
 it("propagates CMS failures instead of publishing an incomplete sitemap", async () => {

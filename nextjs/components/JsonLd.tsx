@@ -1,6 +1,7 @@
 import { companyPostalAddress } from "@/data/siteData";
 import { serializeJsonLd } from "@/lib/structured-data";
 import { locales, type Locale } from '@/lib/i18n/routing';
+import { getTranslator } from "@/lib/i18n/server";
 
 type JsonLdData = Record<string, unknown>;
 
@@ -143,6 +144,7 @@ export function getWholesaleCatalogSchema({
   url: string;
   language?: Locale;
 }) {
+  const t = getTranslator(language);
   return {
     "@context": "https://schema.org/",
     "@type": "CollectionPage",
@@ -154,7 +156,7 @@ export function getWholesaleCatalogSchema({
     "about": {
       "@type": "Service",
       "name": name,
-      "serviceType": "Used goods wholesale",
+      "serviceType": t("Used goods wholesale"),
       "provider": {
         "@type": "Organization",
         "name": "RealismThrift",
@@ -167,10 +169,11 @@ export function getWholesaleCatalogSchema({
 /**
  * Generates FAQ Schema
  */
-export function getFaqSchema(faqs: { q: string; a: string }[]) {
+export function getFaqSchema(faqs: { q: string; a: string }[], language: Locale) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    "inLanguage": language,
     "mainEntity": faqs.map((faq) => ({
       "@type": "Question",
       "name": faq.q,

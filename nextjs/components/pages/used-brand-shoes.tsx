@@ -2,6 +2,7 @@ import { createPageMetadata } from "@/lib/metadata";
 import "@/app/internal-pages.css";
 import Image from "next/image";
 import Link from "next/link";
+import { TranslatedText } from "@/components/TranslatedText";
 import { InquiryForm } from "@/components/InquiryForm";
 import { QualityStandards } from "@/components/product/QualityStandards";
 import { ProductTrustSections } from "@/components/product/ProductTrustSections";
@@ -169,7 +170,7 @@ export default function UsedBrandShoesPage({
     url: `https://www.realismthrift.com${localePath("/used-brand-shoes", locale)}`,
   });
 
-  const faqSchema = getFaqSchema(shoeFaqs);
+  const faqSchema = getFaqSchema(shoeFaqs, locale);
 
   return (
     <div className="bg-white">
@@ -405,18 +406,20 @@ export default function UsedBrandShoesPage({
               <div className="rt-section-divider" />
             </div>
             <p className="text-[0.9375rem] text-[#555] leading-[1.75] mb-7">
-              {t(
-                "Used brand shoes require a more detailed sorting process than clothing. If you also need textiles, feel free to check our ",
-              )}
-              <Link
-                href={localePath("/used-brand-clothes", locale)}
-                className="text-[#C0392B] font-bold hover:underline"
-              >
-                {t("Used Brand Clothes")}
-              </Link>
-              {t(
-                " sorting lines. Our dedicated shoe sorting team handles each pair individually to ensure quality and pairing accuracy.",
-              )}
+              <TranslatedText
+                locale={locale}
+                text="Used brand shoes require a more detailed sorting process than clothing. If you also need textiles, feel free to check our {clothes} sorting lines. Our dedicated shoe sorting team handles each pair individually to ensure quality and pairing accuracy."
+                values={{
+                  clothes: (
+                    <Link
+                      href={localePath("/used-brand-clothes", locale)}
+                      className="text-[#C0392B] font-bold hover:underline"
+                    >
+                      {t("Used Brand Clothes")}
+                    </Link>
+                  ),
+                }}
+              />
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {[

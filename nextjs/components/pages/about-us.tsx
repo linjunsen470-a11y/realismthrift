@@ -181,7 +181,7 @@ export default function AboutUsPage({
             </h2>
             <p className="text-[0.9375rem] text-[#555] leading-[1.85] mb-5">
               {t(
-                "RealismThrift started in Guangzhou, China, a major hub for used clothing trade. What began as a small sorting operation in {v0}  has grown into a Huizhou-based exporter serving wholesale buyers in multiple markets.",
+                "RealismThrift started in Guangzhou, China, a major hub for used clothing trade. What began as a small sorting operation in {v0} has grown into a Huizhou-based exporter serving wholesale buyers in multiple markets.",
                 { v0: companyStats.foundedYear },
               )}
             </p>

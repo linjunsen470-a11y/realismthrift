@@ -22,13 +22,13 @@ const baseUrl = "https://www.realismthrift.com";
 // Shared translated copy was reviewed on November 8. Track later page edits explicitly.
 const translationReviewedAt = new Date("2026-11-08");
 const correctedPaths: Record<string, readonly string[]> = {
-  es: ["/", "/about-us", "/used-brand-clothes", "/used-brand-shoes", "/used-brand-bag", "/terms-of-service"],
-  fr: ["/", "/about-us", "/used-brand-shoes", "/used-brand-bag", "/how-to-order", "/terms-of-service"],
-  ar: ["/", "/used-brand-clothes", "/used-brand-shoes"],
-  vi: ["/", "/used-brand-clothes", "/used-brand-shoes", "/used-brand-bag", "/how-to-order", "/terms-of-service"],
-  id: ["/"],
+  es: ["/", "/about-us", "/used-brand-clothes", "/used-brand-shoes", "/used-brand-bag", "/how-to-order", "/contact-us", "/privacy-policy", "/terms-of-service"],
+  fr: ["/", "/about-us", "/used-brand-clothes", "/used-brand-shoes", "/used-brand-bag", "/how-to-order", "/privacy-policy", "/terms-of-service"],
+  ar: ["/", "/about-us", "/used-brand-clothes", "/used-brand-shoes", "/used-brand-bag", "/how-to-order", "/faq", "/contact-us", "/privacy-policy", "/terms-of-service"],
+  vi: ["/", "/about-us", "/used-brand-clothes", "/used-brand-shoes", "/used-brand-bag", "/how-to-order", "/faq", "/privacy-policy", "/terms-of-service"],
+  id: ["/", "/about-us", "/used-brand-clothes", "/used-brand-shoes", "/used-brand-bag", "/how-to-order", "/contact-us", "/terms-of-service"],
 };
-const translationCorrectedAt = new Date("2026-11-13");
+const translationCorrectedAt = new Date("2026-11-20");
 
 type StaticPageConfig = {
   path: string;

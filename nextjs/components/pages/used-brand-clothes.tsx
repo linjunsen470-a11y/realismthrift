@@ -196,7 +196,7 @@ export default function UsedBrandClothesPage({
     url: `https://www.realismthrift.com${localePath("/used-brand-clothes", locale)}`,
   });
 
-  const faqSchema = getFaqSchema(clothesFaqs);
+  const faqSchema = getFaqSchema(clothesFaqs, locale);
 
   return (
     <div className="bg-white">

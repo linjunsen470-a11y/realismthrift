@@ -179,7 +179,7 @@ export default function UsedBrandBagPage({
     url: `https://www.realismthrift.com${localePath("/used-brand-bag", locale)}`,
   });
 
-  const faqSchema = getFaqSchema(bagFaqs);
+  const faqSchema = getFaqSchema(bagFaqs, locale);
 
   return (
     <div className="bg-white">

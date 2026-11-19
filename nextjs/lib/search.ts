@@ -36,6 +36,9 @@ function normalizeText(value: string) {
     .toLowerCase()
     .normalize("NFD")
     .replace(/\p{M}/gu, "")
+    .replace(/đ/g, "d")
+    .replace(/ة/g, "ه")
+    .replace(/ى/g, "ي")
     .replace(/[^\p{L}\p{N}\s]/gu, " ")
     .replace(/\s+/g, " ")
     .trim();
