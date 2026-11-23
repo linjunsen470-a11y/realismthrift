@@ -46,6 +46,8 @@ import {
   localizeMetadata,
 } from "@/lib/i18n/server";
 import { localePath, type Locale } from "@/lib/i18n/routing";
+import heroMain from "@/public/images/hero-main-893.webp";
+import heroMobile from "@/public/images/hero-main-480.webp";
 
 export function getPageMetadata(locale: Locale = "en") {
   const t = getTranslator(locale);
@@ -232,16 +234,19 @@ export default async function Home({
       <JsonLd data={websiteSchema} />
       <JsonLd data={faqSchema} />
       <section className="rt-hero" id="home" aria-label={t("Hero Section")}>
-        <Image
-          src="/images/hero-main.webp"
+        {/* eslint-disable-next-line @next/next/no-img-element -- Serve the two pre-sized WebPs directly. */}
+        <img
+          src={heroMain.src}
+          srcSet={`${heroMobile.src} ${heroMobile.width}w, ${heroMain.src} ${heroMain.width}w`}
+          sizes="100vw"
           alt={t(
             "Dongguan Huihe Realismthrift Trading Co., Ltd. - China Wholesale Supplier of Sorted Second Hand Branded Clothes, Shoes, and Bags",
           )}
-          fill
-          priority
+          width={heroMain.width}
+          height={heroMain.height}
+          decoding="async"
           fetchPriority="high"
-          sizes="100vw"
-          className="rt-hero-bg"
+          className="rt-hero-bg absolute inset-0 size-full"
         />
         <div className="rt-hero-overlay" />
         <div className="rt-container">
@@ -363,7 +368,7 @@ export default async function Home({
                   }
                   width={400}
                   height={260}
-                  sizes="(min-width: 1100px) 25vw, (min-width: 768px) 50vw, 100vw"
+                  sizes="(min-width: 1280px) 293px, (min-width: 1100px) 25vw, (min-width: 768px) 50vw, 100vw"
                   className="rt-product-card-image"
                   style={{ height: "auto" }}
                 />

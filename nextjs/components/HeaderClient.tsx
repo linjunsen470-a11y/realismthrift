@@ -9,6 +9,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { SiteHeader as SiteHeaderType } from "@/types";
 import { localePath, searchHref, type Locale } from "@/lib/i18n/routing";
 import { createTranslator, type Messages } from "@/lib/i18n/translate";
+import logo from "@/public/img/logo-168.webp";
 
 interface HeaderClientProps {
   locale?: Locale;
@@ -57,11 +58,11 @@ export function HeaderClient({
           >
             <span className="rt-logo-combo">
               <Image
-                src="/img/logo.webp"
+                src={logo}
                 alt=""
                 width={48}
                 height={48}
-                sizes="48px"
+                unoptimized
                 className="rt-logo-image"
               />
               <span className="rt-logo-combo-text">

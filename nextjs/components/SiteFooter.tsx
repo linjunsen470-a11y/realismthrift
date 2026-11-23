@@ -7,6 +7,7 @@ import { localePath, type Locale } from "@/lib/i18n/routing";
 import { getTranslator } from "@/lib/i18n/server";
 import { TranslatedText } from "./TranslatedText";
 import { isMetaMeasurementEnabled } from "@/lib/meta-pixel";
+import logo from "@/public/img/logo-168.webp";
 
 interface SiteFooterProps {
   locale?: Locale;
@@ -22,13 +23,13 @@ export function SiteFooter({ locale = "en", data }: SiteFooterProps) {
           <div>
             <div className="rt-footer-logo">
               <Image
-                src="/img/logo.webp"
+                src={logo}
                 alt={t(
                   "RealismThrift Logo - Used Fashion Export Supplier from Huizhou China",
                 )}
                 width={56}
                 height={56}
-                sizes="56px"
+                unoptimized
                 className="rt-footer-logo-image"
               />
               <div className="rt-footer-logo-copy">

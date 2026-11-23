@@ -45,6 +45,7 @@ describe("inquiry and email recovery without external services", () => {
     vi.resetModules();
     vi.stubEnv("SUPABASE_URL", "https://supabase.example.test");
     vi.stubEnv("SUPABASE_SECRET_KEY", "sb_secret_test_only");
+    vi.stubEnv("SUPABASE_SERVICE_ROLE_KEY", undefined);
     vi.stubEnv("RESEND_API_KEY", "re_test_only");
     vi.spyOn(console, "warn").mockImplementation(() => {});
     vi.spyOn(console, "error").mockImplementation(() => {});

@@ -22,11 +22,20 @@ function requireEnvironmentVariable(name: string) {
 
 export function getSupabaseAdmin() {
   if (!supabaseAdmin) {
+    const url = requireEnvironmentVariable("SUPABASE_URL");
+    const secretKey = requireEnvironmentVariable("SUPABASE_SECRET_KEY");
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
     supabaseAdmin = createClient(
-      requireEnvironmentVariable("SUPABASE_URL"),
-      requireEnvironmentVariable("SUPABASE_SECRET_KEY"),
+      url,
+      secretKey,
       {
-        global: { fetch: createSupabaseAuthRetryFetch(fetch) },
+        global: {
+          fetch: createSupabaseAuthRetryFetch(
+            fetch,
+            undefined,
+            serviceRoleKey ? { origin: new URL(url).origin, secretKey, serviceRoleKey } : undefined,
+          ),
+        },
         auth: {
           persistSession: false,
           autoRefreshToken: false,

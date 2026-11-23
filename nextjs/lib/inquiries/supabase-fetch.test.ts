@@ -5,6 +5,13 @@ function authRejection() {
   return Response.json({ code: "PGRST303", message: "JWT issued at future" }, { status: 401 });
 }
 
+const serviceRoleFallback = {
+  origin: "https://supabase.example",
+  secretKey: "sb_secret_test_only",
+  serviceRoleKey: "test.service-role.jwt",
+};
+const adminHeaders = { apikey: serviceRoleFallback.secretKey, authorization: `Bearer ${serviceRoleFallback.secretKey}` };
+
 afterEach(() => vi.restoreAllMocks());
 
 describe("Supabase authentication recovery", () => {
@@ -55,6 +62,61 @@ describe("Supabase authentication recovery", () => {
     expect(wait.mock.calls.map((call) => call[0])).toEqual([250, 750, 1500, 2500]);
     expect(response.status).toBe(401);
     expect(await response.json()).toMatchObject({ code: "PGRST303" });
+  });
+
+  it("returns to the original credential when the service-role key is explicitly rejected", async () => {
+    const attempts: (string | null)[] = [];
+    const transport = vi.fn(async (request: Request) => {
+      attempts.push(request.headers.get("apikey"));
+      if (attempts.length === 2) return Response.json({ message: "Invalid API key" }, { status: 401 });
+      return attempts.length < 4 ? authRejection() : Response.json({ ok: true });
+    });
+    const wait = vi.fn().mockResolvedValue(undefined);
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    const retryingFetch = createSupabaseAuthRetryFetch(transport as typeof fetch, wait, serviceRoleFallback);
+
+    const response = await retryingFetch("https://supabase.example/rest/v1/rpc/claim_inquiry_email_jobs", {
+      method: "POST", headers: adminHeaders, body: "{}",
+    });
+    expect(response.status).toBe(200);
+    expect(attempts).toEqual(["sb_secret_test_only", "test.service-role.jwt", "sb_secret_test_only", "sb_secret_test_only"]);
+    expect(wait.mock.calls.map(([delay]) => delay)).toEqual([250, 750]);
+  });
+
+  it("does not replay an ambiguous response to the service-role attempt", async () => {
+    const transport = vi.fn()
+      .mockResolvedValueOnce(authRejection())
+      .mockResolvedValueOnce(new Response(null, { status: 503 }));
+    const wait = vi.fn().mockResolvedValue(undefined);
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    const retryingFetch = createSupabaseAuthRetryFetch(transport as typeof fetch, wait, serviceRoleFallback);
+
+    const response = await retryingFetch("https://supabase.example/rest/v1/rpc/claim_inquiry_email_jobs", {
+      method: "POST", headers: adminHeaders,
+    });
+    expect(response.status).toBe(503);
+    expect(transport).toHaveBeenCalledTimes(2);
+    expect(wait).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    ["another origin", "https://other.example", adminHeaders.authorization],
+    ["a different bearer token", serviceRoleFallback.origin, "Bearer user-token"],
+  ])("keeps the original credential for %s", async (_case, origin, authorization) => {
+    const transport = vi.fn()
+      .mockResolvedValueOnce(authRejection())
+      .mockResolvedValueOnce(Response.json({ ok: true }));
+    const wait = vi.fn().mockResolvedValue(undefined);
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    await createSupabaseAuthRetryFetch(transport as typeof fetch, wait, serviceRoleFallback)(
+      `${origin}/rest/v1/inquiry_email_jobs`,
+      { headers: { ...adminHeaders, authorization } },
+    );
+
+    expect(transport.mock.calls.map(([request]) => request.headers.get("apikey"))).toEqual([
+      adminHeaders.apikey, adminHeaders.apikey,
+    ]);
+    expect(wait).toHaveBeenCalledTimes(1);
   });
 
   it.each([

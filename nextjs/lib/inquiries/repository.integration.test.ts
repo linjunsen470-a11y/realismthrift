@@ -9,6 +9,7 @@ describe("inquiry repository with the Supabase client", () => {
     vi.resetModules();
     vi.stubEnv("SUPABASE_URL", "https://supabase.example.test");
     vi.stubEnv("SUPABASE_SECRET_KEY", "sb_secret_test_only");
+    vi.stubEnv("SUPABASE_SERVICE_ROLE_KEY", undefined);
     vi.spyOn(console, "warn").mockImplementation(() => {});
     vi.useFakeTimers();
   });
@@ -78,5 +79,32 @@ describe("inquiry repository with the Supabase client", () => {
     expect({ pendingAttempts, processingAttempts, claimAttempts, claims }).toEqual({
       pendingAttempts: 2, processingAttempts: 1, claimAttempts: 2, claims: 1,
     });
+  });
+
+  it("recovers a clock rejection immediately with the configured service-role JWT", async () => {
+    const serviceRoleKey = "test.service-role.jwt";
+    vi.stubEnv("SUPABASE_SERVICE_ROLE_KEY", serviceRoleKey);
+    const attempts: { key: string | null; authorization: string | null; redirect: RequestRedirect; body: string }[] = [];
+    vi.stubGlobal("fetch", vi.fn(async (request: Request) => {
+      expect(new URL(request.url).origin).toBe("https://supabase.example.test");
+      if (request.method === "PATCH") return new Response(null, { status: 204 });
+      attempts.push({
+        key: request.headers.get("apikey"),
+        authorization: request.headers.get("authorization"),
+        redirect: request.redirect,
+        body: await request.text(),
+      });
+      return attempts.length === 1 ? rejectedAuthentication() : Response.json([]);
+    }));
+    const { claimEmailJobs } = await import("./repository");
+
+    expect(await claimEmailJobs()).toEqual([]);
+    expect(attempts).toEqual([
+      { key: "sb_secret_test_only", authorization: "Bearer sb_secret_test_only", redirect: "follow", body: attempts[0].body },
+      { key: serviceRoleKey, authorization: `Bearer ${serviceRoleKey}`, redirect: "error", body: attempts[0].body },
+    ]);
+    expect(console.warn).toHaveBeenCalledWith("Supabase PostgREST authentication retry", expect.objectContaining({
+      reason: "jwt_issued_in_future", outcome: "recovered", retries: 1, usedServiceRoleFallback: true,
+    }));
   });
 });
