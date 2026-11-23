@@ -46,7 +46,7 @@ import {
   localizeMetadata,
 } from "@/lib/i18n/server";
 import { localePath, type Locale } from "@/lib/i18n/routing";
-import heroMain from "@/public/images/hero-main.webp";
+import heroMain from "@/public/images/hero-main-893.webp";
 import heroMobile from "@/public/images/hero-main-480.webp";
 
 export function getPageMetadata(locale: Locale = "en") {
@@ -244,6 +244,7 @@ export default async function Home({
           )}
           width={heroMain.width}
           height={heroMain.height}
+          decoding="async"
           fetchPriority="high"
           className="rt-hero-bg absolute inset-0 size-full"
         />
