@@ -49,7 +49,9 @@ Copy the signing secret into `RESEND_WEBHOOK_SECRET` and redeploy once more.
 
 ## 3. Configure Supabase Cron
 
-Enable the Supabase Cron and Vault modules. Store the same value used for Vercel's `INQUIRY_RETRY_SECRET` in Vault, then create an HTTP Cron job every five minutes:
+For an existing retry job, apply [the schedule migration](migrations/20261123160414_slow_inquiry_email_retries.sql). In Supabase Cron, verify that `retry-inquiry-emails` is active and shows `*/15 * * * *`.
+
+For a new installation, enable the Supabase Cron and Vault modules. Store the same value used for Vercel's `INQUIRY_RETRY_SECRET` in Vault, then use the following SQL to create an HTTP Cron job every 15 minutes.
 
 ```sql
 -- Run each create_secret call once, replacing the placeholder locally.
@@ -65,7 +67,7 @@ select vault.create_secret(
 
 select cron.schedule(
   'retry-inquiry-emails',
-  '*/5 * * * *',
+  '*/15 * * * *',
   $$
   select net.http_post(
     url := (
